@@ -36,6 +36,10 @@ gggeo_scale(p, pos = "left")
 library(phytools)
 library(ggtree)
 tree <- pbtree(b = .03, d = .01,  n=100)
+p <- ggtree(tree) +
+  coord_cartesian(xlim = c(0,-500), ylim = c(-10,Ntip(tree)), expand = FALSE) +
+  scale_x_continuous(breaks=seq(-300,0,100), labels=abs(seq(-300,0,100))) +
+  theme_tree2()
 p <- revts(p)
 gggeo_scale(p, neg = TRUE)
 ```
