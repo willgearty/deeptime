@@ -1,12 +1,13 @@
+# deeptime
 Tools (currently just one function) to help with plotting data over long time intervals.
 
-To install:
+## To install
 ```r
 library(devtools)
 install_github("willgearty/deeptime")
 ```
 
-To use:
+## To use
 ```r
 library(deeptime)
 library(ggplot2)
