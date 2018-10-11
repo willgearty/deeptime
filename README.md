@@ -17,3 +17,16 @@ p <- ggplot() +
   theme_classic()
 gggeo_scale(p)
 ```
+
+![example bottom scale](/images/example_bottom.png?raw=true)
+
+```r
+p <- ggplot() +
+  geom_point(aes(x = runif(1000, .5, 8), y = runif(1000, 0, 541))) +
+  scale_y_reverse() +
+  coord_cartesian(xlim = c(0, 8), ylim = c(0,541), expand = FALSE) +
+  theme_classic()
+gggeo_scale(p, pos = "left")
+```
+
+![example left scale](/images/example_left.png?raw=true)
