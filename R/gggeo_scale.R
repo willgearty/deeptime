@@ -24,18 +24,33 @@
 #' @return A ggplot object.
 #' @export
 #' @examples
+#' library(ggplot2)
+#' # bottom scale by default
 #' p <- ggplot() +
 #'   geom_point(aes(y = runif(1000, .5, 8), x = runif(1000, 0, 1000))) +
 #'   scale_x_reverse() +
 #'   coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic()
 #' gggeo_scale(p)
+#'
+#' # can specify any side of the plot
 #' p <- ggplot() +
 #'  geom_point(aes(x = runif(1000, .5, 8), y = runif(1000, 0, 1000))) +
 #'  scale_y_reverse() +
 #'  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
 #'  theme_classic()
 #' gggeo_scale(p, pos = "left")
+#'
+#' #can even add a scale to a phylogeny (using ggtree)
+#' library(phytools)
+#' library(ggtree)
+#' tree <- pbtree(b = .03, d = .01,  n=100)
+#' p <- ggtree(tree) +
+#'  coord_cartesian(xlim = c(0,-500), ylim = c(-10,Ntip(tree)), expand = FALSE) +
+#'  scale_x_continuous(breaks=seq(-300,0,100), labels=abs(seq(-300,0,100))) +
+#'  theme_tree2()
+#' p <- revts(p)
+#' gggeo_scale(p, neg = TRUE)
 gggeo_scale <- function(gg, fill = NULL, color = "black", alpha = 1, height = .05, size = 5, quat = FALSE, pos = "bottom", abbrv = TRUE, dat = NULL, neg = FALSE) {
   if(is.null(dat)){
     dat <- periods

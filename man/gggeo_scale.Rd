@@ -48,16 +48,31 @@ If custom data is provided (with \code{dat}), it should consist of at least 3 co
   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 }
 \examples{
+library(ggplot2)
+# bottom scale by default
 p <- ggplot() +
   geom_point(aes(y = runif(1000, .5, 8), x = runif(1000, 0, 1000))) +
   scale_x_reverse() +
   coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
   theme_classic()
 gggeo_scale(p)
+
+# can specify any side of the plot
 p <- ggplot() +
  geom_point(aes(x = runif(1000, .5, 8), y = runif(1000, 0, 1000))) +
  scale_y_reverse() +
  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
  theme_classic()
 gggeo_scale(p, pos = "left")
+
+#can even add a scale to a phylogeny (using ggtree)
+library(phytools)
+library(ggtree)
+tree <- pbtree(b = .03, d = .01,  n=100)
+p <- ggtree(tree) +
+ coord_cartesian(xlim = c(0,-500), ylim = c(-10,Ntip(tree)), expand = FALSE) +
+ scale_x_continuous(breaks=seq(-300,0,100), labels=abs(seq(-300,0,100))) +
+ theme_tree2()
+p <- revts(p)
+gggeo_scale(p, neg = TRUE)
 }
