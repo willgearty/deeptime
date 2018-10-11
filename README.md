@@ -31,3 +31,14 @@ gggeo_scale(p, pos = "left")
 ```
 
 ![example left scale](/images/example_left.png?raw=true)
+
+```r
+library(phytools)
+library(ggtree)
+tree <- pbtree(b = .03, d = .01,  n=100)
+p <- revts(p)
+gggeo_scale(p, neg = TRUE)
+```
+
+![example phylogeny](/images/example_phylo.png?raw=true)
+
