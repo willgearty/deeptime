@@ -6,14 +6,14 @@
 \usage{
 gggeo_scale(gg, fill = NULL, color = "black", alpha = 1,
   height = 0.05, size = 5, quat = FALSE, pos = "bottom",
-  abbrv = TRUE, periods = NULL, neg = FALSE)
+  abbrv = TRUE, dat = NULL, neg = FALSE)
 }
 \arguments{
 \item{gg}{The ggplot object.}
 
-\item{fill}{The fill color of the boxes. The default is to use the colors from the Commission for the Geological Map of the World (CGMW).
-Custom fill colors can be provided and will be recycled if necessary.
-If a custom dataset is provided with periods without color and without fill, a greyscale will be used}
+\item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
+If a custom dataset is provided with dat without color and without fill, a greyscale will be used
+Custom fill colors can be provided with this option and will be recycled if/as necessary.}
 
 \item{color}{The outline color of the interval boxes.}
 
@@ -29,7 +29,7 @@ If a custom dataset is provided with periods without color and without fill, a g
 
 \item{abbrv}{Whether to use abbreviations instead of full interval names.}
 
-\item{periods}{A custom data set of time interval boundaries (see Details).}
+\item{dat}{A custom data set of time interval boundaries (see Details).}
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 }
@@ -40,8 +40,8 @@ A ggplot object.
 This function takes a ggplot object and adds a geologic time scale at the specified side.
 }
 \details{
-If custom data is provided (with \code{periods}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
-  The \code{period} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(dat)} for an example.
+  The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
   The \code{max_age} column lists the oldest boundary of each time interval.
   The \code{min_age} column lists the youngest boundary of each time interval.
   The \code{abbr} column is optonal and lists abbreviations that may be used as labels.
@@ -49,9 +49,15 @@ If custom data is provided (with \code{periods}), it should consist of at least 
 }
 \examples{
 p <- ggplot() +
-  geom_point(aes(y = runif(1000, .5, 8), x = runif(1000, 0, 541))) +
+  geom_point(aes(y = runif(1000, .5, 8), x = runif(1000, 0, 1000))) +
   scale_x_reverse() +
-  coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
+  coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
   theme_classic()
 gggeo_scale(p)
+p <- ggplot() +
+ geom_point(aes(x = runif(1000, .5, 8), y = runif(1000, 0, 1000))) +
+ scale_y_reverse() +
+ coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
+ theme_classic()
+gggeo_scale(p, pos = "left")
 }
