@@ -2,7 +2,7 @@
 #'
 #' This function takes a ggplot object and adds a geologic time scale at the specified side.
 #'
-#' If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(dat)} for an example.
+#' If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
 #'   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
 #'   The \code{max_age} column lists the oldest boundary of each time interval.
 #'   The \code{min_age} column lists the youngest boundary of each time interval.
@@ -15,11 +15,14 @@
 #' @param color The outline color of the interval boxes.
 #' @param alpha The transparency of the fill colors.
 #' @param height The proportional height (or width if \code{pos} is \code{left} or \code{right}) of the entire plot to use for the scale.
+#' @param gap The proportional height (or width) of the entire plot to use as a gap between the axis and the scale.
 #' @param size Label size.
 #' @param quat Specifies whether the Quaternary should be labelled (if using the default data).
 #' @param pos Which side to add the scale to (left, right, top, or bottom). First letter may also be used.
-#' @param abbrv Whether to use abbreviations instead of full interval names.
-#' @param dat A custom data set of time interval boundaries (see Details).
+#' @param lab Whether to include labels.
+#' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
+#' @param dat Either A) a string indicating a built-in dataframe with interval data (periods, epochs, or stages)
+#'   or B) a custom dataframe of time interval boundaries (see Details).
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @return A ggplot object.
 #' @export
@@ -51,9 +54,13 @@
 #'  theme_tree2()
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
-gggeo_scale <- function(gg, fill = NULL, color = "black", alpha = 1, height = .05, size = 5, quat = FALSE, pos = "bottom", abbrv = TRUE, dat = NULL, neg = FALSE) {
-  if(is.null(dat)){
+gggeo_scale <- function(gg, fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, size = 5, quat = FALSE, pos = "bottom", lab = TRUE, abbrv = TRUE, dat = "periods", neg = FALSE) {
+  if(dat == "periods"){
     dat <- periods
+  }else if(dat == "epochs"){
+    dat <- epochs
+  }else if(dat == "stages"){
+    dat <- stages
   }
   if(neg){
     dat$max_age <- -1 * (dat$max_age)
@@ -75,31 +82,37 @@ gggeo_scale <- function(gg, fill = NULL, color = "black", alpha = 1, height = .0
     dat$label[dat$abbr=="Q"] <- ""
   }
   if(pos %in% c("bottom", "top", "b", "t")){
+    y.range <- max(lims$y.range) - min(lims$y.range)
     if(pos %in% c("top","t")){
-      ymax <- max(lims$y.range)
-      ymin <- max(lims$y.range) - height * (max(lims$y.range) - min(lims$y.range))
+      ymax <- max(lims$y.range) - gap * y.range
+      ymin <- max(lims$y.range) - (height + gap) * y.range
     }else{
-      ymin <- min(lims$y.range)
-      ymax <- min(lims$y.range) + height * (max(lims$y.range) - min(lims$y.range))
+      ymin <- min(lims$y.range) + gap * y.range
+      ymax <- min(lims$y.range) + (height + gap) * y.range
     }
     gg <- gg +
       ggplot2::annotate("rect", xmin = dat$min_age, xmax = dat$max_age, ymin = ymin, ymax = ymax,
-               fill = dat$color, color = color, alpha = alpha) +
-      ggplot2::annotate("text", x = dat$mid_age, label = dat$label, y = (ymin+ymax)/2,
-               vjust = "middle", hjust = "middle", size = size)
+                        fill = dat$color, color = color, alpha = alpha)
+    if(lab){
+      gg <- gg + ggplot2::annotate("text", x = dat$mid_age, label = dat$label, y = (ymin+ymax)/2,
+                                   vjust = "middle", hjust = "middle", size = size)
+    }
   }else if(pos %in% c("left", "right","l","r")){
+    x.range <- max(lims$x.range) - min(lims$x.range)
     if(pos %in% c("right","r")){
-      xmax <- max(lims$x.range)
-      xmin <- max(lims$x.range) - height * (max(lims$x.range) - min(lims$x.range))
+      xmax <- max(lims$x.range) - gap * x.range
+      xmin <- max(lims$x.range) - (height + gap) * x.range
     }else{
-      xmin <- min(lims$x.range)
-      xmax <- min(lims$x.range) + height * (max(lims$x.range) - min(lims$x.range))
+      xmin <- min(lims$x.range) + gap * x.range
+      xmax <- min(lims$x.range) + (height + gap) * x.range
     }
     gg <- gg +
       ggplot2::annotate("rect", ymin = dat$min_age, ymax = dat$max_age, xmin = xmin, xmax = xmax,
-               fill = dat$color, color = color, alpha = alpha) +
-      ggplot2::annotate("text", y = dat$mid_age, label = dat$label, x = (xmin+xmax)/2,
-               vjust = "middle", hjust = "middle", size = size, angle = 90)
+                        fill = dat$color, color = color, alpha = alpha)
+    if(lab){
+      gg <- gg + ggplot2::annotate("text", y = dat$mid_age, label = dat$label, x = (xmin+xmax)/2,
+                                   vjust = "middle", hjust = "middle", size = size, angle = 90)
+    }
   }
   gg
 }

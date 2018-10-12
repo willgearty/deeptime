@@ -5,8 +5,8 @@
 \title{Add a geologic scale to ggplots}
 \usage{
 gggeo_scale(gg, fill = NULL, color = "black", alpha = 1,
-  height = 0.05, size = 5, quat = FALSE, pos = "bottom",
-  abbrv = TRUE, dat = NULL, neg = FALSE)
+  height = 0.05, gap = 0, size = 5, quat = FALSE, pos = "bottom",
+  lab = TRUE, abbrv = TRUE, dat = "periods", neg = FALSE)
 }
 \arguments{
 \item{gg}{The ggplot object.}
@@ -21,15 +21,20 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{height}{The proportional height (or width if \code{pos} is \code{left} or \code{right}) of the entire plot to use for the scale.}
 
+\item{gap}{The proportional height (or width) of the entire plot to use as a gap between the axis and the scale.}
+
 \item{size}{Label size.}
 
 \item{quat}{Specifies whether the Quaternary should be labelled (if using the default data).}
 
 \item{pos}{Which side to add the scale to (left, right, top, or bottom). First letter may also be used.}
 
-\item{abbrv}{Whether to use abbreviations instead of full interval names.}
+\item{lab}{Whether to include labels.}
 
-\item{dat}{A custom data set of time interval boundaries (see Details).}
+\item{abbrv}{If including labels, whether to use abbreviations instead of full interval names.}
+
+\item{dat}{Either A) a string indicating a built-in dataframe with interval data (periods, epochs, or stages)
+or B) a custom dataframe of time interval boundaries (see Details).}
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 }
@@ -40,7 +45,7 @@ A ggplot object.
 This function takes a ggplot object and adds a geologic time scale at the specified side.
 }
 \details{
-If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(dat)} for an example.
+If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
   The \code{max_age} column lists the oldest boundary of each time interval.
   The \code{min_age} column lists the youngest boundary of each time interval.
