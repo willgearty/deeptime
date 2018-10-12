@@ -4,12 +4,16 @@
 \alias{gggeo_scale}
 \title{Add a geologic scale to ggplots}
 \usage{
-gggeo_scale(gg, fill = NULL, color = "black", alpha = 1,
-  height = 0.05, gap = 0, size = 5, quat = FALSE, pos = "bottom",
-  lab = TRUE, abbrv = TRUE, dat = "periods", neg = FALSE)
+gggeo_scale(gg, dat = "periods", fill = NULL, color = "black",
+  alpha = 1, height = 0.05, gap = 0, pos = "bottom", lab = TRUE,
+  rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene"),
+  size = 5, neg = FALSE)
 }
 \arguments{
 \item{gg}{The ggplot object.}
+
+\item{dat}{Either A) a string indicating a built-in dataframe with interval data (periods, epochs, or stages)
+or B) a custom dataframe of time interval boundaries (see Details).}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
 If a custom dataset is provided with dat without color and without fill, a greyscale will be used
@@ -23,18 +27,17 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{gap}{The proportional height (or width) of the entire plot to use as a gap between the axis and the scale.}
 
-\item{size}{Label size.}
-
-\item{quat}{Specifies whether the Quaternary should be labelled (if using the default data).}
-
 \item{pos}{Which side to add the scale to (left, right, top, or bottom). First letter may also be used.}
 
 \item{lab}{Whether to include labels.}
 
+\item{rot}{The amount of counter-clockwise rotation to add to the labels (in degrees).}
+
 \item{abbrv}{If including labels, whether to use abbreviations instead of full interval names.}
 
-\item{dat}{Either A) a string indicating a built-in dataframe with interval data (periods, epochs, or stages)
-or B) a custom dataframe of time interval boundaries (see Details).}
+\item{skip}{A vector of interval names indicating which intervals should not be labelled.}
+
+\item{size}{Label size.}
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 }
@@ -69,6 +72,16 @@ p <- ggplot() +
  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
  theme_classic()
 gggeo_scale(p, pos = "left")
+
+# can add multiple scales
+p <- ggplot() +
+  geom_point(aes(y = runif(1000, 1, 8), x = runif(1000, 0, 1000))) +
+  scale_x_reverse() +
+  coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
+  theme_classic()
+p <- gggeo_scale(p, height = .03)
+p <- gggeo_scale(p, gap = .03, height = .03, dat = "epochs")
+gggeo_scale(p, gap = .06, height = .03, dat = "stages")
 
 #can even add a scale to a phylogeny (using ggtree)
 library(phytools)
