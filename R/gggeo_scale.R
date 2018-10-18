@@ -72,6 +72,10 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
     dat <- epochs
   }else if(dat == "stages"){
     dat <- stages
+  }else if(dat == "eras"){
+    dat <- eras
+  }else if(dat == "eons"){
+    dat <- eons
   }
   if(neg){
     dat$max_age <- -1 * (dat$max_age)
