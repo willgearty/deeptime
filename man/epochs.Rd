@@ -4,7 +4,7 @@
 \name{epochs}
 \alias{epochs}
 \title{Epoch data based on The Geologic Time Scale 2012}
-\format{A data frame with 15 rows and 5 variables:
+\format{A data frame with 34 rows and 4 variables:
 \describe{
   \item{name}{epoch name}
   \item{max_age}{maximum age, in millions of years}
