@@ -12,7 +12,7 @@ gggeo_scale(gg, dat = "periods", fill = NULL, color = "black",
 \arguments{
 \item{gg}{The ggplot object.}
 
-\item{dat}{Either A) a string indicating a built-in dataframe with interval data (periods, epochs, or stages)
+\item{dat}{Either A) a string indicating a built-in dataframe with interval data ("periods", "epochs", or "stages")
 or B) a custom dataframe of time interval boundaries (see Details).}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
