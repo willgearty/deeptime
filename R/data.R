@@ -3,7 +3,7 @@
 #' A dataset containing the boundary ages, abbrevations, and colors for the periods of the Geologic Time Scale.
 #' Based on The Geologic Time Scale 2012, by Gradstein and Ogg.
 #'
-#' @format A data frame with 15 rows and 5 variables:
+#' @format A data frame with 22 rows and 5 variables:
 #' \describe{
 #'   \item{name}{period name}
 #'   \item{max_age}{maximum age, in millions of years}
