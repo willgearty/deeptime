@@ -51,7 +51,7 @@ gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
 
 ### Scale on faceted plot
 ```r
-df = data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
+df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
 p <- ggplot(df) +
     geom_point(aes(x, y)) +
     scale_x_reverse() +
