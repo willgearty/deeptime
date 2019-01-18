@@ -9,7 +9,7 @@
 #'   The \code{abbr} column is optonal and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 #' @param gg The ggplot object.
-#' @param dat Either A) a string indicating a built-in dataframe with interval data (periods, epochs, or stages)
+#' @param dat Either A) a string indicating a built-in dataframe with interval data ("periods", "epochs", or "stages")
 #'   or B) a custom dataframe of time interval boundaries (see Details).
 #' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
 #'   If a custom dataset is provided with dat without color and without fill, a greyscale will be used
@@ -27,6 +27,7 @@
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @return A ggplot object.
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
 #' library(ggplot2)
 #' # bottom scale by default
@@ -104,11 +105,14 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
       ymax <- min(lims$y.range) + (height + gap) * y.range
     }
     gg <- gg +
-      ggplot2::annotate("rect", xmin = dat$min_age, xmax = dat$max_age, ymin = ymin, ymax = ymax,
-                        fill = dat$color, color = color, alpha = alpha)
+      (ggplot2::geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill_geo_scale = color),
+                          ymin = ymin, ymax = ymax, color = color, alpha = alpha, show.legend = FALSE) %>%
+         relayer::rename_geom_aes(new_aes = c("fill" = "fill_geo_scale"))) +
+      scale_fill_manual(values = setNames(dat$color, dat$color), aesthetics = "fill_geo_scale")
     if(lab){
-      gg <- gg + ggplot2::annotate("text", x = dat$mid_age, label = dat$label, y = (ymin+ymax)/2,
-                                   vjust = "middle", hjust = "middle", size = size, angle = rot)
+      gg <- gg +
+        ggplot2::geom_text(data = dat, aes(x = mid_age, label = label), y = (ymin+ymax)/2,
+                           vjust = "middle", hjust = "middle", size = size, angle = rot)
     }
   }else if(pos %in% c("left", "right","l","r")){
     x.range <- max(lims$x.range) - min(lims$x.range)
@@ -120,11 +124,14 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
       xmax <- min(lims$x.range) + (height + gap) * x.range
     }
     gg <- gg +
-      ggplot2::annotate("rect", ymin = dat$min_age, ymax = dat$max_age, xmin = xmin, xmax = xmax,
-                        fill = dat$color, color = color, alpha = alpha)
+      (ggplot2::geom_rect(data = dat, aes(ymin = min_age, ymax = max_age, fill_geo_scale = color),
+                          xmin = xmin, xmax = xmax, color = color, alpha = alpha, show.legend = FALSE) %>%
+         relayer::rename_geom_aes(new_aes = c("fill" = "fill_geo_scale"))) +
+      scale_fill_manual(values = setNames(dat$color, dat$color), aesthetics = "fill_geo_scale")
     if(lab){
-      gg <- gg + ggplot2::annotate("text", y = dat$mid_age, label = dat$label, x = (xmin+xmax)/2,
-                                   vjust = "middle", hjust = "middle", size = size, angle = 90 + rot)
+      gg <- gg +
+        ggplot2::geom_text(data = dat, aes(y = mid_age, label = label), x = (xmin+xmax)/2,
+                           vjust = "middle", hjust = "middle", size = size, angle = rot)
     }
   }
   gg

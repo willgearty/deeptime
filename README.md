@@ -30,7 +30,7 @@ p <- ggplot() +
   scale_y_reverse() +
   coord_cartesian(xlim = c(0, 8), ylim = c(0,541), expand = FALSE) +
   theme_classic()
-gggeo_scale(p, pos = "left")
+gggeo_scale(p, pos = "left", rot = 90)
 ```
 
 ![example left scale](/images/example_left.png?raw=true)
@@ -48,6 +48,20 @@ gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
 ```
 
 ![example stacked scales](/images/example_stack.png?raw=true)
+
+### Scale on faceted plot
+```r
+df = data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
+p <- ggplot(df) +
+    geom_point(aes(x, y)) +
+    scale_x_reverse() +
+    coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
+    theme_classic() +
+    facet_wrap(~z, nrow = 2)
+gggeo_scale(p)
+```
+
+![example faceted scale](/images/example_facet.png?raw=true)
 
 ### Add scale to phylogeny
 ```r
