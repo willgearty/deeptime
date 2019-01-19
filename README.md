@@ -9,6 +9,8 @@ install_github("willgearty/deeptime")
 
 ## To use
 
+*Note: This function does not expand your axes (yet), which may result in the scale overlapping with your data. Please use caution and set your axis limits manually to account for this.*
+
 ### Default scale on bottom axis
 ```r
 library(deeptime)
