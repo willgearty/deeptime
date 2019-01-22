@@ -106,13 +106,13 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
     }
     gg <- gg +
       (ggplot2::geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill_geo_scale = color),
-                          ymin = ymin, ymax = ymax, color = color, alpha = alpha, show.legend = FALSE) %>%
+                          ymin = ymin, ymax = ymax, color = color, alpha = alpha, show.legend = FALSE, inherit.aes = FALSE) %>%
          relayer::rename_geom_aes(new_aes = c("fill" = "fill_geo_scale"))) +
       scale_fill_manual(values = setNames(dat$color, dat$color), aesthetics = "fill_geo_scale")
     if(lab){
       gg <- gg +
         ggplot2::geom_text(data = dat, aes(x = mid_age, label = label), y = (ymin+ymax)/2,
-                           vjust = "middle", hjust = "middle", size = size, angle = rot)
+                           vjust = "middle", hjust = "middle", size = size, angle = rot, inherit.aes = FALSE)
     }
   }else if(pos %in% c("left", "right","l","r")){
     x.range <- max(lims$x.range) - min(lims$x.range)
@@ -125,13 +125,13 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
     }
     gg <- gg +
       (ggplot2::geom_rect(data = dat, aes(ymin = min_age, ymax = max_age, fill_geo_scale = color),
-                          xmin = xmin, xmax = xmax, color = color, alpha = alpha, show.legend = FALSE) %>%
+                          xmin = xmin, xmax = xmax, color = color, alpha = alpha, show.legend = FALSE, inherit.aes = FALSE) %>%
          relayer::rename_geom_aes(new_aes = c("fill" = "fill_geo_scale"))) +
       scale_fill_manual(values = setNames(dat$color, dat$color), aesthetics = "fill_geo_scale")
     if(lab){
       gg <- gg +
         ggplot2::geom_text(data = dat, aes(y = mid_age, label = label), x = (xmin+xmax)/2,
-                           vjust = "middle", hjust = "middle", size = size, angle = rot)
+                           vjust = "middle", hjust = "middle", size = size, angle = rot, inherit.aes = FALSE)
     }
   }
   gg
