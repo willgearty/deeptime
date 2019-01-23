@@ -9,7 +9,8 @@ install_github("willgearty/deeptime")
 
 ## To use
 
-*Note: This function does not expand your axes (yet), which may result in the scale overlapping with your data. Please use caution and set your axis limits manually to account for this.*
+*Note #1: This function does not expand your axes (yet), which may result in the scale overlapping with your data. Please use caution and set your axis limits manually to account for this.*
+*Note #2: Make sure to include any fill or color scales beforehand, as you will not be able to modify these attributes for your main plot after applying this function.*
 
 ### Default scale on bottom axis
 ```r

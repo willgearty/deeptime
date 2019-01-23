@@ -3,7 +3,7 @@
 \docType{data}
 \name{periods}
 \alias{periods}
-\title{Period data based on The Geologic Time Scale 2012}
+\title{Period data from the International Commission on Stratigraphy (v2013-1)}
 \format{A data frame with 22 rows and 5 variables:
 \describe{
   \item{name}{period name}
@@ -13,13 +13,13 @@
   \item{color}{the colors for each period, according to the Comission for the Geological Map of the World}
 }}
 \source{
-\url{https://doi.org/10.1016/C2011-1-08249-8}
+\url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=3}
 }
 \usage{
 periods
 }
 \description{
 A dataset containing the boundary ages, abbrevations, and colors for the periods of the Geologic Time Scale.
-Based on The Geologic Time Scale 2012, by Gradstein and Ogg.
+Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 }
 \keyword{datasets}

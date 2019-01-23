@@ -3,22 +3,23 @@
 \docType{data}
 \name{stages}
 \alias{stages}
-\title{Stage data based on The Geologic Time Scale 2012}
-\format{A data frame with 97 rows and 4 variables:
+\title{Stage data from the International Commission on Stratigraphy (v2013-1)}
+\format{A data frame with 100 rows and 5 variables:
 \describe{
   \item{name}{stage name}
   \item{max_age}{maximum age, in millions of years}
   \item{min_age}{minimum age, in millions of years}
+  \item{abbr}{stage name abbreviations}
   \item{color}{the colors for each stage, according to the Comission for the Geological Map of the World}
 }}
 \source{
-\url{https://doi.org/10.1016/C2011-1-08249-8}
+\url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=5}
 }
 \usage{
 stages
 }
 \description{
 A dataset containing the boundary ages, abbrevations, and colors for the stages of the Geologic Time Scale.
-Based on The Geologic Time Scale 2012, by Gradstein and Ogg.
+Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 }
 \keyword{datasets}
