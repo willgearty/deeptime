@@ -52,8 +52,8 @@
 #'   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic()
 #' p <- gggeo_scale(p, height = .03, abbrv = FALSE)
-#' p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 3)
-#' gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
+#' p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
+#' gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 #'
 #' #can add scales to a faceted plot
 #' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
@@ -75,7 +75,7 @@
 #'  theme_tree2()
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
-gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene"), size = 5, neg = FALSE) {
+gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, neg = FALSE) {
   if(dat == "periods"){
     dat <- periods
   }else if(dat == "epochs"){

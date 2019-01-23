@@ -47,8 +47,8 @@ p <- ggplot() +
   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
 p <- gggeo_scale(p, height = .03, abbrv = FALSE)
-p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 3)
-gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
+p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 ```
 
 ![example stacked scales](/images/example_stack.png?raw=true)
