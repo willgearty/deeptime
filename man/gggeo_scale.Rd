@@ -71,17 +71,27 @@ p <- ggplot() +
  scale_y_reverse() +
  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
  theme_classic()
-gggeo_scale(p, pos = "left")
+gggeo_scale(p, pos = "left", rot = 90)
 
 # can add multiple scales
 p <- ggplot() +
   geom_point(aes(y = runif(1000, 1, 8), x = runif(1000, 0, 1000))) +
   scale_x_reverse() +
-  coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
+  coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p, height = .03)
-p <- gggeo_scale(p, gap = .03, height = .03, dat = "epochs")
-gggeo_scale(p, gap = .06, height = .03, dat = "stages")
+p <- gggeo_scale(p, height = .03, abbrv = FALSE)
+p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 3)
+gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
+
+#can add scales to a faceted plot
+df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
+p <- ggplot(df) +
+  geom_point(aes(x, y)) +
+  scale_x_reverse() +
+  coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
+  theme_classic() +
+  facet_wrap(~z, nrow = 2)
+gggeo_scale(p)
 
 #can even add a scale to a phylogeny (using ggtree)
 library(phytools)

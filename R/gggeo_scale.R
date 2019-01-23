@@ -27,7 +27,6 @@
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @return A ggplot object.
 #' @export
-#' @importFrom magrittr %>%
 #' @examples
 #' library(ggplot2)
 #' # bottom scale by default
@@ -44,17 +43,27 @@
 #'  scale_y_reverse() +
 #'  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
 #'  theme_classic()
-#' gggeo_scale(p, pos = "left")
+#' gggeo_scale(p, pos = "left", rot = 90)
 #'
 #' # can add multiple scales
 #' p <- ggplot() +
 #'   geom_point(aes(y = runif(1000, 1, 8), x = runif(1000, 0, 1000))) +
 #'   scale_x_reverse() +
-#'   coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
+#'   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic()
-#' p <- gggeo_scale(p, height = .03)
-#' p <- gggeo_scale(p, gap = .03, height = .03, dat = "epochs")
-#' gggeo_scale(p, gap = .06, height = .03, dat = "stages")
+#' p <- gggeo_scale(p, height = .03, abbrv = FALSE)
+#' p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 3)
+#' gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
+#'
+#' #can add scales to a faceted plot
+#' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
+#' p <- ggplot(df) +
+#'   geom_point(aes(x, y)) +
+#'   scale_x_reverse() +
+#'   coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
+#'   theme_classic() +
+#'   facet_wrap(~z, nrow = 2)
+#' gggeo_scale(p)
 #'
 #' #can even add a scale to a phylogeny (using ggtree)
 #' library(phytools)
@@ -95,6 +104,7 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
     dat$label <- dat$name
   }
   dat$label[dat$name %in% skip] <- ""
+  gg <- gg + ggnewscale::new_scale_fill()
   if(pos %in% c("bottom", "top", "b", "t")){
     y.range <- max(lims$y.range) - min(lims$y.range)
     if(pos %in% c("top","t")){
@@ -105,14 +115,15 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
       ymax <- min(lims$y.range) + (height + gap) * y.range
     }
     gg <- gg +
-      (ggplot2::geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill_geo_scale = color),
-                          ymin = ymin, ymax = ymax, color = color, alpha = alpha, show.legend = FALSE, inherit.aes = FALSE) %>%
-         relayer::rename_geom_aes(new_aes = c("fill" = "fill_geo_scale"))) +
-      scale_fill_manual(values = setNames(dat$color, dat$color), aesthetics = "fill_geo_scale")
+      ggplot2::geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
+                         ymin = ymin, ymax = ymax, color = color, alpha = alpha, show.legend = FALSE,
+                         inherit.aes = FALSE) +
+      ggplot2::scale_fill_manual(values = setNames(dat$color, dat$color))
     if(lab){
       gg <- gg +
         ggplot2::geom_text(data = dat, aes(x = mid_age, label = label), y = (ymin+ymax)/2,
-                           vjust = "middle", hjust = "middle", size = size, angle = rot, inherit.aes = FALSE)
+                           vjust = "middle", hjust = "middle", size = size, angle = rot,
+                           inherit.aes = FALSE)
     }
   }else if(pos %in% c("left", "right","l","r")){
     x.range <- max(lims$x.range) - min(lims$x.range)
@@ -124,14 +135,15 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
       xmax <- min(lims$x.range) + (height + gap) * x.range
     }
     gg <- gg +
-      (ggplot2::geom_rect(data = dat, aes(ymin = min_age, ymax = max_age, fill_geo_scale = color),
-                          xmin = xmin, xmax = xmax, color = color, alpha = alpha, show.legend = FALSE, inherit.aes = FALSE) %>%
-         relayer::rename_geom_aes(new_aes = c("fill" = "fill_geo_scale"))) +
-      scale_fill_manual(values = setNames(dat$color, dat$color), aesthetics = "fill_geo_scale")
+      ggplot2::geom_rect(data = dat, aes(ymin = min_age, ymax = max_age, fill = color),
+                         xmin = xmin, xmax = xmax, color = color, alpha = alpha, show.legend = FALSE,
+                         inherit.aes = FALSE) +
+      ggplot2::scale_fill_manual(values = setNames(dat$color, dat$color))
     if(lab){
       gg <- gg +
         ggplot2::geom_text(data = dat, aes(y = mid_age, label = label), x = (xmin+xmax)/2,
-                           vjust = "middle", hjust = "middle", size = size, angle = rot, inherit.aes = FALSE)
+                           vjust = "middle", hjust = "middle", size = size, angle = rot,
+                           inherit.aes = FALSE)
     }
   }
   gg
