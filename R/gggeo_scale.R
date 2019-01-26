@@ -6,13 +6,13 @@
 #'   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
 #'   The \code{max_age} column lists the oldest boundary of each time interval.
 #'   The \code{min_age} column lists the youngest boundary of each time interval.
-#'   The \code{abbr} column is optonal and lists abbreviations that may be used as labels.
+#'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 #' @param gg The ggplot object.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data ("periods", "epochs", or "stages")
 #'   or B) a custom dataframe of time interval boundaries (see Details).
 #' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
-#'   If a custom dataset is provided with dat without color and without fill, a greyscale will be used
+#'   If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
 #'   Custom fill colors can be provided with this option and will be recycled if/as necessary.
 #' @param color The outline color of the interval boxes.
 #' @param alpha The transparency of the fill colors.
