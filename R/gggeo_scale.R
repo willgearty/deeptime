@@ -77,15 +77,15 @@
 #' gggeo_scale(p, neg = TRUE)
 gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, neg = FALSE) {
   if(dat == "periods"){
-    dat <- periods
+    dat <- deeptime::periods
   }else if(dat == "epochs"){
-    dat <- epochs
+    dat <- deeptime::epochs
   }else if(dat == "stages"){
-    dat <- stages
+    dat <- deeptime::stages
   }else if(dat == "eras"){
-    dat <- eras
+    dat <- deeptime::eras
   }else if(dat == "eons"){
-    dat <- eons
+    dat <- deeptime::eons
   }
   if(neg){
     dat$max_age <- -1 * (dat$max_age)

@@ -6,8 +6,8 @@
 \usage{
 gggeo_scale(gg, dat = "periods", fill = NULL, color = "black",
   alpha = 1, height = 0.05, gap = 0, pos = "bottom", lab = TRUE,
-  rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene"),
-  size = 5, neg = FALSE)
+  rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene",
+  "Late Pleistocene"), size = 5, neg = FALSE)
 }
 \arguments{
 \item{gg}{The ggplot object.}
@@ -16,7 +16,7 @@ gggeo_scale(gg, dat = "periods", fill = NULL, color = "black",
 or B) a custom dataframe of time interval boundaries (see Details).}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
-If a custom dataset is provided with dat without color and without fill, a greyscale will be used
+If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
 Custom fill colors can be provided with this option and will be recycled if/as necessary.}
 
 \item{color}{The outline color of the interval boxes.}
@@ -52,7 +52,7 @@ If custom data is provided (with \code{dat}), it should consist of at least 3 co
   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
   The \code{max_age} column lists the oldest boundary of each time interval.
   The \code{min_age} column lists the youngest boundary of each time interval.
-  The \code{abbr} column is optonal and lists abbreviations that may be used as labels.
+  The \code{abbr} column is optional and lists abbreviations that may be used as labels.
   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 }
 \examples{
@@ -80,8 +80,8 @@ p <- ggplot() +
   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
 p <- gggeo_scale(p, height = .03, abbrv = FALSE)
-p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 3)
-gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 3)
+p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 
 #can add scales to a faceted plot
 df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
