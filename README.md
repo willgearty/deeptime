@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/willgearty/deeptime.svg?branch=master)](https://travis-ci.org/willgearty/deeptime)
+[![DOI](https://zenodo.org/badge/152502088.svg)](https://zenodo.org/badge/latestdoi/152502088)
+
 # deeptime
 Tools (currently just one function) to help with plotting data over long time intervals.
 
