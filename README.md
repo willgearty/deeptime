@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/willgearty/deeptime.svg?branch=master)](https://travis-ci.org/willgearty/deeptime)
+[![Build Status](https://travis-ci.com/willgearty/deeptime.svg?branch=master)](https://travis-ci.com/willgearty/deeptime)
 [![DOI](https://zenodo.org/badge/152502088.svg)](https://zenodo.org/badge/latestdoi/152502088)
 
 # deeptime
