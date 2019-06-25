@@ -9,8 +9,9 @@
 #'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 #' @param gg The ggplot object.
-#' @param dat Either A) a string indicating a built-in dataframe with interval data ("periods", "epochs", or "stages")
-#'   or B) a custom dataframe of time interval boundaries (see Details).
+#' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
+#'   B) a string indicating a timescale from macrostrat (see list here: https://macrostrat.org/api/defs/timescales?all),
+#'   or C) a custom dataframe of time interval boundaries (see Details).
 #' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
 #'   If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
 #'   Custom fill colors can be provided with this option and will be recycled if/as necessary.
@@ -55,6 +56,15 @@
 #' p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 #' gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 #'
+#' # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
+#' p <- ggplot() +
+#'   geom_point(aes(x = runif(1000, 1, 9), y = runif(1000, 0, 65))) +
+#'   scale_y_reverse() +
+#'   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
+#'   theme_classic()
+#' p <- gggeo_scale(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv = FALSE)
+#' gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
+#'
 #' #can add scales to a faceted plot
 #' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
 #' p <- ggplot(df) +
@@ -76,7 +86,9 @@
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
 gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, neg = FALSE) {
-  if(dat == "periods"){
+  if(is(dat, "data.frame")){
+    #just use the supplied data
+  }else if(dat == "periods"){
     dat <- deeptime::periods
   }else if(dat == "epochs"){
     dat <- deeptime::epochs
@@ -86,6 +98,15 @@ gggeo_scale <- function(gg, dat = "periods", fill = NULL, color = "black", alpha
     dat <- deeptime::eras
   }else if(dat == "eons"){
     dat <- deeptime::eons
+  }else{
+    #try to get the timescale from macrostrat
+    URL <- url(paste0("https://macrostrat.org/api/v2/defs/intervals?format=csv&timescale=",gsub(" ", "%20", dat)))
+    raw_dat <- utils::read.csv(URL,header=TRUE, stringsAsFactors = FALSE)
+    clean_dat <- raw_dat[,c("name", "b_age", "t_age", "abbrev", "color")]
+    colnames(clean_dat) <- c("name", "max_age", "min_age", "abbr", "color")
+    no_abbr <- (is.na(clean_dat$abbr) | clean_dat$abbr == "")
+    clean_dat$abbr[no_abbr] <- abbreviate(clean_dat$name, minlength = 1, use.classes = FALSE, named = FALSE)[no_abbr]
+    dat <- clean_dat
   }
   if(neg){
     dat$max_age <- -1 * (dat$max_age)

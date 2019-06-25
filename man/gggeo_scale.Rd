@@ -12,8 +12,9 @@ gggeo_scale(gg, dat = "periods", fill = NULL, color = "black",
 \arguments{
 \item{gg}{The ggplot object.}
 
-\item{dat}{Either A) a string indicating a built-in dataframe with interval data ("periods", "epochs", or "stages")
-or B) a custom dataframe of time interval boundaries (see Details).}
+\item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
+B) a string indicating a timescale from macrostrat (see list here: https://macrostrat.org/api/defs/timescales?all),
+or C) a custom dataframe of time interval boundaries (see Details).}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
 If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
@@ -82,6 +83,15 @@ p <- ggplot() +
 p <- gggeo_scale(p, height = .03, abbrv = FALSE)
 p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
+
+# intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
+p <- ggplot() +
+  geom_point(aes(x = runif(1000, 1, 9), y = runif(1000, 0, 65))) +
+  scale_y_reverse() +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
+  theme_classic()
+p <- gggeo_scale(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
 
 #can add scales to a faceted plot
 df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))

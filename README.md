@@ -56,6 +56,19 @@ gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abb
 
 ![example stacked scales](/images/example_stack.png?raw=true)
 
+### Show intervals from different scales (ICS stages vs. North American Land Mammal Ages)
+```r
+p <- ggplot() +
+   geom_point(aes(x = runif(1000, 1, 9), y = runif(1000, 0, 65))) +
+   scale_y_reverse() +
+   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
+   theme_classic()
+p <- gggeo_scale(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
+```
+
+![example stacked scales](/images/separate_scales.png?raw=true)
+
 ### Scale on faceted plot
 ```r
 df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
