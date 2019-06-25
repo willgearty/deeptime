@@ -67,7 +67,7 @@ p <- gggeo_scale(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv
 gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
 ```
 
-![example stacked scales](/images/separate_scales.png?raw=true)
+![example separate scales](/images/separate_scales.png?raw=true)
 
 ### Scale on faceted plot
 ```r
