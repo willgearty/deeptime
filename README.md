@@ -16,7 +16,7 @@ install_github("willgearty/deeptime")
 
 ## To use
 
-###Load packages
+### Load packages
 ```r
 library(deeptime)
 library(ggplot2)
@@ -76,7 +76,7 @@ gggeo_scale(p, lims = c(-65,0), dat = "North American Land Mammal Ages", pos = "
 ![example separate scales](/images/separate_scales.png?raw=true)
 
 ### Scale on faceted plot
-Adding scales to facetted plot (with more than one column) only works with the old version at the moment.
+Adding scales to a facetted plot with more than one column only works with the old version at the moment.
 ```r
 df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
 p <- ggplot(df) +
