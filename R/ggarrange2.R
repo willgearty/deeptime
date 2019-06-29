@@ -14,6 +14,7 @@
 #' @examples
 #' library(grid)
 #' library(gridExtra)
+#' library(ggplot2)
 #' p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
 #'   geom_point()
 #'
@@ -238,6 +239,7 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @return gtable of aligned plots
 #' @export
 #' @examples
+#' library(ggplot2)
 #' p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
 #'   geom_point()
 #' p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +

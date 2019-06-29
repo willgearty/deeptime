@@ -57,6 +57,7 @@ gtable of aligned plots
 Arrange multiple ggplot objects on a page, aligning the plot panels, axes, and axis titles.
 }
 \examples{
+library(ggplot2)
 p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   geom_point()
 p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +

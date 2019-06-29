@@ -25,6 +25,7 @@ Reformat the gtable associated with a ggplot object into a 7x7 gtable where the 
 \examples{
 library(grid)
 library(gridExtra)
+library(ggplot2)
 p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   geom_point()
 
