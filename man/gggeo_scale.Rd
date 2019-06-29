@@ -15,12 +15,16 @@ gggeo_scale(x, ...)
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
   margin = unit(0.5, "line"))
 
-\method{gggeo_scale}{ggplot}(gg, ...)
+\method{gggeo_scale}{ggplot}(gg, dat = "periods", fill = NULL,
+  color = "black", alpha = 1, height = unit(2, "line"),
+  pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
+  margin = unit(0.5, "line"))
 
-\method{print}{gggeo_scale}(x, ...)
+\method{print}{gggeo_scale}(gggeo, ...)
 }
 \arguments{
-\item{x}{an object output by \code{gggeo_scale()}.}
+\item{x}{Either a ggplot object or a gtable object.}
 
 \item{...}{further arguments passed to \code{grid.draw}.}
 
@@ -57,6 +61,8 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{margin}{The width of the margin around the returned object (can be a vector of length 4).}
 
 \item{gg}{A ggplot object.}
+
+\item{gggeo}{an object output by \code{gggeo_scale()}.}
 }
 \value{
 A ggplot object.
@@ -96,9 +102,9 @@ p <- ggplot() +
   scale_x_reverse() +
   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p)
-p <- gggeo_scale(p, dat = "epochs")
-gggeo_scale(p, dat = "stages")
+p <- gggeo_scale(p, abbrv = FALSE)
+p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
 
 # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
 p <- ggplot() +
@@ -106,17 +112,18 @@ p <- ggplot() +
   scale_y_reverse() +
   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p, dat = "stages", pos = "left", height = 3, size = 2.5, abbrv = FALSE)
-gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = 3, size = 2.5, abbrv = FALSE)
+p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
+gggeo_scale(p, lims = c(-65,0), dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
 
 #can add scales to a faceted plot
+#use gggeo_scale_old() if you have more than one column
 df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8), z = sample(c(1,2,3,4), 1000, TRUE))
 p <- ggplot(df) +
   geom_point(aes(x, y)) +
   scale_x_reverse() +
   coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
   theme_classic() +
-  facet_wrap(~z, nrow = 2)
+  facet_wrap(~z, ncol = 1)
 gggeo_scale(p)
 
 #can even add a scale to a phylogeny (using ggtree)
@@ -124,9 +131,9 @@ library(phytools)
 library(ggtree)
 tree <- pbtree(b = .03, d = .01,  n=100)
 p <- ggtree(tree) +
- coord_cartesian(xlim = c(0,-500), ylim = c(-10,Ntip(tree)), expand = FALSE) +
- scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
- theme_tree2()
+  coord_cartesian(xlim = c(0,-500), ylim = c(-2,Ntip(tree)), expand = FALSE) +
+  scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
+  theme_tree2()
 p <- revts(p)
-gggeo_scale(p, neg = TRUE)
+gggeo_scale(p)
 }

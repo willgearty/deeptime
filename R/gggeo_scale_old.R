@@ -10,7 +10,7 @@
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 #' @param gg The ggplot object.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-#'   B) a string indicating a timescale from macrostrat (see list here: https://macrostrat.org/api/defs/timescales?all),
+#'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
 #'   or C) a custom dataframe of time interval boundaries (see Details).
 #' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
 #'   If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.

@@ -13,7 +13,7 @@ gggeo_scale_old(gg, dat = "periods", fill = NULL, color = "black",
 \item{gg}{The ggplot object.}
 
 \item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here: https://macrostrat.org/api/defs/timescales?all),
+B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
 or C) a custom dataframe of time interval boundaries (see Details).}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.

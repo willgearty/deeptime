@@ -1,5 +1,6 @@
 #' @export
 #' @rdname gggeo_scale
+#' @param x Either a ggplot object or a gtable object.
 gggeo_scale <- function(x, ...) {
   UseMethod("gggeo_scale", x)
 }
@@ -63,9 +64,9 @@ gggeo_scale <- function(x, ...) {
 #'   scale_x_reverse() +
 #'   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic()
-#' p <- gggeo_scale(p)
-#' p <- gggeo_scale(p, dat = "epochs")
-#' gggeo_scale(p, dat = "stages")
+#' p <- gggeo_scale(p, abbrv = FALSE)
+#' p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+#' gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
 #'
 #' # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
 #' p <- ggplot() +
@@ -73,17 +74,18 @@ gggeo_scale <- function(x, ...) {
 #'   scale_y_reverse() +
 #'   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
 #'   theme_classic()
-#' p <- gggeo_scale(p, dat = "stages", pos = "left", height = 3, size = 2.5, abbrv = FALSE)
-#' gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = 3, size = 2.5, abbrv = FALSE)
+#' p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
+#' gggeo_scale(p, lims = c(-65,0), dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
 #'
 #' #can add scales to a faceted plot
+#' #use gggeo_scale_old() if you have more than one column
 #' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8), z = sample(c(1,2,3,4), 1000, TRUE))
 #' p <- ggplot(df) +
 #'   geom_point(aes(x, y)) +
 #'   scale_x_reverse() +
 #'   coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic() +
-#'   facet_wrap(~z, nrow = 2)
+#'   facet_wrap(~z, ncol = 1)
 #' gggeo_scale(p)
 #'
 #' #can even add a scale to a phylogeny (using ggtree)
@@ -91,11 +93,11 @@ gggeo_scale <- function(x, ...) {
 #' library(ggtree)
 #' tree <- pbtree(b = .03, d = .01,  n=100)
 #' p <- ggtree(tree) +
-#'  coord_cartesian(xlim = c(0,-500), ylim = c(-10,Ntip(tree)), expand = FALSE) +
-#'  scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
-#'  theme_tree2()
+#'   coord_cartesian(xlim = c(0,-500), ylim = c(-2,Ntip(tree)), expand = FALSE) +
+#'   scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
+#'   theme_tree2()
 #' p <- revts(p)
-#' gggeo_scale(p, neg = TRUE)
+#' gggeo_scale(p)
 gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line")) {
   if(is(dat, "data.frame")){
     #just use the supplied data
@@ -201,20 +203,21 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
 #' @param gg A ggplot object.
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.ggplot <- function(gg, ...){
+gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line")){
   lims <- ggplot2::ggplot_build(gg)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(gg)
   gt <- gtable_frame2(grob_gg)
-  gggeo_scale.gtable(gt, lims, ...)
+  gggeo_scale.gtable(gt, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin)
 }
 
-#' @param x an object output by \code{gggeo_scale()}.
+#' @param gggeo an object output by \code{gggeo_scale()}.
 #' @param ... further arguments passed to \code{grid.draw}.
 #' @export
 #' @rdname gggeo_scale
 #' @importFrom grid grid.newpage grid.draw
-print.gggeo_scale <- function(x, ...) {
+print.gggeo_scale <- function(gggeo, ...) {
   grid.newpage()
   grid.draw(x, ...)
 }
