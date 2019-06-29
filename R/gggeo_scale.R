@@ -36,7 +36,8 @@ gggeo_scale <- function(x, ...) {
 #' @return A ggplot object.
 #' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows gtable_add_padding
 #' @importFrom grid unit
-#' @importFrom ggplot2 ggplot geom_rect geom_text aes scale_fill_manual theme_void theme element_rect
+#' @importFrom ggplot2 ggplot geom_rect geom_text aes scale_fill_manual theme_void theme element_rect coord_cartesian coord_flip scale_x_reverse
+#' @importFrom methods is
 #' @export
 #' @aliases gggeo_scale
 #' @rdname gggeo_scale
@@ -201,10 +202,11 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
 }
 
 #' @param gg A ggplot object.
+#' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
 gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line")){
-  lims <- ggplot2::ggplot_build(gg)$layout$panel_params[[1]]
+  lims <- ggplot_build(gg)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(gg)
   gt <- gtable_frame2(grob_gg)
@@ -219,5 +221,5 @@ gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black"
 #' @importFrom grid grid.newpage grid.draw
 print.gggeo_scale <- function(gggeo, ...) {
   grid.newpage()
-  grid.draw(x, ...)
+  grid.draw(gggeo, ...)
 }

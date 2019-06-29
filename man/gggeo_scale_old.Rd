@@ -64,7 +64,7 @@ p <- ggplot() +
   scale_x_reverse() +
   coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
   theme_classic()
-gggeo_scale(p)
+gggeo_scale_old(p)
 
 # can specify any side of the plot
 p <- ggplot() +
@@ -72,7 +72,7 @@ p <- ggplot() +
  scale_y_reverse() +
  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
  theme_classic()
-gggeo_scale(p, pos = "left", rot = 90)
+gggeo_scale_old(p, pos = "left", rot = 90)
 
 # can add multiple scales
 p <- ggplot() +
@@ -80,9 +80,8 @@ p <- ggplot() +
   scale_x_reverse() +
   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p, height = .03, abbrv = FALSE)
-p <- gggeo_scale(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
-gggeo_scale(p, dat = "stages", gap = .13, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
+p <- gggeo_scale_old(p, height = .03, abbrv = FALSE)
+p <- gggeo_scale_old(p, dat = "epochs", gap = .03, height = .1, rot = 90, size = 2.5, abbrv = FALSE)
 
 # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
 p <- ggplot() +
@@ -90,8 +89,8 @@ p <- ggplot() +
   scale_y_reverse() +
   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv = FALSE)
-gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
+p <- gggeo_scale_old(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv = FALSE)
+gggeo_scale_old(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
 
 #can add scales to a faceted plot
 df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
@@ -101,7 +100,7 @@ p <- ggplot(df) +
   coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
   theme_classic() +
   facet_wrap(~z, nrow = 2)
-gggeo_scale(p)
+gggeo_scale_old(p)
 
 #can even add a scale to a phylogeny (using ggtree)
 library(phytools)
@@ -112,5 +111,5 @@ p <- ggtree(tree) +
  scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
  theme_tree2()
 p <- revts(p)
-gggeo_scale(p, neg = TRUE)
+gggeo_scale_old(p, neg = TRUE)
 }

@@ -40,10 +40,10 @@ p3 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
 g1 <- ggplotGrob(p1);
 g2 <- ggplotGrob(p2);
 g3 <- ggplotGrob(p3);
-fg1 <- gtable_frame(g1)
-fg2 <- gtable_frame(g2)
-fg12 <- gtable_frame(gtable_rbind(fg1,fg2), width=unit(2,'null'), height=unit(1,'null'))
-fg3 <- gtable_frame(g3, width=unit(1,'null'), height=unit(1,'null'))
+fg1 <- gtable_frame2(g1)
+fg2 <- gtable_frame2(g2)
+fg12 <- gtable_frame2(gtable_rbind(fg1,fg2), width=unit(2,'null'), height=unit(1,'null'))
+fg3 <- gtable_frame2(g3, width=unit(1,'null'), height=unit(1,'null'))
 grid.newpage()
 combined <- gtable_cbind(fg12, fg3)
 grid.draw(combined)

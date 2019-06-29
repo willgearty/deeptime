@@ -29,10 +29,10 @@
 #' g1 <- ggplotGrob(p1);
 #' g2 <- ggplotGrob(p2);
 #' g3 <- ggplotGrob(p3);
-#' fg1 <- gtable_frame(g1)
-#' fg2 <- gtable_frame(g2)
-#' fg12 <- gtable_frame(gtable_rbind(fg1,fg2), width=unit(2,'null'), height=unit(1,'null'))
-#' fg3 <- gtable_frame(g3, width=unit(1,'null'), height=unit(1,'null'))
+#' fg1 <- gtable_frame2(g1)
+#' fg2 <- gtable_frame2(g2)
+#' fg12 <- gtable_frame2(gtable_rbind(fg1,fg2), width=unit(2,'null'), height=unit(1,'null'))
+#' fg3 <- gtable_frame2(g3, width=unit(1,'null'), height=unit(1,'null'))
 #' grid.newpage()
 #' combined <- gtable_cbind(fg12, fg3)
 #' grid.draw(combined)
@@ -204,6 +204,26 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   all
 }
 
+.tmp <- gtable::gtable_matrix("placeholder", matrix(replicate(49, grid::nullGrob(), simplify = FALSE),
+                                                    7, 7), widths = rep(unit(1, "null"), 7), heights = rep(unit(1, "null"), 7))
+.tmp$layout$name[25] <- "panel"
+
+#' @export
+.dummy_gtable <- .tmp
+
+# stolen from grid (because unexported)
+as.unit.list <- function(unit) {
+  if (inherits(unit, "unit.list")) {
+    unit
+  } else {
+    l <- length(unit)
+    result <- vector("list", l)
+    for (i in seq_len(l)) result[[i]] <- unit[i]
+    class(result) <- c("unit.list", "unit")
+    result
+  }
+}
+
 #' @importFrom grid textGrob
 label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = textGrob) {
   lapply(labels, .fun, x = x, hjust = hjust, y = y, vjust = vjust, ...)
@@ -231,11 +251,12 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @param debug logical, show layout with thin lines
 #' @param labels character labels used for annotation of subfigures
 #' @param label.args label list of parameters for the formatting of labels
-#' @importFrom grid is.unit is.grob gpar
+#' @importFrom grid is.unit is.grob gpar grobHeight grobWidth
 #' @importFrom grDevices n2mfrow
 #' @importFrom gridExtra gtable_cbind gtable_rbind
 #' @importFrom ggplot2 ggplotGrob
 #' @importFrom gtable gtable_add_padding
+#' @importFrom methods is
 #' @return gtable of aligned plots
 #' @export
 #' @examples
