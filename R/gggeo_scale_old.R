@@ -78,6 +78,7 @@
 #' gggeo_scale_old(p)
 #'
 #' #can even add a scale to a phylogeny (using ggtree)
+#' \dontrun{
 #' library(phytools)
 #' library(ggtree)
 #' tree <- pbtree(b = .03, d = .01,  n=100)
@@ -87,6 +88,7 @@
 #'  theme_tree2()
 #' p <- revts(p)
 #' gggeo_scale_old(p, neg = TRUE)
+#' }
 gggeo_scale_old <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, neg = FALSE) {
   if(is(dat, "data.frame")){
     #just use the supplied data

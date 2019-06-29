@@ -90,6 +90,7 @@ gggeo_scale <- function(x, ...) {
 #' gggeo_scale(p)
 #'
 #' #can even add a scale to a phylogeny (using ggtree)
+#' \dontrun{
 #' library(phytools)
 #' library(ggtree)
 #' tree <- pbtree(b = .03, d = .01,  n=100)
@@ -99,6 +100,7 @@ gggeo_scale <- function(x, ...) {
 #'   theme_tree2()
 #' p <- revts(p)
 #' gggeo_scale(p)
+#' }
 gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line")) {
   if(is(dat, "data.frame")){
     #just use the supplied data
