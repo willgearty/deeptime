@@ -9,4 +9,4 @@ Encoding: UTF-8
 LazyData: true
 Imports: ggplot2, ggnewscale, utils, grid, gridExtra, gtable, methods, stats
 RoxygenNote: 6.1.1
-Remotes: eliocamp/ggnewscale
+Remotes: eliocamp/ggnewscale@7d4d3358056f90c3e90a5858e69d575849f40bd2

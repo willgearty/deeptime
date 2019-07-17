@@ -90,10 +90,11 @@ p <- ggplot() +
   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
   theme_classic()
 p <- gggeo_scale_old(p, dat = "stages", pos = "left", height = .1, size = 2.5, abbrv = FALSE)
-gggeo_scale_old(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5, abbrv = FALSE)
+gggeo_scale_old(p, dat = "North American Land Mammal Ages", pos = "right", height = .1, size = 2.5,
+                abbrv = FALSE)
 
 #can add scales to a faceted plot
-df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8), z = sample(c(1,2,3,4), 1000, TRUE))
+df <- data.frame(x = runif(1000,0,541), y = runif(1000,.5,8), z = sample(c(1,2,3,4), 1000, TRUE))
 p <- ggplot(df) +
   geom_point(aes(x, y)) +
   scale_x_reverse() +
