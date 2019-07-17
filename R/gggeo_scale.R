@@ -67,10 +67,8 @@ gggeo_scale <- function(x, ...) {
 #'   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic()
 #' p <- gggeo_scale(p, abbrv = FALSE)
-#' p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90,
-#'                  size = 2.5, abbrv = FALSE)
-#' gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5,
-#'             abbrv = FALSE)
+#' p <- gggeo_scale(p, dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+#' gggeo_scale(p, dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
 #'
 #' # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
 #' p <- ggplot() +
