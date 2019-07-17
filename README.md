@@ -48,7 +48,6 @@ gggeo_scale(p, pos = "left", rot = 90)
 
 ### Stack multiple scales (e.g. periods, epochs, stages)
 Scales are added immediately under the plot, so you'll want to work inwards from the scale you want closest to the axis to the scale you want closest to the plot.
-As soon as you add one scale, you'll be working with a gtable object instead of a ggplot object, so you'll need to specify the axis limits.
 ```r
 p <- ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
@@ -56,8 +55,8 @@ p <- ggplot() +
   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
 p <- gggeo_scale(p, abbrv = FALSE)
-p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
-gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+p <- gggeo_scale(p, dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
 ```
 
 ![example stacked scales](/images/example_stack.png?raw=true)
@@ -70,7 +69,7 @@ p <- ggplot() +
     coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
     theme_classic()
 p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
-gggeo_scale(p, lims = c(-65,0), dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
 ```
 
 ![example separate scales](/images/separate_scales.png?raw=true)
@@ -114,7 +113,7 @@ p <- ggtree(tree) +
   scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
   theme_tree2()
 p <- revts(p)
-gggeo_scale(p)
+gggeo_scale(p, neg = TRUE)
 ```
 
 ![example phylogeny](/images/example_phylo.png?raw=true)
@@ -129,8 +128,8 @@ p <- ggtree(tree, position = position_nudge(x = -tree$root.time)) +
   coord_cartesian(xlim = c(0,-25), ylim = c(.75,Ntip(tree)), expand = FALSE) +
   scale_x_continuous(breaks=seq(-50,50,10), labels=abs(seq(-50,50,10))) +
   theme_tree2()
-p <- gggeo_scale(p, skip = NULL, abbrv = FALSE)
-gggeo_scale(p, lims = c(-25,0), dat = "epochs", skip = "Holocene", abbrv = FALSE, size = 4)
+p <- gggeo_scale(p, skip = NULL, abbrv = FALSE, neg = TRUE)
+gggeo_scale(p, dat = "epochs", skip = "Holocene", abbrv = FALSE, size = 4, neg = TRUE)
 ```
 
 ![example fossil_phylogeny](/images/example_fossil_phylo.png?raw=true)

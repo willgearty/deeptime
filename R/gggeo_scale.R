@@ -16,7 +16,7 @@ gggeo_scale <- function(x, ...) {
 #'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 #' @param gt A gtable object.
-#' @param lims The limits of the axis of the desired side of the plot. Only required if using a gtable object (like the one produced by this function).
+#' @param lims The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
 #'   or C) a custom dataframe of time interval boundaries (see Details).
@@ -34,7 +34,7 @@ gggeo_scale <- function(x, ...) {
 #' @param size Label size.
 #' @param margin The width of the margin around the returned object (can be a vector of length 4).
 #' @param neg Set this to true if your x-axis is using negative values.
-#' @return A ggplot object.
+#' @return A geo_scale object. Basically a gtable object but with the axis limits included.
 #' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows gtable_add_padding
 #' @importFrom grid unit
 #' @importFrom ggplot2 ggplot geom_rect geom_text aes scale_fill_manual theme_void theme element_rect coord_cartesian coord_flip scale_x_reverse
@@ -67,8 +67,10 @@ gggeo_scale <- function(x, ...) {
 #'   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
 #'   theme_classic()
 #' p <- gggeo_scale(p, abbrv = FALSE)
-#' p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
-#' gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+#' p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90,
+#'                  size = 2.5, abbrv = FALSE)
+#' gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5,
+#'             abbrv = FALSE)
 #'
 #' # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
 #' p <- ggplot() +
@@ -76,8 +78,10 @@ gggeo_scale <- function(x, ...) {
 #'   scale_y_reverse() +
 #'   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
 #'   theme_classic()
-#' p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
-#' gggeo_scale(p, lims = c(-65,0), dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
+#' p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
+#'                  abbrv = FALSE)
+#' gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
+#'             size = 2.5, abbrv = FALSE)
 #'
 #' #can add scales to a faceted plot
 #' #use gggeo_scale_old() if you have more than one column
@@ -100,7 +104,7 @@ gggeo_scale <- function(x, ...) {
 #'   scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
 #'   theme_tree2()
 #' p <- revts(p)
-#' gggeo_scale(p)
+#' gggeo_scale(p, neg = TRUE)
 #' }
 gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE) {
   if(is(dat, "data.frame")){
@@ -204,7 +208,8 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
     }
   }
   gt <- gtable_add_padding(gt, margin)
-  class(gt) <- c("gggeo_scale", class(gt))
+  gt$lims <- lims
+  class(gt) <- c("geo_scale", class(gt))
   gt
 }
 
@@ -221,12 +226,20 @@ gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black"
                      pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin, neg = neg)
 }
 
-#' @param gggeo an object output by \code{gggeo_scale()}.
+#' @param geo A geo_scale object output by \code{gggeo_scale()}.
+#' @export
+#' @rdname gggeo_scale
+gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE){
+  lims <- geo$lims
+  gggeo_scale.gtable(geo, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin, neg = neg)
+}
+
 #' @param ... further arguments passed to \code{grid.draw}.
 #' @export
 #' @rdname gggeo_scale
 #' @importFrom grid grid.newpage grid.draw
-print.gggeo_scale <- function(gggeo, ...) {
+print.geo_scale <- function(geo, ...) {
   grid.newpage()
-  grid.draw(gggeo, ...)
+  grid.draw(geo, ...)
 }

@@ -4,7 +4,8 @@
 \alias{gggeo_scale}
 \alias{gggeo_scale.gtable}
 \alias{gggeo_scale.ggplot}
-\alias{print.gggeo_scale}
+\alias{gggeo_scale.geo_scale}
+\alias{print.geo_scale}
 \title{Add a geologic scale to ggplots}
 \usage{
 gggeo_scale(x, ...)
@@ -21,7 +22,13 @@ gggeo_scale(x, ...)
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
   margin = unit(0.5, "line"), neg = FALSE)
 
-\method{print}{gggeo_scale}(gggeo, ...)
+\method{gggeo_scale}{geo_scale}(geo, dat = "periods", fill = NULL,
+  color = "black", alpha = 1, height = unit(2, "line"),
+  pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
+  margin = unit(0.5, "line"), neg = FALSE)
+
+\method{print}{geo_scale}(geo, ...)
 }
 \arguments{
 \item{x}{Either a ggplot object or a gtable object.}
@@ -30,7 +37,7 @@ gggeo_scale(x, ...)
 
 \item{gt}{A gtable object.}
 
-\item{lims}{The limits of the axis of the desired side of the plot. Only required if using a gtable object (like the one produced by this function).}
+\item{lims}{The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.}
 
 \item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
@@ -64,10 +71,10 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{gg}{A ggplot object.}
 
-\item{gggeo}{an object output by \code{gggeo_scale()}.}
+\item{geo}{A geo_scale object output by \code{gggeo_scale()}.}
 }
 \value{
-A ggplot object.
+A geo_scale object. Basically a gtable object but with the axis limits included.
 }
 \description{
 This function takes a ggplot object and adds a geologic time scale at the specified side.
@@ -105,8 +112,10 @@ p <- ggplot() +
   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
   theme_classic()
 p <- gggeo_scale(p, abbrv = FALSE)
-p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
-gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+p <- gggeo_scale(p, lims = c(-100,0), dat = "epochs", height = unit(4, "lines"), rot = 90,
+                 size = 2.5, abbrv = FALSE)
+gggeo_scale(p, lims = c(-100,0), dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5,
+            abbrv = FALSE)
 
 # intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
 p <- ggplot() +
@@ -114,8 +123,10 @@ p <- ggplot() +
   scale_y_reverse() +
   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
-gggeo_scale(p, lims = c(-65,0), dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"), size = 2.5, abbrv = FALSE)
+p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
+                 abbrv = FALSE)
+gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
+            size = 2.5, abbrv = FALSE)
 
 #can add scales to a faceted plot
 #use gggeo_scale_old() if you have more than one column
@@ -138,6 +149,6 @@ p <- ggtree(tree) +
   scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
   theme_tree2()
 p <- revts(p)
-gggeo_scale(p)
+gggeo_scale(p, neg = TRUE)
 }
 }
