@@ -33,6 +33,7 @@ gggeo_scale <- function(x, ...) {
 #' @param skip A vector of interval names indicating which intervals should not be labelled.
 #' @param size Label size.
 #' @param margin The width of the margin around the returned object (can be a vector of length 4).
+#' @param neg Set this to true if your x-axis is using negative values.
 #' @return A ggplot object.
 #' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows gtable_add_padding
 #' @importFrom grid unit
@@ -101,11 +102,15 @@ gggeo_scale <- function(x, ...) {
 #' p <- revts(p)
 #' gggeo_scale(p)
 #' }
-gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line")) {
+gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
     dat <- getScaleData(dat)
+  }
+  if(neg){
+    dat$max_age <- -1 * (dat$max_age)
+    dat$min_age <- -1 * (dat$min_age)
   }
   dat$mid_age <- (dat$max_age + dat$min_age)/2
   if(!is.null(fill)){
@@ -136,23 +141,23 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
   if(pos %in% c("bottom", "top", "b", "t")){
     if(is.list(lims)){
-      rev_axis <- any(lims$x.range < 0)
+      rev_axis <- lims$x.major[1] > lims$x.major[2]
       gg_scale <- gg_scale +
-        coord_cartesian(xlim = abs(lims$x.range), expand = FALSE)
+        coord_cartesian(xlim = lims$x.range * c(1, -1)[rev_axis + 1], expand = FALSE)
     }else{
-      rev_axis <- any(lims < 0)
+      rev_axis <- lims[1] > lims[2]
       gg_scale <- gg_scale +
-        coord_cartesian(xlim = abs(lims), expand = FALSE)
+        coord_cartesian(xlim = lims, expand = FALSE)
     }
   }else if(pos %in% c("left", "right","l","r")){
     if(is.list(lims)){
-      rev_axis <- any(lims$y.range < 0)
+      rev_axis <- lims$y.major[1] > lims$y.major[2]
       gg_scale <- gg_scale +
-        coord_flip(xlim = abs(lims$y.range), expand = FALSE)
+        coord_flip(xlim = lims$y.range * c(1, -1)[rev_axis + 1], expand = FALSE)
     }else{
-      rev_axis <- any(lims < 0)
+      rev_axis <- lims[1] > lims[2]
       gg_scale <- gg_scale +
-        coord_flip(xlim = abs(lims), expand = FALSE)
+        coord_flip(xlim = lims, expand = FALSE)
     }
   }
 
@@ -207,13 +212,13 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
 #' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line")){
+gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE){
   lims <- ggplot_build(gg)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(gg)
   gt <- gtable_frame2(grob_gg)
   gggeo_scale.gtable(gt, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin)
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin, neg = neg)
 }
 
 #' @param gggeo an object output by \code{gggeo_scale()}.

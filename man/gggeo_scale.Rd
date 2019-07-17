@@ -13,13 +13,13 @@ gggeo_scale(x, ...)
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  margin = unit(0.5, "line"))
+  margin = unit(0.5, "line"), neg = FALSE)
 
 \method{gggeo_scale}{ggplot}(gg, dat = "periods", fill = NULL,
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  margin = unit(0.5, "line"))
+  margin = unit(0.5, "line"), neg = FALSE)
 
 \method{print}{gggeo_scale}(gggeo, ...)
 }
@@ -59,6 +59,8 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{size}{Label size.}
 
 \item{margin}{The width of the margin around the returned object (can be a vector of length 4).}
+
+\item{neg}{Set this to true if your x-axis is using negative values.}
 
 \item{gg}{A ggplot object.}
 
