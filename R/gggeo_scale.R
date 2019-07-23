@@ -32,6 +32,7 @@ gggeo_scale <- function(x, ...) {
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
 #' @param skip A vector of interval names indicating which intervals should not be labelled.
 #' @param size Label size.
+#' @param lwd Line width.
 #' @param margin The width of the margin around the returned object (can be a vector of length 4).
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @return A geo_scale object. Basically a gtable object but with the axis limits included.
@@ -104,7 +105,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
 #' }
-gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE) {
+gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -130,14 +131,22 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
   #make ggplot of scale
   gg_scale <- ggplot() +
     geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
-                       ymin = 0, ymax = 1, color = color, alpha = alpha, show.legend = FALSE,
-                       inherit.aes = FALSE) +
+              ymin = 0, ymax = 1, color = NA, alpha = alpha,
+              show.legend = FALSE, inherit.aes = FALSE) +
+    geom_segment(data = dat, aes(x = min_age, xend = max_age), y = 1, yend = 1,
+                 color = color, size = lwd * 2) +
+    geom_segment(data = dat, aes(x = min_age, xend = max_age), y = 0, yend = 0,
+                 color = color, size = lwd * 2) +
+    geom_segment(data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
+                 color = color, size = lwd) +
+    geom_segment(data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
+                 color = color, size = lwd) +
     scale_fill_manual(values = setNames(dat$color, dat$color)) +
     geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
-                       vjust = "middle", hjust = "middle", size = size, angle = rot,
-                       inherit.aes = FALSE) +
+              vjust = "middle", hjust = "middle", size = size, angle = rot,
+              inherit.aes = FALSE) +
     theme_void() +
-    theme(panel.border = element_rect(color = color, fill = NA))
+    theme(panel.border = element_rect(color = color, fill = NA, size = lwd * 2))
 
   rev_axis <- FALSE
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
@@ -215,22 +224,22 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
 #' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE){
+gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE){
   lims <- ggplot_build(gg)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(gg)
   gt <- gtable_frame2(grob_gg)
   gggeo_scale.gtable(gt, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin, neg = neg)
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg)
 }
 
 #' @param geo A geo_scale object output by \code{gggeo_scale()}.
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, margin = unit(0.5, "line"), neg = FALSE){
+gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE){
   lims <- geo$lims
   gggeo_scale.gtable(geo, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, margin = margin, neg = neg)
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg)
 }
 
 #' @param ... further arguments passed to \code{grid.draw}.

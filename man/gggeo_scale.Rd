@@ -14,19 +14,19 @@ gggeo_scale(x, ...)
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  margin = unit(0.5, "line"), neg = FALSE)
+  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE)
 
 \method{gggeo_scale}{ggplot}(gg, dat = "periods", fill = NULL,
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  margin = unit(0.5, "line"), neg = FALSE)
+  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE)
 
 \method{gggeo_scale}{geo_scale}(geo, dat = "periods", fill = NULL,
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  margin = unit(0.5, "line"), neg = FALSE)
+  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE)
 
 \method{print}{geo_scale}(geo, ...)
 }
@@ -64,6 +64,8 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{skip}{A vector of interval names indicating which intervals should not be labelled.}
 
 \item{size}{Label size.}
+
+\item{lwd}{Line width.}
 
 \item{margin}{The width of the margin around the returned object (can be a vector of length 4).}
 
