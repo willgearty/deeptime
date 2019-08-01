@@ -35,6 +35,7 @@ gggeo_scale <- function(x, ...) {
 #' @param lwd Line width.
 #' @param margin The width of the margin around the returned object (can be a vector of length 4).
 #' @param neg Set this to true if your x-axis is using negative values.
+#' @param bord Whether to add a border around the entire scale.
 #' @return A geo_scale object. Basically a gtable object but with the axis limits included.
 #' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows gtable_add_padding
 #' @importFrom grid unit
@@ -105,7 +106,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
 #' }
-gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE) {
+gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = FALSE) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -145,8 +146,12 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
     geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
               vjust = "middle", hjust = "middle", size = size, angle = rot,
               inherit.aes = FALSE) +
-    theme_void() +
-    theme(panel.border = element_rect(color = color, fill = NA, size = lwd * 2))
+    theme_void()
+
+  if(bord){
+    gg_scale <- gg_scale +
+      theme(panel.border = element_rect(color = color, fill = NA, size = lwd * 2))
+  }
 
   rev_axis <- FALSE
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
@@ -224,22 +229,22 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
 #' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE){
+gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = FALSE){
   lims <- ggplot_build(gg)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(gg)
   gt <- gtable_frame2(grob_gg)
   gggeo_scale.gtable(gt, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg)
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg, bord = bord)
 }
 
 #' @param geo A geo_scale object output by \code{gggeo_scale()}.
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE){
+gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = FALSE){
   lims <- geo$lims
   gggeo_scale.gtable(geo, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg)
+                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg, bord = bord)
 }
 
 #' @param ... further arguments passed to \code{grid.draw}.

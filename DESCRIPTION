@@ -1,9 +1,9 @@
 Package: deeptime
 Title: Plotting Tools for Anyone Working in Deep Time
-Version: 0.0.2.4
+Version: 0.0.2.5
 Authors@R: person("William", "Gearty", email = "willgearty@gmail.com", role = c("aut", "cre"))
-Description: Tools (currently just one function) to help with plotting data over long time intervals.
-Depends: R (>= 3.4.4)
+Description: Tools to help with plotting data over long time intervals.
+Depends: R (>= 3.4)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
