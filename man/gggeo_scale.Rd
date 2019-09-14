@@ -14,21 +14,22 @@ gggeo_scale(x, ...)
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE, bord = TRUE)
+  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE,
+  bord = c("left", "right", "top", "bottom"))
 
 \method{gggeo_scale}{ggplot}(gg, dat = "periods", fill = NULL,
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
   lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE,
-  bord = FALSE)
+  bord = c("left", "right", "top", "bottom"))
 
 \method{gggeo_scale}{geo_scale}(geo, dat = "periods", fill = NULL,
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
   lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE,
-  bord = FALSE)
+  bord = c("left", "right", "top", "bottom"))
 
 \method{print}{geo_scale}(geo, ...)
 }
@@ -73,7 +74,7 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{Whether to add borders at the ends of the scale.}
+\item{bord}{A vector specifying on Which sides of the scale to add bords (same options as \code{pos}).}
 
 \item{gg}{A ggplot object.}
 
