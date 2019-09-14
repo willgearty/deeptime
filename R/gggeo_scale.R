@@ -154,7 +154,7 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
       rev_axis <- lims[1] > lims[2]
     }
     gg_scale <- gg_scale +
-      coord_cartesian(xlim = lims, expand = FALSE)
+      coord_cartesian(xlim = lims, ylim = c(0,1), expand = FALSE)
   }else if(pos %in% c("left", "right","l","r")){
     if(is.list(lims)){
       rev_axis <- lims$y.major[1] > lims$y.major[2]
@@ -163,7 +163,7 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
       rev_axis <- lims[1] > lims[2]
     }
     gg_scale <- gg_scale +
-      coord_flip(xlim = lims, expand = FALSE)
+      coord_flip(xlim = lims, ylim = c(0,1), expand = FALSE)
   }
 
   #Add border
@@ -179,12 +179,12 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
   }
   if("top" %in% bord | "t" %in% bord){
     gg_scale <- gg_scale +
-      annotate("segment", x = -Inf, xend = Inf, y = .9, yend = .9,
+      annotate("segment", x = lims[1], xend = lims[2], y = 1, yend = 1,
                color = color, size = lwd * 2)
   }
   if("bottom" %in% bord | "b" %in% bord){
     gg_scale <- gg_scale +
-      annotate("segment", x = -Inf, xend = Inf, y = .1, yend = .1,
+      annotate("segment", x = lims[1], xend = lims[2], y = 0, yend = 0,
                    color = color, size = lwd * 2)
   }
 
