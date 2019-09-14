@@ -14,8 +14,7 @@ gggeo_scale(x, ...)
   color = "black", alpha = 1, height = unit(2, "line"),
   pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE,
-  bord = FALSE)
+  lwd = 0.25, margin = unit(0.5, "line"), neg = FALSE, bord = TRUE)
 
 \method{gggeo_scale}{ggplot}(gg, dat = "periods", fill = NULL,
   color = "black", alpha = 1, height = unit(2, "line"),
@@ -74,7 +73,7 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{Whether to add a border around the entire scale.}
+\item{bord}{Whether to add borders at the ends of the scale.}
 
 \item{gg}{A ggplot object.}
 

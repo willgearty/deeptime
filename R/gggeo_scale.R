@@ -35,7 +35,7 @@ gggeo_scale <- function(x, ...) {
 #' @param lwd Line width.
 #' @param margin The width of the margin around the returned object (can be a vector of length 4).
 #' @param neg Set this to true if your x-axis is using negative values.
-#' @param bord Whether to add a border around the entire scale.
+#' @param bord Whether to add borders at the ends of the scale.
 #' @return A geo_scale object. Basically a gtable object but with the axis limits included.
 #' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows gtable_add_padding
 #' @importFrom grid unit
@@ -106,7 +106,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
 #' }
-gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = FALSE) {
+gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = TRUE) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -134,10 +134,10 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
     geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
               ymin = 0, ymax = 1, color = NA, alpha = alpha,
               show.legend = FALSE, inherit.aes = FALSE) +
-    geom_segment(data = dat, aes(x = min_age, xend = max_age), y = 1, yend = 1,
-                 color = color, size = lwd * 2) +
+    #geom_segment(data = dat, aes(x = min_age, xend = max_age), y = 1, yend = 1,
+    #             color = color, size = lwd*2) +
     geom_segment(data = dat, aes(x = min_age, xend = max_age), y = 0, yend = 0,
-                 color = color, size = lwd * 2) +
+                 color = color, size = lwd*2) +
     geom_segment(data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
                  color = color, size = lwd) +
     geom_segment(data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
@@ -148,33 +148,34 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
               inherit.aes = FALSE) +
     theme_void()
 
-  if(bord){
-    gg_scale <- gg_scale +
-      theme(panel.border = element_rect(color = color, fill = NA, size = lwd * 2))
-  }
-
   rev_axis <- FALSE
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
   if(pos %in% c("bottom", "top", "b", "t")){
     if(is.list(lims)){
       rev_axis <- lims$x.major[1] > lims$x.major[2]
-      gg_scale <- gg_scale +
-        coord_cartesian(xlim = lims$x.range * c(1, -1)[rev_axis + 1], expand = FALSE)
+      lims <- lims$x.range * c(1, -1)[rev_axis + 1]
     }else{
       rev_axis <- lims[1] > lims[2]
-      gg_scale <- gg_scale +
-        coord_cartesian(xlim = lims, expand = FALSE)
     }
+    gg_scale <- gg_scale +
+      coord_cartesian(xlim = lims, expand = FALSE)
   }else if(pos %in% c("left", "right","l","r")){
     if(is.list(lims)){
       rev_axis <- lims$y.major[1] > lims$y.major[2]
-      gg_scale <- gg_scale +
-        coord_flip(xlim = lims$y.range * c(1, -1)[rev_axis + 1], expand = FALSE)
+      lims <- lims$y.range * c(1, -1)[rev_axis + 1]
     }else{
       rev_axis <- lims[1] > lims[2]
-      gg_scale <- gg_scale +
-        coord_flip(xlim = lims, expand = FALSE)
     }
+    gg_scale <- gg_scale +
+      coord_flip(xlim = lims, expand = FALSE)
+  }
+
+  if(bord){
+    gg_scale <- gg_scale +
+      annotate("segment", x = lims[1], xend = lims[1], y = 0, yend = 1,
+                   color = color, size = lwd * 2) +
+      annotate("segment", x = lims[2], xend = lims[2], y = 0, yend = 1,
+                   color = color, size = lwd * 2)
   }
 
   #reverse axis if necessary
