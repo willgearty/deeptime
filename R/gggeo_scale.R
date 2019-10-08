@@ -167,24 +167,27 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
   }
 
   #Add border
+  bord_lims <- lims
+  bord_lims[(if(neg) bord_lims > 0 else bord_lims < 0)] <- 0
+
   if("left" %in% bord | "l" %in% bord){
     gg_scale <- gg_scale +
-      annotate("segment", x = lims[1], xend = lims[1], y = 0, yend = 1,
-                   color = color, size = lwd * 2)
+      annotate("segment", x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
+                   color = color, size = if(bord_lims[1] == lims[1]) lwd * 2 else lwd)
   }
   if("right" %in% bord | "r" %in% bord){
     gg_scale <- gg_scale +
-      annotate("segment", x = lims[2], xend = lims[2], y = 0, yend = 1,
-               color = color, size = lwd * 2)
+      annotate("segment", x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
+               color = color, size = if(bord_lims[2] == lims[2]) lwd * 2 else lwd)
   }
   if("top" %in% bord | "t" %in% bord){
     gg_scale <- gg_scale +
-      annotate("segment", x = lims[1], xend = lims[2], y = 1, yend = 1,
+      annotate("segment", x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
                color = color, size = lwd * 2)
   }
   if("bottom" %in% bord | "b" %in% bord){
     gg_scale <- gg_scale +
-      annotate("segment", x = lims[1], xend = lims[2], y = 0, yend = 0,
+      annotate("segment", x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
                    color = color, size = lwd * 2)
   }
 
