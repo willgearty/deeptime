@@ -60,16 +60,16 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   top <- g[seq(1, min(tt) - 1), seq(min(ll), max(ll))]
   top_ind <- c()
   if (any(grepl("axis", top$layout$name))){
-    axist <- top[top$layout$t[grep("axis", top$layout$name)],]
-    top_ind <- c(top_ind, top$layout$t[grep("axis", top$layout$name)])
+    axist <- top[unique(top$layout$t[grep("axis", top$layout$name)]),]
+    top_ind <- c(top_ind, unique(top$layout$t[grep("axis", top$layout$name)]))
     # add a dummy grob to make sure the axis sticks to the panel
     axist <- gtable_add_grob(gtable_add_rows(axist, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
     axist <- fg
   }
   if (any(grepl("xlab", top$layout$name))){
-    xlabt <- top[top$layout$t[grep("xlab", top$layout$name)],]
-    top_ind <- c(top_ind, top$layout$t[grep("xlab", top$layout$name)])
+    xlabt <- top[unique(top$layout$t[grep("xlab", top$layout$name)]),]
+    top_ind <- c(top_ind, unique(top$layout$t[grep("xlab", top$layout$name)]))
     # add a dummy grob to make sure the title sticks to the bottom
     xlabt <- gtable_add_grob(gtable_add_rows(xlabt, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
@@ -85,16 +85,16 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   bottom <- g[seq(max(tt) + 1, nrow(g)), seq(min(ll), max(ll))]
   bottom_ind <- c()
   if (any(grepl("axis", bottom$layout$name))){
-    axisb <- bottom[bottom$layout$t[grep("axis", bottom$layout$name)],]
-    bottom_ind <- c(bottom_ind, bottom$layout$t[grep("axis", bottom$layout$name)])
+    axisb <- bottom[unique(bottom$layout$t[grep("axis", bottom$layout$name)]),]
+    bottom_ind <- c(bottom_ind, unique(bottom$layout$t[grep("axis", bottom$layout$name)]))
     # add a dummy grob to make sure the axis sticks to the panel
     axisb <- gtable_add_grob(gtable_add_rows(axisb, unit(1, "null"), -1), fg, t = nrow(axisb), l = 1)
   } else {
     axisb <- fg
   }
   if (any(grepl("xlab", bottom$layout$name))){
-    xlabb <- bottom[bottom$layout$t[grep("xlab", bottom$layout$name)],]
-    bottom_ind <- c(bottom_ind, bottom$layout$t[grep("xlab", bottom$layout$name)])
+    xlabb <- bottom[unique(bottom$layout$t[grep("xlab", bottom$layout$name)]),]
+    bottom_ind <- c(bottom_ind, unique(bottom$layout$t[grep("xlab", bottom$layout$name)]))
     # add a dummy grob to make sure the title sticks to the top
     xlabb <- gtable_add_grob(gtable_add_rows(xlabb, unit(1, "null"), -1), fg, t = nrow(xlabb), l = 1)
   } else {
@@ -110,16 +110,16 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   left <- g[seq(min(tt), max(tt)), seq(1, min(ll) - 1)]
   left_ind <- c()
   if (any(grepl("axis", left$layout$name))){
-    axisl <- left[, left$layout$l[grep("axis", left$layout$name)]]
-    left_ind <- c(left_ind, left$layout$l[grep("axis", left$layout$name)])
+    axisl <- left[, unique(left$layout$l[grep("axis", left$layout$name)])]
+    left_ind <- c(left_ind, unique(left$layout$l[grep("axis", left$layout$name)]))
     # add a dummy grob to make sure the axis sticks to the panel
     axisl <- gtable_add_grob(gtable_add_cols(axisl, unit(1, "null"), 0), fg, 1, l = 1)
   } else {
     axisl <- fg
   }
   if (any(grepl("ylab", left$layout$name))){
-    ylabl <- left[, left$layout$l[grep("ylab", left$layout$name)]]
-    left_ind <- c(left_ind, left$layout$l[grep("ylab", left$layout$name)])
+    ylabl <- left[, unique(left$layout$l[grep("ylab", left$layout$name)])]
+    left_ind <- c(left_ind, unique(left$layout$l[grep("ylab", left$layout$name)]))
     # add a dummy grob to make sure the title sticks to the right
     ylabl <- gtable_add_grob(gtable_add_cols(ylabl, unit(1, "null"), 0), fg, 1, l = 1)
   } else {
@@ -135,16 +135,16 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   right <- g[seq(min(tt), max(tt)), seq(max(ll) + 1, ncol(g))]
   right_ind <- c()
   if (any(grepl("axis", right$layout$name))){
-    axisr <- right[, right$layout$l[grep("axis", right$layout$name)]]
-    right_ind <- c(right_ind, right$layout$l[grep("axis", right$layout$name)])
+    axisr <- right[, unique(right$layout$l[grep("axis", right$layout$name)])]
+    right_ind <- c(right_ind, unique(right$layout$l[grep("axis", right$layout$name)]))
     # add a dummy grob to make sure the axis sticks to the panel
     axisr <- gtable_add_grob(gtable_add_cols(axisr, unit(1, "null")), fg, 1, l = ncol(axisr))
   } else {
     axisr <- fg
   }
   if (any(grepl("ylab", right$layout$name))){
-    ylabr <- right[, right$layout$l[grep("ylab", right$layout$name)]]
-    right_ind <- c(right_ind, right$layout$l[grep("ylab", right$layout$name)])
+    ylabr <- right[, unique(right$layout$l[grep("ylab", right$layout$name)])]
+    right_ind <- c(right_ind, unique(right$layout$l[grep("ylab", right$layout$name)]))
     # add a dummy grob to make sure the title sticks to the left
     ylabr <- gtable_add_grob(gtable_add_cols(ylabr, unit(1, "null")), fg, 1, l = ncol(ylabr))
   } else {
