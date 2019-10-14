@@ -58,19 +58,19 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   #pull out the top axis, axis title, and other stuff
   top <- g[seq(1, min(tt) - 1), seq(min(ll), max(ll))]
-  if (sum(grepl("axis", top$layout$name)) > 0){
+  if (any(grepl("axis", top$layout$name))){
     axist <- gtable_filter(top, "axis")
     # add a dummy grob to make sure the axis sticks to the panel
     axist <- gtable_add_grob(gtable_add_rows(axist, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
     axist <- fg
   }
-  if (sum(grepl("xlab", top$layout$name)) > 0){
+  if (any(grepl("xlab", top$layout$name))){
     xlabt <- gtable_filter(top, "xlab")
   } else {
     xlabt <- fg
   }
-  if (sum(!grepl("axis|xlab", top$layout$name)) > 0){
+  if (any(!grepl("axis|xlab", top$layout$name))){
     top <- gtable_filter(top, paste(kept_names, sep = "", collapse = "|"))
   } else {
     top <- fg
@@ -78,19 +78,19 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   #pull out the bottom axis, axis title, and other stuff
   bottom <- g[seq(max(tt) + 1, nrow(g)), seq(min(ll), max(ll))]
-  if (sum(grepl("axis", bottom$layout$name)) > 0){
+  if (any(grepl("axis", bottom$layout$name))){
     axisb <- gtable_filter(bottom, "axis")
     # add a dummy grob to make sure the axis sticks to the panel
     axisb <- gtable_add_grob(gtable_add_rows(axisb, unit(1, "null"), -1), fg, t = nrow(axisb), l = 1)
   } else {
     axisb <- fg
   }
-  if (sum(grepl("xlab", bottom$layout$name)) > 0){
+  if (any(grepl("xlab", bottom$layout$name))){
     xlabb <- gtable_filter(bottom, "xlab")
   } else {
     xlabb <- fg
   }
-  if (sum(!grepl("axis|xlab", bottom$layout$name)) > 0){
+  if (any(!grepl("axis|xlab", bottom$layout$name))){
     bottom <- gtable_filter(bottom, paste(kept_names, sep = "", collapse = "|"))
   } else {
     bottom <- fg
@@ -98,19 +98,19 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   #pull out the left axis, axis title, and other stuff
   left <- g[seq(min(tt), max(tt)), seq(1, min(ll) - 1)]
-  if (sum(grepl("axis", left$layout$name)) > 0){
+  if (any(grepl("axis", left$layout$name))){
     axisl <- gtable_filter(left, "axis")
     # add a dummy grob to make sure the axis sticks to the panel
     axisl <- gtable_add_grob(gtable_add_cols(axisl, unit(1, "null"), 0), fg, 1, l = 1)
   } else {
     axisl <- fg
   }
-  if (sum(grepl("ylab", left$layout$name)) > 0){
+  if (any(grepl("ylab", left$layout$name))){
     ylabl <- gtable_filter(left, "ylab")
   } else {
     ylabl <- fg
   }
-  if (sum(!grepl("axis|ylab", left$layout$name)) > 0){
+  if (any(!grepl("axis|ylab", left$layout$name))){
     left <- gtable_filter(left, paste(kept_names, sep = "", collapse = "|"))
   } else {
     left <- fg
@@ -118,19 +118,19 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   #pull out the right axis, axis title, and other stuff
   right <- g[seq(min(tt), max(tt)), seq(max(ll) + 1, ncol(g))]
-  if (sum(grepl("axis", right$layout$name)) > 0){
+  if (any(grepl("axis", right$layout$name))){
     axisr <- gtable_filter(right, "axis")
     # add a dummy grob to make sure the axis sticks to the panel
     axisr <- gtable_add_grob(gtable_add_cols(axisr, unit(1, "null")), fg, 1, l = ncol(axisr))
   } else {
     axisr <- fg
   }
-  if (sum(grepl("ylab", right$layout$name)) > 0){
+  if (any(grepl("ylab", right$layout$name))){
     ylabr <- gtable_filter(right, "ylab")
   } else {
     ylabr <- fg
   }
-  if (sum(!grepl("axis|ylab", right$layout$name)) > 0){
+  if (any(!grepl("axis|ylab", right$layout$name))){
     right <- gtable_filter(right, paste(kept_names, sep = "", collapse = "|"))
   } else {
     right <- fg
