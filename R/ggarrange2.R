@@ -143,10 +143,10 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     axisr <- fg
   }
   if (any(grepl("ylab", right$layout$name))){
-    axisr <- right[, right$layout$l[grep("ylab", right$layout$name)]]
+    ylabr <- right[, right$layout$l[grep("ylab", right$layout$name)]]
     right_ind <- c(right_ind, right$layout$l[grep("ylab", right$layout$name)])
     # add a dummy grob to make sure the title sticks to the left
-    axisr <- gtable_add_grob(gtable_add_cols(axisr, unit(1, "null")), fg, 1, l = ncol(axisr))
+    ylabr <- gtable_add_grob(gtable_add_cols(ylabr, unit(1, "null")), fg, 1, l = ncol(ylabr))
   } else {
     ylabr <- fg
   }
