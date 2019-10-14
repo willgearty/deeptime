@@ -38,6 +38,7 @@
 #' grid.draw(combined)
 gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), debug = FALSE) {
   panels <- g$layout[grepl("panel", g$layout[["name"]]), ]
+  background <- gtable_filter(g, "background")
   ll <- unique(panels$l)
   margins <- if (length(ll) == 1)
     unit(0, "pt") else g$widths[ll[-length(ll)] + 2]
@@ -216,6 +217,9 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   #move panel to bottom of plot
   all$layout$z[25] <- 0
+
+  #add background
+  all <- gtable_add_grob(all, background, 1, 1, 7, 7, name = "background", z = -Inf)
 
   if (fixed_ar) {
     all$respect <- TRUE
