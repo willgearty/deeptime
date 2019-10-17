@@ -37,6 +37,7 @@
 #' combined <- gtable_cbind(fg12, fg3)
 #' grid.draw(combined)
 gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), debug = FALSE) {
+  if(is(g, "dummy")) return(g)
   panels <- g$layout[grepl("panel", g$layout[["name"]]), ]
   background <- gtable_filter(g, "background")
   ll <- unique(panels$l)
@@ -76,10 +77,10 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     xlabt <- fg
   }
-  if (length(top_ind) < nrow(top)){
-    top <- top[-top_ind,]
-  } else {
+  if (length(top_ind) == nrow(top)){
     top <- fg
+  } else if (length(top_ind) > 0){
+    top <- top[-top_ind,]
   }
 
   #pull out the bottom axis, axis title, and other stuff
@@ -101,10 +102,10 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     xlabb <- fg
   }
-  if (length(bottom_ind) < nrow(bottom)){
-    bottom <- bottom[-bottom_ind,]
-  } else {
+  if (length(bottom_ind) == nrow(bottom)){
     bottom <- fg
+  } else if (length(bottom_ind) > 0){
+    bottom <- bottom[-bottom_ind,]
   }
 
   #pull out the left axis, axis title, and other stuff
@@ -126,10 +127,10 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     ylabl <- fg
   }
-  if (length(left_ind) < ncol(left)){
-    left <- left[, -left_ind]
-  } else {
+  if (length(left_ind) == nrow(left)){
     left <- fg
+  } else if (length(left_ind) > 0){
+    left <- left[, -left_ind]
   }
 
   #pull out the right axis, axis title, and other stuff
@@ -151,10 +152,10 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     ylabr <- fg
   }
-  if (length(right_ind) < ncol(right)){
-    right <- right[, -right_ind]
-  } else {
+  if (length(right_ind) == nrow(right)){
     right <- fg
+  } else if (length(right_ind) > 0){
+    right <- right[, -right_ind]
   }
 
   # add dummy grobs to make sure the "other stuff" sticks to the internal components
@@ -231,6 +232,7 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 .tmp <- gtable::gtable_matrix("placeholder", matrix(replicate(49, grid::nullGrob(), simplify = FALSE),
                                                     7, 7), widths = rep(unit(1, "null"), 7), heights = rep(unit(1, "null"), 7))
 .tmp$layout$name[25] <- "panel"
+class(.tmp) <- c(class(.tmp), "dummy")
 
 #' @export
 .dummy_gtable <- .tmp
