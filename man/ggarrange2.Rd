@@ -12,9 +12,9 @@ ggarrange2(..., plots = list(...), nrow = NULL, ncol = NULL,
   label.args = list(gp = gpar(font = 4, cex = 1.2)))
 }
 \arguments{
-\item{...}{ggplot objects}
+\item{...}{ggplot, grobified ggplot (gtable), or geo_scale objects}
 
-\item{plots}{list of ggplots}
+\item{plots}{list of ggplot, gtable, or geo_scale objects}
 
 \item{nrow}{number of rows}
 
@@ -54,7 +54,7 @@ ggarrange2(..., plots = list(...), nrow = NULL, ncol = NULL,
 gtable of aligned plots
 }
 \description{
-Arrange multiple ggplot objects on a page, aligning the plot panels, axes, and axis titles.
+Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page, aligning the plot panels, axes, and axis titles.
 }
 \examples{
 library(ggplot2)

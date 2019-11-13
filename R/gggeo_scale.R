@@ -209,28 +209,28 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
       gt <- gtable_add_rows(gt, heights = height, pos = i - 1)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$l[i], r = panels$r[i], name = "scale")
+      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$l[i], r = panels$r[i], name = "axis-scale")
     }
   }else if(pos %in% c("bottom","b")){
     for(i in unique(panels$b)){
       gt <- gtable_add_rows(gt, heights = height, pos = i)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$b[i] + 1, l = panels$l[i], r = panels$r[i], name = "scale")
+      gt <- gtable_add_grob(gt, grob_scale, t = panels$b[i] + 1, l = panels$l[i], r = panels$r[i], name = "axis-scale")
     }
   }else if(pos %in% c("left", "l")){
     for(i in unique(panels$l)){
       gt <- gtable_add_cols(gt, widths = height, pos = i - 1)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$l[i], b = panels$b[i], name = "scale")
+      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$l[i], b = panels$b[i], name = "axis-scale")
     }
   }else if(pos %in% c("right","r")){
     for(i in unique(panels$r)){
       gt <- gtable_add_cols(gt, widths = height, pos = i)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$r[i] + 1, b = panels$b[i], name = "scale")
+      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$r[i] + 1, b = panels$b[i], name = "axis-scale")
     }
   }
   gt <- gtable_add_padding(gt, margin)

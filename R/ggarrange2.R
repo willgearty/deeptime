@@ -41,15 +41,11 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   panels <- g$layout[grepl("panel", g$layout[["name"]]), ]
   background <- gtable_filter(g, "background")
   ll <- unique(panels$l)
-  margins <- if (length(ll) == 1)
-    unit(0, "pt") else g$widths[ll[-length(ll)] + 2]
   tt <- unique(panels$t)
   fixed_ar <- g$respect
   if (fixed_ar) {
-    # there lies madness, we want to align with aspect ratio constraints
     ar <- as.numeric(g$heights[tt[1]])/as.numeric(g$widths[ll[1]])
-    # a*(b-c) != ab - ac in grid...
-    height <- width * (ar/length(ll))  # - sum(margins)* (ar / length(ll))
+    height <- width * (ar/length(ll))
     g$respect <- FALSE
   }
 
@@ -62,16 +58,18 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   top <- g[seq(1, min(tt) - 1), seq(min(ll), max(ll))]
   top_ind <- c()
   if (any(grepl("axis", top$layout$name))){
-    axist <- top[unique(top$layout$t[grep("axis", top$layout$name)]),]
-    top_ind <- c(top_ind, unique(top$layout$t[grep("axis", top$layout$name)]))
+    ind <- sort(unique(top$layout$t[grep("axis", top$layout$name)]))
+    axist <- top[ind,]
+    top_ind <- c(top_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
     axist <- gtable_add_grob(gtable_add_rows(axist, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
     axist <- fg
   }
   if (any(grepl("xlab", top$layout$name))){
-    xlabt <- top[unique(top$layout$t[grep("xlab", top$layout$name)]),]
-    top_ind <- c(top_ind, unique(top$layout$t[grep("xlab", top$layout$name)]))
+    ind <- sort(unique(top$layout$t[grep("xlab", top$layout$name)]))
+    xlabt <- top[ind,]
+    top_ind <- c(top_ind, ind)
     # add a dummy grob to make sure the title sticks to the bottom
     xlabt <- gtable_add_grob(gtable_add_rows(xlabt, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
@@ -87,16 +85,18 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   bottom <- g[seq(max(tt) + 1, nrow(g)), seq(min(ll), max(ll))]
   bottom_ind <- c()
   if (any(grepl("axis", bottom$layout$name))){
-    axisb <- bottom[unique(bottom$layout$t[grep("axis", bottom$layout$name)]),]
-    bottom_ind <- c(bottom_ind, unique(bottom$layout$t[grep("axis", bottom$layout$name)]))
+    ind <- sort(unique(bottom$layout$t[grep("axis", bottom$layout$name)]))
+    axisb <- bottom[ind,]
+    bottom_ind <- c(bottom_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
     axisb <- gtable_add_grob(gtable_add_rows(axisb, unit(1, "null"), -1), fg, t = nrow(axisb), l = 1)
   } else {
     axisb <- fg
   }
   if (any(grepl("xlab", bottom$layout$name))){
-    xlabb <- bottom[unique(bottom$layout$t[grep("xlab", bottom$layout$name)]),]
-    bottom_ind <- c(bottom_ind, unique(bottom$layout$t[grep("xlab", bottom$layout$name)]))
+    ind <- sort(unique(bottom$layout$t[grep("xlab", bottom$layout$name)]))
+    xlabb <- bottom[ind,]
+    bottom_ind <- c(bottom_ind, ind)
     # add a dummy grob to make sure the title sticks to the top
     xlabb <- gtable_add_grob(gtable_add_rows(xlabb, unit(1, "null"), -1), fg, t = nrow(xlabb), l = 1)
   } else {
@@ -112,16 +112,18 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   left <- g[seq(min(tt), max(tt)), seq(1, min(ll) - 1)]
   left_ind <- c()
   if (any(grepl("axis", left$layout$name))){
-    axisl <- left[, unique(left$layout$l[grep("axis", left$layout$name)])]
-    left_ind <- c(left_ind, unique(left$layout$l[grep("axis", left$layout$name)]))
+    ind <- sort(unique(left$layout$l[grep("axis", left$layout$name)]))
+    axisl <- left[, ind]
+    left_ind <- c(left_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
     axisl <- gtable_add_grob(gtable_add_cols(axisl, unit(1, "null"), 0), fg, 1, l = 1)
   } else {
     axisl <- fg
   }
   if (any(grepl("ylab", left$layout$name))){
-    ylabl <- left[, unique(left$layout$l[grep("ylab", left$layout$name)])]
-    left_ind <- c(left_ind, unique(left$layout$l[grep("ylab", left$layout$name)]))
+    ind <- sort(unique(left$layout$l[grep("ylab", left$layout$name)]))
+    ylabl <- left[, ind]
+    left_ind <- c(left_ind, ind)
     # add a dummy grob to make sure the title sticks to the right
     ylabl <- gtable_add_grob(gtable_add_cols(ylabl, unit(1, "null"), 0), fg, 1, l = 1)
   } else {
@@ -137,16 +139,18 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   right <- g[seq(min(tt), max(tt)), seq(max(ll) + 1, ncol(g))]
   right_ind <- c()
   if (any(grepl("axis", right$layout$name))){
-    axisr <- right[, unique(right$layout$l[grep("axis", right$layout$name)])]
-    right_ind <- c(right_ind, unique(right$layout$l[grep("axis", right$layout$name)]))
+    ind <- sort(unique(right$layout$l[grep("axis", right$layout$name)]))
+    axisr <- right[, ind]
+    right_ind <- c(right_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
     axisr <- gtable_add_grob(gtable_add_cols(axisr, unit(1, "null")), fg, 1, l = ncol(axisr))
   } else {
     axisr <- fg
   }
   if (any(grepl("ylab", right$layout$name))){
-    ylabr <- right[, unique(right$layout$l[grep("ylab", right$layout$name)])]
-    right_ind <- c(right_ind, unique(right$layout$l[grep("ylab", right$layout$name)]))
+    ind <- sort(unique(right$layout$l[grep("ylab", right$layout$name)]))
+    ylabr <- right[, ind]
+    right_ind <- c(right_ind, ind)
     # add a dummy grob to make sure the title sticks to the left
     ylabr <- gtable_add_grob(gtable_add_cols(ylabr, unit(1, "null")), fg, 1, l = ncol(ylabr))
   } else {
@@ -257,9 +261,9 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 
 #' ggarrange2
 #'
-#' @description Arrange multiple ggplot objects on a page, aligning the plot panels, axes, and axis titles.
-#' @param ... ggplot objects
-#' @param plots list of ggplots
+#' @description Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page, aligning the plot panels, axes, and axis titles.
+#' @param ... ggplot, grobified ggplot (gtable), or geo_scale objects
+#' @param plots list of ggplot, gtable, or geo_scale objects
 #' @param nrow number of rows
 #' @param ncol number of columns
 #' @param heights list of requested heights
@@ -299,7 +303,8 @@ ggarrange2 <- function(..., plots = list(...), nrow = NULL, ncol = NULL, widths 
                       padding = unit(0.5, "line"), margin = unit(0.5, "line"), clip = "on", draw = TRUE, newpage = TRUE, debug = FALSE,
                       labels = NULL, label.args = list(gp = gpar(font = 4, cex = 1.2))) {
   n <- length(plots)
-  grobs <- lapply(plots, ggplotGrob)
+  #convert any non-grobs to grobs
+  grobs <- lapply(plots, function(x) if(is(x, "grob")) x else ggplotGrob(x))
 
   ## logic for the layout if nrow/ncol supplied, honour this if not, use length of
   ## widths/heights, if supplied if nothing supplied, work out sensible defaults
