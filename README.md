@@ -6,7 +6,7 @@ Tools to help with plotting data over long time intervals.
 
 *Note #1: This package is under active development. It's strongly suggested that you upgrade to the most recent version.*
 
-*Note #2: Version 0.2 does not work for facetted plots with multiple columns. For such cases, you can still use the old version with `gggeo_scale_old()`. Note that this may result in the scale overlapping with your data. Please use caution and set your axis limits manually to account for this. Make sure to include any fill or color scales beforehand, as you will not be able to modify these attributes for your main plot after applying this function.*
+*Note #2: Versions 0.2+ do not work for facetted plots with multiple columns. For such cases, you can still use the old version with `gggeo_scale_old()`. Note that this may result in the scale overlapping with your data. Please use caution and set your axis limits manually to account for this. Make sure to include any fill or color scales beforehand, as you will not be able to modify these attributes for your main plot after applying this function.*
 
 ## To install
 ```r
