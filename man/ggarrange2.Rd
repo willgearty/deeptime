@@ -65,4 +65,12 @@ p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   guides(colour='none') +
   theme()
 ggarrange2(p1, p2, widths = c(2,1), labels = c('a', 'b'))
+
+p <- ggplot() +
+  geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
+  scale_x_reverse() +
+  coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
+  theme_classic()
+p3 <- gggeo_scale(p)
+ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
 }
