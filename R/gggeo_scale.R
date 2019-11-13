@@ -106,7 +106,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
 #' }
-gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = c("left", "right", "top", "bottom")) {
+gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = NULL, neg = FALSE, bord = c("left", "right", "top", "bottom")) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -243,7 +243,7 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
 #' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = c("left", "right", "top", "bottom")){
+gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = NULL, neg = FALSE, bord = c("left", "right", "top", "bottom")){
   lims <- ggplot_build(gg)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(gg)
@@ -255,7 +255,7 @@ gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black"
 #' @param geo A geo_scale object output by \code{gggeo_scale()}.
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = unit(0.5, "line"), neg = FALSE, bord = c("left", "right", "top", "bottom")){
+gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, lwd = .25, margin = NULL, neg = FALSE, bord = c("left", "right", "top", "bottom")){
   lims <- geo$lims
   gggeo_scale.gtable(geo, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
                      pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd, margin = margin, neg = neg, bord = bord)

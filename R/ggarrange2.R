@@ -9,6 +9,7 @@
 #' @importFrom gtable gtable_matrix gtable_add_grob gtable_add_cols gtable_add_rows gtable_filter
 #' @importFrom grid unit unit.c nullGrob rectGrob grid.newpage grid.draw
 #' @importFrom gridExtra gtable_rbind gtable_cbind
+#' @importFrom methods is
 #' @return 7x7 gtable wrapping the plot
 #' @export
 #' @examples
@@ -274,7 +275,7 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @param left optional string, or grob
 #' @param right optional string, or grob
 #' @param padding unit of length one, margin around annotations
-#' @param margin unit of length one, margin around entire gtable
+#' @param margin vector of units of length 4: top, right, bottom, left (as in \code{\link{gtable_add_padding}})
 #' @param clip argument of gtable
 #' @param newpage logical: draw on a new page
 #' @param draw logical: draw or return a grob
