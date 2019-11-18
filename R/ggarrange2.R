@@ -275,7 +275,7 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @param left optional string, or grob
 #' @param right optional string, or grob
 #' @param padding unit of length one, margin around annotations
-#' @param margin vector of units of length 4: top, right, bottom, left (as in \code{\link{gtable_add_padding}})
+#' @param margin vector of units of length 4: top, right, bottom, left (as in \code{\link[gtable]{gtable_add_padding}})
 #' @param clip argument of gtable
 #' @param newpage logical: draw on a new page
 #' @param draw logical: draw or return a grob

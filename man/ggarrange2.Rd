@@ -36,7 +36,7 @@ ggarrange2(..., plots = list(...), nrow = NULL, ncol = NULL,
 
 \item{padding}{unit of length one, margin around annotations}
 
-\item{margin}{vector of units of length 4: top, right, bottom, left (as in \code{\link{gtable_add_padding}})}
+\item{margin}{vector of units of length 4: top, right, bottom, left (as in \code{\link[gtable]{gtable_add_padding}})}
 
 \item{clip}{argument of gtable}
 
