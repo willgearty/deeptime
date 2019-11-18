@@ -153,3 +153,35 @@ ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
 ```
 
 ![example ggarrange2](/images/ggarrange2.png?raw=true)
+
+### Plot disparity through time with ggplot
+```r
+#make transformer
+library(ggforce)
+trans <- linear_trans(shear(2, 0))
+
+#set up data to be plotted
+square <- data.frame(x = c(0, 0, 4, 4), y = c(0, 1, 1, 0))
+points <- data.frame(x = runif(100, 0, 4), y = runif(100, 0, 1), group = rep(1:5, each = 20))
+
+#plot data normally
+library(ggplot2)
+ggplot(data = points, aes(x = x, y = y)) +
+  geom_polygon(data = square, fill = NA, color = "black") +
+  geom_point(color = 'black') +
+  coord_cartesian(expand = FALSE) +
+  theme_classic() +
+  facet_wrap(~group, ncol = 1, strip.position = "right") +
+  theme(panel.spacing = unit(0, "lines"), panel.background = element_blank())
+
+#plot data with transformation
+ggplot(data = points, aes(x = x, y = y)) +
+  geom_polygon(data = square, fill = NA, color = "black") +
+  geom_point(color = 'black') +
+  coord_trans_xy(trans = trans, expand = FALSE) +
+  theme_classic() +
+  facet_wrap(~group, ncol = 1, strip.position = "right") +
+  theme(panel.spacing = unit(0, "lines"), panel.background = element_blank())
+```
+
+![example disparity_ggplot](/images/disparity_ggplot.png?raw=true)
