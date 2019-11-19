@@ -190,10 +190,12 @@ ggplot(data = points, aes(x = x, y = y)) +
 #### With base R/lattice
 ```r
 #make some data
-g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10), z = factor(rep(periods$name[1:5], each=20), levels = periods$name[1:5]))
+g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),
+                z = factor(rep(periods$name[1:5], each=20), levels = periods$name[1:5]))
 
 #plot data
-disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2), xlim = c(0,60), ylim = c(0,10), col.regions = "lightgreen", col.point = c("red","blue"))
+disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2), xlim = c(0,60), ylim = c(0,10),
+                       col.regions = "lightgreen", col.point = c("red","blue"))
 ```
 
 ![example disparity_lattice](/images/disparity_lattice.png?raw=true)
