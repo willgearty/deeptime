@@ -1,11 +1,11 @@
 Package: deeptime
 Title: Plotting Tools for Anyone Working in Deep Time
-Version: 0.0.4.1
+Version: 0.0.4.2
 Authors@R: person("William", "Gearty", email = "willgearty@gmail.com", role = c("aut", "cre"))
 Description: Tools to help with plotting data over long time intervals.
 Depends: R (>= 3.4)
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-Imports: ggplot2, ggnewscale, utils, grid, gridExtra, gtable, methods, stats
+Imports: ggplot2, ggnewscale, utils, grid, gridExtra, gtable, methods, stats, lattice
 RoxygenNote: 6.1.1
