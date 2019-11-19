@@ -155,7 +155,7 @@ ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
 ![example ggarrange2](/images/ggarrange2.png?raw=true)
 
 ### Plot disparity through time
-####With ggplot
+#### With ggplot
 ```r
 #make transformer
 library(ggforce)
@@ -187,7 +187,7 @@ ggplot(data = points, aes(x = x, y = y)) +
 
 ![example disparity_ggplot](/images/disparity_ggplot.png?raw=true)
 
-####With base R/lattice
+#### With base R/lattice
 ```r
 #make some data
 g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10), z = factor(rep(periods$name[1:5], each=20), levels = periods$name[1:5]))
