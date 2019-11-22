@@ -39,7 +39,7 @@ gggeo_scale <- function(x, ...) {
 #' @return A geo_scale object. Basically a gtable object but with the axis limits included.
 #' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows gtable_add_padding
 #' @importFrom grid unit
-#' @importFrom ggplot2 ggplot geom_rect geom_text aes scale_fill_manual theme_void theme element_rect coord_cartesian coord_flip scale_x_reverse
+#' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
 #' @importFrom methods is
 #' @export
 #' @aliases gggeo_scale
