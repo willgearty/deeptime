@@ -36,7 +36,7 @@
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @param bord A vector specifying on Which sides of the scale to add bords (same options as \code{pos}).
 #' @importFrom ggplot2 ggproto
-#' @importFrom scales as.trans
+#' @importFrom scales as.trans identity_trans
 #' @export
 #' @examples
 #' library(ggplot2)
@@ -45,7 +45,7 @@
 #'   scale_x_reverse() +
 #'   coord_geo(xlim = c(0, 1000), ylim = c(.1,100), expand = FALSE, pos = "bottom", lwd = 1) +
 #'   theme_classic()
-coord_geo <- function(xtrans = "identity", ytrans = "identity", xlim = NULL, ylim = NULL, clip = "on", expand = TRUE,
+coord_geo <- function(xtrans = identity_trans(), ytrans = identity_trans(), xlim = NULL, ylim = NULL, clip = "on", expand = TRUE,
                             dat = "periods", fill = NULL, color = "black", alpha = 1, height = unit(2, "line"), pos = "bottom",
                             lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
                             lwd = .25, neg = FALSE, bord = c("left", "right", "top", "bottom")) {
