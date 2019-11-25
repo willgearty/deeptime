@@ -4,19 +4,29 @@
 \alias{disparity_through_time}
 \title{Disparity through time plot using lattice}
 \usage{
-disparity_through_time(x, data, groups, pch = 16,
-  col.point = c("blue"), scales = list(arrows = FALSE, distance = 1,
-  col = "black", z = list(rot = 90)), colorkey = FALSE, screen = list(z
-  = 90, x = 70, y = 180), aspect = c(1.5, 4), drape = TRUE,
-  col.regions = c("white"), alpha.regions = c(1),
-  perspective = FALSE, R.mat = matrix(c(1, 1, 0, 0, 0, 1, 0, 0, 0, 0,
-  1, 0, 0, 0, 0, 1), 4, 4), par.settings = list(axis.line = list(col =
-  "transparent"), layout.heights = list(top.padding = 0, main.key.padding =
-  0, key.axis.padding = 0, axis.xlab.padding = 0, xlab.key.padding = 0,
-  key.sub.padding = 0, bottom.padding = 0), layout.widths =
-  list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0,
-  axis.key.padding = 0, right.padding = 0)),
-  lattice.options = list(axis.padding = list(factor = 0)), ...)
+disparity_through_time(
+  x,
+  data,
+  groups,
+  pch = 16,
+  col.point = c("blue"),
+  scales = list(arrows = FALSE, distance = 1, col = "black", z = list(rot = 90)),
+  colorkey = FALSE,
+  screen = list(z = 90, x = 70, y = 180),
+  aspect = c(1.5, 4),
+  drape = TRUE,
+  col.regions = c("white"),
+  alpha.regions = c(1),
+  perspective = FALSE,
+  R.mat = matrix(c(1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1), 4, 4),
+  par.settings = list(axis.line = list(col = "transparent"), layout.heights =
+    list(top.padding = 0, main.key.padding = 0, key.axis.padding = 0, axis.xlab.padding =
+    0, xlab.key.padding = 0, key.sub.padding = 0, bottom.padding = 0), layout.widths =
+    list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding =
+    0, right.padding = 0)),
+  lattice.options = list(axis.padding = list(factor = 0)),
+  ...
+)
 }
 \arguments{
 \item{x}{a formula (most likely of the form \code{z ~ x * y})}

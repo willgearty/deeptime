@@ -4,12 +4,27 @@
 \alias{ggarrange2}
 \title{ggarrange2}
 \usage{
-ggarrange2(..., plots = list(...), nrow = NULL, ncol = NULL,
-  widths = NULL, heights = NULL, byrow = TRUE, top = NULL,
-  bottom = NULL, left = NULL, right = NULL, padding = unit(0.5,
-  "line"), margin = unit(0.5, "line"), clip = "on", draw = TRUE,
-  newpage = TRUE, debug = FALSE, labels = NULL,
-  label.args = list(gp = gpar(font = 4, cex = 1.2)))
+ggarrange2(
+  ...,
+  plots = list(...),
+  nrow = NULL,
+  ncol = NULL,
+  widths = NULL,
+  heights = NULL,
+  byrow = TRUE,
+  top = NULL,
+  bottom = NULL,
+  left = NULL,
+  right = NULL,
+  padding = unit(0.5, "line"),
+  margin = unit(0.5, "line"),
+  clip = "on",
+  draw = TRUE,
+  newpage = TRUE,
+  debug = FALSE,
+  labels = NULL,
+  label.args = list(gp = gpar(font = 4, cex = 1.2))
+)
 }
 \arguments{
 \item{...}{ggplot, grobified ggplot (gtable), or geo_scale objects}

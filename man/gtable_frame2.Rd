@@ -4,8 +4,12 @@
 \alias{gtable_frame2}
 \title{gtable_frame2}
 \usage{
-gtable_frame2(g, width = unit(1, "null"), height = unit(1, "null"),
-  debug = FALSE)
+gtable_frame2(
+  g,
+  width = unit(1, "null"),
+  height = unit(1, "null"),
+  debug = FALSE
+)
 }
 \arguments{
 \item{g}{gtable}

@@ -4,10 +4,22 @@
 \alias{gggeo_scale_old}
 \title{Add a geologic scale to ggplots (old version)}
 \usage{
-gggeo_scale_old(gg, dat = "periods", fill = NULL, color = "black",
-  alpha = 1, height = 0.05, gap = 0, pos = "bottom", lab = TRUE,
-  rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene",
-  "Late Pleistocene"), size = 5, neg = FALSE)
+gggeo_scale_old(
+  gg,
+  dat = "periods",
+  fill = NULL,
+  color = "black",
+  alpha = 1,
+  height = 0.05,
+  gap = 0,
+  pos = "bottom",
+  lab = TRUE,
+  rot = 0,
+  abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  size = 5,
+  neg = FALSE
+)
 }
 \arguments{
 \item{gg}{The ggplot object.}

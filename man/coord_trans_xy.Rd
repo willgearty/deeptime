@@ -6,8 +6,14 @@
 \alias{CoordTransXY}
 \title{Transformed XY Cartesian coordinate system}
 \usage{
-coord_trans_xy(trans = NULL, xlim = NULL, ylim = NULL,
-  expand = TRUE, default = FALSE, clip = "on")
+coord_trans_xy(
+  trans = NULL,
+  xlim = NULL,
+  ylim = NULL,
+  expand = TRUE,
+  default = FALSE,
+  clip = "on"
+)
 }
 \arguments{
 \item{trans}{Transformer for x and y axes.}

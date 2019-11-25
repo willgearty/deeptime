@@ -10,26 +10,63 @@
 \usage{
 gggeo_scale(x, ...)
 
-\method{gggeo_scale}{gtable}(gt, lims, dat = "periods", fill = NULL,
-  color = "black", alpha = 1, height = unit(2, "line"),
-  pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  lwd = 0.25, margin = NULL, neg = FALSE, bord = c("left", "right",
-  "top", "bottom"))
+\method{gggeo_scale}{gtable}(
+  gt,
+  lims,
+  dat = "periods",
+  fill = NULL,
+  color = "black",
+  alpha = 1,
+  height = unit(2, "line"),
+  pos = "bottom",
+  lab = TRUE,
+  rot = 0,
+  abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  size = 5,
+  lwd = 0.25,
+  margin = NULL,
+  neg = FALSE,
+  bord = c("left", "right", "top", "bottom")
+)
 
-\method{gggeo_scale}{ggplot}(gg, dat = "periods", fill = NULL,
-  color = "black", alpha = 1, height = unit(2, "line"),
-  pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  lwd = 0.25, margin = NULL, neg = FALSE, bord = c("left", "right",
-  "top", "bottom"))
+\method{gggeo_scale}{ggplot}(
+  gg,
+  dat = "periods",
+  fill = NULL,
+  color = "black",
+  alpha = 1,
+  height = unit(2, "line"),
+  pos = "bottom",
+  lab = TRUE,
+  rot = 0,
+  abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  size = 5,
+  lwd = 0.25,
+  margin = NULL,
+  neg = FALSE,
+  bord = c("left", "right", "top", "bottom")
+)
 
-\method{gggeo_scale}{geo_scale}(geo, dat = "periods", fill = NULL,
-  color = "black", alpha = 1, height = unit(2, "line"),
-  pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  lwd = 0.25, margin = NULL, neg = FALSE, bord = c("left", "right",
-  "top", "bottom"))
+\method{gggeo_scale}{geo_scale}(
+  geo,
+  dat = "periods",
+  fill = NULL,
+  color = "black",
+  alpha = 1,
+  height = unit(2, "line"),
+  pos = "bottom",
+  lab = TRUE,
+  rot = 0,
+  abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  size = 5,
+  lwd = 0.25,
+  margin = NULL,
+  neg = FALSE,
+  bord = c("left", "right", "top", "bottom")
+)
 
 \method{print}{geo_scale}(geo, ...)
 }
