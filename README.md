@@ -43,7 +43,7 @@ ggplot() +
 ![example left scale](/images/example_left.png?raw=true)
 
 ### Stack multiple scales (e.g. periods, epochs, stages)
-Scales are added from the inside to the outside.
+Specify multiple scales by giving a list for `pos`. Scales are added from the inside to the outside. Other arguments can be lists or single values (either of which will be recycled if necessary).
 ```r
 ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
