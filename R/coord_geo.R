@@ -13,8 +13,8 @@
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 #'
 #' \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-#' In this case, other arguments including \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
-#' \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{margin}, \code{neg}, and \code{bord} can also be lists.
+#' In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
+#' \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{neg}, and \code{bord} can also be lists.
 #' If these lists are not as long as \code{pos}, the elements will be recycled.
 #' @param pos Which side to add the scale to (left, right, top, or bottom). First letter may also be used.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
@@ -58,13 +58,20 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   if (is.character(xtrans)) xtrans <- as.trans(xtrans)
   if (is.character(ytrans)) ytrans <- as.trans(ytrans)
 
+  pos = as.list(pos)
+  n_scales = length(pos)
+
   ggproto(NULL, CoordGeo,
           trans = list(x = xtrans, y = ytrans),
           limits = list(x = xlim, y = ylim),
           expand = expand, clip = clip,
-          dat = dat, fill = fill, color = color, alpha = alpha,
-          height = height, pos = pos, lab = lab, rot = rot, abbrv = abbrv,
-          skip = skip, size = size, lwd = lwd, neg = neg, bord = bord
+          pos = pos, dat = rep(make_list(dat), length.out = n_scales), fill = rep(make_list(fill), length.out = n_scales),
+          color = rep(make_list(color), length.out = n_scales), alpha = rep(make_list(alpha), length.out = n_scales),
+          height = rep(make_list(height), length.out = n_scales), lab = rep(as.list(lab), length.out = n_scales),
+          rot = rep(make_list(rot), length.out = n_scales), abbrv = rep(make_list(abbrv), length.out = n_scales),
+          skip = rep(make_list(skip), length.out = n_scales), size = rep(make_list(size), length.out = n_scales),
+          lwd = rep(make_list(lwd), length.out = n_scales), neg = rep(make_list(neg), length.out = n_scales),
+          bord = rep(make_list(bord), length.out = n_scales)
   )
 }
 
@@ -77,13 +84,13 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
 CoordGeo <- ggproto("CoordGeo", CoordTrans,
   render_axis_h = function(self, panel_params, theme) {
     arrange <- panel_params$x.arrange %||% c("secondary", "primary")
-    if (self$pos %in% c("top", "t")){
-      top = render_geo_scale(self, panel_params, theme)
+    if (any(self$pos %in% c("top", "t"))){
+      top = render_geo_scale(self, panel_params, theme, "top")
     } else {
       top = ggplot2:::render_axis(panel_params, arrange[1], "x", "top", theme)
     }
-    if (self$pos %in% c("bottom", "b")){
-      bottom = render_geo_scale(self, panel_params, theme)
+    if (any(self$pos %in% c("bottom", "b"))){
+      bottom = render_geo_scale(self, panel_params, theme, "bottom")
     } else {
       bottom = ggplot2:::render_axis(panel_params, arrange[2], "x", "bottom", theme)
     }
@@ -96,13 +103,13 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
 
   render_axis_v = function(self, panel_params, theme) {
     arrange <- panel_params$y.arrange %||% c("primary", "secondary")
-    if (self$pos %in% c("left", "l")){
-      left = render_geo_scale(self, panel_params, theme)
+    if (any(self$pos %in% c("left", "l"))){
+      left = render_geo_scale(self, panel_params, theme, "left")
     } else {
       left = ggplot2:::render_axis(panel_params, arrange[1], "y", "left", theme)
     }
-    if (self$pos %in% c("right", "r")){
-      right = render_geo_scale(self, panel_params, theme)
+    if (any(self$pos %in% c("right", "r"))){
+      right = render_geo_scale(self, panel_params, theme, "right")
     } else {
       right = ggplot2:::render_axis(panel_params, arrange[2], "y", "right", theme)
     }
@@ -117,30 +124,47 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
 #' @importFrom ggplot2 ggplotGrob
 #' @importFrom grid unit unit.c viewport grobWidth grobHeight gList
 #' @importFrom gtable gtable_col gtable_row gtable_height gtable_width
-render_geo_scale <- function(self, panel_params, theme){
+render_geo_scale <- function(self, panel_params, theme, position){
   one <- unit(1, "npc")
+  ind <- self$pos == position
 
-  geo_scale <- ggplotGrob(make_geo_scale(self, panel_params, theme))
+  geo_scales <- mapply(make_geo_scale,
+                       dat = self$dat[ind],
+                       fill = self$fill[ind],
+                       color = self$color[ind],
+                       alpha = self$alpha[ind],
+                       pos = self$pos[ind],
+                       lab = self$lab[ind],
+                       rot = self$rot[ind],
+                       abbrv = self$abbrv[ind],
+                       skip = self$skip[ind],
+                       size = self$size[ind],
+                       lwd = self$lwd[ind],
+                       neg = self$neg[ind],
+                       bord = self$bord[ind],
+                       MoreArgs = list(panel_params = panel_params, theme = theme),
+                       SIMPLIFY = FALSE)
+  geo_grobs <- lapply(geo_scales, ggplotGrob)
 
-  if(self$pos == "bottom"){
+  if(position == "bottom"){
     axis <- ggplot2:::render_axis(panel_params, "primary", "x", "bottom", theme)
-    gt <- gtable_col("axis", grobs = list(geo_scale, axis),
-                     width = one, heights = unit.c(self$height, grobHeight(axis)))
+    gt <- gtable_col("axis", grobs = c(geo_grobs, list(axis)),
+                     width = one, heights = unit.c(do.call(unit.c, self$height[ind]), grobHeight(axis)))
     justvp <- viewport(y = 1, just = "top", height = gtable_height(gt))
-  }else if(self$pos == "top"){
+  }else if(position == "top"){
     axis <- ggplot2:::render_axis(panel_params, "primary", "x", "top", theme)
-    gt <- gtable_col("axis", grobs = list(axis, geo_scale),
-                     width = one, heights = unit.c(grobHeight(axis), self$height))
+    gt <- gtable_col("axis", grobs = c(list(axis), geo_grobs),
+                     width = one, heights = unit.c(grobHeight(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(y = 0, just = "bottom", height = gtable_height(gt))
-  }else if(self$pos == "left"){
+  }else if(position == "left"){
     axis <- ggplot2:::render_axis(panel_params, "primary", "y", "left", theme)
-    gt <- gtable_row("axis", grobs = list(axis, geo_scale),
-                     height = one, widths = unit.c(grobWidth(axis), self$height))
+    gt <- gtable_row("axis", grobs = c(list(axis), geo_grobs),
+                     height = one, widths = unit.c(grobWidth(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(x = 1, just = "right", width = gtable_width(gt))
-  }else if(self$pos == "right"){
+  }else if(position == "right"){
     axis <- ggplot2:::render_axis(panel_params, "primary", "y", "right", theme)
-    gt <- gtable_row("axis", grobs = list(geo_scale, axis),
-                     height = one, widths = unit.c(self$height, grobWidth(axis)))
+    gt <- gtable_row("axis", grobs = c(geo_grobs, list(axis)),
+                     height = one, widths = unit.c(do.call(unit.c, self$height[ind]), grobWidth(axis)))
     justvp <-  viewport(x = 0, just = "left", width = gtable_width(gt))
   }
 
@@ -149,23 +173,8 @@ render_geo_scale <- function(self, panel_params, theme){
 }
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
-make_geo_scale <- function(self, panel_params, theme){
-  dat = self$dat
-  fill = self$fill
-  color = self$color
-  alpha = self$alpha
-  height = self$height
-  pos = self$pos
-  lab = self$lab
-  rot = self$rot
-  abbrv = self$abbrv
-  skip = self$skip
-  size = self$size
-  lwd = self$lwd
-  margin = self$margin
-  neg = self$neg
-  bord = self$bord
-
+make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, skip,
+                           size, lwd, neg, bord, panel_params, theme){
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -248,4 +257,8 @@ make_geo_scale <- function(self, panel_params, theme){
   }
 
   gg_scale
+}
+
+make_list <- function(x) {
+  if (is.list(x)) x else list(x)
 }
