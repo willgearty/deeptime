@@ -6,16 +6,16 @@
 #'
 #' Transforming the side with the scale is not currently implemented.
 #' If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
-#'
-#' \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-#' In this case, other arguments including \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
-#' \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{margin}, \code{neg}, and \code{bord} can also be lists.
-#' If these lists are not as long as \code{pos}, the elements will be recycled.
 #'   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
 #'   The \code{max_age} column lists the oldest boundary of each time interval.
 #'   The \code{min_age} column lists the youngest boundary of each time interval.
 #'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+#'
+#' \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
+#' In this case, other arguments including \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
+#' \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{margin}, \code{neg}, and \code{bord} can also be lists.
+#' If these lists are not as long as \code{pos}, the elements will be recycled.
 #' @param pos Which side to add the scale to (left, right, top, or bottom). First letter may also be used.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
