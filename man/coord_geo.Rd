@@ -85,8 +85,8 @@ If custom data is provided (with \code{dat}), it should consist of at least 3 co
   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 
 \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-In this case, other arguments including \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
-\code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{margin}, \code{neg}, and \code{bord} can also be lists.
+In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
+\code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{neg}, and \code{bord} can also be lists.
 If these lists are not as long as \code{pos}, the elements will be recycled.
 }
 \examples{
