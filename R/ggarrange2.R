@@ -300,12 +300,11 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #'   theme()
 #' ggarrange2(p1, p2, widths = c(2,1), labels = c('a', 'b'))
 #'
-#' p <- ggplot() +
+#' p3 <- ggplot() +
 #'   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
-#'   scale_x_reverse() +
-#'   coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
-#'   theme_classic()
-#' p3 <- gggeo_scale(p)
+#'  scale_x_reverse() +
+#'  coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
+#'  theme_classic()
 #' ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
 ggarrange2 <- function(..., plots = list(...), nrow = NULL, ncol = NULL, widths = NULL,
                       heights = NULL, byrow = TRUE, top = NULL, bottom = NULL, left = NULL, right = NULL,
