@@ -6,26 +6,43 @@
 \alias{CoordGeo}
 \title{Transformed coordinate system with geological timescale}
 \usage{
-coord_geo(xtrans = "identity", ytrans = "identity", xlim = NULL,
-  ylim = NULL, clip = "on", expand = TRUE, dat = "periods",
-  fill = NULL, color = "black", alpha = 1, height = unit(2,
-  "line"), pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-  lwd = 0.25, neg = FALSE, bord = c("left", "right", "top",
-  "bottom"))
+coord_geo(
+  pos = "bottom",
+  dat = "periods",
+  xlim = NULL,
+  ylim = NULL,
+  xtrans = identity_trans(),
+  ytrans = identity_trans(),
+  clip = "on",
+  expand = FALSE,
+  fill = NULL,
+  color = "black",
+  alpha = 1,
+  height = unit(2, "line"),
+  lab = TRUE,
+  rot = 0,
+  abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  size = 5,
+  lwd = 0.25,
+  neg = FALSE,
+  bord = c("left", "right", "top", "bottom")
+)
 }
 \arguments{
-\item{xtrans, ytrans}{transformers for y axis. For more information see \code{\link[ggplot2]{coord_trans}}.}
-
-\item{xlim, ylim}{Limits for the x and y axes.}
-
-\item{expand}{If `TRUE`, the default, adds a small expansion factor to
-the limits to ensure that data and axes don't overlap. If `FALSE`,
-limits are taken exactly from the data or `xlim`/`ylim`.}
+\item{pos}{Which side to add the scale to (left, right, top, or bottom). First letter may also be used.}
 
 \item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
 or C) a custom dataframe of time interval boundaries (see Details).}
+
+\item{xlim, ylim}{Limits for the x and y axes.}
+
+\item{xtrans, ytrans}{transformers for y axis. For more information see \code{\link[ggplot2]{coord_trans}}.}
+
+\item{expand}{If `TRUE`, the default, adds a small expansion factor to
+the limits to ensure that data and axes don't overlap. If `FALSE`,
+limits are taken exactly from the data or `xlim`/`ylim`.}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
 If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
@@ -36,8 +53,6 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{alpha}{The transparency of the fill colors.}
 
 \item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the scale.}
-
-\item{pos}{Which side to add the scale to (left, right, top, or bottom). First letter may also be used.}
 
 \item{lab}{Whether to include labels.}
 
@@ -54,8 +69,6 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
 \item{bord}{A vector specifying on Which sides of the scale to add bords (same options as \code{pos}).}
-
-\item{margin}{The width of the margin around the returned object (can be a vector of length 4).}
 }
 \description{
 \code{coord_geo} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
@@ -65,6 +78,11 @@ is that it also adds a geological timescale to the specified side of the plot.
 \details{
 Transforming the side with the scale is not currently implemented.
 If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
+
+\code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
+In this case, other arguments including \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
+\code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{margin}, \code{neg}, and \code{bord} can also be lists.
+If these lists are not as long as \code{pos}, the elements will be recycled.
   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
   The \code{max_age} column lists the oldest boundary of each time interval.
   The \code{min_age} column lists the youngest boundary of each time interval.
