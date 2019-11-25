@@ -80,7 +80,6 @@ ggplot(df) +
     coord_geo(xlim = c(541, 0), ylim = c(0,8)) +
     theme_classic() +
     facet_wrap(~z, nrow = 2, scales = "free_x")
-gggeo_scale_old(p)
 ```
 
 ![example faceted scale](/images/example_facet.png?raw=true)
