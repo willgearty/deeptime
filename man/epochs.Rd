@@ -4,14 +4,16 @@
 \name{epochs}
 \alias{epochs}
 \title{Epoch data from the International Commission on Stratigraphy (v2013-1)}
-\format{A data frame with 34 rows and 5 variables:
+\format{
+A data frame with 34 rows and 5 variables:
 \describe{
   \item{name}{epoch name}
   \item{max_age}{maximum age, in millions of years}
   \item{min_age}{minimum age, in millions of years}
   \item{abbr}{epoch name abbreviations}
   \item{color}{the colors for each epoch, according to the Comission for the Geological Map of the World}
-}}
+}
+}
 \source{
 \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=4}
 }

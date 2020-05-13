@@ -7,6 +7,7 @@
 ggarrange2(
   ...,
   plots = list(...),
+  layout = NULL,
   nrow = NULL,
   ncol = NULL,
   widths = NULL,
@@ -30,6 +31,8 @@ ggarrange2(
 \item{...}{ggplot, grobified ggplot (gtable), or geo_scale objects}
 
 \item{plots}{list of ggplot, gtable, or geo_scale objects}
+
+\item{layout}{a matrix of integers specifying where each plot should go, like \code{mat} in \code{\link[graphics]{layout}}; \code{NA} or a value less than 0 or greater than the number of plots indicates a blank plot; overrides nrow/ncol/byrow}
 
 \item{nrow}{number of rows}
 

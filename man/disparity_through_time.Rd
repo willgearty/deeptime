@@ -22,8 +22,8 @@ disparity_through_time(
   par.settings = list(axis.line = list(col = "transparent"), layout.heights =
     list(top.padding = 0, main.key.padding = 0, key.axis.padding = 0, axis.xlab.padding =
     0, xlab.key.padding = 0, key.sub.padding = 0, bottom.padding = 0), layout.widths =
-    list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding =
-    0, right.padding = 0)),
+    list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding
+    = 0, right.padding = 0)),
   lattice.options = list(axis.padding = list(factor = 0)),
   ...
 )

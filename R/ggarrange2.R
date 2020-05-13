@@ -265,6 +265,7 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @description Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page, aligning the plot panels, axes, and axis titles.
 #' @param ... ggplot, grobified ggplot (gtable), or geo_scale objects
 #' @param plots list of ggplot, gtable, or geo_scale objects
+#' @param layout a matrix of integers specifying where each plot should go, like \code{mat} in \code{\link[graphics]{layout}}; \code{NA} or a value less than 0 or greater than the number of plots indicates a blank plot; overrides nrow/ncol/byrow
 #' @param nrow number of rows
 #' @param ncol number of columns
 #' @param heights list of requested heights
@@ -306,13 +307,21 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #'  coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
 #'  theme_classic()
 #' ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
-ggarrange2 <- function(..., plots = list(...), nrow = NULL, ncol = NULL, widths = NULL,
+ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol = NULL, widths = NULL,
                       heights = NULL, byrow = TRUE, top = NULL, bottom = NULL, left = NULL, right = NULL,
                       padding = unit(0.5, "line"), margin = unit(0.5, "line"), clip = "on", draw = TRUE, newpage = TRUE, debug = FALSE,
                       labels = NULL, label.args = list(gp = gpar(font = 4, cex = 1.2))) {
   n <- length(plots)
   #convert any non-grobs to grobs
-  grobs <- lapply(plots, function(x) if(is(x, "grob")) x else ggplotGrob(x))
+  plots_grobs <- lapply(plots, function(x) if(is(x, "grob")) x else ggplotGrob(x))
+
+  ## check layout is consistent, if supplied
+  if (!is.null(layout) && is.matrix(layout)){
+    layout[layout <= 0 | layout > n] <- NA
+    nrow <- nrow(layout)
+    ncol <- ncol(layout)
+    byrow <- FALSE
+  }
 
   ## logic for the layout if nrow/ncol supplied, honour this if not, use length of
   ## widths/heights, if supplied if nothing supplied, work out sensible defaults
@@ -350,17 +359,21 @@ ggarrange2 <- function(..., plots = list(...), nrow = NULL, ncol = NULL, widths 
     ncol <- nm[2]
   }
 
-  is_full <- ((nrow*ncol) %% n) > 0
-  if (is_full) {
-    message('adding dummy grobs')
-    # trouble, we need to add dummy grobs to fill the layout
-    grobs <- c(grobs, rep(list(.dummy_gtable), nrow * ncol - n))
-    n <- length(grobs)
+  ## setup layout if not specified
+  if (is.null(layout)){
+    layout <- matrix(c(1:n, rep(NA, max(0, nrow * ncol - n))), nrow = nrow, ncol = ncol, byrow = byrow)
+  }
 
-    # add dummy labels if needed
-    if ((!is.null(labels)) && (length(labels) != nrow * ncol)) {
-      labels <- c(labels, rep("", nrow * ncol - length(labels)))
-    }
+  grobs <- vector(mode = "list", length = length(layout))
+  for (i in 1:length(layout)) {
+    grobs[[i]] <- if (is.na(layout[i])) .dummy_gtable else plots_grobs[[layout[[i]]]]
+  }
+  n <- length(grobs)
+
+  # add dummy labels if needed
+  if ((!is.null(labels)) && (length(labels) != nrow * ncol)) {
+    labels <- labels[layout]
+    labels[is.na(labels)] <- ""
   }
 
   ## case numeric
@@ -393,19 +406,17 @@ ggarrange2 <- function(..., plots = list(...), nrow = NULL, ncol = NULL, widths 
   }
 
   ## split the list into rows/cols
-  nrc <- if (byrow)
-    nrow else ncol
-  if (nrc == 1) {
+  if (ncol == 1) {
     splits <- rep(1, n)
   } else {
     seqgrobs <- seq_along(grobs)
-    splits <- cut(seqgrobs, nrc, labels = seq_len(nrc))
+    splits <- cut(seqgrobs, ncol, labels = seq_len(ncol))
     ## widths and heights refer to the layout repeat for corresponding grobs
 
     repw <- rep_len(seq_along(widths), length.out=n)
     reph <- rep_len(seq_along(heights), length.out=n)
-    widths <- c(matrix(widths[repw], ncol = nrc, byrow = !byrow))
-    heights <- c(matrix(heights[reph], ncol = nrc, byrow = byrow))
+    widths <- c(matrix(widths[repw], ncol = ncol, byrow = TRUE))
+    heights <- c(matrix(heights[reph], ncol = ncol, byrow = FALSE))
 
   }
 
@@ -424,14 +435,9 @@ ggarrange2 <- function(..., plots = list(...), nrow = NULL, ncol = NULL, widths 
   }
 
   spl <- split(fg, splits)
-  if (byrow) {
-    rows <- lapply(spl, function(.r) do.call(gtable_cbind, .r))
-    gt <- do.call(gtable_rbind, rows)
-  } else {
-    # fill colwise
-    cols <- lapply(spl, function(.c) do.call(gtable_rbind, .c))
-    gt <- do.call(gtable_cbind, cols)
-  }
+  # fill colwise
+  cols <- lapply(spl, function(.c) do.call(gtable_rbind, .c))
+  gt <- do.call(gtable_cbind, cols)
 
   ## titles given as strings are converted to text grobs
   if (is.character(top)) {

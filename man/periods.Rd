@@ -4,14 +4,16 @@
 \name{periods}
 \alias{periods}
 \title{Period data from the International Commission on Stratigraphy (v2013-1)}
-\format{A data frame with 22 rows and 5 variables:
+\format{
+A data frame with 22 rows and 5 variables:
 \describe{
   \item{name}{period name}
   \item{max_age}{maximum age, in millions of years}
   \item{min_age}{minimum age, in millions of years}
   \item{abbr}{period name abbreviations}
   \item{color}{the colors for each period, according to the Comission for the Geological Map of the World}
-}}
+}
+}
 \source{
 \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=3}
 }
