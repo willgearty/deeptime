@@ -51,7 +51,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- ggplot() +
 #'   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
 #'   scale_x_reverse() +
-#'   coord_cartesian(xlim = c(0, 1000), ylim = c(0,8), expand = FALSE) +
+#'   coord_cartesian(xlim = c(1000, 0), ylim = c(0, 8), expand = FALSE) +
 #'   theme_classic()
 #' gggeo_scale(p)
 #'
@@ -59,7 +59,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- ggplot() +
 #'  geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 1000))) +
 #'  scale_y_reverse() +
-#'  coord_cartesian(xlim = c(0, 8), ylim = c(0,1000), expand = FALSE) +
+#'  coord_cartesian(xlim = c(0, 8), ylim = c(1000, 0), expand = FALSE) +
 #'  theme_classic()
 #' gggeo_scale(p, pos = "left", rot = 90)
 #'
@@ -67,7 +67,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- ggplot() +
 #'   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
 #'   scale_x_reverse() +
-#'   coord_cartesian(xlim = c(0, 100), ylim = c(0,8), expand = FALSE) +
+#'   coord_cartesian(xlim = c(100, 0), ylim = c(0, 8), expand = FALSE) +
 #'   theme_classic()
 #' p <- gggeo_scale(p, abbrv = FALSE)
 #' p <- gggeo_scale(p, dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
@@ -77,7 +77,7 @@ gggeo_scale <- function(x, ...) {
 #' p <- ggplot() +
 #'   geom_point(aes(x = runif(1000, 0, 10), y = runif(1000, 0, 65))) +
 #'   scale_y_reverse() +
-#'   coord_cartesian(xlim = c(0, 10), ylim = c(0,65), expand = FALSE) +
+#'   coord_cartesian(xlim = c(0, 10), ylim = c(65, 0), expand = FALSE) +
 #'   theme_classic()
 #' p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
 #'                  abbrv = FALSE)
@@ -86,11 +86,11 @@ gggeo_scale <- function(x, ...) {
 #'
 #' #can add scales to a faceted plot
 #' #use gggeo_scale_old() if you have more than one column
-#' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8), z = sample(c(1,2,3,4), 1000, TRUE))
+#' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8), z = sample(c(1, 2, 3, 4), 1000, TRUE))
 #' p <- ggplot(df) +
 #'   geom_point(aes(x, y)) +
 #'   scale_x_reverse() +
-#'   coord_cartesian(xlim = c(0, 541), ylim = c(0,8), expand = FALSE) +
+#'   coord_cartesian(xlim = c(541, 0), ylim = c(0, 8), expand = FALSE) +
 #'   theme_classic() +
 #'   facet_wrap(~z, ncol = 1)
 #' gggeo_scale(p)
@@ -101,8 +101,8 @@ gggeo_scale <- function(x, ...) {
 #' library(ggtree)
 #' tree <- pbtree(b = .03, d = .01,  n=100)
 #' p <- ggtree(tree) +
-#'   coord_cartesian(xlim = c(0,-500), ylim = c(-2,Ntip(tree)), expand = FALSE) +
-#'   scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
+#'   coord_cartesian(xlim = c(-500, 0), ylim = c(-2, Ntip(tree)), expand = FALSE) +
+#'   scale_x_continuous(breaks=seq(-500, 0, 100), labels=abs(seq(-500, 0, 100))) +
 #'   theme_tree2()
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
