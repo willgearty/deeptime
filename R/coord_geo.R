@@ -38,7 +38,8 @@
 #' @param size Label size.
 #' @param lwd Line width.
 #' @param neg Set this to true if your x-axis is using negative values.
-#' @param bord A vector specifying on Which sides of the scale to add bords (same options as \code{pos}).
+#' @param bord A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).
+#' @param center_end_labels Should labels be centered within the visible range of intervals at the ends of the axis?
 #' @importFrom ggplot2 ggproto
 #' @importFrom scales as.trans identity_trans
 #' @export
@@ -63,7 +64,8 @@
 coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL, xtrans = identity_trans(), ytrans = identity_trans(),
                       clip = "on", expand = FALSE, fill = NULL, color = "black", alpha = 1, height = unit(2, "line"),
                       lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
-                      lwd = .25, neg = FALSE, bord = c("left", "right", "top", "bottom")) {
+                      lwd = .25, neg = FALSE, bord = c("left", "right", "top", "bottom"),
+                      center_end_labels = FALSE) {
 
   # resolve transformers
   if (is.character(xtrans)) xtrans <- as.trans(xtrans)
@@ -82,7 +84,8 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
           rot = rep(make_list(rot), length.out = n_scales), abbrv = rep(make_list(abbrv), length.out = n_scales),
           skip = rep(make_list(skip), length.out = n_scales), size = rep(make_list(size), length.out = n_scales),
           lwd = rep(make_list(lwd), length.out = n_scales), neg = rep(make_list(neg), length.out = n_scales),
-          bord = rep(make_list(bord), length.out = n_scales)
+          bord = rep(make_list(bord), length.out = n_scales),
+          center_end_labels = rep(make_list(center_end_labels), length.out = n_scales)
   )
 }
 
@@ -153,6 +156,7 @@ render_geo_scale <- function(self, panel_params, theme, position){
                        lwd = self$lwd[ind],
                        neg = self$neg[ind],
                        bord = self$bord[ind],
+                       center_end_labels = self$center_end_labels[ind],
                        MoreArgs = list(panel_params = panel_params, theme = theme),
                        SIMPLIFY = FALSE)
   geo_grobs <- lapply(geo_scales, ggplotGrob)
@@ -185,7 +189,7 @@ render_geo_scale <- function(self, panel_params, theme, position){
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
 make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, skip,
-                           size, lwd, neg, bord, panel_params, theme){
+                           size, lwd, neg, bord, center_end_labels, panel_params, theme){
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -218,9 +222,6 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
     geom_segment(data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
                  color = color, size = lwd) +
     scale_fill_manual(values = setNames(dat$color, dat$color)) +
-    geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
-              vjust = "middle", hjust = "middle", size = size, angle = rot,
-              inherit.aes = FALSE) +
     theme_void()
 
   rev_axis <- FALSE
@@ -236,6 +237,25 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
     gg_scale <- gg_scale +
       coord_flip(xlim = lims, ylim = c(0,1), expand = FALSE)
   }
+
+  #Add labels
+  if (center_end_labels) {
+    #center the labels for the time periods at the ends of the axis
+    max_end <- (dat$max_age > max(lims) & dat$min_age < max(lims)) | (dat$max_age < max(lims) & dat$min_age > max(lims))
+    min_end <- (dat$max_age > min(lims) & dat$min_age < min(lims)) | (dat$max_age < min(lims) & dat$min_age > min(lims))
+    if (any(max_end)){
+      ends <- dat[max_end,c("min_age","max_age")]
+      dat$mid_age[max_end] <- (ends[ends < max(lims) & ends > min(lims)] + max(lims))/2
+    }
+    if (any(min_end)){
+      ends <- dat[min_end,c("min_age","max_age")]
+      dat$mid_age[min_end] <- (ends[ends < max(lims) & ends > min(lims)] + min(lims))/2
+    }
+  }
+  gg_scale <- gg_scale +
+    geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
+              vjust = "middle", hjust = "middle", size = size, angle = rot,
+              inherit.aes = FALSE)
 
   #Add border
   bord_lims <- lims

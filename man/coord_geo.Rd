@@ -26,7 +26,8 @@ coord_geo(
   size = 5,
   lwd = 0.25,
   neg = FALSE,
-  bord = c("left", "right", "top", "bottom")
+  bord = c("left", "right", "top", "bottom"),
+  center_end_labels = FALSE
 )
 }
 \arguments{
@@ -68,7 +69,9 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{A vector specifying on Which sides of the scale to add bords (same options as \code{pos}).}
+\item{bord}{A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).}
+
+\item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
 }
 \description{
 \code{coord_geo} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after

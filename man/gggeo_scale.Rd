@@ -27,7 +27,8 @@ gggeo_scale(x, ...)
   lwd = 0.25,
   margin = NULL,
   neg = FALSE,
-  bord = c("left", "right", "top", "bottom")
+  bord = c("left", "right", "top", "bottom"),
+  center_end_labels = FALSE
 )
 
 \method{gggeo_scale}{ggplot}(
@@ -46,7 +47,8 @@ gggeo_scale(x, ...)
   lwd = 0.25,
   margin = NULL,
   neg = FALSE,
-  bord = c("left", "right", "top", "bottom")
+  bord = c("left", "right", "top", "bottom"),
+  center_end_labels = FALSE
 )
 
 \method{gggeo_scale}{geo_scale}(
@@ -65,7 +67,8 @@ gggeo_scale(x, ...)
   lwd = 0.25,
   margin = NULL,
   neg = FALSE,
-  bord = c("left", "right", "top", "bottom")
+  bord = c("left", "right", "top", "bottom"),
+  center_end_labels = FALSE
 )
 
 \method{print}{geo_scale}(geo, ...)
@@ -111,7 +114,9 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{A vector specifying on Which sides of the scale to add bords (same options as \code{pos}).}
+\item{bord}{A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).}
+
+\item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
 
 \item{gg}{A ggplot object.}
 
