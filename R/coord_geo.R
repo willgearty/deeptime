@@ -239,23 +239,25 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
   }
 
   #Add labels
-  if (center_end_labels) {
-    #center the labels for the time periods at the ends of the axis
-    max_end <- (dat$max_age > max(lims) & dat$min_age < max(lims)) | (dat$max_age < max(lims) & dat$min_age > max(lims))
-    min_end <- (dat$max_age > min(lims) & dat$min_age < min(lims)) | (dat$max_age < min(lims) & dat$min_age > min(lims))
-    if (any(max_end)){
-      ends <- dat[max_end,c("min_age","max_age")]
-      dat$mid_age[max_end] <- (ends[ends < max(lims) & ends > min(lims)] + max(lims))/2
+  if (lab) {
+    if (center_end_labels) {
+      #center the labels for the time periods at the ends of the axis
+      max_end <- (dat$max_age > max(lims) & dat$min_age < max(lims)) | (dat$max_age < max(lims) & dat$min_age > max(lims))
+      min_end <- (dat$max_age > min(lims) & dat$min_age < min(lims)) | (dat$max_age < min(lims) & dat$min_age > min(lims))
+      if (any(max_end)){
+        ends <- dat[max_end,c("min_age","max_age")]
+        dat$mid_age[max_end] <- (ends[ends < max(lims) & ends > min(lims)] + max(lims))/2
+      }
+      if (any(min_end)){
+        ends <- dat[min_end,c("min_age","max_age")]
+        dat$mid_age[min_end] <- (ends[ends < max(lims) & ends > min(lims)] + min(lims))/2
+      }
     }
-    if (any(min_end)){
-      ends <- dat[min_end,c("min_age","max_age")]
-      dat$mid_age[min_end] <- (ends[ends < max(lims) & ends > min(lims)] + min(lims))/2
-    }
+    gg_scale <- gg_scale +
+      geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
+                vjust = "middle", hjust = "middle", size = size, angle = rot,
+                inherit.aes = FALSE)
   }
-  gg_scale <- gg_scale +
-    geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
-              vjust = "middle", hjust = "middle", size = size, angle = rot,
-              inherit.aes = FALSE)
 
   #Add border
   bord_lims <- lims
