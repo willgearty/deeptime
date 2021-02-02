@@ -64,7 +64,7 @@ ggarrange2(
 
 \item{debug}{logical, show layout with thin lines}
 
-\item{labels}{character labels used for annotation of subfigures}
+\item{labels}{character labels used for annotation of subfigures (should be in the same order as \code{plots})}
 
 \item{label.args}{label list of parameters for the formatting of labels}
 }

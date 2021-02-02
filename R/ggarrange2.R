@@ -281,7 +281,7 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @param newpage logical: draw on a new page
 #' @param draw logical: draw or return a grob
 #' @param debug logical, show layout with thin lines
-#' @param labels character labels used for annotation of subfigures
+#' @param labels character labels used for annotation of subfigures (should be in the same order as \code{plots})
 #' @param label.args label list of parameters for the formatting of labels
 #' @importFrom grid is.unit is.grob gpar grobHeight grobWidth
 #' @importFrom grDevices n2mfrow
@@ -370,9 +370,10 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   }
   n <- length(grobs)
 
+  # reorder labels
+  labels <- labels[layout]
   # add dummy labels if needed
   if ((!is.null(labels)) && (length(labels) != nrow * ncol)) {
-    labels <- labels[layout]
     labels[is.na(labels)] <- ""
   }
 
