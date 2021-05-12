@@ -40,12 +40,14 @@ ggplot(coral_div) +
 
 ![example bottom scale](/images/example_bottom.png?raw=true)
 
-### Move scale to left axis
+### Scale on left axis
 ```r
-ggplot() +
-  geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 541))) +
-  scale_y_reverse() +
-  coord_geo(xlim = c(0, 8), ylim = c(541,0), pos = "left", rot = 90) +
+library(gsloid)
+ggplot(lisiecki2005) +
+  geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
+  scale_y_reverse("Time (Ma)") +
+  scale_x_reverse() +
+  coord_geo(dat = "Geomagnetic Polarity Chron", xlim = c(6,2), ylim = c(6,0), pos = "left", rot = 90) +
   theme_classic()
 ```
 
