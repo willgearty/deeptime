@@ -22,10 +22,19 @@ library(ggplot2)
 
 ### Default scale on bottom axis
 ```r
-ggplot() +
-  geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
-  scale_x_reverse() +
-  coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
+library(divDyn)
+library(tidyverse)
+data(corals)
+# this is not a proper diversity curve but it gets the point across
+coral_div <- corals %>% filter(stage != "") %>%
+  group_by(stage) %>%
+  summarise(n = n()) %>%
+  mutate(stage_age = (stages$max_age[match(stage, stages$name)] + stages$min_age[match(stage, stages$name)])/2)
+ggplot(coral_div) +
+  geom_point(aes(x = stage_age, y = n)) +
+  scale_x_reverse("Age (Ma)") +
+  ylab("Coral Genera") +
+  coord_geo(xlim = c(250, 0), ylim = c(0, 1700)) +
   theme_classic()
 ```
 
@@ -84,7 +93,7 @@ ggplot(df) +
 
 ![example faceted scale](/images/example_facet.png?raw=true)
 
-### Add scale to phylogeny
+### Add scale to a phylogeny
 ```r
 library(phytools)
 library(ggtree)
