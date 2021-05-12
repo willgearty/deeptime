@@ -88,10 +88,10 @@ ggplot(df) +
 ```r
 library(phytools)
 library(ggtree)
-tree <- pbtree(b = .03, d = .01,  n=100)
-p <- ggtree(tree) +
-  coord_geo(xlim = c(-500,0), ylim = c(-2,Ntip(tree)), neg = TRUE) +
-  scale_x_continuous(breaks=seq(-500,0,100), labels=abs(seq(-500,0,100))) +
+data(mammal.tree)
+p <- ggtree(mammal.tree) +
+  coord_geo(xlim = c(-75,0), ylim = c(-2,Ntip(mammal.tree)), neg = TRUE, abbrv = FALSE) +
+  scale_x_continuous(breaks=seq(-80,0,20), labels=abs(seq(-80,0,20))) +
   theme_tree2()
 revts(p)
 ```
@@ -102,14 +102,15 @@ revts(p)
 ```r
 library(phytools)
 library(ggtree)
-tree<-read.tree(text="(A:3,(B:2,(C:5,D:3):2):3);")
-tree$root.time<-20
-ggtree(tree, position = position_nudge(x = -tree$root.time)) +
-  coord_geo(xlim = c(-25,0), ylim = c(.75,Ntip(tree)), pos = list("bottom", "bottom"),
-            skip = "Holocene", dat = list("epochs", "periods"), abbrv = FALSE,
-            size = list(4,5), neg = TRUE) +
-  scale_x_continuous(breaks=seq(-50,50,10), labels=abs(seq(-50,50,10))) +
-  theme_tree2()
+library(paleotree)
+data(RaiaCopesRule)
+ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
+  coord_geo(xlim = c(-163.5,-66), ylim = c(-2,Ntip(ceratopsianTreeRaia)), pos = list("bottom", "bottom"),
+            skip = c("Paleocene", "Middle Jurassic"), dat = list("epochs", "periods"), abbrv = FALSE,
+            size = list(4,5), neg = TRUE, center_end_labels = TRUE) +
+  scale_x_continuous(breaks = -rev(epochs$max_age), labels = rev(epochs$max_age)) +
+  theme_tree2() +
+  theme(plot.margin = margin(7,11,7,11))
 ```
 
 ![example fossil_phylogeny](/images/example_fossil_phylo.png?raw=true)
