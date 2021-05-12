@@ -56,13 +56,13 @@ ggplot(lisiecki2005) +
 ### Stack multiple scales (e.g. periods, epochs, stages)
 Specify multiple scales by giving a list for `pos`. Scales are added from the inside to the outside. Other arguments can be lists or single values (either of which will be recycled if necessary).
 ```r
-ggplot() +
-  geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
-  scale_x_reverse() +
-  coord_geo(xlim = c(100, 0), ylim = c(0,8), pos = as.list(rep("bottom", 3)),
-            dat = list("stages", "epochs", "periods"),
-            height = list(unit(4, "lines"), unit(4, "lines"), unit(2, "line")),
-            rot = list(90, 90, 0), size = list(2.5, 2.5, 5), abbrv = FALSE) +
+#uses coral diversity data from above
+ggplot(coral_div) +
+  geom_line(aes(x = stage_age, y = n)) +
+  scale_x_reverse("Age (Ma)") +
+  ylab("Coral Genera") +
+  coord_geo(dat = list("periods", "eras"), xlim = c(250, 0), ylim = c(0, 1700),
+            pos = list("b", "b"), abbrv = list(TRUE, FALSE)) +
   theme_classic()
 ```
 
