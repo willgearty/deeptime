@@ -56,7 +56,7 @@ ggplot(lisiecki2005) +
 ### Stack multiple scales (e.g. periods and eras)
 Specify multiple scales by giving a list for `pos`. Scales are added from the inside to the outside. Other arguments can be lists or single values (either of which will be recycled if necessary).
 ```r
-#uses coral diversity data from above
+# uses coral diversity data from above
 ggplot(coral_div) +
   geom_line(aes(x = stage_age, y = n)) +
   scale_x_reverse("Age (Ma)") +
@@ -70,6 +70,7 @@ ggplot(coral_div) +
 
 ### Show intervals from different scales (e.g. Geochrons vs. Foram biozones)
 ```r
+# uses oxygen isotope data from above
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
   scale_y_reverse("Time (Ma)") +
