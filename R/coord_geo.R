@@ -34,7 +34,7 @@
 #' @param lab Whether to include labels.
 #' @param rot The amount of counter-clockwise rotation to add to the labels (in degrees).
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
-#' @param skip A vector of interval names indicating which intervals should not be labelled.
+#' @param skip A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.
 #' @param size Label size.
 #' @param lwd Line width.
 #' @param neg Set this to true if your x-axis is using negative values.
@@ -207,6 +207,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
   }
   if(abbrv & "abbr" %in% colnames(dat)){
     dat$label <- dat$abbr
+    dat$label[dat$abbr %in% skip] <- ""
   }else{
     dat$label <- dat$name
   }

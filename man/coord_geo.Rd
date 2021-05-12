@@ -61,7 +61,7 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{abbrv}{If including labels, whether to use abbreviations instead of full interval names.}
 
-\item{skip}{A vector of interval names indicating which intervals should not be labelled.}
+\item{skip}{A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.}
 
 \item{size}{Label size.}
 
