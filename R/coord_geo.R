@@ -140,7 +140,7 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
 #' @importFrom gtable gtable_col gtable_row gtable_height gtable_width
 render_geo_scale <- function(self, panel_params, theme, position){
   one <- unit(1, "npc")
-  ind <- self$pos == position
+  ind <- self$pos %in% c(position, substring(position, 1, 1))
 
   geo_scales <- mapply(make_geo_scale,
                        dat = self$dat[ind],
