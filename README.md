@@ -53,7 +53,7 @@ ggplot(lisiecki2005) +
 
 ![example left scale](/images/example_left.png?raw=true)
 
-### Stack multiple scales (e.g. periods, epochs, stages)
+### Stack multiple scales (e.g. periods and eras)
 Specify multiple scales by giving a list for `pos`. Scales are added from the inside to the outside. Other arguments can be lists or single values (either of which will be recycled if necessary).
 ```r
 #uses coral diversity data from above
@@ -68,15 +68,15 @@ ggplot(coral_div) +
 
 ![example stacked scales](/images/example_stack.png?raw=true)
 
-### Show intervals from different scales (ICS stages vs. North American Land Mammal Ages)
+### Show intervals from different scales (e.g. Geochrons vs. Foram biozones)
 ```r
-ggplot() +
-    geom_point(aes(x = runif(1000, 0, 10), y = runif(1000, 0, 65))) +
-    scale_y_reverse() +
-    coord_geo(xlim = c(0, 10), ylim = c(65, 0), pos = list("left","right"),
-              dat = list("stages", "North American Land Mammal Ages"),
-              height = unit(4, "lines"), size = 2.5, abbrv = FALSE) +
-    theme_classic()
+ggplot(lisiecki2005) +
+  geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
+  scale_y_reverse("Time (Ma)") +
+  scale_x_reverse() +
+  coord_geo(dat = list("Geomagnetic Polarity Chron", "Planktic foraminiferal Primary Biozones"),
+            xlim = c(6,2), ylim = c(5.5,0), pos = list("l", "r"), rot = 90, skip = "PL4", size = list(5, 4)) +
+  theme_classic()
 ```
 
 ![example separate scales](/images/separate_scales.png?raw=true)
