@@ -56,7 +56,7 @@ ggplot(lisiecki2005) +
 ### Stack multiple scales (e.g. periods and eras)
 Specify multiple scales by giving a list for `pos`. Scales are added from the inside to the outside. Other arguments can be lists or single values (either of which will be recycled if necessary).
 ```r
-# uses coral diversity data from above
+# uses the coral diversity data from above
 ggplot(coral_div) +
   geom_line(aes(x = stage_age, y = n)) +
   scale_x_reverse("Age (Ma)") +
@@ -70,7 +70,7 @@ ggplot(coral_div) +
 
 ### Show intervals from different scales (e.g. Geochrons vs. Foram biozones)
 ```r
-# uses oxygen isotope data from above
+# uses the oxygen isotope data from above
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
   scale_y_reverse("Time (Ma)") +
@@ -85,13 +85,19 @@ ggplot(lisiecki2005) +
 ### Scale on faceted plot
 You can change on which facets the time scale is plotted by changing the `scales` argument in `facet_wrap()`.
 ```r
-df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8), z = sample(c(1,2,3,4), 1000, TRUE))
-ggplot(df) +
-    geom_point(aes(x, y)) +
-    scale_x_reverse() +
-    coord_geo(xlim = c(541, 0), ylim = c(0,8)) +
-    theme_classic() +
-    facet_wrap(~z, nrow = 2, scales = "free_x")
+# uses the coral occurrence data from above
+coral_div <- corals %>% filter(stage != "") %>%
+  group_by(diet, stage) %>%
+  summarise(n = n()) %>%
+  mutate(stage_age = (stages$max_age[match(stage, stages$name)] + stages$min_age[match(stage, stages$name)])/2)
+
+ggplot(coral_div) +
+  geom_line(aes(x = stage_age, y = n)) +
+  scale_x_reverse("Age (Ma)") +
+  ylab("Coral Genera") +
+  coord_geo(xlim = c(250, 0)) +
+  theme_classic() +
+  facet_wrap(~diet, nrow = 3)
 ```
 
 ![example faceted scale](/images/example_facet.png?raw=true)
