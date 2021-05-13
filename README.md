@@ -1,5 +1,7 @@
-[![Build Status](https://travis-ci.com/willgearty/deeptime.svg?branch=master)](https://travis-ci.com/willgearty/deeptime)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/willgearty/deeptime/workflows/R-CMD-check/badge.svg)](https://github.com/willgearty/deeptime/actions)
 [![DOI](https://zenodo.org/badge/152502088.svg)](https://zenodo.org/badge/latestdoi/152502088)
+<!-- badges: end -->
 
 # deeptime
 Tools to help with plotting data over long time intervals.
