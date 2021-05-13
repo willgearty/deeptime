@@ -164,42 +164,54 @@ ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2, heig
 ```r
 #make transformer
 library(ggforce)
-trans <- linear_trans(shear(2, 0))
+trans <- linear_trans(shear(.5, 0))
 
-#set up data to be plotted
-square <- data.frame(x = c(0, 0, 4, 4), y = c(0, 1, 1, 0))
-points <- data.frame(x = runif(100, 0, 4), y = runif(100, 0, 1), group = rep(1:5, each = 20))
+library(dispRity)
+data(demo_data)
+# prepare data to be plotted
+crinoids <- as.data.frame(demo_data$wright$matrix[[1]][, 1:2])
+crinoids$time <- "before extinction"
+crinoids$time[demo_data$wright$subsets$after$elements] <- "after extinction"
 
-#plot data normally
-library(ggplot2)
-ggplot(data = points, aes(x = x, y = y)) +
-  geom_polygon(data = square, fill = NA, color = "black") +
-  geom_point(color = 'black') +
+square <- data.frame(V1 = c(-.6, -.6, .6, .6), V2 = c(-.4, .4, .4, -.4))
+
+# plot data normally
+ggplot() +
+  geom_segment(data = data.frame(x = -.6, y = seq(-.4, .4,.2), xend = .6, yend = seq(-0.4, .4, .2)),
+               aes(x = x, y = y, xend = xend, yend=yend), linetype = "dashed", color = "grey") +
+  geom_segment(data = data.frame(x = seq(-.6, .6, .2), y = -.4, xend = seq(-.6, .6, .2), yend = .4),
+               aes(x = x, y = y, xend = xend, yend=yend), linetype = "dashed", color = "grey") +
+  geom_polygon(data = square, aes(x = V1, y = V2), fill = NA, color = "black") +
+  geom_point(data = crinoids, aes(x = V1, y = V2), color = 'black') +
   coord_cartesian(expand = FALSE) +
+  labs(x = "PCO1", y = "PCO2") +
   theme_classic() +
-  facet_wrap(~group, ncol = 1, strip.position = "right") +
-  theme(panel.spacing = unit(0, "lines"), panel.background = element_blank())
+  facet_wrap(~time, ncol = 1, strip.position = "right") +
+  theme(panel.spacing = unit(1, "lines"), panel.background = element_blank())
 
-#plot data with transformation
-ggplot(data = points, aes(x = x, y = y)) +
-  geom_polygon(data = square, fill = NA, color = "black") +
-  geom_point(color = 'black') +
+# plot data with transformation
+ggplot() +
+  geom_segment(data = data.frame(x = -.6, y = seq(-.4, .4,.2), xend = .6, yend = seq(-0.4, .4, .2)),
+               aes(x = x, y = y, xend = xend, yend=yend), linetype = "dashed", color = "grey") +
+  geom_segment(data = data.frame(x = seq(-.6, .6, .2), y = -.4, xend = seq(-.6, .6, .2), yend = .4),
+               aes(x = x, y = y, xend = xend, yend=yend), linetype = "dashed", color = "grey") +
+  geom_polygon(data = square, aes(x = V1, y = V2), fill = NA, color = "black") +
+  geom_point(data = crinoids, aes(x = V1, y = V2), color = 'black') +
   coord_trans_xy(trans = trans, expand = FALSE) +
+  labs(x = "PCO1", y = "PCO2") +
   theme_classic() +
-  facet_wrap(~group, ncol = 1, strip.position = "right") +
-  theme(panel.spacing = unit(0, "lines"), panel.background = element_blank())
+  facet_wrap(~time, ncol = 1, strip.position = "right") +
+  theme(panel.spacing = unit(1, "lines"), panel.background = element_blank())
 ```
 
 ![example disparity_ggplot](/images/disparity_ggplot.png?raw=true)
 
 #### With base R/lattice
 ```r
-#make some data
-g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),
-                z = factor(rep(periods$name[1:5], each=20), levels = periods$name[1:5]))
-
-#plot data
-disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2), xlim = c(0,60), ylim = c(0,10),
+# use same data as above
+# plot data
+crinoids$time <- factor(crinoids$time)
+disparity_through_time(time~V1*V2, data = crinoids, groups = time, aspect = c(1.5,2), xlim = c(-.6,.6), ylim = c(-.5,.5),
                        col.regions = "lightgreen", col.point = c("red","blue"))
 ```
 
