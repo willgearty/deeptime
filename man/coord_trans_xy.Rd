@@ -41,7 +41,7 @@ legend, the plot title, or the plot margins.}
 \description{
 \code{coord_trans_xy} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
 statistical transformation and will affect the visual appearance of geoms. The main difference
-is that it takes a single transforer that is applied to the x and y axes simultaneously. Any
+is that it takes a single transformer that is applied to the x and y axes simultaneously. Any
 transformers produced by \code{\link[ggforce]{linear_trans}} that have x and y arguments should work,
 but any other transformers produced using \code{\link[scales]{trans_new}} that take x and y arguments
 should also work. Axis limits will be adjusted to account for transformation unless limits are

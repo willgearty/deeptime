@@ -2,7 +2,7 @@
 #'
 #' \code{coord_trans_xy} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
 #' statistical transformation and will affect the visual appearance of geoms. The main difference
-#' is that it takes a single transforer that is applied to the x and y axes simultaneously. Any
+#' is that it takes a single transformer that is applied to the x and y axes simultaneously. Any
 #' transformers produced by \code{\link[ggforce]{linear_trans}} that have x and y arguments should work,
 #' but any other transformers produced using \code{\link[scales]{trans_new}} that take x and y arguments
 #' should also work. Axis limits will be adjusted to account for transformation unless limits are
@@ -69,7 +69,7 @@ coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL, expand = TRUE
 #' @export
 CoordTransXY <- ggproto("CoordTransXY", CoordCartesian,
                         setup_panel_params = function(self, scale_x, scale_y, params = list()) {
-                          if (is.null(self$limits$x) | is.null(self$limits$y)){
+                          if (!is.null(self$trans) & (is.null(self$limits$x) | is.null(self$limits$y))){
                             lims <- expand.grid(x = scale_x$get_limits(), y = scale_y$get_limits())
                             new_lims <- self$trans$transform(lims$x, lims$y)
                             if (is.null(self$limits$x)) self$limits$x <- range(new_lims$x)
@@ -78,11 +78,16 @@ CoordTransXY <- ggproto("CoordTransXY", CoordCartesian,
                           parent <- ggproto_parent(CoordCartesian, self)
                           panel_params <- parent$setup_panel_params(scale_x, scale_y, params)
                           panel_params$trans <- self$trans
+                          panel_params$lims <- self$limits
                           panel_params
                         },
                         transform = function(data, panel_params) {
                           new_data <- data
                           if (!is.null(panel_params$trans)) {
+                            data$x[data$x == -Inf] <- panel_params$lims$x[1]
+                            data$x[data$x == Inf] <- panel_params$lims$x[2]
+                            data$y[data$y == -Inf] <- panel_params$lims$y[1]
+                            data$y[data$y == Inf] <- panel_params$lims$y[2]
                             new_data[, c("x","y")] <- panel_params$trans$transform(data$x, data$y)
                           }
                           CoordCartesian$transform(new_data, panel_params)
