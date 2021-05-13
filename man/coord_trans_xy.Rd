@@ -45,7 +45,9 @@ is that it takes a single transformer that is applied to the x and y axes simult
 transformers produced by \code{\link[ggforce]{linear_trans}} that have x and y arguments should work,
 but any other transformers produced using \code{\link[scales]{trans_new}} that take x and y arguments
 should also work. Axis limits will be adjusted to account for transformation unless limits are
-specified with `xlim` or `ylim`.
+specified with `xlim` or `ylim`. This only works with geoms where all points are defined with x and y
+coordinates (e.g. \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{geom_polygon}}). This does not currently work with geoms where point
+coordinates are extrapolated (e.g. \code{\link[ggplot2]{geom_rect}}).
 }
 \examples{
 \dontrun{

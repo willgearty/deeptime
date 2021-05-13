@@ -6,7 +6,9 @@
 #' transformers produced by \code{\link[ggforce]{linear_trans}} that have x and y arguments should work,
 #' but any other transformers produced using \code{\link[scales]{trans_new}} that take x and y arguments
 #' should also work. Axis limits will be adjusted to account for transformation unless limits are
-#' specified with `xlim` or `ylim`.
+#' specified with `xlim` or `ylim`. This only works with geoms where all points are defined with x and y
+#' coordinates (e.g. \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{geom_polygon}}). This does not currently work with geoms where point
+#' coordinates are extrapolated (e.g. \code{\link[ggplot2]{geom_rect}}).
 #'
 #' @param trans Transformer for x and y axes.
 #' @param xlim,ylim Limits for the x and y axes.
@@ -84,11 +86,20 @@ CoordTransXY <- ggproto("CoordTransXY", CoordCartesian,
                         transform = function(data, panel_params) {
                           new_data <- data
                           if (!is.null(panel_params$trans)) {
-                            data$x[data$x == -Inf] <- panel_params$lims$x[1]
-                            data$x[data$x == Inf] <- panel_params$lims$x[2]
-                            data$y[data$y == -Inf] <- panel_params$lims$y[1]
-                            data$y[data$y == Inf] <- panel_params$lims$y[2]
-                            new_data[, c("x","y")] <- panel_params$trans$transform(data$x, data$y)
+                            # transform x and y coordinates
+                            if('x' %in% colnames(data)){
+                              # a bit of a hack for axis tick labels
+                              data$x[data$x == -Inf] <- panel_params$lims$x[1]
+                              data$x[data$x == Inf] <- panel_params$lims$x[2]
+                              data$y[data$y == -Inf] <- panel_params$lims$y[1]
+                              data$y[data$y == Inf] <- panel_params$lims$y[2]
+                              new_data[, c("x","y")] <- panel_params$trans$transform(data$x, data$y)
+                            }
+                            # transform end points for segments
+                            if('xend' %in% colnames(data)){
+                              new_data[, c("xend","yend")] <- panel_params$trans$transform(data$xend, data$yend)
+                            }
+                            # TODO: transform corners for geom_rect?
                           }
                           CoordCartesian$transform(new_data, panel_params)
                         }
