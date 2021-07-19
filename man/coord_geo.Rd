@@ -39,7 +39,9 @@ or C) a custom dataframe of time interval boundaries (see Details).}
 
 \item{xlim, ylim}{Limits for the x and y axes.}
 
-\item{xtrans, ytrans}{transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.}
+\item{xtrans, ytrans}{Transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.}
+
+\item{clip}{Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.}
 
 \item{expand}{If `TRUE`, the default, adds a small expansion factor to
 the limits to ensure that data and axes don't overlap. If `FALSE`,

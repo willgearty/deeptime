@@ -51,7 +51,7 @@ calculateAxisComponents <- function(x, ...,
 #' Combined wireframe and cloud panel
 #'
 #' Plots provided data on 2-D surfaces within 3-D framework. See \code{\link{disparity_through_time}}.
-#'
+#' @param x,y,z,groups,subscripts,... Same as for \code{\link[lattice]{panel.cloud}}
 #' @importFrom lattice panel.wireframe panel.cloud
 #' @export
 panel.disparity <- function(x,y,z,groups,subscripts,...) {

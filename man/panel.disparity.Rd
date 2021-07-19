@@ -6,6 +6,9 @@
 \usage{
 panel.disparity(x, y, z, groups, subscripts, ...)
 }
+\arguments{
+\item{x, y, z, groups, subscripts, ...}{Same as for \code{\link[lattice]{panel.cloud}}}
+}
 \description{
 Plots provided data on 2-D surfaces within 3-D framework. See \code{\link{disparity_through_time}}.
 }

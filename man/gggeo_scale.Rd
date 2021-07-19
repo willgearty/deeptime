@@ -11,7 +11,7 @@
 gggeo_scale(obj, ...)
 
 \method{gggeo_scale}{gtable}(
-  gt,
+  obj,
   lims,
   dat = "periods",
   fill = NULL,
@@ -117,10 +117,6 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
 
 \item{x}{An object of class geo_scale.}
-
-\item{gg}{A ggplot object.}
-
-\item{geo}{A geo_scale object output by \code{gggeo_scale()}.}
 }
 \value{
 A geo_scale object. Basically a gtable object but with the axis limits included.

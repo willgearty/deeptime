@@ -21,7 +21,8 @@
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
 #'   or C) a custom dataframe of time interval boundaries (see Details).
 #' @param xlim,ylim Limits for the x and y axes.
-#' @param xtrans,ytrans transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.
+#' @param xtrans,ytrans Transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.
+#' @param clip Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.
 #' @param expand If `TRUE`, the default, adds a small expansion factor to
 #'   the limits to ensure that data and axes don't overlap. If `FALSE`,
 #'   limits are taken exactly from the data or `xlim`/`ylim`.

@@ -107,7 +107,7 @@ gggeo_scale <- function(obj, ...) {
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
 #' }
-gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "black", alpha = 1,
+gggeo_scale.gtable <- function(obj, lims, dat = "periods", fill = NULL, color = "black", alpha = 1,
                                height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0,
                                abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                size = 5, lwd = .25, margin = NULL, neg = FALSE,
@@ -260,7 +260,6 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
   obj
 }
 
-#' @param gg A ggplot object.
 #' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
@@ -278,7 +277,6 @@ gggeo_scale.ggplot <- function(obj, dat = "periods", fill = NULL, color = "black
                      margin = margin, neg = neg, bord = bord, center_end_labels = center_end_labels)
 }
 
-#' @param geo A geo_scale object output by \code{gggeo_scale()}.
 #' @export
 #' @rdname gggeo_scale
 gggeo_scale.geo_scale <- function(obj, dat = "periods", fill = NULL, color = "black", alpha = 1,
