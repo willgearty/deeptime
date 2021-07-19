@@ -97,6 +97,14 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
 #' @importFrom ggplot2 ggproto CoordTrans
 #' @importFrom rlang %||%
 CoordGeo <- ggproto("CoordGeo", CoordTrans,
+  setup_panel_params = function(self, scale_x, scale_y, params = list()) {
+    parent <- ggproto_parent(CoordTrans, self)
+    panel_params <- parent$setup_panel_params(scale_x, scale_y, params)
+    panel_params$scale_x <- scale_x
+    panel_params$scale_y <- scale_y
+    panel_params
+  },
+
   render_axis_h = function(self, panel_params, theme) {
     arrange <- panel_params$x.arrange %||% c("secondary", "primary")
     if (any(self$pos %in% c("top", "t"))){
@@ -229,12 +237,12 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
   rev_axis <- FALSE
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
   if(pos %in% c("bottom", "top", "b", "t")){
-    rev_axis <- panel_params$x.major[1] > panel_params$x.major[2]
+    rev_axis <- panel_params$scale_x$trans$name == "reverse"
     lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
     gg_scale <- gg_scale +
       coord_cartesian(xlim = lims, ylim = c(0,1), expand = FALSE)
   }else if(pos %in% c("left", "right","l","r")){
-    rev_axis <- panel_params$y.major[1] > panel_params$y.major[2]
+    rev_axis <- panel_params$scale_y$trans$name == "reverse"
     lims <- panel_params$y.range * c(1, -1)[rev_axis + 1]
     gg_scale <- gg_scale +
       coord_flip(xlim = lims, ylim = c(0,1), expand = FALSE)

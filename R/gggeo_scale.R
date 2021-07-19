@@ -1,6 +1,6 @@
 #' @export
 #' @rdname gggeo_scale
-#' @param obj An object of class ggplot, gtable, or geo_scale (as produced by this function).
+#' @param obj An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced by this function).
 gggeo_scale <- function(obj, ...) {
   UseMethod("gggeo_scale", obj)
 }
@@ -15,7 +15,6 @@ gggeo_scale <- function(obj, ...) {
 #'   The \code{min_age} column lists the youngest boundary of each time interval.
 #'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
-#' @param obj A gtable object.
 #' @param lims The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
@@ -151,7 +150,7 @@ gggeo_scale.gtable <- function(obj, lims, dat = "periods", fill = NULL, color = 
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
   if(pos %in% c("bottom", "top", "b", "t")){
     if(is.list(lims)){
-      rev_axis <- lims$x$break_positions()[1] > lims$x$break_positions()[2]
+      rev_axis <- lims$x$scale$trans$name == "reverse"
       lims <- lims$x.range * c(1, -1)[rev_axis + 1]
     }else{
       rev_axis <- lims[1] > lims[2]
@@ -160,7 +159,7 @@ gggeo_scale.gtable <- function(obj, lims, dat = "periods", fill = NULL, color = 
       coord_cartesian(xlim = lims, ylim = c(0,1), expand = FALSE)
   }else if(pos %in% c("left", "right","l","r")){
     if(is.list(lims)){
-      rev_axis <- lims$y$break_positions()[1] > lims$y$break_positions()[2]
+      rev_axis <- lims$y$scale$trans$name == "reverse"
       lims <- lims$y.range * c(1, -1)[rev_axis + 1]
     }else{
       rev_axis <- lims[1] > lims[2]
@@ -292,7 +291,7 @@ gggeo_scale.geo_scale <- function(obj, dat = "periods", fill = NULL, color = "bl
 }
 
 #' @param x An object of class geo_scale.
-#' @param ... further arguments passed to \code{grid.draw}.
+#' @param ... further arguments passed to \code{\link[grid]{grid.draw}}.
 #' @export
 #' @rdname gggeo_scale
 #' @importFrom grid grid.newpage grid.draw

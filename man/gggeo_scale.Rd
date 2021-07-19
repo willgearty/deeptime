@@ -74,9 +74,9 @@ gggeo_scale(obj, ...)
 \method{print}{geo_scale}(x, ...)
 }
 \arguments{
-\item{obj}{A gtable object.}
+\item{obj}{An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced by this function).}
 
-\item{...}{further arguments passed to \code{grid.draw}.}
+\item{...}{further arguments passed to \code{\link[grid]{grid.draw}}.}
 
 \item{lims}{The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.}
 
