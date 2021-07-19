@@ -90,19 +90,6 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   )
 }
 
-## Renders an axis with the correct orientation or zeroGrob if no axis should be
-## generated
-## Copied from the ggplot2 package
-render_axis <- function(panel_params, axis, scale, position, theme) {
-  if (axis == "primary") {
-    draw_axis(panel_params[[paste0(scale, ".major")]], panel_params[[paste0(scale, ".labels")]], position, theme)
-  } else if (axis == "secondary" && !is.null(panel_params[[paste0(scale, ".sec.major")]])) {
-    draw_axis(panel_params[[paste0(scale, ".sec.major")]], panel_params[[paste0(scale, ".sec.labels")]], position, theme)
-  } else {
-    zeroGrob()
-  }
-}
-
 #' @rdname coord_geo
 #' @format NULL
 #' @usage NULL
@@ -115,12 +102,12 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
     if (any(self$pos %in% c("top", "t"))){
       top = render_geo_scale(self, panel_params, theme, "top")
     } else {
-      top = render_axis(panel_params, arrange[1], "x", "top", theme)
+      top = ggplot2:::render_axis(panel_params, arrange[1], "x", "top", theme)
     }
     if (any(self$pos %in% c("bottom", "b"))){
       bottom = render_geo_scale(self, panel_params, theme, "bottom")
     } else {
-      bottom = render_axis(panel_params, arrange[2], "x", "bottom", theme)
+      bottom = ggplot2:::render_axis(panel_params, arrange[2], "x", "bottom", theme)
     }
 
     list(
@@ -134,12 +121,12 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
     if (any(self$pos %in% c("left", "l"))){
       left = render_geo_scale(self, panel_params, theme, "left")
     } else {
-      left = render_axis(panel_params, arrange[1], "y", "left", theme)
+      left = ggplot2:::render_axis(panel_params, arrange[1], "y", "left", theme)
     }
     if (any(self$pos %in% c("right", "r"))){
       right = render_geo_scale(self, panel_params, theme, "right")
     } else {
-      right = render_axis(panel_params, arrange[2], "y", "right", theme)
+      right = ggplot2:::render_axis(panel_params, arrange[2], "y", "right", theme)
     }
 
     list(
@@ -148,17 +135,6 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
     )
   }
 )
-
-## Copied from the ggplot2 package
-absoluteGrob <- function(grob, width = NULL, height = NULL,
-                         xmin = NULL, ymin = NULL, vp = NULL) {
-  gTree(
-    children = grob,
-    width = width, height = height,
-    xmin = xmin, ymin = ymin,
-    vp = vp, cl = "absoluteGrob"
-  )
-}
 
 #' @importFrom ggplot2 ggplotGrob
 #' @importFrom grid unit unit.c viewport grobWidth grobHeight gList
@@ -187,29 +163,29 @@ render_geo_scale <- function(self, panel_params, theme, position){
   geo_grobs <- lapply(geo_scales, ggplotGrob)
 
   if(position == "bottom"){
-    axis <- render_axis(panel_params, "primary", "x", "bottom", theme)
+    axis <- ggplot2:::render_axis(panel_params, "primary", "x", "bottom", theme)
     gt <- gtable_col("axis", grobs = c(geo_grobs, list(axis)),
                      width = one, heights = unit.c(do.call(unit.c, self$height[ind]), grobHeight(axis)))
     justvp <- viewport(y = 1, just = "top", height = gtable_height(gt))
   }else if(position == "top"){
-    axis <- render_axis(panel_params, "primary", "x", "top", theme)
+    axis <- ggplot2:::render_axis(panel_params, "primary", "x", "top", theme)
     gt <- gtable_col("axis", grobs = c(list(axis), geo_grobs),
                      width = one, heights = unit.c(grobHeight(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(y = 0, just = "bottom", height = gtable_height(gt))
   }else if(position == "left"){
-    axis <- render_axis(panel_params, "primary", "y", "left", theme)
+    axis <- ggplot2:::render_axis(panel_params, "primary", "y", "left", theme)
     gt <- gtable_row("axis", grobs = c(list(axis), geo_grobs),
                      height = one, widths = unit.c(grobWidth(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(x = 1, just = "right", width = gtable_width(gt))
   }else if(position == "right"){
-    axis <- render_axis(panel_params, "primary", "y", "right", theme)
+    axis <- ggplot2:::render_axis(panel_params, "primary", "y", "right", theme)
     gt <- gtable_row("axis", grobs = c(geo_grobs, list(axis)),
                      height = one, widths = unit.c(do.call(unit.c, self$height[ind]), grobWidth(axis)))
     justvp <-  viewport(x = 0, just = "left", width = gtable_width(gt))
   }
 
-  absoluteGrob(gList(gt), width = gtable_width(gt),
-               height = gtable_height(gt), vp = justvp)
+  ggplot2:::absoluteGrob(gList(gt), width = gtable_width(gt),
+                         height = gtable_height(gt), vp = justvp)
 }
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
