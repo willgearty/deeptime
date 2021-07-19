@@ -1,8 +1,8 @@
 #' @export
 #' @rdname gggeo_scale
-#' @param x Either a ggplot object or a gtable object.
-gggeo_scale <- function(x, ...) {
-  UseMethod("gggeo_scale", x)
+#' @param obj An object of class ggplot, gtable, or geo_scale (as produced by this function).
+gggeo_scale <- function(obj, ...) {
+  UseMethod("gggeo_scale", obj)
 }
 
 #' Add a geologic scale to ggplots
@@ -15,7 +15,7 @@ gggeo_scale <- function(x, ...) {
 #'   The \code{min_age} column lists the youngest boundary of each time interval.
 #'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
 #'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
-#' @param gt A gtable object.
+#' @param obj A gtable object.
 #' @param lims The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
@@ -221,57 +221,57 @@ gggeo_scale.gtable <- function(gt, lims, dat = "periods", fill = NULL, color = "
   grob_scale <- ggplotGrob(gg_scale)
 
   #find panels
-  panels <- gt$layout[grepl("panel", gt$layout[["name"]]), 1:4]
+  panels <- obj$layout[grepl("panel", obj$layout[["name"]]), 1:4]
 
   #add a row or column in the proper spot
   #then put the scale grob in the proper spot
   if(pos %in% c("top","t")){
     for(i in unique(panels$t)){
-      gt <- gtable_add_rows(gt, heights = height, pos = i - 1)
+      obj <- gtable_add_rows(obj, heights = height, pos = i - 1)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$l[i], r = panels$r[i], name = "axis-scale")
+      obj <- gtable_add_grob(obj, grob_scale, t = panels$t[i], l = panels$l[i], r = panels$r[i], name = "axis-scale")
     }
   }else if(pos %in% c("bottom","b")){
     for(i in unique(panels$b)){
-      gt <- gtable_add_rows(gt, heights = height, pos = i)
+      obj <- gtable_add_rows(obj, heights = height, pos = i)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$b[i] + 1, l = panels$l[i], r = panels$r[i], name = "axis-scale")
+      obj <- gtable_add_grob(obj, grob_scale, t = panels$b[i] + 1, l = panels$l[i], r = panels$r[i], name = "axis-scale")
     }
   }else if(pos %in% c("left", "l")){
     for(i in unique(panels$l)){
-      gt <- gtable_add_cols(gt, widths = height, pos = i - 1)
+      obj <- gtable_add_cols(obj, widths = height, pos = i - 1)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$l[i], b = panels$b[i], name = "axis-scale")
+      obj <- gtable_add_grob(obj, grob_scale, t = panels$t[i], l = panels$l[i], b = panels$b[i], name = "axis-scale")
     }
   }else if(pos %in% c("right","r")){
     for(i in unique(panels$r)){
-      gt <- gtable_add_cols(gt, widths = height, pos = i)
+      obj <- gtable_add_cols(obj, widths = height, pos = i)
     }
     for(i in 1:nrow(panels)){
-      gt <- gtable_add_grob(gt, grob_scale, t = panels$t[i], l = panels$r[i] + 1, b = panels$b[i], name = "axis-scale")
+      obj <- gtable_add_grob(obj, grob_scale, t = panels$t[i], l = panels$r[i] + 1, b = panels$b[i], name = "axis-scale")
     }
   }
-  gt <- gtable_add_padding(gt, margin)
-  gt$lims <- lims
-  class(gt) <- c("geo_scale", class(gt))
-  gt
+  obj <- gtable_add_padding(obj, margin)
+  obj$lims <- lims
+  class(obj) <- c("geo_scale", class(obj))
+  obj
 }
 
 #' @param gg A ggplot object.
 #' @importFrom ggplot2 ggplot_build
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1,
+gggeo_scale.ggplot <- function(obj, dat = "periods", fill = NULL, color = "black", alpha = 1,
                                height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0,
                                abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                size = 5, lwd = .25, margin = NULL, neg = FALSE,
                                bord = c("left", "right", "top", "bottom"), center_end_labels = FALSE){
-  lims <- ggplot_build(gg)$layout$panel_params[[1]]
+  lims <- ggplot_build(obj)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
-  grob_gg <- ggplotGrob(gg)
+  grob_gg <- ggplotGrob(obj)
   gt <- gtable_frame2(grob_gg)
   gggeo_scale.gtable(gt, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
                      pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
@@ -281,22 +281,23 @@ gggeo_scale.ggplot <- function(gg, dat = "periods", fill = NULL, color = "black"
 #' @param geo A geo_scale object output by \code{gggeo_scale()}.
 #' @export
 #' @rdname gggeo_scale
-gggeo_scale.geo_scale <- function(geo, dat = "periods", fill = NULL, color = "black", alpha = 1,
+gggeo_scale.geo_scale <- function(obj, dat = "periods", fill = NULL, color = "black", alpha = 1,
                                   height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0,
                                   abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                   size = 5, lwd = .25, margin = NULL, neg = FALSE,
                                   bord = c("left", "right", "top", "bottom"), center_end_labels = FALSE){
-  lims <- geo$lims
-  gggeo_scale.gtable(geo, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
+  lims <- obj$lims
+  gggeo_scale.gtable(obj, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
                      pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
                      margin = margin, neg = neg, bord = bord, center_end_labels = center_end_labels)
 }
 
+#' @param x An object of class geo_scale.
 #' @param ... further arguments passed to \code{grid.draw}.
 #' @export
 #' @rdname gggeo_scale
 #' @importFrom grid grid.newpage grid.draw
-print.geo_scale <- function(geo, ...) {
+print.geo_scale <- function(x, ...) {
   grid.newpage()
-  grid.draw(geo, ...)
+  grid.draw(x, ...)
 }

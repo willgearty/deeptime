@@ -8,7 +8,7 @@
 \alias{print.geo_scale}
 \title{Add a geologic scale to ggplots}
 \usage{
-gggeo_scale(x, ...)
+gggeo_scale(obj, ...)
 
 \method{gggeo_scale}{gtable}(
   gt,
@@ -32,7 +32,7 @@ gggeo_scale(x, ...)
 )
 
 \method{gggeo_scale}{ggplot}(
-  gg,
+  obj,
   dat = "periods",
   fill = NULL,
   color = "black",
@@ -52,7 +52,7 @@ gggeo_scale(x, ...)
 )
 
 \method{gggeo_scale}{geo_scale}(
-  geo,
+  obj,
   dat = "periods",
   fill = NULL,
   color = "black",
@@ -71,14 +71,12 @@ gggeo_scale(x, ...)
   center_end_labels = FALSE
 )
 
-\method{print}{geo_scale}(geo, ...)
+\method{print}{geo_scale}(x, ...)
 }
 \arguments{
-\item{x}{Either a ggplot object or a gtable object.}
+\item{obj}{A gtable object.}
 
 \item{...}{further arguments passed to \code{grid.draw}.}
-
-\item{gt}{A gtable object.}
 
 \item{lims}{The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.}
 
@@ -117,6 +115,8 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{bord}{A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).}
 
 \item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
+
+\item{x}{An object of class geo_scale.}
 
 \item{gg}{A ggplot object.}
 
