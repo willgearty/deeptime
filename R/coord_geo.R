@@ -21,7 +21,7 @@
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
 #'   or C) a custom dataframe of time interval boundaries (see Details).
 #' @param xlim,ylim Limits for the x and y axes.
-#' @param xtrans,ytrans transformers for y axis. For more information see \code{\link[ggplot2]{coord_trans}}.
+#' @param xtrans,ytrans transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.
 #' @param expand If `TRUE`, the default, adds a small expansion factor to
 #'   the limits to ensure that data and axes don't overlap. If `FALSE`,
 #'   limits are taken exactly from the data or `xlim`/`ylim`.
@@ -41,7 +41,7 @@
 #' @param bord A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).
 #' @param center_end_labels Should labels be centered within the visible range of intervals at the ends of the axis?
 #' @importFrom ggplot2 ggproto
-#' @importFrom scales as.trans identity_trans
+#' @import scales
 #' @export
 #' @examples
 #' library(ggplot2)
