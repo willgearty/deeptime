@@ -173,7 +173,8 @@ gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = 
 
 #can add scales to a faceted plot
 #use gggeo_scale_old() if you have more than one column
-df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8), z = sample(c(1, 2, 3, 4), 1000, TRUE))
+df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8),
+                 z = sample(c(1, 2, 3, 4), 1000, TRUE))
 p <- ggplot(df) +
   geom_point(aes(x, y)) +
   scale_x_reverse() +

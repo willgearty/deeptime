@@ -67,6 +67,10 @@ disparity_through_time(
 Plots points on 2-D surfaces within a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
 }
 \examples{
-g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10), z = factor(rep(periods$name[1:5], each=20), levels = periods$name[1:5]))
-disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2), xlim = c(0,60), ylim = c(0,10), col.regions = "lightgreen", col.point = c("red","blue"))
+g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),
+                z = factor(rep(periods$name[1:5], each=20),
+                levels = periods$name[1:5]))
+disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2),
+                       xlim = c(0,60), ylim = c(0,10), col.regions = "lightgreen",
+                       col.point = c("red","blue"))
 }

@@ -62,8 +62,12 @@ panel.disparity <- function(x,y,z,groups,subscripts,...) {
 #' @importFrom lattice wireframe
 #' @export
 #' @examples
-#' g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10), z = factor(rep(periods$name[1:5], each=20), levels = periods$name[1:5]))
-#' disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2), xlim = c(0,60), ylim = c(0,10), col.regions = "lightgreen", col.point = c("red","blue"))
+#' g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),
+#'                 z = factor(rep(periods$name[1:5], each=20),
+#'                 levels = periods$name[1:5]))
+#' disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2),
+#'                        xlim = c(0,60), ylim = c(0,10), col.regions = "lightgreen",
+#'                        col.point = c("red","blue"))
 disparity_through_time <- function(x, data, groups, pch = 16, col.point = c("blue"),
                                    scales = list(arrows = FALSE, distance = 1, col = "black",
                                                  z = list(rot = 90)),
