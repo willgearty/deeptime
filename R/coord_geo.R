@@ -90,6 +90,8 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   )
 }
 
+render_axis <- utils::getFromNamespace("render_axis", "ggplot2")
+
 #' @rdname coord_geo
 #' @format NULL
 #' @usage NULL
@@ -110,12 +112,12 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
     if (any(self$pos %in% c("top", "t"))){
       top = render_geo_scale(self, panel_params, theme, "top")
     } else {
-      top = ggplot2:::render_axis(panel_params, arrange[1], "x", "top", theme)
+      top = render_axis(panel_params, arrange[1], "x", "top", theme)
     }
     if (any(self$pos %in% c("bottom", "b"))){
       bottom = render_geo_scale(self, panel_params, theme, "bottom")
     } else {
-      bottom = ggplot2:::render_axis(panel_params, arrange[2], "x", "bottom", theme)
+      bottom = render_axis(panel_params, arrange[2], "x", "bottom", theme)
     }
 
     list(
@@ -129,12 +131,12 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
     if (any(self$pos %in% c("left", "l"))){
       left = render_geo_scale(self, panel_params, theme, "left")
     } else {
-      left = ggplot2:::render_axis(panel_params, arrange[1], "y", "left", theme)
+      left = render_axis(panel_params, arrange[1], "y", "left", theme)
     }
     if (any(self$pos %in% c("right", "r"))){
       right = render_geo_scale(self, panel_params, theme, "right")
     } else {
-      right = ggplot2:::render_axis(panel_params, arrange[2], "y", "right", theme)
+      right = render_axis(panel_params, arrange[2], "y", "right", theme)
     }
 
     list(
@@ -145,7 +147,7 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
 )
 
 #' @importFrom ggplot2 ggplotGrob
-#' @importFrom grid unit unit.c viewport grobWidth grobHeight gList
+#' @importFrom grid unit unit.c viewport grobWidth grobHeight gList gTree
 #' @importFrom gtable gtable_col gtable_row gtable_height gtable_width
 render_geo_scale <- function(self, panel_params, theme, position){
   one <- unit(1, "npc")
@@ -171,29 +173,31 @@ render_geo_scale <- function(self, panel_params, theme, position){
   geo_grobs <- lapply(geo_scales, ggplotGrob)
 
   if(position == "bottom"){
-    axis <- ggplot2:::render_axis(panel_params, "primary", "x", "bottom", theme)
+    axis <- render_axis(panel_params, "primary", "x", "bottom", theme)
     gt <- gtable_col("axis", grobs = c(geo_grobs, list(axis)),
                      width = one, heights = unit.c(do.call(unit.c, self$height[ind]), grobHeight(axis)))
     justvp <- viewport(y = 1, just = "top", height = gtable_height(gt))
   }else if(position == "top"){
-    axis <- ggplot2:::render_axis(panel_params, "primary", "x", "top", theme)
+    axis <- render_axis(panel_params, "primary", "x", "top", theme)
     gt <- gtable_col("axis", grobs = c(list(axis), geo_grobs),
                      width = one, heights = unit.c(grobHeight(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(y = 0, just = "bottom", height = gtable_height(gt))
   }else if(position == "left"){
-    axis <- ggplot2:::render_axis(panel_params, "primary", "y", "left", theme)
+    axis <- render_axis(panel_params, "primary", "y", "left", theme)
     gt <- gtable_row("axis", grobs = c(list(axis), geo_grobs),
                      height = one, widths = unit.c(grobWidth(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(x = 1, just = "right", width = gtable_width(gt))
   }else if(position == "right"){
-    axis <- ggplot2:::render_axis(panel_params, "primary", "y", "right", theme)
+    axis <- render_axis(panel_params, "primary", "y", "right", theme)
     gt <- gtable_row("axis", grobs = c(geo_grobs, list(axis)),
                      height = one, widths = unit.c(do.call(unit.c, self$height[ind]), grobWidth(axis)))
     justvp <-  viewport(x = 0, just = "left", width = gtable_width(gt))
   }
 
-  ggplot2:::absoluteGrob(gList(gt), width = gtable_width(gt),
-                         height = gtable_height(gt), vp = justvp)
+  gTree(children = gList(gt),
+        width = gtable_width(gt), height = gtable_height(gt),
+        vp = justvp, cl = "absoluteGrob"
+  )
 }
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse

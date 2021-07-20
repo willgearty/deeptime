@@ -6,33 +6,34 @@
 #' @export
 panel.disparity <- function(x,y,z,groups,subscripts,...) {
   args <- list(...)
-  xlabelinfo <- lattice:::calculateAxisComponents(args$xlim,
-                                                  at = args$scales.3d$x.scales$at,
-                                                  num.limit = NULL,
-                                                  labels = args$scales.3d$x.scales$labels,
-                                                  logsc = args$scales.3d$x.scales$log,
-                                                  abbreviate = args$scales.3d$x.scales$abbreviate,
-                                                  minlength = args$scales.3d$x.scales$minlength,
-                                                  format.posixt = args$scales.3d$x.scales$format,
-                                                  n = args$scales.3d$x.scales$tick.number)
-  ylabelinfo <- lattice:::calculateAxisComponents(args$ylim,
-                                                  at = args$scales.3d$y.scales$at,
-                                                  num.limit = NULL,
-                                                  labels = args$scales.3d$y.scales$labels,
-                                                  logsc = args$scales.3d$y.scales$log,
-                                                  abbreviate = args$scales.3d$y.scales$abbreviate,
-                                                  minlength = args$scales.3d$y.scales$minlength,
-                                                  format.posixt = args$scales.3d$y.scales$format,
-                                                  n = args$scales.3d$y.scales$tick.number)
-  zlabelinfo <- lattice:::calculateAxisComponents(args$zlim,
-                                                  at = args$scales.3d$z.scales$at,
-                                                  num.limit = NULL,
-                                                  labels = args$scales.3d$z.scales$labels,
-                                                  logsc = args$scales.3d$z.scales$log,
-                                                  abbreviate = args$scales.3d$z.scales$abbreviate,
-                                                  minlength = args$scales.3d$z.scales$minlength,
-                                                  format.posixt = args$scales.3d$z.scales$format,
-                                                  n = args$scales.3d$z.scales$tick.number)
+  calculateAxisComponents <- utils::getFromNamespace("calculateAxisComponents", "lattice")
+  xlabelinfo <- calculateAxisComponents(args$xlim,
+                                        at = args$scales.3d$x.scales$at,
+                                        num.limit = NULL,
+                                        labels = args$scales.3d$x.scales$labels,
+                                        logsc = args$scales.3d$x.scales$log,
+                                        abbreviate = args$scales.3d$x.scales$abbreviate,
+                                        minlength = args$scales.3d$x.scales$minlength,
+                                        format.posixt = args$scales.3d$x.scales$format,
+                                        n = args$scales.3d$x.scales$tick.number)
+  ylabelinfo <- calculateAxisComponents(args$ylim,
+                                        at = args$scales.3d$y.scales$at,
+                                        num.limit = NULL,
+                                        labels = args$scales.3d$y.scales$labels,
+                                        logsc = args$scales.3d$y.scales$log,
+                                        abbreviate = args$scales.3d$y.scales$abbreviate,
+                                        minlength = args$scales.3d$y.scales$minlength,
+                                        format.posixt = args$scales.3d$y.scales$format,
+                                        n = args$scales.3d$y.scales$tick.number)
+  zlabelinfo <- calculateAxisComponents(args$zlim,
+                                        at = args$scales.3d$z.scales$at,
+                                        num.limit = NULL,
+                                        labels = args$scales.3d$z.scales$labels,
+                                        logsc = args$scales.3d$z.scales$log,
+                                        abbreviate = args$scales.3d$z.scales$abbreviate,
+                                        minlength = args$scales.3d$z.scales$minlength,
+                                        format.posixt = args$scales.3d$z.scales$format,
+                                        n = args$scales.3d$z.scales$tick.number)
   tmp <- expand.grid(x = sort(union(xlabelinfo$at, xlabelinfo$num.limit)), y = sort(union(ylabelinfo$at, ylabelinfo$num.limit)), gr = zlabelinfo$at)
   panel.wireframe(x=tmp$x,y=tmp$y,z=tmp$gr,groups=tmp$gr,subscripts=seq(1:nrow(tmp)),...)
   panel.cloud(x=x,y=y,z=z,groups=groups,subscripts=subscripts,par.box=list("col" = NA),...)
