@@ -19,4 +19,13 @@ Imports:
     lattice,
     rlang,
     scales
+Suggests: 
+    tidyverse,
+    divDyn,
+    gsloid,
+    phytools,
+    ggtree,
+    paleotree,
+    ggforce,
+    dispRity
 RoxygenNote: 7.1.1

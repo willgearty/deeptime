@@ -1,3 +1,6 @@
+## declare variables that are used within aes() to prevent R CMD check from complaining
+utils::globalVariables(c("min_age", "max_age", "mid_age", "label"))
+
 #' @export
 #' @rdname gggeo_scale
 #' @param obj An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced by this function).
