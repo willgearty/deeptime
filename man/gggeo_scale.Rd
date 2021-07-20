@@ -28,7 +28,8 @@ gggeo_scale(obj, ...)
   margin = NULL,
   neg = FALSE,
   bord = c("left", "right", "top", "bottom"),
-  center_end_labels = FALSE
+  center_end_labels = FALSE,
+  ...
 )
 
 \method{gggeo_scale}{ggplot}(
@@ -48,7 +49,8 @@ gggeo_scale(obj, ...)
   margin = NULL,
   neg = FALSE,
   bord = c("left", "right", "top", "bottom"),
-  center_end_labels = FALSE
+  center_end_labels = FALSE,
+  ...
 )
 
 \method{gggeo_scale}{geo_scale}(
@@ -68,7 +70,8 @@ gggeo_scale(obj, ...)
   margin = NULL,
   neg = FALSE,
   bord = c("left", "right", "top", "bottom"),
-  center_end_labels = FALSE
+  center_end_labels = FALSE,
+  ...
 )
 
 \method{print}{geo_scale}(x, ...)

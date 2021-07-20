@@ -2,7 +2,7 @@
 #' @rdname gggeo_scale
 #' @param obj An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced by this function).
 gggeo_scale <- function(obj, ...) {
-  UseMethod("gggeo_scale", obj)
+  UseMethod("gggeo_scale")
 }
 
 #' Add a geologic scale to ggplots
@@ -111,7 +111,8 @@ gggeo_scale.gtable <- function(obj, lims, dat = "periods", fill = NULL, color = 
                                height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0,
                                abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                size = 5, lwd = .25, margin = NULL, neg = FALSE,
-                               bord = c("left", "right", "top", "bottom"), center_end_labels = FALSE) {
+                               bord = c("left", "right", "top", "bottom"),
+                               center_end_labels = FALSE, ...) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -267,7 +268,8 @@ gggeo_scale.ggplot <- function(obj, dat = "periods", fill = NULL, color = "black
                                height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0,
                                abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                size = 5, lwd = .25, margin = NULL, neg = FALSE,
-                               bord = c("left", "right", "top", "bottom"), center_end_labels = FALSE){
+                               bord = c("left", "right", "top", "bottom"),
+                               center_end_labels = FALSE, ...){
   lims <- ggplot_build(obj)$layout$panel_params[[1]]
   #convert input to grob and gtable layout
   grob_gg <- ggplotGrob(obj)
@@ -283,7 +285,8 @@ gggeo_scale.geo_scale <- function(obj, dat = "periods", fill = NULL, color = "bl
                                   height = unit(2, "line"), pos = "bottom", lab = TRUE, rot = 0,
                                   abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                   size = 5, lwd = .25, margin = NULL, neg = FALSE,
-                                  bord = c("left", "right", "top", "bottom"), center_end_labels = FALSE){
+                                  bord = c("left", "right", "top", "bottom"),
+                                  center_end_labels = FALSE, ...){
   lims <- obj$lims
   gggeo_scale.gtable(obj, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
                      pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
