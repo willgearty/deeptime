@@ -11,7 +11,7 @@
 #'   \item{abbr}{eon name abbreviations}
 #'   \item{color}{the colors for each eon, according to the Comission for the Geological Map of the World}
 #' }
-#' @source \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=1}
+#' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=1}
 "eons"
 
 #' Era data from the International Commission on Stratigraphy (v2013-1)
@@ -27,7 +27,7 @@
 #'   \item{abbr}{era name abbreviations}
 #'   \item{color}{the colors for each era, according to the Comission for the Geological Map of the World}
 #' }
-#' @source \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=2}
+#' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=2}
 "eras"
 
 #' Period data from the International Commission on Stratigraphy (v2013-1)
@@ -43,7 +43,7 @@
 #'   \item{abbr}{period name abbreviations}
 #'   \item{color}{the colors for each period, according to the Comission for the Geological Map of the World}
 #' }
-#' @source \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=3}
+#' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=3}
 "periods"
 
 #' Epoch data from the International Commission on Stratigraphy (v2013-1)
@@ -59,7 +59,7 @@
 #'   \item{abbr}{epoch name abbreviations}
 #'   \item{color}{the colors for each epoch, according to the Comission for the Geological Map of the World}
 #' }
-#' @source \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=4}
+#' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=4}
 "epochs"
 
 #' Stage data from the International Commission on Stratigraphy (v2013-1)
@@ -75,5 +75,5 @@
 #'   \item{abbr}{stage name abbreviations}
 #'   \item{color}{the colors for each stage, according to the Comission for the Geological Map of the World}
 #' }
-#' @source \url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=5}
+#' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=5}
 "stages"

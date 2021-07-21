@@ -15,7 +15,7 @@ A data frame with 4 rows and 5 variables:
 }
 }
 \source{
-\url{http://www.stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=1}
+\url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=1}
 }
 \usage{
 eons
