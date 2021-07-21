@@ -116,7 +116,6 @@ p <- ggplot(df) +
 gggeo_scale_old(p)
 
 #can even add a scale to a phylogeny (using ggtree)
-\dontrun{
 library(phytools)
 library(ggtree)
 tree <- pbtree(b = .03, d = .01,  n=100)
@@ -126,5 +125,4 @@ p <- ggtree(tree) +
  theme_tree2()
 p <- revts(p)
 gggeo_scale_old(p, neg = TRUE)
-}
 }

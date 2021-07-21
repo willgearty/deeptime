@@ -2,6 +2,7 @@ Package: deeptime
 Title: Plotting Tools for Anyone Working in Deep Time
 Version: 0.1.0
 Authors@R: person("William", "Gearty", email = "willgearty@gmail.com", role = c("aut", "cre"))
+Maintainer: William Gearty <willgearty@gmail.com>
 Description: Tools to help with plotting data over long time intervals.
 URL: https://github.com/willgearty/deeptime
 BugReports: https://github.com/willgearty/deeptime/issues
@@ -10,6 +11,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 RoxygenNote: 7.1.1
 LazyData: true
+biocViews:
 Imports:
     ggplot2,
     ggnewscale,
@@ -29,4 +31,5 @@ Suggests:
     phytools,
     paleotree,
     ggforce,
-    dispRity
+    dispRity,
+    ggtree

@@ -30,7 +30,6 @@
 #' @importFrom ggplot2 ggproto CoordCartesian ggproto_parent
 #' @export
 #' @examples
-#' \dontrun{
 #' #make transformer
 #' library(ggforce)
 #' trans <- linear_trans(shear(2, 0), rotate(-pi / 3))
@@ -53,7 +52,6 @@
 #'   geom_point(color = 'black') +
 #'   coord_trans_xy(trans = trans, expand = FALSE) +
 #'   theme_classic()
-#' }
 coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL, expand = TRUE,
                            default = FALSE, clip = "on") {
   ggproto(NULL, CoordTransXY,

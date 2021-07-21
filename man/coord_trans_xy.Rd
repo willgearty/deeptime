@@ -50,7 +50,6 @@ coordinates (e.g. \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{geom_p
 coordinates are extrapolated (e.g. \code{\link[ggplot2]{geom_rect}}).
 }
 \examples{
-\dontrun{
 #make transformer
 library(ggforce)
 trans <- linear_trans(shear(2, 0), rotate(-pi / 3))
@@ -73,6 +72,5 @@ ggplot(data = points, aes(x = x, y = y)) +
   geom_point(color = 'black') +
   coord_trans_xy(trans = trans, expand = FALSE) +
   theme_classic()
-}
 }
 \keyword{datasets}
