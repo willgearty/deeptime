@@ -21,7 +21,7 @@ A data frame with 34 rows and 5 variables:
 epochs
 }
 \description{
-A dataset containing the boundary ages, abbrevations, and colors for the epochs of the Geologic Time Scale.
+A dataset containing the boundary ages, abbreviations, and colors for the epochs of the Geologic Time Scale.
 Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 }
 \keyword{datasets}

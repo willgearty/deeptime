@@ -49,7 +49,7 @@ Complete redesign of `gggeo_scale()` that adds the scale outside of the plotting
 First full release. Adds scale onto the bottom of a ggplot.
 
 * Depends on R>3.4 (#1)
-* Fixed adding scales to facetted plots (#2)
+* Fixed adding scales to faceted plots (#2)
 * Added timescale data from PBDB API (#3)
 * Fixed the use of ggtree when a geom has its own data (#5)
 * Fixed the stacking of multiple scales (#6)

@@ -1,6 +1,6 @@
 #' Eon data from the International Commission on Stratigraphy (v2013-1)
 #'
-#' A dataset containing the boundary ages, abbrevations, and colors for the eons of the Geologic Time Scale.
+#' A dataset containing the boundary ages, abbreviations, and colors for the eons of the Geologic Time Scale.
 #' Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 4 rows and 5 variables:
@@ -16,7 +16,7 @@
 
 #' Era data from the International Commission on Stratigraphy (v2013-1)
 #'
-#' A dataset containing the boundary ages, abbrevations, and colors for the eras of the Geologic Time Scale.
+#' A dataset containing the boundary ages, abbreviations, and colors for the eras of the Geologic Time Scale.
 #' Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 10 rows and 5 variables:
@@ -32,7 +32,7 @@
 
 #' Period data from the International Commission on Stratigraphy (v2013-1)
 #'
-#' A dataset containing the boundary ages, abbrevations, and colors for the periods of the Geologic Time Scale.
+#' A dataset containing the boundary ages, abbreviations, and colors for the periods of the Geologic Time Scale.
 #' Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 22 rows and 5 variables:
@@ -48,7 +48,7 @@
 
 #' Epoch data from the International Commission on Stratigraphy (v2013-1)
 #'
-#' A dataset containing the boundary ages, abbrevations, and colors for the epochs of the Geologic Time Scale.
+#' A dataset containing the boundary ages, abbreviations, and colors for the epochs of the Geologic Time Scale.
 #' Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 34 rows and 5 variables:
@@ -64,7 +64,7 @@
 
 #' Stage data from the International Commission on Stratigraphy (v2013-1)
 #'
-#' A dataset containing the boundary ages, abbrevations, and colors for the stages of the Geologic Time Scale.
+#' A dataset containing the boundary ages, abbreviations, and colors for the stages of the Geologic Time Scale.
 #' Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 100 rows and 5 variables:

@@ -21,7 +21,7 @@ A data frame with 22 rows and 5 variables:
 periods
 }
 \description{
-A dataset containing the boundary ages, abbrevations, and colors for the periods of the Geologic Time Scale.
+A dataset containing the boundary ages, abbreviations, and colors for the periods of the Geologic Time Scale.
 Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
 }
 \keyword{datasets}
