@@ -63,8 +63,11 @@ disparity_through_time(
 
 \item{...}{Other arguments passed to \code{\link[lattice]{wireframe}}}
 }
+\value{
+An object of class \code{"trellis"}, as output by \code{\link[lattice]{wireframe}}.
+}
 \description{
-Plots points on 2-D surfaces within a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
+Plots points on 2-D surfaces within a a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
 }
 \examples{
 g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),

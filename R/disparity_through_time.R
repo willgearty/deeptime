@@ -1,7 +1,8 @@
 #' Combined wireframe and cloud panel
 #'
-#' Plots provided data on 2-D surfaces within 3-D framework. See \code{\link{disparity_through_time}}.
+#' Plots the provided data on 2-D surfaces within a 3-D framework. See \code{\link{disparity_through_time}}.
 #' @param x,y,z,groups,subscripts,... Same as for \code{\link[lattice]{panel.cloud}}
+#' @return No return value, plots the results of both \code{\link[lattice]{panel.cloud}} and \code{\link[lattice]{panel.wireframe}}.
 #' @importFrom lattice panel.wireframe panel.cloud
 #' @export
 panel.disparity <- function(x,y,z,groups,subscripts,...) {
@@ -41,7 +42,7 @@ panel.disparity <- function(x,y,z,groups,subscripts,...) {
 
 #' Disparity through time plot using lattice
 #'
-#' Plots points on 2-D surfaces within a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
+#' Plots points on 2-D surfaces within a a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
 #'
 #' @param x a formula (most likely of the form \code{z ~ x * y})
 #' @param data a data frame in which variables in the formula are to be evaluated
@@ -60,6 +61,7 @@ panel.disparity <- function(x,y,z,groups,subscripts,...) {
 #' @param par.settings plotting settings (see \code{\link[lattice]{trellis.par.set}})
 #' @param lattice.options lattice settings (see \code{\link[lattice]{lattice.options}})
 #' @param ... Other arguments passed to \code{\link[lattice]{wireframe}}
+#' @return An object of class \code{"trellis"}, as output by \code{\link[lattice]{wireframe}}.
 #' @importFrom lattice wireframe
 #' @export
 #' @examples

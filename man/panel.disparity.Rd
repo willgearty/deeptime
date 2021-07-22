@@ -9,6 +9,9 @@ panel.disparity(x, y, z, groups, subscripts, ...)
 \arguments{
 \item{x, y, z, groups, subscripts, ...}{Same as for \code{\link[lattice]{panel.cloud}}}
 }
+\value{
+No return value, plots the results of both \code{\link[lattice]{panel.cloud}} and \code{\link[lattice]{panel.wireframe}}.
+}
 \description{
-Plots provided data on 2-D surfaces within 3-D framework. See \code{\link{disparity_through_time}}.
+Plots the provided data on 2-D surfaces within a 3-D framework. See \code{\link{disparity_through_time}}.
 }

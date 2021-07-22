@@ -187,7 +187,7 @@ p <- ggplot(df) +
 gggeo_scale(p)
 
 #can even add a scale to a phylogeny (using ggtree)
-\dontrun{
+\donttest{
 library(phytools)
 library(ggtree)
 tree <- pbtree(b = .03, d = .01,  n=100)
