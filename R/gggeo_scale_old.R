@@ -23,7 +23,7 @@
 #' @param lab Whether to include labels.
 #' @param rot The amount of counter-clockwise rotation to add to the labels (in degrees).
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
-#' @param skip A vector of interval names indicating which intervals should not be labelled.
+#' @param skip A vector of interval names indicating which intervals should not be labeled.
 #' @param size Label size.
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @return A ggplot object.

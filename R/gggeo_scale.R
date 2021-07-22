@@ -32,7 +32,7 @@ gggeo_scale <- function(obj, ...) {
 #' @param lab Whether to include labels.
 #' @param rot The amount of counter-clockwise rotation to add to the labels (in degrees).
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
-#' @param skip A vector of interval names indicating which intervals should not be labelled.
+#' @param skip A vector of interval names indicating which intervals should not be labeled.
 #' @param size Label size.
 #' @param lwd Line width.
 #' @param margin The width of the margin around the returned object (can be a vector of length 4).

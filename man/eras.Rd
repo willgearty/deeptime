@@ -11,7 +11,7 @@ A data frame with 10 rows and 5 variables:
   \item{max_age}{maximum age, in millions of years}
   \item{min_age}{minimum age, in millions of years}
   \item{abbr}{era name abbreviations}
-  \item{color}{the colors for each era, according to the Comission for the Geological Map of the World}
+  \item{color}{the colors for each era, according to the Commission for the Geological Map of the World}
 }
 }
 \source{

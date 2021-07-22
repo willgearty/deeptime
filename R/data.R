@@ -9,7 +9,7 @@
 #'   \item{max_age}{maximum age, in millions of years}
 #'   \item{min_age}{minimum age, in millions of years}
 #'   \item{abbr}{eon name abbreviations}
-#'   \item{color}{the colors for each eon, according to the Comission for the Geological Map of the World}
+#'   \item{color}{the colors for each eon, according to the Commission for the Geological Map of the World}
 #' }
 #' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=1}
 "eons"
@@ -25,7 +25,7 @@
 #'   \item{max_age}{maximum age, in millions of years}
 #'   \item{min_age}{minimum age, in millions of years}
 #'   \item{abbr}{era name abbreviations}
-#'   \item{color}{the colors for each era, according to the Comission for the Geological Map of the World}
+#'   \item{color}{the colors for each era, according to the Commission for the Geological Map of the World}
 #' }
 #' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=2}
 "eras"
@@ -41,7 +41,7 @@
 #'   \item{max_age}{maximum age, in millions of years}
 #'   \item{min_age}{minimum age, in millions of years}
 #'   \item{abbr}{period name abbreviations}
-#'   \item{color}{the colors for each period, according to the Comission for the Geological Map of the World}
+#'   \item{color}{the colors for each period, according to the Commission for the Geological Map of the World}
 #' }
 #' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=3}
 "periods"
@@ -57,7 +57,7 @@
 #'   \item{max_age}{maximum age, in millions of years}
 #'   \item{min_age}{minimum age, in millions of years}
 #'   \item{abbr}{epoch name abbreviations}
-#'   \item{color}{the colors for each epoch, according to the Comission for the Geological Map of the World}
+#'   \item{color}{the colors for each epoch, according to the Commission for the Geological Map of the World}
 #' }
 #' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=4}
 "epochs"
@@ -73,7 +73,7 @@
 #'   \item{max_age}{maximum age, in millions of years}
 #'   \item{min_age}{minimum age, in millions of years}
 #'   \item{abbr}{stage name abbreviations}
-#'   \item{color}{the colors for each stage, according to the Comission for the Geological Map of the World}
+#'   \item{color}{the colors for each stage, according to the Commission for the Geological Map of the World}
 #' }
 #' @source \url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=5}
 "stages"
