@@ -53,7 +53,7 @@ ggplot(coral_div) +
   theme_classic()
 ```
 
-![example bottom scale](/images/example_bottom.png?raw=true)
+![example bottom scale](man/figures/example_bottom.png)
 
 ### Scale on left axis
 ```r
@@ -66,7 +66,7 @@ ggplot(lisiecki2005) +
   theme_classic()
 ```
 
-![example left scale](/images/example_left.png?raw=true)
+![example left scale](man/figures/example_left.png)
 
 ### Stack multiple scales (e.g. periods and eras)
 Specify multiple scales by giving a list for `pos`. Scales are added from the inside to the outside. Other arguments can be lists or single values (either of which will be recycled if necessary).
@@ -81,7 +81,7 @@ ggplot(coral_div) +
   theme_classic()
 ```
 
-![example stacked scales](/images/example_stack.png?raw=true)
+![example stacked scales](man/figures/example_stack.png)
 
 ### Show intervals from different scales (e.g. Geochrons vs. Foram biozones)
 ```r
@@ -95,7 +95,7 @@ ggplot(lisiecki2005) +
   theme_classic()
 ```
 
-![example separate scales](/images/separate_scales.png?raw=true)
+![example separate scales](man/figures/separate_scales.png)
 
 ### Scale on faceted plot
 You can change on which facets the time scale is plotted by changing the `scales` argument in `facet_wrap()`.
@@ -115,7 +115,7 @@ ggplot(coral_div) +
   facet_wrap(~diet, nrow = 3)
 ```
 
-![example faceted scale](/images/example_facet.png?raw=true)
+![example faceted scale](man/figures/example_facet.png)
 
 ### Add scale to a phylogeny
 ```r
@@ -129,7 +129,7 @@ p <- ggtree(mammal.tree) +
 revts(p)
 ```
 
-![example phylogeny](/images/example_phylo.png?raw=true)
+![example phylogeny](man/figures/example_phylo.png)
 
 ### Add scale to a phylogeny with only fossil taxa
 ```r
@@ -146,7 +146,7 @@ ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$r
   theme(plot.margin = margin(7,11,7,11))
 ```
 
-![example fossil_phylogeny](/images/example_fossil_phylo.png?raw=true)
+![example fossil_phylogeny](man/figures/example_fossil_phylo.png)
 
 ### Combine plots with timescales and plots without timescales
 ```r
@@ -172,7 +172,7 @@ p3 <- ggtree(ammoniteTreeRaia, position = position_nudge(x = -ammoniteTreeRaia$r
 ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2, heights = c(1,2))
 ```
 
-![example ggarrange2](/images/ggarrange2.png?raw=true)
+![example ggarrange2](man/figures/ggarrange2.png)
 
 ### Plot disparity through time
 #### With ggplot
@@ -219,7 +219,7 @@ ggplot() +
   theme(panel.spacing = unit(1, "lines"), panel.background = element_blank())
 ```
 
-![example disparity_ggplot](/images/disparity_ggplot.png?raw=true)
+![example disparity_ggplot](man/figures/disparity_ggplot.png)
 
 #### With base R/lattice
 ```r
@@ -230,4 +230,4 @@ disparity_through_time(time~V1*V2, data = crinoids, groups = time, aspect = c(1.
                        col.regions = "lightgreen", col.point = c("red","blue"))
 ```
 
-![example disparity_lattice](/images/disparity_lattice.png?raw=true)
+![example disparity_lattice](man/figures/disparity_lattice.png)
