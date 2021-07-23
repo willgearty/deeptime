@@ -2,7 +2,6 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^data-raw$
-^images$
 ^\.github$
 cran-comments.md
 ^CRAN-RELEASE$

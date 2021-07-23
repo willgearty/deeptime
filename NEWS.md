@@ -1,5 +1,7 @@
+# deeptime (development version)
+
 # deeptime 0.1.0
-First minor release (planned for CRAN submission)
+First minor release (released on CRAN!)
 
 * Fixed ability to use text transformations (from `scales`) in `coord_geo()` (#30)
 * Added automatic R CMD check Github Actions

@@ -1,26 +1,39 @@
+# deeptime
+
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/willgearty/deeptime/workflows/R-CMD-check/badge.svg)](https://github.com/willgearty/deeptime/actions)
 [![DOI](https://zenodo.org/badge/152502088.svg)](https://zenodo.org/badge/latestdoi/152502088)
+[![CRAN status](https://www.r-pkg.org/badges/version/deeptime)](https://CRAN.R-project.org/package=deeptime)
 <!-- badges: end -->
 
-# deeptime
-Tools to help with plotting data over long time intervals.
+## Overview
+Extends the functionality of other plotting packages like
+`ggplot2` and `lattice` to help facilitate the plotting of data over long time
+intervals, including, but not limited to, geological, evolutionary, and ecological
+data. The primary goal of 'deeptime' is to enable users to add highly customizable
+timescales to their visualizations. Other functions are also included to assist
+with other areas of deep time visualization.
 
-*Note #1: This package is under active development. It's strongly suggested that you upgrade to the most recent version.*
-
-## To install
+## Installation
 ```r
-library(devtools)
-install_github("willgearty/deeptime")
+# get the stable version from CRAN
+install.packages("deeptime")
+
+# or get the development version from github
+# install.packages("devtools")
+devtools::install_github("willgearty/deeptime")
 ```
 
-## To use
+## Usage
 
 ### Load packages
 ```r
 library(deeptime)
 library(ggplot2)
 ```
+
+The main function of `deeptime` is `coord_geo()`, which functions just like `coord_trans()` from `ggplot2`.
+You can use this function to add highly customizable timescales to a wide variety of ggplots.
 
 ### Default scale on bottom axis
 ```r
