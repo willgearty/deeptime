@@ -43,9 +43,8 @@ or C) a custom dataframe of time interval boundaries (see Details).}
 
 \item{clip}{Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.}
 
-\item{expand}{If `TRUE`, the default, adds a small expansion factor to
-the limits to ensure that data and axes don't overlap. If `FALSE`,
-limits are taken exactly from the data or `xlim`/`ylim`.}
+\item{expand}{If `FALSE`, the default, limits are taken exactly from the data or `xlim`/`ylim`.
+If `TRUE`, adds a small expansion factor to the limits to ensure that data and axes don't overlap.}
 
 \item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
 If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.

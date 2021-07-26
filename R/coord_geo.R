@@ -1,3 +1,6 @@
+## declare variables that are used within aes() to prevent R CMD check from complaining
+utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name"))
+
 #' Transformed coordinate system with geological timescale
 #'
 #' \code{coord_geo} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
@@ -23,9 +26,8 @@
 #' @param xlim,ylim Limits for the x and y axes.
 #' @param xtrans,ytrans Transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.
 #' @param clip Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.
-#' @param expand If `TRUE`, the default, adds a small expansion factor to
-#'   the limits to ensure that data and axes don't overlap. If `FALSE`,
-#'   limits are taken exactly from the data or `xlim`/`ylim`.
+#' @param expand If `FALSE`, the default, limits are taken exactly from the data or `xlim`/`ylim`.
+#'   If `TRUE`, adds a small expansion factor to the limits to ensure that data and axes don't overlap.
 #' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
 #'   If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
 #'   Custom fill colors can be provided with this option and will be recycled if/as necessary.
@@ -208,6 +210,22 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
   }else{
     dat <- getScaleData(dat)
   }
+
+  #if the axis is discrete, adjust the data accordingly
+  if(pos %in% c("bottom", "top", "b", "t")){
+    discrete <- panel_params$scale_x$is_discrete()
+    limits <- panel_params$scale_x$limits
+  }else if(pos %in% c("left", "right","l","r")){
+    discrete <- panel_params$scale_y$is_discrete()
+    limits <- panel_params$scale_y$limits
+  }
+
+  if(discrete){
+    dat <- subset(dat, name %in% limits)
+    dat$min_age <- -0.5 + match(limits, dat$name)
+    dat$max_age <- 0.5 + match(limits, dat$name)
+  }
+
   if(neg){
     dat$max_age <- -1 * (dat$max_age)
     dat$min_age <- -1 * (dat$min_age)
@@ -241,13 +259,21 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
   rev_axis <- FALSE
   #if left or right, rotate accordingly, otherwise, just use coord_cartesian
   if(pos %in% c("bottom", "top", "b", "t")){
-    rev_axis <- panel_params$scale_x$trans$name == "reverse"
-    lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
+    if(discrete){
+      lims <- panel_params$x.range
+    } else {
+      rev_axis <- panel_params$scale_x$trans$name == "reverse"
+      lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
+    }
     gg_scale <- gg_scale +
       coord_cartesian(xlim = lims, ylim = c(0,1), expand = FALSE)
   }else if(pos %in% c("left", "right","l","r")){
-    rev_axis <- panel_params$scale_y$trans$name == "reverse"
-    lims <- panel_params$y.range * c(1, -1)[rev_axis + 1]
+    if(discrete){
+      lims <- panel_params$y.range
+    } else {
+      rev_axis <- panel_params$scale_y$trans$name == "reverse"
+      lims <- panel_params$y.range * c(1, -1)[rev_axis + 1]
+    }
     gg_scale <- gg_scale +
       coord_flip(xlim = lims, ylim = c(0,1), expand = FALSE)
   }
@@ -274,8 +300,12 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
   }
 
   #Add border
-  bord_lims <- lims
-  bord_lims[(if(neg) bord_lims > 0 else bord_lims < 0)] <- 0
+  if(discrete){
+    bord_lims <- c(min(dat$min_age), max(dat$max_age))
+  } else {
+    bord_lims <- lims
+    bord_lims[(if(neg) bord_lims > 0 else bord_lims < 0)] <- 0
+  }
 
   if("left" %in% bord | "l" %in% bord){
     gg_scale <- gg_scale +

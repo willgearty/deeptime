@@ -117,6 +117,32 @@ ggplot(coral_div) +
 
 ![example faceted scale](man/figures/example_facet.png)
 
+### Scale on discrete axis
+`coord_geo()` will automatically detect if your axis is discrete. The categories of the discrete axis
+(which can be reordered using the `limits` argument of `scale_[x/y]_discrete()`) should match the `name`
+column of the timescale data (`dat`). You can use the arguments of `theme()` and `scale_[x/y]_discrete()`
+to optionally remove the labels and tick marks.
+```r
+# uses the coral occurrence data from above
+coral_div <- corals %>% filter(period != "") %>%
+  group_by(diet, period) %>%
+  summarise(n = n()) %>%
+  mutate(period_age = (periods$max_age[match(period, periods$name)] + periods$min_age[match(period, periods$name)])/2) %>%
+  arrange(-period_age)
+
+ggplot(coral_div) +
+  geom_col(aes(x = period, y = n, fill = diet)) +
+  scale_x_discrete("Period", limits = unique(coral_div$period), labels = NULL, expand = expansion(add = .5)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_fill_viridis_d() +
+  ylab("Coral Genera") +
+  coord_geo(expand = TRUE, skip = NULL, abbrv = FALSE) +
+  theme_classic() +
+  theme(axis.text.x.bottom = element_text(angle = 90, vjust = .5), axis.ticks.length.x = unit(0, "lines"))
+```
+
+![example discrete axis](man/figures/example_discrete.png)
+
 ### Add scale to a phylogeny
 ```r
 library(phytools)
