@@ -144,6 +144,26 @@ ggplot(coral_div) +
 
 ![example discrete axis](man/figures/example_discrete.png)
 
+### Custom discrete scale
+You can also supply your own pre-discretized scale data by setting the `dat_is_discrete` parameter to `TRUE`.
+You can even have one scale with auto-discretized ages and one scale with pre-discretized ages.
+
+```r
+eras_custom <- data.frame(name = c("Mesozoic", "Cenozoic"), max_age = c(0.5, 3.5), min_age = c(3.5, 6.5), color = c("#67C5CA", "#F2F91D"))
+
+ggplot(coral_div) +
+    geom_col(aes(x = period, y = n, fill = diet)) +
+    scale_x_discrete(NULL, limits = unique(coral_div$period), labels = NULL, expand = expansion(add = .5)) +
+    scale_y_continuous(expand = c(0,0)) +
+    scale_fill_viridis_d() +
+    ylab("Coral Genera") +
+    coord_geo(dat = list("periods", eras_custom), pos = c("b", "b"), expand = TRUE, skip = NULL, abbrv = FALSE, dat_is_discrete = list(FALSE, TRUE)) +
+    theme_classic() +
+    theme(axis.text.x.bottom = element_text(angle = 90, vjust = .5), axis.ticks.length.x = unit(0, "lines"))
+```
+
+![example discrete axis](man/figures/example_discrete_multiple.png)
+
 ### Add scale to a phylogeny
 ```r
 library(phytools)
