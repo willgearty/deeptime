@@ -28,7 +28,8 @@ Imports:
     stats,
     lattice,
     rlang,
-    scales
+    scales,
+    ggfittext
 Suggests: 
     tidyverse,
     divDyn,

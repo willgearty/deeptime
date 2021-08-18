@@ -49,13 +49,16 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name"))
 #' @param rot The amount of counter-clockwise rotation to add to the labels (in degrees).
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
 #' @param skip A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.
-#' @param size Label size.
+#' @param size Label size. Either a number as you would specify in \code{\link[ggplot2]{geom_text}} or \code{"auto"} to use \code{\link[ggfittext]{geom_fit_text}}.
 #' @param lwd Line width.
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @param bord A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).
 #' @param center_end_labels Should labels be centered within the visible range of intervals at the ends of the axis?
 #' @param dat_is_discrete Are the ages in \code{dat} already converted for a discrete scale?
+#' @param fittext_args A list of named arguments to provide to \code{\link[ggfittext]{geom_fit_text}}. Only used if \code{size} is set to \code{"auto"}.
 #' @importFrom ggplot2 ggproto
+#' @importFrom ggfittext geom_fit_text
+#' @importFrom rlang exec
 #' @import scales
 #' @export
 #' @examples
@@ -80,7 +83,7 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
                       clip = "on", expand = FALSE, fill = NULL, color = "black", alpha = 1, height = unit(2, "line"),
                       lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
                       lwd = .25, neg = FALSE, bord = c("left", "right", "top", "bottom"),
-                      center_end_labels = FALSE, dat_is_discrete = FALSE) {
+                      center_end_labels = FALSE, dat_is_discrete = FALSE, fittext_args = list()) {
 
   # resolve transformers
   if (is.character(xtrans)) xtrans <- as.trans(xtrans)
@@ -101,7 +104,8 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
           lwd = rep(make_list(lwd), length.out = n_scales), neg = rep(make_list(neg), length.out = n_scales),
           bord = rep(make_list(bord), length.out = n_scales),
           center_end_labels = rep(make_list(center_end_labels), length.out = n_scales),
-          dat_is_discrete = rep(make_list(dat_is_discrete), length.out = n_scales)
+          dat_is_discrete = rep(make_list(dat_is_discrete), length.out = n_scales),
+          fittext_args = fittext_args
   )
 }
 
@@ -184,7 +188,8 @@ render_geo_scale <- function(self, panel_params, theme, position){
                        bord = self$bord[ind],
                        center_end_labels = self$center_end_labels[ind],
                        dat_is_discrete = self$dat_is_discrete[ind],
-                       MoreArgs = list(panel_params = panel_params, theme = theme),
+                       MoreArgs = list(panel_params = panel_params, theme = theme,
+                                       fittext_args = self$fittext_args),
                        SIMPLIFY = FALSE)
   geo_grobs <- lapply(geo_scales, ggplotGrob)
 
@@ -218,7 +223,7 @@ render_geo_scale <- function(self, panel_params, theme, position){
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
 make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, skip,
-                           size, lwd, neg, bord, center_end_labels, dat_is_discrete, panel_params, theme){
+                           size, lwd, neg, bord, center_end_labels, dat_is_discrete, panel_params, theme, fittext_args){
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -307,10 +312,18 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
         dat$mid_age[min_end] <- (ends[ends < max(lims) & ends > min(lims)] + min(lims))/2
       }
     }
-    gg_scale <- gg_scale +
-      geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
-                vjust = "middle", hjust = "middle", size = size, angle = rot,
-                inherit.aes = FALSE)
+    if(size == "auto"){
+      gg_scale <- gg_scale +
+        exec(geom_fit_text, data = dat, aes(x = mid_age, label = label,
+                                            ymin = 0, ymax = 1,
+                                            xmin = min_age, xmax = max_age),
+                            angle = rot, inherit.aes = FALSE, !!!fittext_args)
+    } else {
+      gg_scale <- gg_scale +
+        geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
+                  vjust = "middle", hjust = "middle", size = size, angle = rot,
+                  inherit.aes = FALSE)
+    }
   }
 
   #Add border

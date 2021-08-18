@@ -125,15 +125,15 @@ column of the timescale data (`dat`). You can use the arguments of `theme()` and
 to optionally remove the labels and tick marks.
 ```r
 # uses the coral occurrence data from above
-coral_div <- corals %>% filter(period != "") %>%
+coral_div_dis <- corals %>% filter(period != "") %>%
   group_by(diet, period) %>%
   summarise(n = n()) %>%
   mutate(period_age = (periods$max_age[match(period, periods$name)] + periods$min_age[match(period, periods$name)])/2) %>%
   arrange(-period_age)
 
-ggplot(coral_div) +
+ggplot(coral_div_dis) +
   geom_col(aes(x = period, y = n, fill = diet)) +
-  scale_x_discrete("Period", limits = unique(coral_div$period), labels = NULL, expand = expansion(add = .5)) +
+  scale_x_discrete("Period", limits = unique(coral_div_dis$period), labels = NULL, expand = expansion(add = .5)) +
   scale_y_continuous(expand = c(0,0)) +
   scale_fill_viridis_d() +
   ylab("Coral Genera") +
@@ -151,18 +151,35 @@ You can even have one scale with auto-discretized ages and one scale with pre-di
 ```r
 eras_custom <- data.frame(name = c("Mesozoic", "Cenozoic"), max_age = c(0.5, 3.5), min_age = c(3.5, 6.5), color = c("#67C5CA", "#F2F91D"))
 
-ggplot(coral_div) +
-    geom_col(aes(x = period, y = n, fill = diet)) +
-    scale_x_discrete(NULL, limits = unique(coral_div$period), labels = NULL, expand = expansion(add = .5)) +
-    scale_y_continuous(expand = c(0,0)) +
-    scale_fill_viridis_d() +
-    ylab("Coral Genera") +
-    coord_geo(dat = list("periods", eras_custom), pos = c("b", "b"), expand = TRUE, skip = NULL, abbrv = FALSE, dat_is_discrete = list(FALSE, TRUE)) +
-    theme_classic() +
-    theme(axis.text.x.bottom = element_text(angle = 90, vjust = .5), axis.ticks.length.x = unit(0, "lines"))
+ggplot(coral_div_dis) +
+  geom_col(aes(x = period, y = n, fill = diet)) +
+  scale_x_discrete(NULL, limits = unique(coral_div_dis$period), labels = NULL, expand = expansion(add = .5)) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_fill_viridis_d() +
+  ylab("Coral Genera") +
+  coord_geo(dat = list("periods", eras_custom), pos = c("b", "b"), expand = TRUE, skip = NULL, abbrv = FALSE, dat_is_discrete = list(FALSE, TRUE)) +
+  theme_classic() +
+  theme(axis.text.x.bottom = element_text(angle = 90, vjust = .5), axis.ticks.length.x = unit(0, "lines"))
 ```
 
-![example discrete axis](man/figures/example_discrete_multiple.png)
+![example custom discrete axis](man/figures/example_discrete_multiple.png)
+
+### Resize labels to fit inside interval rectangles
+`coord_geo()` can use the [ggfittext package](https://wilkox.org/ggfittext/index.html) to resize labels.
+This can be enabled by setting `size` to `"auto"`. Additional arguments can be passed to `geom_fit_text()`
+as a list using the `fittext_args` argument.
+
+```r
+ggplot(coral_div) +
+  geom_line(aes(x = stage_age, y = n)) +
+  scale_x_reverse("Age (Ma)") +
+  ylab("Coral Genera") +
+  coord_geo(dat = "periods", xlim = c(250, 0), ylim = c(0, 1700),
+            abbrv = FALSE, size = "auto", fittext_args = list(size = 20)) +
+  theme_classic()
+```
+
+![example bottom scale](man/figures/example_fittext.png)
 
 ### Add scale to a phylogeny
 ```r

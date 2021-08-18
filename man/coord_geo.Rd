@@ -28,7 +28,8 @@ coord_geo(
   neg = FALSE,
   bord = c("left", "right", "top", "bottom"),
   center_end_labels = FALSE,
-  dat_is_discrete = FALSE
+  dat_is_discrete = FALSE,
+  fittext_args = list()
 )
 }
 \arguments{
@@ -65,7 +66,7 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{skip}{A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.}
 
-\item{size}{Label size.}
+\item{size}{Label size. Either a number as you would specify in \code{\link[ggplot2]{geom_text}} or \code{"auto"} to use \code{\link[ggfittext]{geom_fit_text}}.}
 
 \item{lwd}{Line width.}
 
@@ -76,6 +77,8 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
 
 \item{dat_is_discrete}{Are the ages in \code{dat} already converted for a discrete scale?}
+
+\item{fittext_args}{A list of named arguments to provide to \code{\link[ggfittext]{geom_fit_text}}. Only used if \code{size} is set to \code{"auto"}.}
 }
 \description{
 \code{coord_geo} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
