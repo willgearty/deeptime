@@ -57,8 +57,6 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name"))
 #' @param dat_is_discrete Are the ages in \code{dat} already converted for a discrete scale?
 #' @param fittext_args A list of named arguments to provide to \code{\link[ggfittext]{geom_fit_text}}. Only used if \code{size} is set to \code{"auto"}.
 #' @importFrom ggplot2 ggproto
-#' @importFrom ggfittext geom_fit_text
-#' @importFrom rlang exec
 #' @import scales
 #' @export
 #' @examples
@@ -115,7 +113,7 @@ render_axis <- utils::getFromNamespace("render_axis", "ggplot2")
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom ggplot2 ggproto CoordTrans
+#' @importFrom ggplot2 ggproto CoordTrans ggproto_parent
 #' @importFrom rlang %||%
 CoordGeo <- ggproto("CoordGeo", CoordTrans,
   setup_panel_params = function(self, scale_x, scale_y, params = list()) {
@@ -222,6 +220,8 @@ render_geo_scale <- function(self, panel_params, theme, position){
 }
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
+#' @importFrom ggfittext geom_fit_text
+#' @importFrom rlang exec
 make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, skip,
                            size, lwd, neg, bord, center_end_labels, dat_is_discrete, panel_params, theme, fittext_args){
   if(is(dat, "data.frame")){

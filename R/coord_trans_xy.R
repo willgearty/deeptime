@@ -27,7 +27,7 @@
 #'   limits are set via `xlim` and `ylim` and some data points fall outside those
 #'   limits, then those data points may show up in places such as the axes, the
 #'   legend, the plot title, or the plot margins.
-#' @importFrom ggplot2 ggproto CoordCartesian ggproto_parent
+#' @importFrom ggplot2 ggproto
 #' @export
 #' @examples
 #' #make transformer
@@ -66,6 +66,7 @@ coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL, expand = TRUE
 #' @rdname coord_trans_xy
 #' @format NULL
 #' @usage NULL
+#' @importFrom ggplot2 ggproto CoordCartesian ggproto_parent
 #' @export
 CoordTransXY <- ggproto("CoordTransXY", CoordCartesian,
                         setup_panel_params = function(self, scale_x, scale_y, params = list()) {
