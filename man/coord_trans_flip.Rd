@@ -43,6 +43,7 @@ statistical transformation and will affect the visual appearance of geoms. The m
 is that it also flips the x and y coordinates like \code{\link[ggplot2]{coord_flip}}.
 }
 \examples{
+library(ggplot2)
 ggplot(mtcars, aes(disp, wt)) +
   geom_point() +
   coord_trans_flip(x = "log10", y = "log10")

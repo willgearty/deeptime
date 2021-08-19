@@ -8,6 +8,7 @@
 #' @inheritParams ggplot2::coord_trans
 #' @export
 #' @examples
+#' library(ggplot2)
 #' ggplot(mtcars, aes(disp, wt)) +
 #'   geom_point() +
 #'   coord_trans_flip(x = "log10", y = "log10")
