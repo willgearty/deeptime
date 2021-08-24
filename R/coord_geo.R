@@ -186,8 +186,8 @@ render_geo_scale <- function(self, panel_params, theme, position){
                        bord = self$bord[ind],
                        center_end_labels = self$center_end_labels[ind],
                        dat_is_discrete = self$dat_is_discrete[ind],
-                       MoreArgs = list(panel_params = panel_params, theme = theme,
-                                       fittext_args = self$fittext_args),
+                       MoreArgs = list(self = self, panel_params = panel_params,
+                                       theme = theme, fittext_args = self$fittext_args),
                        SIMPLIFY = FALSE)
   geo_grobs <- lapply(geo_scales, ggplotGrob)
 
@@ -219,11 +219,12 @@ render_geo_scale <- function(self, panel_params, theme, position){
   )
 }
 
-#' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse
+#' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse coord_trans
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
 make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, skip,
-                           size, lwd, neg, bord, center_end_labels, dat_is_discrete, panel_params, theme, fittext_args){
+                           size, lwd, neg, bord, center_end_labels, dat_is_discrete,
+                           panel_params, theme, fittext_args){
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
@@ -276,7 +277,8 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
     theme_void()
 
   rev_axis <- FALSE
-  #if left or right, rotate accordingly, otherwise, just use coord_cartesian
+  #if left or right, rotate accordingly using coord_trans_flip,
+  #otherwise, just use coord_trans
   if(pos %in% c("bottom", "top", "b", "t")){
     if(discrete){
       lims <- panel_params$x.range
@@ -285,7 +287,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
       lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
     }
     gg_scale <- gg_scale +
-      coord_cartesian(xlim = lims, ylim = c(0,1), expand = FALSE)
+      coord_trans(x = self$trans$x, xlim = lims, ylim = c(0,1), expand = FALSE)
   }else if(pos %in% c("left", "right","l","r")){
     if(discrete){
       lims <- panel_params$y.range
@@ -294,7 +296,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
       lims <- panel_params$y.range * c(1, -1)[rev_axis + 1]
     }
     gg_scale <- gg_scale +
-      coord_flip(xlim = lims, ylim = c(0,1), expand = FALSE)
+      coord_trans_flip(x = self$trans$y, xlim = lims, ylim = c(0,1), expand = FALSE)
   }
 
   #Add labels
