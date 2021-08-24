@@ -33,8 +33,10 @@ test_that("coord_geo works", {
     ylab("Coral Genera") +
     coord_geo(xlim = c(250, 0), ylim = c(10, 1700), ytrans = "log10") +
     theme_classic()
-  expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$x.range, c(0, 250))
-  expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$y.range, c(log10(10), log10(1700)))
+  expect_true(is.ggplot(gg))
+  params <- ggplot_build(gg)$layout$panel_params[[1]]
+  expect_equal(params$x.range, c(0, 250))
+  expect_equal(params$y.range, c(log10(10), log10(1700)))
 })
 
 test_that("stacking scales works", {

@@ -52,7 +52,7 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name"))
 #' @param size Label size. Either a number as you would specify in \code{\link[ggplot2]{geom_text}} or \code{"auto"} to use \code{\link[ggfittext]{geom_fit_text}}.
 #' @param lwd Line width.
 #' @param neg Set this to true if your x-axis is using negative values.
-#' @param bord A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).
+#' @param bord A vector specifying on which sides of the scale to add borders (same options as \code{pos}).
 #' @param center_end_labels Should labels be centered within the visible range of intervals at the ends of the axis?
 #' @param dat_is_discrete Are the ages in \code{dat} already converted for a discrete scale?
 #' @param fittext_args A list of named arguments to provide to \code{\link[ggfittext]{geom_fit_text}}. Only used if \code{size} is set to \code{"auto"}.
