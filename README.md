@@ -102,12 +102,12 @@ ggplot(lisiecki2005) +
 You can change on which facets the time scale is plotted by changing the `scales` argument in `facet_wrap()`.
 ```r
 # uses the coral occurrence data from above
-coral_div <- corals %>% filter(stage != "") %>%
+coral_div_diet <- corals %>% filter(stage != "") %>%
   group_by(diet, stage) %>%
   summarise(n = n()) %>%
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] + stages$min_age[match(stage, stages$name)])/2)
 
-ggplot(coral_div) +
+ggplot(coral_div_diet) +
   geom_line(aes(x = stage_age, y = n)) +
   scale_x_reverse("Age (Ma)") +
   ylab("Coral Genera") +
