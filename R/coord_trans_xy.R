@@ -77,26 +77,23 @@ CoordTransXY <- ggproto("CoordTransXY", CoordCartesian,
       if (is.null(self$limits$y)) self$limits$y <- range(new_lims$y)
     }
     parent <- ggproto_parent(CoordCartesian, self)
-    panel_params <- parent$setup_panel_params(scale_x, scale_y, params)
-    panel_params$trans <- self$trans
-    panel_params$lims <- self$limits
-    panel_params
+    parent$setup_panel_params(scale_x, scale_y, params)
   },
-  transform = function(data, panel_params) {
+  transform = function(self, data, panel_params) {
     new_data <- data
-    if (!is.null(panel_params$trans)) {
+    if (!is.null(self$trans)) {
       # transform x and y coordinates
       if('x' %in% colnames(data)){
         # a bit of a hack for axis tick labels
-        data$x[data$x == -Inf] <- panel_params$lims$x[1]
-        data$x[data$x == Inf] <- panel_params$lims$x[2]
-        data$y[data$y == -Inf] <- panel_params$lims$y[1]
-        data$y[data$y == Inf] <- panel_params$lims$y[2]
-        new_data[, c("x","y")] <- panel_params$trans$transform(data$x, data$y)
+        data$x[data$x == -Inf] <- self$limits$x[1]
+        data$x[data$x == Inf] <- self$limits$x[2]
+        data$y[data$y == -Inf] <- self$limits$y[1]
+        data$y[data$y == Inf] <- self$limits$y[2]
+        new_data[, c("x","y")] <- self$trans$transform(data$x, data$y)
       }
       # transform end points for segments
       if('xend' %in% colnames(data)){
-        new_data[, c("xend","yend")] <- panel_params$trans$transform(data$xend, data$yend)
+        new_data[, c("xend","yend")] <- self$trans$transform(data$xend, data$yend)
       }
       # TODO: transform corners for geom_rect?
     }

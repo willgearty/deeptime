@@ -72,7 +72,7 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).}
+\item{bord}{A vector specifying on which sides of the scale to add borders (same options as \code{pos}).}
 
 \item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
 
