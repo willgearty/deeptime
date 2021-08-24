@@ -159,7 +159,7 @@ ggplot(coral_div_dis) +
   ylab("Coral Genera") +
   coord_geo(dat = list("periods", eras_custom), pos = c("b", "b"), expand = TRUE, skip = NULL, abbrv = FALSE, dat_is_discrete = list(FALSE, TRUE)) +
   theme_classic() +
-  theme(axis.text.x.bottom = element_text(angle = 90, vjust = .5), axis.ticks.length.x = unit(0, "lines"))
+  theme(axis.ticks.length.x = unit(0, "lines"))
 ```
 
 ![example custom discrete axis](man/figures/example_discrete_multiple.png)
