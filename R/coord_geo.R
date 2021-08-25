@@ -1,5 +1,5 @@
 ## declare variables that are used within aes() to prevent R CMD check from complaining
-utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name"))
+utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name", "translate"))
 
 #' Transformed coordinate system with geological timescale
 #'
