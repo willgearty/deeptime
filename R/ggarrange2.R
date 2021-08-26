@@ -242,6 +242,8 @@ class(.tmp) <- c(class(.tmp), "dummy")
 #' @export
 .dummy_gtable <- .tmp
 
+upgradeUnit <- utils::getFromNamespace("upgradeUnit", "grid")
+
 # stolen from grid (because unexported)
 as.unit.list <- function(unit) {
   if (inherits(unit, "unit.list")) {
@@ -251,7 +253,7 @@ as.unit.list <- function(unit) {
     result <- vector("list", l)
     for (i in seq_len(l)) result[[i]] <- unit[i]
     class(result) <- c("unit.list", "unit")
-    result
+    upgradeUnit(result)
   }
 }
 
@@ -372,6 +374,7 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
 
   # reorder labels
   labels <- labels[layout]
+  labels[is.na(labels)] <- ""
   # add dummy labels if needed
   if ((!is.null(labels)) && (length(labels) != nrow * ncol)) {
     labels[is.na(labels)] <- ""
@@ -424,7 +427,7 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   fg <- mapply(gtable_frame2, g = grobs, width = widths, height = heights, MoreArgs = list(debug = debug),
                SIMPLIFY = FALSE)
 
-  if (!is.null(labels)) {
+  if (!is.null(labels) && length(labels) > 0) {
     stopifnot(length(labels) == length(fg))
     # make grobs
     labels <- do.call(label_grid, c(list(labels), label.args))
