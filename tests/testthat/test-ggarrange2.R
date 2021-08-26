@@ -20,7 +20,7 @@ test_that("ggarrange2() works", {
     theme_tree2() +
     theme(plot.margin = margin(7,11,7,11))
 
-  gg2 <- ggarrange2(gg1, p3, nrow = 2, heights = c(1,2), draw = FALSE,
+  gg2 <- ggarrange2(gg1, p3, nrow = 2, heights = c(unit(20, "lines"), unit(40, "lines")), draw = FALSE,
                     top = "Test1", bottom = "Test2", left = "Test3", right = "Test4")
   expect_true(gtable::is.gtable(gg2))
   expect_doppelganger("double ggarrange2()", gg2)
