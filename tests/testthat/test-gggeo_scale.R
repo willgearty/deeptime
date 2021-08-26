@@ -5,9 +5,13 @@ test_that("gggeo_scale() works", {
     ylab("Coral Genera") +
     coord_cartesian(xlim = c(250, 0), ylim = c(0, 1700), expand = FALSE) +
     theme_classic()
-  gg <- gggeo_scale(p)
+  gg <- gggeo_scale(p, center_end_labels = TRUE)
   expect_true(gtable::is.gtable(gg))
-  expect_doppelganger("gggeo_scale()", gg)
+  expect_doppelganger("gggeo_scale()", print(gg))
+
+  gg <- gggeo_scale(p, pos = "top")
+  expect_true(gtable::is.gtable(gg))
+  expect_doppelganger("gggeo_scale() top", gg)
 
   p <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
