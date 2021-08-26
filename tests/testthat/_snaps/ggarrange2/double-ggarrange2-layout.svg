@@ -153,7 +153,7 @@
 <text x='651.60' y='97.07' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='117.39px' lengthAdjust='spacingAndGlyphs'>sum(1null, 1null, 0cm)</text>
 <rect x='72.00' y='92.94' width='7.20' height='102.90' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='75.60' y='148.52' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='28.01px' lengthAdjust='spacingAndGlyphs'>(6, 1)</text>
-<text x='68.40' y='148.52' text-anchor='end' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='25.35px' lengthAdjust='spacingAndGlyphs'>1null</text>
+<text x='68.40' y='148.52' text-anchor='end' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='32.03px' lengthAdjust='spacingAndGlyphs'>20null</text>
 <rect x='79.20' y='92.94' width='15.46' height='102.90' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='86.93' y='148.52' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='28.01px' lengthAdjust='spacingAndGlyphs'>(6, 2)</text>
 <rect x='94.66' y='92.94' width='12.68' height='102.90' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
@@ -174,7 +174,7 @@
 <text x='633.07' y='148.52' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='34.68px' lengthAdjust='spacingAndGlyphs'>(6, 10)</text>
 <rect x='640.80' y='92.94' width='7.20' height='102.90' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='644.40' y='148.52' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='34.68px' lengthAdjust='spacingAndGlyphs'>(6, 11)</text>
-<text x='651.60' y='148.52' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='25.35px' lengthAdjust='spacingAndGlyphs'>1null</text>
+<text x='651.60' y='148.52' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='32.03px' lengthAdjust='spacingAndGlyphs'>20null</text>
 <rect x='72.00' y='195.84' width='7.20' height='12.97' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='75.60' y='206.45' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='28.01px' lengthAdjust='spacingAndGlyphs'>(7, 1)</text>
 <text x='68.40' y='206.45' text-anchor='end' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='476.29px' lengthAdjust='spacingAndGlyphs'>sum(max(sum(1null, 2.75points, 1grobheight), sum(1null, 2.75points, 1grobheight)), 1null)</text>
@@ -321,7 +321,7 @@
 <text x='651.60' y='245.32' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='85.37px' lengthAdjust='spacingAndGlyphs'>sum(1null, 0cm)</text>
 <rect x='72.00' y='241.19' width='7.20' height='205.81' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='75.60' y='348.23' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='34.68px' lengthAdjust='spacingAndGlyphs'>(13, 1)</text>
-<text x='68.40' y='348.23' text-anchor='end' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='25.35px' lengthAdjust='spacingAndGlyphs'>2null</text>
+<text x='68.40' y='348.23' text-anchor='end' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='32.03px' lengthAdjust='spacingAndGlyphs'>40null</text>
 <rect x='79.20' y='241.19' width='15.46' height='205.81' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='86.93' y='348.23' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='34.68px' lengthAdjust='spacingAndGlyphs'>(13, 2)</text>
 <rect x='94.66' y='241.19' width='12.68' height='205.81' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
@@ -342,7 +342,7 @@
 <text x='633.07' y='348.23' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='41.36px' lengthAdjust='spacingAndGlyphs'>(13, 10)</text>
 <rect x='640.80' y='241.19' width='7.20' height='205.81' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='644.40' y='348.23' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='41.36px' lengthAdjust='spacingAndGlyphs'>(13, 11)</text>
-<text x='651.60' y='348.23' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='25.35px' lengthAdjust='spacingAndGlyphs'>2null</text>
+<text x='651.60' y='348.23' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='32.03px' lengthAdjust='spacingAndGlyphs'>40null</text>
 <rect x='72.00' y='447.00' width='7.20' height='41.77' style='stroke-width: 0.75; stroke: #0000FF; fill: #ADD8E6;' />
 <text x='75.60' y='472.01' text-anchor='middle' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='34.68px' lengthAdjust='spacingAndGlyphs'>(14, 1)</text>
 <text x='68.40' y='472.01' text-anchor='end' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='226.15px' lengthAdjust='spacingAndGlyphs'>sum(1null, 2lines, 2.75points, 1grobheight)</text>
