@@ -51,6 +51,7 @@ test_that("stacking scales works", {
 })
 
 test_that("scales on different sides works", {
+  skip_if_offline(host = "macrostrat.org")
   gg <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
     scale_y_reverse("Time (Ma)") +
