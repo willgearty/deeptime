@@ -28,6 +28,6 @@ test_that("ggarrange2() works", {
                     top = "Test1", bottom = "Test2", left = "Test3", right = "Test4",
                     newpage = TRUE, draw = TRUE)
   expect_true(gtable::is.gtable(gg3))
-  expect_doppelganger("double ggarrange2()", gg3)
+  expect_doppelganger("double ggarrange2()", print(gg3))
   expect_doppelganger("double ggarrange2() layout", gtable::gtable_show_layout(gg3))
 })
