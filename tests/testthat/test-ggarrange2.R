@@ -1,6 +1,4 @@
 test_that("ggarrange2() works", {
-  library(paleotree)
-  data(RaiaCopesRule)
   p1 <- ggplot(ammoniteTraitsRaia) +
     geom_point(aes(x = Log_D, y = FD)) +
     labs(x = "Body size", y = "Suture complexity") +
