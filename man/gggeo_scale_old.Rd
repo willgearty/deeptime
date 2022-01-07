@@ -115,6 +115,7 @@ p <- ggplot(df) +
   facet_wrap(~z, nrow = 2)
 gggeo_scale_old(p)
 
+\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 #can even add a scale to a phylogeny (using ggtree)
 library(phytools)
 library(ggtree)
@@ -125,4 +126,5 @@ p <- ggtree(tree) +
  theme_tree2()
 p <- revts(p)
 gggeo_scale_old(p, neg = TRUE)
+\dontshow{\}) # examplesIf}
 }

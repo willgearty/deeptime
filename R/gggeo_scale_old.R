@@ -78,6 +78,7 @@
 #'   facet_wrap(~z, nrow = 2)
 #' gggeo_scale_old(p)
 #'
+#' @examplesIf require(ggtree)
 #' #can even add a scale to a phylogeny (using ggtree)
 #' library(phytools)
 #' library(ggtree)

@@ -17,6 +17,7 @@ test_that("ggarrange2() works", {
   expect_doppelganger("ggarrange2() with layout (layout)", gtable::gtable_show_layout(gg2))
 
   library(ggtree)
+  if(!require(ggtree)) skip("ggtree not available for ggarrange2")
   p3 <- ggtree(ammoniteTreeRaia, position = position_nudge(x = -ammoniteTreeRaia$root.time)) +
     coord_geo(xlim = c(-415,-66), ylim = c(-2,Ntip(ammoniteTreeRaia)), pos = "bottom",
               size = 4, abbrv = FALSE, neg = TRUE) +
