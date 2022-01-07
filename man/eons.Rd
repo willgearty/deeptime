@@ -3,9 +3,9 @@
 \docType{data}
 \name{eons}
 \alias{eons}
-\title{Eon data from the International Commission on Stratigraphy (v2013-1)}
+\title{Eon data from the International Commission on Stratigraphy (v2021/05)}
 \format{
-A data frame with 4 rows and 5 variables:
+A data frame with 3 rows and 5 variables:
 \describe{
   \item{name}{eon name}
   \item{max_age}{maximum age, in millions of years}
@@ -15,13 +15,13 @@ A data frame with 4 rows and 5 variables:
 }
 }
 \source{
-\url{https://stratigraphy.org/ICSchart/Cohen2013_Episodes.pdf} via \url{https://paleobiodb.org/data1.2/intervals/list.txt?scale_id=1&scale_level=1}
+\url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20eons}
 }
 \usage{
 eons
 }
 \description{
 A dataset containing the boundary ages, abbreviations, and colors for the eons of the Geologic Time Scale.
-Based on The ICS International Chronostratigraphic Chart (2013), by Cohen, Finney, Gibbard, and Fan.
+Based on The ICS International Chronostratigraphic Chart (v2021/05), by Cohen, Finney, Gibbard, and Fan.
 }
 \keyword{datasets}
