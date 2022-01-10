@@ -1,5 +1,11 @@
 # development version
 
+# deeptime 0.2.1
+Updated built-in timescales
+
+* Updated the built-in timescales using the Macrostrat API (#39)
+* Fixed CRAN checks when ggtree is missing (#38)
+
 # deeptime 0.2.0
 Several new features and bug fixes.
 
