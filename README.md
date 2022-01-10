@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/willgearty/deeptime/workflows/R-CMD-check/badge.svg)](https://github.com/willgearty/deeptime/actions)
-[![codecov](https://codecov.io/gh/willgearty/deeptime/branch/master/graph/badge.svg?token=VMT2EQQB8E)](https://codecov.io/gh/willgearty/deeptime)
+[![codecov](https://codecov.io/gh/willgearty/deeptime/branch/master/graph/badge.svg?token=VMT2EQQB8E)](https://app.codecov.io/gh/willgearty/deeptime)
 [![DOI](https://zenodo.org/badge/152502088.svg)](https://zenodo.org/badge/latestdoi/152502088)
 [![CRAN status](https://www.r-pkg.org/badges/version/deeptime)](https://CRAN.R-project.org/package=deeptime)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/deeptime)](https://cran.r-project.org/package=deeptime)
