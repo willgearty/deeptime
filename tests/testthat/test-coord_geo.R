@@ -104,10 +104,11 @@ test_that("geom_fit_text() works", {
 })
 
 suppressPackageStartupMessages(library(phytools, quietly = TRUE))
-suppressPackageStartupMessages(library(ggtree, quietly = TRUE))
 
 test_that("ggtree scale works", {
-  if(!require(ggtree)) skip("ggtree not available for coord_geo")
+  if(!suppressPackageStartupMessages(require(ggtree, quietly = TRUE))) {
+    skip("ggtree not available for coord_geo")
+  }
   data(mammal.tree)
   gg <- ggtree(mammal.tree) +
     coord_geo(xlim = c(-75,0), ylim = c(-2,Ntip(mammal.tree)), neg = TRUE, abbrv = FALSE) +
@@ -117,7 +118,9 @@ test_that("ggtree scale works", {
 })
 
 test_that("ggtree scale works with only fossil taxa", {
-  if(!require(ggtree)) skip("ggtree not available for fossil tree")
+  if(!suppressPackageStartupMessages(require(ggtree, quietly = TRUE))) {
+    skip("ggtree not available for fossil tree")
+  }
   gg <- ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
     coord_geo(xlim = c(-163.5,-66), ylim = c(-2,Ntip(ceratopsianTreeRaia)), pos = list("bottom", "bottom"),
               skip = c("Paleocene", "Middle Jurassic"), dat = list("epochs", "periods"), abbrv = FALSE,
