@@ -14,7 +14,8 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name", "tran
 #'   \item The \code{max_age} column lists the oldest boundary of each time interval.
 #'   \item The \code{min_age} column lists the youngest boundary of each time interval.
 #'   \item The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-#'   \item The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+#'   \item The \code{color} column is also optional and lists a \link[ggplot2]{color} for the background for each time interval.
+#'   \item The \code{lab_color} column is also optional and lists a \link[ggplot2]{color} for the label for each time interval.
 #' }
 #'
 #' If the axis of the time scale is discrete, \code{max_age} and \code{min_age} will
@@ -25,11 +26,11 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name", "tran
 #' time scale where categories and time intervals are not 1:1.
 #'
 #' \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-#' In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
+#' In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab}, \code{lab_color},
 #' \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{neg}, \code{bord},
 #' \code{center_end_labels}, and \code{dat_is_discrete} can also be lists.
 #' If these lists are not as long as \code{pos}, the elements will be recycled.
-#' If individual values are used for these parameters, they will be applied to all time scales.
+#' If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
 #' @param pos Which side to add the scale to (left, right, top, or bottom). First letter may also be used.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
@@ -39,13 +40,16 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name", "tran
 #' @param clip Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.
 #' @param expand If `FALSE`, the default, limits are taken exactly from the data or `xlim`/`ylim`.
 #'   If `TRUE`, adds a small expansion factor to the limits to ensure that data and axes don't overlap.
-#' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
-#'   If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
-#'   Custom fill colors can be provided with this option and will be recycled if/as necessary.
+#' @param fill The fill color of the boxes. The default is to use the \code{color} column included in \code{dat}.
+#'   If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
+#'   Custom fill colors can be provided with this option (overriding the \code{color} column) and will be recycled if/as necessary.
 #' @param color The outline color of the interval boxes.
 #' @param alpha The transparency of the fill colors.
 #' @param height The height (or width if \code{pos} is \code{left} or \code{right}) of the scale.
 #' @param lab Whether to include labels.
+#' @param lab_color The color of the labels. The default is to use the \code{lab_color} column included in \code{dat}.
+#'   If a custom dataset is provided with \code{dat} without a \code{lab_color} column and without fill, all labels will be black.
+#'   Custom label colors can be provided with this option (overriding the \code{lab_color} column) and will be recycled if/as necessary.
 #' @param rot The amount of counter-clockwise rotation to add to the labels (in degrees).
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
 #' @param skip A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.
@@ -79,7 +83,7 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name", "tran
 #'   theme_classic()
 coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL, xtrans = identity_trans(), ytrans = identity_trans(),
                       clip = "on", expand = FALSE, fill = NULL, color = "black", alpha = 1, height = unit(2, "line"),
-                      lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
+                      lab = TRUE, lab_color = NULL, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5,
                       lwd = .25, neg = FALSE, bord = c("left", "right", "top", "bottom"),
                       center_end_labels = FALSE, dat_is_discrete = FALSE, fittext_args = list()) {
 
@@ -96,7 +100,8 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
           expand = expand, clip = clip,
           pos = pos, dat = rep(make_list(dat), length.out = n_scales), fill = rep(make_list(fill), length.out = n_scales),
           color = rep(make_list(color), length.out = n_scales), alpha = rep(make_list(alpha), length.out = n_scales),
-          height = rep(make_list(height), length.out = n_scales), lab = rep(as.list(lab), length.out = n_scales),
+          height = rep(make_list(height), length.out = n_scales), lab = rep(make_list(lab), length.out = n_scales),
+          lab_color = rep(make_list(lab_color), length.out = n_scales),
           rot = rep(make_list(rot), length.out = n_scales), abbrv = rep(make_list(abbrv), length.out = n_scales),
           skip = rep(make_list(skip), length.out = n_scales), size = rep(make_list(size), length.out = n_scales),
           lwd = rep(make_list(lwd), length.out = n_scales), neg = rep(make_list(neg), length.out = n_scales),
@@ -177,6 +182,7 @@ render_geo_scale <- function(self, panel_params, theme, position){
                        alpha = self$alpha[ind],
                        pos = self$pos[ind],
                        lab = self$lab[ind],
+                       lab_color = self$lab_color[ind],
                        rot = self$rot[ind],
                        abbrv = self$abbrv[ind],
                        skip = self$skip[ind],
@@ -219,10 +225,10 @@ render_geo_scale <- function(self, panel_params, theme, position){
   )
 }
 
-#' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual theme_void theme coord_cartesian coord_flip scale_x_reverse coord_trans
+#' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes scale_fill_manual scale_color_manual theme_void theme coord_cartesian coord_flip scale_x_reverse coord_trans
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
-make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, skip,
+make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, lab_color, rot, abbrv, skip,
                            size, lwd, neg, bord, center_end_labels, dat_is_discrete,
                            panel_params, theme, fittext_args){
   if(is(dat, "data.frame")){
@@ -255,6 +261,11 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
     dat$color <- rep(fill, length.out = nrow(dat))
   }else if(!("color" %in% colnames(dat))){
     dat$color <- rep(c("grey60","grey80"), length.out = nrow(dat))
+  }
+  if(!is.null(lab_color)){
+    dat$lab_color <- rep(lab_color, length.out = nrow(dat))
+  }else if(!("lab_color" %in% colnames(dat))){
+    dat$lab_color <- "black"
   }
   if(abbrv & "abbr" %in% colnames(dat)){
     dat$label <- dat$abbr
@@ -318,14 +329,17 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, rot, abbrv, 
       gg_scale <- gg_scale +
         exec(geom_fit_text, data = dat, aes(x = mid_age, label = label,
                                             ymin = 0, ymax = 1,
-                                            xmin = min_age, xmax = max_age),
-                            angle = rot, inherit.aes = FALSE, !!!fittext_args)
+                                            xmin = min_age, xmax = max_age,
+                                            color = lab_color), angle = rot,
+             show.legend = FALSE, inherit.aes = FALSE, !!!fittext_args)
     } else {
       gg_scale <- gg_scale +
-        geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
+        geom_text(data = dat, aes(x = mid_age, label = label, color = lab_color), y = .5,
                   vjust = "middle", hjust = "middle", size = size, angle = rot,
-                  inherit.aes = FALSE)
+                  show.legend = FALSE, inherit.aes = FALSE)
     }
+    gg_scale <- gg_scale +
+      scale_color_manual(values = setNames(dat$lab_color, dat$lab_color))
   }
 
   #Add border

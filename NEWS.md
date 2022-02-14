@@ -1,5 +1,7 @@
 # development version
 
+* Added the ability to specify label color (#40)
+
 # deeptime 0.2.1
 Updated built-in timescales
 

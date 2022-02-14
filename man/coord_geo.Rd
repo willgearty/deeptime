@@ -20,6 +20,7 @@ coord_geo(
   alpha = 1,
   height = unit(2, "line"),
   lab = TRUE,
+  lab_color = NULL,
   rot = 0,
   abbrv = TRUE,
   skip = c("Quaternary", "Holocene", "Late Pleistocene"),
@@ -48,9 +49,9 @@ or C) a custom data.frame of time interval boundaries (see Details).}
 \item{expand}{If `FALSE`, the default, limits are taken exactly from the data or `xlim`/`ylim`.
 If `TRUE`, adds a small expansion factor to the limits to ensure that data and axes don't overlap.}
 
-\item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
-If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
-Custom fill colors can be provided with this option and will be recycled if/as necessary.}
+\item{fill}{The fill color of the boxes. The default is to use the \code{color} column included in \code{dat}.
+If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
+Custom fill colors can be provided with this option (overriding the \code{color} column) and will be recycled if/as necessary.}
 
 \item{color}{The outline color of the interval boxes.}
 
@@ -59,6 +60,10 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 \item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the scale.}
 
 \item{lab}{Whether to include labels.}
+
+\item{lab_color}{The color of the labels. The default is to use the \code{lab_color} column included in \code{dat}.
+If a custom dataset is provided with \code{dat} without a \code{lab_color} column and without fill, all labels will be black.
+Custom label colors can be provided with this option (overriding the \code{lab_color} column) and will be recycled if/as necessary.}
 
 \item{rot}{The amount of counter-clockwise rotation to add to the labels (in degrees).}
 
@@ -93,7 +98,8 @@ If a custom data.frame is provided (with \code{dat}), it should consist of at le
   \item The \code{max_age} column lists the oldest boundary of each time interval.
   \item The \code{min_age} column lists the youngest boundary of each time interval.
   \item The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-  \item The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+  \item The \code{color} column is also optional and lists a \link[ggplot2]{color} for the background for each time interval.
+  \item The \code{lab_color} column is also optional and lists a \link[ggplot2]{color} for the label for each time interval.
 }
 
 If the axis of the time scale is discrete, \code{max_age} and \code{min_age} will
@@ -104,11 +110,11 @@ within \code{dat} are already discretized, you can set \code{dat_is_discrete} to
 time scale where categories and time intervals are not 1:1.
 
 \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab},
+In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab}, \code{lab_color},
 \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{neg}, \code{bord},
 \code{center_end_labels}, and \code{dat_is_discrete} can also be lists.
 If these lists are not as long as \code{pos}, the elements will be recycled.
-If individual values are used for these parameters, they will be applied to all time scales.
+If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
 }
 \examples{
 library(ggplot2)
