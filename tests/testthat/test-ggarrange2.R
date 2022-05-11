@@ -1,4 +1,7 @@
 test_that("ggarrange2() works", {
+  if(!suppressPackageStartupMessages(require(paleotree, quietly = TRUE))) {
+    skip("paleotree not available for ggarrange2")
+  }
   p1 <- ggplot(ammoniteTraitsRaia) +
     geom_point(aes(x = Log_D, y = FD)) +
     labs(x = "Body size", y = "Suture complexity") +
@@ -16,8 +19,9 @@ test_that("ggarrange2() works", {
   expect_doppelganger("ggarrange2() with layout", gg2)
   expect_doppelganger("ggarrange2() with layout (layout)", gtable::gtable_show_layout(gg2))
 
-  library(ggtree)
-  if(!require(ggtree)) skip("ggtree not available for ggarrange2")
+  if(!suppressPackageStartupMessages(require(ggtree, quietly = TRUE))) {
+    skip("ggtree not available for ggarrange2")
+  }
   p3 <- ggtree(ammoniteTreeRaia, position = position_nudge(x = -ammoniteTreeRaia$root.time)) +
     coord_geo(xlim = c(-415,-66), ylim = c(-2,Ntip(ammoniteTreeRaia)), pos = "bottom",
               size = 4, abbrv = FALSE, neg = TRUE) +

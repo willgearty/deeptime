@@ -1,4 +1,7 @@
 test_that("gggeo_scale_old() works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for gggeo_scale_old")
+  }
   p <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
@@ -9,6 +12,9 @@ test_that("gggeo_scale_old() works", {
   expect_true(is.ggplot(gg))
   expect_doppelganger("gggeo_scale_old()", gg)
 
+  if(!suppressPackageStartupMessages(require(gsloid, quietly = TRUE))) {
+    skip("gsloid not available for gggeo_scale_old")
+  }
   p <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
     scale_y_reverse("Time (Ma)") +

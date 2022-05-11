@@ -1,4 +1,7 @@
 test_that("coord_geo works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for coord_geo")
+  }
   gg <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
@@ -20,6 +23,9 @@ test_that("coord_geo works", {
 })
 
 test_that("stacking scales works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for stacking scales")
+  }
   gg <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
@@ -32,17 +38,9 @@ test_that("stacking scales works", {
 
 test_that("scales on different sides works", {
   skip_if_offline(host = "macrostrat.org")
-  gg <- ggplot(lisiecki2005) +
-    geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
-    scale_y_reverse("Time (Ma)") +
-    scale_x_reverse() +
-    coord_geo(dat = list("Geomagnetic Polarity Chron", "Planktic foraminiferal Primary Biozones"),
-              xlim = c(6,2), ylim = c(5.5,0), pos = list("l", "r"), rot = 90, skip = "PL4", size = list(5, 4)) +
-    theme_classic()
-  expect_doppelganger("scales on different sides", gg)
-})
-
-test_that("scales on different sides works", {
+  if(!suppressPackageStartupMessages(require(gsloid, quietly = TRUE))) {
+    skip("gsloid not available for scales on different sides")
+  }
   gg <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
     scale_y_reverse("Time (Ma)") +
@@ -54,6 +52,9 @@ test_that("scales on different sides works", {
 })
 
 test_that("scales on facetted plot works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for facetted plot")
+  }
   gg <- ggplot(coral_div_diet) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
@@ -65,6 +66,9 @@ test_that("scales on facetted plot works", {
 })
 
 test_that("auto-discrete scale works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for auto-discrete scale")
+  }
   gg <- ggplot(coral_div_dis) +
     geom_col(aes(x = period, y = n, fill = diet)) +
     scale_x_discrete("Period", limits = unique(coral_div_dis$period), labels = NULL, expand = expansion(add = .5)) +
@@ -78,6 +82,9 @@ test_that("auto-discrete scale works", {
 })
 
 test_that("custom discrete scale works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for custom discrete scale")
+  }
   eras_custom <- data.frame(name = c("Mesozoic", "Cenozoic"), max_age = c(0.5, 3.5), min_age = c(3.5, 6.5), color = c("#67C5CA", "#F2F91D"))
 
   gg <- ggplot(coral_div_dis) +
@@ -93,6 +100,9 @@ test_that("custom discrete scale works", {
 })
 
 test_that("geom_fit_text() works", {
+  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
+    skip("divDyn not available for geom_fit_text")
+  }
   gg <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
@@ -103,13 +113,13 @@ test_that("geom_fit_text() works", {
   expect_doppelganger("geom_fit_text()", gg)
 })
 
-suppressPackageStartupMessages(library(phytools, quietly = TRUE))
-
 test_that("ggtree scale works", {
   if(!suppressPackageStartupMessages(require(ggtree, quietly = TRUE))) {
     skip("ggtree not available for coord_geo")
   }
-  data(mammal.tree)
+  if(!suppressPackageStartupMessages(require(phytools, quietly = TRUE))) {
+    skip("phytools not available for coord_geo")
+  }
   gg <- ggtree(mammal.tree) +
     coord_geo(xlim = c(-75,0), ylim = c(-2,Ntip(mammal.tree)), neg = TRUE, abbrv = FALSE) +
     scale_x_continuous(breaks=seq(-80,0,20), labels=abs(seq(-80,0,20))) +
@@ -120,6 +130,9 @@ test_that("ggtree scale works", {
 test_that("ggtree scale works with only fossil taxa", {
   if(!suppressPackageStartupMessages(require(ggtree, quietly = TRUE))) {
     skip("ggtree not available for fossil tree")
+  }
+  if(!suppressPackageStartupMessages(require(paleotree, quietly = TRUE))) {
+    skip("paleotree not available for fossil tree")
   }
   gg <- ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
     coord_geo(xlim = c(-163.5,-66), ylim = c(-2,Ntip(ceratopsianTreeRaia)), pos = list("bottom", "bottom"),

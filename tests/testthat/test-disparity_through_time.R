@@ -1,6 +1,7 @@
 test_that("disparity_through_time() works", {
-  suppressPackageStartupMessages(library(dispRity, quietly = TRUE))
-  data(demo_data)
+  if(!suppressPackageStartupMessages(require(dispRity, quietly = TRUE))) {
+    skip("dispRity not available for disparity_through_time")
+  }
   crinoids <- as.data.frame(demo_data$wright$matrix[[1]][, 1:2])
   crinoids$time <- "before extinction"
   crinoids$time[demo_data$wright$subsets$after$elements] <- "after extinction"
