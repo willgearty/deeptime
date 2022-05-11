@@ -19,6 +19,7 @@ test_that("gggeo_scale() works", {
   if(!suppressPackageStartupMessages(require(gsloid, quietly = TRUE))) {
     skip("gsloid not available for gggeo_scale")
   }
+  skip_if_offline(host = "macrostrat.org")
   p <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
     scale_y_reverse("Time (Ma)") +
