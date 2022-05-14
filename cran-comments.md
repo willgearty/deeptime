@@ -12,16 +12,11 @@ This is a resubmission.
 ## R CMD check results
 There were no ERRORs or WARNINGs.
 
-There were 2 NOTES:
-
- * Package suggested but not available for checking: ‘gsloid’
-   
-   gsloid is only used for tests and these tests are skipped if the package is not available.
-   Furthermore, this package appears to be under active development and should be restored to CRAN soon.
+There was 1 NOTE:
    
  * Examples with CPU (user + system) or elapsed time > 5s
    
-   The identified example takes up to 7 seconds depending on the OS (but less than 5 seconds on Ubuntu).
+   The identified example takes up to 8 seconds depending on the OS (but less than 5 seconds on Ubuntu).
    The example is necessary to exemplify the functionality of the function.
 
 ## Downstream dependencies
