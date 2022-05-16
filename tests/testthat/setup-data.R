@@ -1,22 +1,24 @@
-suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
+suppressPackageStartupMessages(library(ggplot2, quietly = TRUE))
 
 if(suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
   data(corals)
-  coral_div <- corals %>% filter(stage != "") %>%
-    group_by(stage) %>%
-    summarise(n = n()) %>%
-    mutate(stage_age = (stages$max_age[match(stage, stages$name)] + stages$min_age[match(stage, stages$name)])/2)
+  corals__stages_clean <- subset(corals, stage != "")
+  coral_div <- aggregate(cbind(n = genus) ~ stage, data = corals__stages_clean,
+                         FUN = function(x) length(x))
+  coral_div$stage_age = (stages$max_age[match(coral_div$stage, stages$name)] +
+                           stages$min_age[match(coral_div$stage, stages$name)])/2
 
-  coral_div_diet <- corals %>% filter(stage != "") %>%
-    group_by(diet, stage) %>%
-    summarise(n = n()) %>%
-    mutate(stage_age = (stages$max_age[match(stage, stages$name)] + stages$min_age[match(stage, stages$name)])/2)
+  coral_div_diet <- aggregate(cbind(n = genus) ~ stage + diet, data = corals__stages_clean,
+                               FUN = function(x) length(x))
+  coral_div_diet$stage_age = (stages$max_age[match(coral_div_diet$stage, stages$name)] +
+                                stages$min_age[match(coral_div_diet$stage, stages$name)])/2
 
-  coral_div_dis <- corals %>% filter(period != "") %>%
-    group_by(diet, period) %>%
-    summarise(n = n()) %>%
-    mutate(period_age = (periods$max_age[match(period, periods$name)] + periods$min_age[match(period, periods$name)])/2) %>%
-    arrange(-period_age)
+  corals_periods_clean <- subset(corals, period != "")
+  coral_div_dis <- aggregate(cbind(n = genus) ~ period + diet, data = corals_periods_clean,
+                             FUN = function(x) length(x))
+  coral_div_dis$period_age = (periods$max_age[match(coral_div_dis$period, periods$name)] +
+                               periods$min_age[match(coral_div_dis$period, periods$name)])/2
+  coral_div_dis <- coral_div_dis[rev(order(coral_div_dis$period_age)),, drop = FALSE]
 }
 
 if(suppressPackageStartupMessages(require(paleotree, quietly = TRUE))) {

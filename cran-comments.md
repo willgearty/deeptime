@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission.
 
-* The gsloid package is now back on CRAN.
+* Removed tidyverse dependency from tests
 
 ## Test environments (with Github Actions)
 
