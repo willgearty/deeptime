@@ -10,7 +10,7 @@ getScaleData(name)
 \item{name}{The name of the desired timescale.}
 }
 \value{
-A dataframe with the following columns:
+A \code{data.frame} with the following columns:
   \item{name}{the names of the time intervals.}
   \item{max_age}{the oldest boundaries of the time intervals, in millions of years.}
   \item{min_age}{the youngest boundaries of the time intervals, in millions of years.}
@@ -19,8 +19,9 @@ A dataframe with the following columns:
 }
 \description{
 This function takes a name of a geological timescale and returns data for the timescale.
-}
-\details{
-Valid names include those of built-in dataframes ("periods", "epochs", "stages", "eons", or "eras")
-and those hosted by macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}).
+Valid names include those of built-in \code{data.frames} (\code{\link{periods}},
+\code{\link{epochs}}, \code{\link{stages}}, \code{\link{eons}}, or \code{\link{eras}}),
+partial matches of those names (e.g., "per" or "stage"),
+and exact matches to those hosted by Macrostrat (see full list here:
+\url{https://macrostrat.org/api/defs/timescales?all}).
 }

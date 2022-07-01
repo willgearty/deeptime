@@ -16,9 +16,7 @@ coord_trans_flip(
 )
 }
 \arguments{
-\item{x}{Transformers for x and y axes or their names.}
-
-\item{y}{Transformers for x and y axes or their names.}
+\item{x, y}{Transformers for x and y axes or their names.}
 
 \item{xlim}{Limits for the x and y axes.}
 

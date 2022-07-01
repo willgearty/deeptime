@@ -11,6 +11,7 @@
 #'   \item{abbr}{eon name abbreviations}
 #'   \item{color}{the colors for each eon, according to the Commission for the Geological Map of the World}
 #' }
+#' @family timescales
 #' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20eons}
 "eons"
 
@@ -27,6 +28,7 @@
 #'   \item{abbr}{era name abbreviations}
 #'   \item{color}{the colors for each era, according to the Commission for the Geological Map of the World}
 #' }
+#' @family timescales
 #' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20eras}
 "eras"
 
@@ -43,6 +45,7 @@
 #'   \item{abbr}{period name abbreviations}
 #'   \item{color}{the colors for each period, according to the Commission for the Geological Map of the World}
 #' }
+#' @family timescales
 #' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20periods}
 "periods"
 
@@ -59,6 +62,7 @@
 #'   \item{abbr}{epoch name abbreviations}
 #'   \item{color}{the colors for each epoch, according to the Commission for the Geological Map of the World}
 #' }
+#' @family timescales
 #' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20epochs}
 "epochs"
 
@@ -75,5 +79,6 @@
 #'   \item{abbr}{stage name abbreviations}
 #'   \item{color}{the colors for each stage, according to the Commission for the Geological Map of the World}
 #' }
+#' @family timescales
 #' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20ages}
 "stages"

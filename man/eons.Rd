@@ -24,4 +24,12 @@ eons
 A dataset containing the boundary ages, abbreviations, and colors for the eons of the Geologic Time Scale.
 Based on The ICS International Chronostratigraphic Chart (v2021/05), by Cohen, Finney, Gibbard, and Fan.
 }
+\seealso{
+Other timescales: 
+\code{\link{epochs}},
+\code{\link{eras}},
+\code{\link{periods}},
+\code{\link{stages}}
+}
+\concept{timescales}
 \keyword{datasets}

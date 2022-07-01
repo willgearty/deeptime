@@ -1,5 +1,6 @@
 # development version
 
+* Better name handling and documentation for getScaleData() (#42)
 
 # deeptime 0.2.2
 
