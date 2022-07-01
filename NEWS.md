@@ -1,5 +1,6 @@
 # development version
 
+* Update built-in timescales to 2022/02 version of GTS
 * Better name handling and documentation for getScaleData() (#42)
 
 # deeptime 0.2.2

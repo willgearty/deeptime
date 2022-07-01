@@ -3,7 +3,7 @@
 \docType{data}
 \name{epochs}
 \alias{epochs}
-\title{Epoch data from the International Commission on Stratigraphy (v2021/05)}
+\title{Epoch data from the International Commission on Stratigraphy (v2022/02)}
 \format{
 A data frame with 34 rows and 5 variables:
 \describe{
@@ -22,7 +22,7 @@ epochs
 }
 \description{
 A dataset containing the boundary ages, abbreviations, and colors for the epochs of the Geologic Time Scale.
-Based on The ICS International Chronostratigraphic Chart (v2021/05), by Cohen, Finney, Gibbard, and Fan.
+Based on The ICS International Chronostratigraphic Chart (v2022/02), by Cohen, Finney, Gibbard, and Fan.
 }
 \seealso{
 Other timescales: 
