@@ -1,6 +1,6 @@
 Package: deeptime
 Title: Plotting Tools for Anyone Working in Deep Time
-Version: 0.2.3
+Version: 0.2.3.9001
 Authors@R: person("William", "Gearty", email = "willgearty@gmail.com", role = c("aut", "cre"))
 Maintainer: William Gearty <willgearty@gmail.com>
 Description: Extends the functionality of other plotting packages like
@@ -43,3 +43,4 @@ Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
 Config/testthat/edition: 3
+Config/Needs/revdeps: revdepcheck
