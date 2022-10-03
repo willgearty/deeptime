@@ -1,5 +1,7 @@
 # development version
 
+* Added coord_geo_polar(), for adding timescales to polar plots (#33)
+
 # deeptime 0.2.3
 
 * Updated built-in timescales to 2022/02 version of GTS

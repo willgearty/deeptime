@@ -21,6 +21,11 @@ if(suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
   coral_div_dis <- coral_div_dis[rev(order(coral_div_dis$period_age)),, drop = FALSE]
 }
 
+if(suppressPackageStartupMessages(require(ape, quietly = TRUE))) {
+  set.seed(1)
+  tree <- rtree(100)
+}
+
 if(suppressPackageStartupMessages(require(paleotree, quietly = TRUE))) {
   data(RaiaCopesRule)
 }

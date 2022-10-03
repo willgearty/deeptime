@@ -36,6 +36,7 @@ Suggests:
     tidyverse,
     divDyn,
     gsloid,
+    ape,
     phytools,
     paleotree,
     dispRity,
