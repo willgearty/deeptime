@@ -80,7 +80,7 @@ The \code{axis.line.r}, \code{axis.text.r}, \code{axis.ticks.r}, and \code{axis.
 ggplot2 \link[ggplot2:theme]{theme elements} can be modified just like their x and y counterparts
 to change the appearance of the radius axis. The default settings work well for a horizontal axis
 pointing towards the right, but these theme settings will need to be modified for other orientations.
-The default value for \code{axis.line.r} is \code{element_line(color = "grey50")}.
+The default value for \code{axis.line.r} is \code{element_line()}.
 The default value for \code{axis.text.r} is \code{element_text(size = 3.5, vjust = -2, hjust = NA)}.
 The default value for \code{axis.ticks.r} is \code{element_line()}.
 The default value for \code{axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that the units
