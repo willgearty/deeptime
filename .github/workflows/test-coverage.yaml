@@ -44,5 +44,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Test coverage
-        run: covr::codecov()
+        run: |
+          excl <- list("R/zzz.R"=1:1e6)
+          covr::codecov(line_exclusions = excl)
         shell: Rscript {0}
