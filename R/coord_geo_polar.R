@@ -95,8 +95,31 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
   )
 }
 
-rename_data <- utils::getFromNamespace("rename_data", "ggplot2")
-ggname <- utils::getFromNamespace("ggname", "ggplot2")
+rename <- function (x, replace) {
+  current_names <- names(x)
+  old_names <- names(replace)
+  missing_names <- setdiff(old_names, current_names)
+  if (length(missing_names) > 0) {
+    replace <- replace[!old_names %in% missing_names]
+    old_names <- names(replace)
+  }
+  names(x)[match(old_names, current_names)] <- as.vector(replace)
+  x
+}
+
+rename_data <- function(coord, data) {
+  if (coord$theta == "y") {
+    rename(data, c("y" = "theta", "x" = "r"))
+  } else {
+    rename(data, c("y" = "r", "x" = "theta"))
+  }
+}
+
+#' @importFrom grid grobName
+ggname <- function (prefix, grob) {
+  grob$name <- grobName(grob, prefix)
+  grob
+}
 
 #' @rdname coord_geo_polar
 #' @format NULL
@@ -106,6 +129,7 @@ ggname <- utils::getFromNamespace("ggname", "ggplot2")
 #' @importFrom ggplot2 geom_rect geom_segment scale_x_continuous scale_fill_manual calc_element
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||%
+#' @importFrom utils packageVersion
 CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
   render_bg = function(self, panel_params, theme) {
     panel_params <- rename_data(self, panel_params)
@@ -188,10 +212,17 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     axis_ticks <- calc_element('axis.ticks.r', theme)
     axis_ticks_length <- calc_element('axis.ticks.length.r', theme)
     if (!is(axis_line, "element_blank")) {
-      geo_scale <- geo_scale +
-        geom_vline(xintercept = 0, color = axis_line$colour %||% NA,
-                   size = axis_line$size %||% NA,
-                   linetype = axis_line$linetype %||% NA)
+      if (packageVersion("ggplot2") > "3.3.6") {
+        geo_scale <- geo_scale +
+          geom_vline(xintercept = 0, color = axis_line$colour %||% NA,
+                     linewidth = axis_line$linewidth %||% NA,
+                     linetype = axis_line$linetype %||% NA)
+      } else {
+        geo_scale <- geo_scale +
+          geom_vline(xintercept = 0, color = axis_line$colour %||% NA,
+                     size = axis_line$size %||% NA,
+                     linetype = axis_line$linetype %||% NA)
+      }
     }
     if (!is(axis_text, "element_blank")) {
       geo_scale <- geo_scale +
@@ -210,13 +241,23 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
       tick_length <- as.numeric(axis_ticks_length %||% unit(0, "points")) / (90 / abs(diff(r_lims)))
       rs <- sapply(panel_params$r.major, function(r) sqrt((r - min(r_lims)) ^ 2 + tick_length ^ 2))
       thetas <- sapply(rs, function(r) asin(tick_length/r))
-      geo_scale <- geo_scale +
-        annotate(geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
-                 y = min(r_lims) + rs, yend = panel_params$r.major,
-                 color = axis_ticks$colour %||% NA,
-                 size = axis_ticks$size %||% NA,
-                 linetype = axis_ticks$linetype %||% NA,
-                 lineend = axis_ticks$lineend %||% NA)
+      if (packageVersion("ggplot2") > "3.3.6") {
+        geo_scale <- geo_scale +
+          annotate(geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
+                   y = min(r_lims) + rs, yend = panel_params$r.major,
+                   color = axis_ticks$colour %||% NA,
+                   linewidth = axis_ticks$linewidth %||% NA,
+                   linetype = axis_ticks$linetype %||% NA,
+                   lineend = axis_ticks$lineend %||% NA)
+      } else {
+        geo_scale <- geo_scale +
+          annotate(geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
+                   y = min(r_lims) + rs, yend = panel_params$r.major,
+                   color = axis_ticks$colour %||% NA,
+                   size = axis_ticks$size %||% NA,
+                   linetype = axis_ticks$linetype %||% NA,
+                   lineend = axis_ticks$lineend %||% NA)
+      }
     }
     # should there be an axis label?
 
