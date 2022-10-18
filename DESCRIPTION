@@ -18,7 +18,7 @@ RoxygenNote: 7.2.1
 LazyData: true
 biocViews:
 Imports:
-    ggplot2,
+    ggplot2 (>= 3.3.0),
     ggnewscale,
     utils,
     ggforce,
@@ -31,7 +31,8 @@ Imports:
     rlang,
     scales,
     ggfittext,
-    curl
+    curl,
+    cli
 Suggests: 
     tidyverse,
     divDyn,

@@ -18,9 +18,7 @@ coord_trans_flip(
 \arguments{
 \item{x, y}{Transformers for x and y axes or their names.}
 
-\item{xlim}{Limits for the x and y axes.}
-
-\item{ylim}{Limits for the x and y axes.}
+\item{xlim, ylim}{Limits for the x and y axes.}
 
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}

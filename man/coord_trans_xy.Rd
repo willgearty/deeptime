@@ -10,7 +10,7 @@ coord_trans_xy(
   trans = NULL,
   xlim = NULL,
   ylim = NULL,
-  expand = TRUE,
+  expand = FALSE,
   default = FALSE,
   clip = "on"
 )
