@@ -15,14 +15,18 @@ test_that("coord_trans_xy() works", {
   points_trans <- trans$transform(points$x, points$y)
   expect_equal(params$x.range, range(points_trans$x))
   expect_equal(params$y.range, range(points_trans$y))
+  expect_true(is(ggplot_build(gg)$layout$panel_params[[1]]$x.sec, "ViewScale"))
+  expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$x$limits, c(-2, 2))
   expect_doppelganger("coord_trans_xy() without expansion", gg)
 
   gg <- ggplot(data = points, aes(x = x, y = y, color = color)) +
     geom_polygon(data = square, fill = NA, color = "black") +
     geom_point() +
     scale_x_continuous(sec.axis = sec_axis(~.)) +
-    coord_trans_xy(trans = trans) +
+    scale_y_continuous(sec.axis = sec_axis(~.)) +
+    coord_trans_xy(trans = trans, expand = TRUE) +
     theme_classic()
   expect_true(is.ggplot(gg))
+  expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$x$limits, c(-2, 2))
   expect_doppelganger("coord_trans_xy() with expansion", gg)
 })

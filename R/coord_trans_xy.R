@@ -53,8 +53,8 @@
 #'   geom_point(color = 'black') +
 #'   coord_trans_xy(trans = trans, expand = FALSE) +
 #'   theme_classic()
-coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL, expand = TRUE,
-                           default = FALSE, clip = "on") {
+coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL,
+                           expand = FALSE, default = FALSE, clip = "on") {
   if(is.null(trans)) trans <- linear_trans(translate(0,0))
   ggproto(NULL, CoordTransXY,
           trans = trans,
@@ -65,9 +65,42 @@ coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL, expand = TRUE
   )
 }
 
-default_expansion <- utils::getFromNamespace("default_expansion", "ggplot2")
-expand_range4 <- utils::getFromNamespace("expand_range4", "ggplot2")
-dist_euclidean <- utils::getFromNamespace("dist_euclidean", "ggplot2")
+#' @importFrom ggplot2 expansion
+default_expansion <- function(scale, discrete = expansion(add = 0.6),
+                              continuous = expansion(mult = 0.05), expand = TRUE) {
+  if (!expand) {
+    return(expansion(0, 0))
+  }
+
+  if (!inherits(scale$expand, "waiver")) scale$expand else if (scale$is_discrete()) discrete else continuous
+}
+
+expand_range4 <- function(limits, expand) {
+  if (!(is.numeric(expand) && length(expand) %in% c(2,4))) {
+    cli::cli_abort("{.arg expand} must be a numeric vector with 2 or 4 elements")
+  }
+
+  if (all(!is.finite(limits))) {
+    return(c(-Inf, Inf))
+  }
+
+  # If only two expansion constants are given (i.e. the old syntax),
+  # reuse them to generate a four-element expansion vector
+  if (length(expand) == 2) {
+    expand <- c(expand, expand)
+  }
+
+  # Calculate separate range expansion for the lower and
+  # upper range limits, and then combine them into one vector
+  lower <- scales::expand_range(limits, expand[1], expand[2])[1]
+  upper <- scales::expand_range(limits, expand[3], expand[4])[2]
+  c(lower, upper)
+}
+
+dist_euclidean <- function(x, y) {
+  n <- length(x)
+  sqrt((x[-n] - x[-1])^2 + (y[-n] - y[-1])^2)
+}
 
 #' @rdname coord_trans_xy
 #' @format NULL
@@ -130,14 +163,20 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     out_x$range <- range(range_x_coord)
     out_y$range <- range(range_y_coord)
 
-    c(list(x.range = out_x$range,
+    c(list(x = view_scale_primary(scale_x, continuous_range = scale_range_x),
+           x.sec = view_scale_secondary(scale_x, continuous_range = scale_range_x_sec),
+           x.range = out_x$range,
+           x.range.coord = range_x_coord,
            x.labels = out_x$labels,
            x.major = rescale(out_x$major_source, 0:1, scale_range_x),
            x.minor = rescale(out_x$minor_source, 0:1, scale_range_x),
            x.sec.labels = out_x_sec$sec.labels,
            x.sec.major = rescale(out_x_sec$sec.major_source, 0:1, scale_range_x_sec),
            x.sec.minor = rescale(out_x_sec$sec.minor_source, 0:1, scale_range_x_sec)),
-      list(y.range = out_y$range,
+      list(y = view_scale_primary(scale_y, continuous_range = scale_range_y),
+           y.sec = view_scale_secondary(scale_y, continuous_range = scale_range_y_sec),
+           y.range = out_y$range,
+           y.range.coord = range_y_coord,
            y.labels = out_y$labels,
            y.major = rescale(out_y$major_source, 0:1, scale_range_y),
            y.minor = rescale(out_y$minor_source, 0:1, scale_range_y),
@@ -150,21 +189,162 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     # transform x and y coordinates
     if('x' %in% colnames(data)){
       # a bit of a hack for axis tick labels
-      data$x[data$x == -Inf] <- panel_params$x.range[1]
-      data$x[data$x == Inf] <- panel_params$x.range[2]
-      data$y[data$y == -Inf] <- panel_params$y.range[1]
-      data$y[data$y == Inf] <- panel_params$y.range[2]
-      temp_data <- self$trans$transform(data$x, data$y)
-      new_data$x <- rescale(temp_data$x, 0:1, panel_params$x.range)
-      new_data$y <- rescale(temp_data$y, 0:1, panel_params$y.range)
+      if(all(data$x == -Inf)){
+        new_data$y <- rescale(data$y, 0:1, panel_params$y$continuous_range)
+      } else if(all(data$x == Inf)){
+        new_data$y <- rescale(data$y, 0:1, panel_params$y.sec$continuous_range)
+      } else if(all(data$y == -Inf)){
+        new_data$x <- rescale(data$x, 0:1, panel_params$x$continuous_range)
+      } else if(all(data$y == Inf)){
+        new_data$x <- rescale(data$x, 0:1, panel_params$x.sec$continuous_range)
+      } else {
+        temp_data <- self$trans$transform(data$x, data$y)
+        new_data$x <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)
+        new_data$y <- rescale(temp_data$y, 0:1, panel_params$y.range.coord)
+      }
     }
     # transform end points for segments
     if('xend' %in% colnames(data)){
       temp_data <- self$trans$transform(data$xend, data$yend)
-      new_data$xend <- rescale(temp_data$x, 0:1, panel_params$x.range)
-      new_data$yend <- rescale(temp_data$y, 0:1, panel_params$y.range)
+      new_data$xend <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)
+      new_data$yend <- rescale(temp_data$y, 0:1, panel_params$y.range.coord)
     }
     # TODO: transform corners for geom_rect?
-    CoordCartesian$transform(new_data, panel_params)
+    new_data
+    #CoordCartesian$transform(new_data, panel_params)
   }
+)
+
+view_scale_primary <- function(scale, limits = scale$get_limits(),
+                               continuous_range = scale$dimension(limits = limits)) {
+
+  if(!scale$is_discrete()) {
+    # continuous_range can be specified in arbitrary order, but
+    # continuous scales expect the one in ascending order.
+    continuous_scale_sorted <- sort(continuous_range)
+    breaks <- scale$get_breaks(continuous_scale_sorted)
+    minor_breaks <- scale$get_breaks_minor(b = breaks, limits = continuous_scale_sorted)
+  } else {
+    breaks <- scale$get_breaks(limits)
+    minor_breaks <- scale$get_breaks_minor(b = breaks, limits = limits)
+  }
+
+  ggproto(NULL, ViewScale,
+          scale = scale,
+          guide = scale$guide,
+          position = scale$position,
+          aesthetics = scale$aesthetics,
+          name = scale$name,
+          scale_is_discrete = scale$is_discrete(),
+          limits = limits,
+          continuous_range = continuous_range,
+          breaks = breaks,
+          minor_breaks = minor_breaks
+  )
+}
+
+scale_flip_position <- function(scale) {
+  scale$position <- switch(scale$position, top = "bottom",
+                           bottom = "top", left = "right", right = "left", scale$position)
+  invisible()
+}
+
+view_scale_secondary <- function(scale, limits = scale$get_limits(),
+                                 continuous_range = scale$dimension(limits = limits)) {
+
+  if (is.null(scale$secondary.axis) || inherits(scale$secondary.axis, "waiver") || scale$secondary.axis$empty()) {
+    # if there is no second axis, return the primary scale with no guide
+    # this guide can be overridden using guides()
+    primary_scale <- view_scale_primary(scale, limits, continuous_range)
+    scale_flip_position(primary_scale)
+    primary_scale$guide <- ggplot2::guide_none()
+    primary_scale
+  } else {
+    scale$secondary.axis$init(scale)
+    break_info <- scale$secondary.axis$break_info(continuous_range, scale)
+    names(break_info) <- gsub("sec\\.", "", names(break_info))
+
+    # flip position from the original scale by default
+    # this can (should) be overridden in the guide
+    position <- switch(scale$position,
+                       top = "bottom",
+                       bottom = "top",
+                       left = "right",
+                       right = "left",
+                       scale$position
+    )
+
+    ggproto(NULL, ViewScale,
+            scale = scale,
+            guide = scale$secondary.axis$guide,
+            position = position,
+            break_info = break_info,
+            # as far as scales are concerned, this is a regular scale with
+            # different breaks and labels in a different data space
+            aesthetics = scale$aesthetics,
+            name = scale$sec_name(),
+            make_title = function(self, title) self$scale$make_sec_title(title),
+            limits = limits,
+            continuous_range = continuous_range,
+
+            dimension = function(self) self$break_info$range,
+            get_limits = function(self) self$break_info$range,
+            get_breaks = function(self) self$break_info$major_source,
+            get_breaks_minor = function(self) self$break_info$minor_source,
+            break_positions = function(self) self$break_info$major,
+            break_positions_minor = function(self) self$break_info$minor,
+            get_labels = function(self, breaks = self$get_breaks()) self$break_info$labels,
+            rescale = function(x) rescale(x, from = break_info$range, to = c(0, 1))
+    )
+  }
+}
+
+
+ViewScale <- ggproto("ViewScale", NULL,
+   # map, rescale, and make_title need a reference
+   # to the original scale
+   scale = ggproto(NULL, ggplot2::Scale),
+   guide = ggplot2::guide_none(),
+   position = NULL,
+   aesthetics = NULL,
+   name = ggplot2::waiver(),
+   scale_is_discrete = FALSE,
+   limits = NULL,
+   continuous_range = NULL,
+   breaks = NULL,
+   minor_breaks = NULL,
+
+   is_empty = function(self) {
+     is.null(self$get_breaks()) && is.null(self$get_breaks_minor())
+   },
+   is_discrete = function(self) self$scale_is_discrete,
+   dimension = function(self) self$continuous_range,
+   get_limits = function(self) self$limits,
+   get_breaks = function(self) self$breaks,
+   get_breaks_minor = function(self) self$minor_breaks,
+   get_labels = function(self, breaks = self$get_breaks()) self$scale$get_labels(breaks),
+   rescale = function(self, x) {
+     self$scale$rescale(x, self$limits, self$continuous_range)
+   },
+   map = function(self, x) {
+     if (self$is_discrete()) {
+       self$scale$map(x, self$limits)
+     } else {
+       self$scale$map(x, self$continuous_range)
+     }
+   },
+   make_title = function(self, title) {
+     self$scale$make_title(title)
+   },
+   break_positions = function(self) {
+     self$rescale(self$get_breaks())
+   },
+   break_positions_minor = function(self) {
+     b <- self$get_breaks_minor()
+     if (is.null(b)) {
+       return(NULL)
+     }
+
+     self$rescale(b)
+   }
 )
