@@ -1,6 +1,8 @@
 # development version
 
 * Added coord_geo_polar(), for adding timescales to polar plots (#33)
+* Fixed coord_geo_polar() and coord_trans_xy() for ggplot2 version 3.4.0 (#44)
+* deeptime now requires ggplot2 version 3.3.0 or higher
 
 # deeptime 0.2.3
 
