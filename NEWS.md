@@ -1,6 +1,7 @@
 # development version
 
 * Added coord_geo_polar(), for adding timescales to polar plots (#33)
+* Added color and fill discrete scales that use the GTS colors (#43)
 
 # deeptime 0.2.3
 
