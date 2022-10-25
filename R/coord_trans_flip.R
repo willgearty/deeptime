@@ -26,7 +26,17 @@ coord_trans_flip <- function(x = "identity", y = "identity", xlim = NULL, ylim =
   )
 }
 
-flip_axis_labels <- utils::getFromNamespace("flip_axis_labels", "ggplot2")
+# copied from ggplot2
+flip_axis_labels <- function(x) {
+  old_names <- names(x)
+
+  new_names <- old_names
+  new_names <- gsub("^x", "z", new_names)
+  new_names <- gsub("^y", "x", new_names)
+  new_names <- gsub("^z", "y", new_names)
+
+  setNames(x, new_names)
+}
 
 #' @rdname coord_trans_flip
 #' @format NULL

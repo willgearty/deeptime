@@ -43,7 +43,7 @@ test_that("scales on different sides works", {
   }
   gg <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
-    scale_y_reverse("Time (Ma)") +
+    scale_y_reverse("Time (Ma)", sec.axis = sec_axis(~.)) +
     scale_x_reverse() +
     coord_geo(dat = list("Geomagnetic Polarity Chron", "Planktic foraminiferal Primary Biozones"),
               xlim = c(6,2), ylim = c(5.5,0), pos = list("l", "r"), rot = 90, skip = "PL4", size = list(5, 4)) +

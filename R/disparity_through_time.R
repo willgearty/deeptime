@@ -1,3 +1,7 @@
+calculateAxisComponents <- function(...) {
+  asNamespace("lattice")$calculateAxisComponents(...)
+}
+
 #' Combined wireframe and cloud panel
 #'
 #' Plots the provided data on 2-D surfaces within a 3-D framework. See \code{\link{disparity_through_time}}.
@@ -7,7 +11,6 @@
 #' @export
 panel.disparity <- function(x,y,z,groups,subscripts,...) {
   args <- list(...)
-  calculateAxisComponents <- utils::getFromNamespace("calculateAxisComponents", "lattice")
   xlabelinfo <- calculateAxisComponents(args$xlim,
                                         at = args$scales.3d$x.scales$at,
                                         num.limit = NULL,

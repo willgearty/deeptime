@@ -242,7 +242,9 @@ class(.tmp) <- c(class(.tmp), "dummy")
 #' @export
 .dummy_gtable <- .tmp
 
-upgradeUnit <- utils::getFromNamespace("upgradeUnit", "grid")
+upgradeUnit <- function(...) {
+  asNamespace("grid")$upgradeUnit(...)
+}
 
 # stolen from grid (because unexported)
 as.unit.list <- function(unit) {

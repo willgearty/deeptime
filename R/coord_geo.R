@@ -112,8 +112,6 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   )
 }
 
-render_axis <- utils::getFromNamespace("render_axis", "ggplot2")
-
 #' @rdname coord_geo
 #' @format NULL
 #' @usage NULL
@@ -131,40 +129,28 @@ CoordGeo <- ggproto("CoordGeo", CoordTrans,
 
   render_axis_h = function(self, panel_params, theme) {
     arrange <- panel_params$x.arrange %||% c("secondary", "primary")
+    axes <- CoordTrans$render_axis_h(panel_params, theme)
     if (any(self$pos %in% c("top", "t"))){
-      top = render_geo_scale(self, panel_params, theme, "top")
-    } else {
-      top = render_axis(panel_params, arrange[1], "x", "top", theme)
+      axes$top <- render_geo_scale(self, panel_params, theme, "top")
     }
     if (any(self$pos %in% c("bottom", "b"))){
-      bottom = render_geo_scale(self, panel_params, theme, "bottom")
-    } else {
-      bottom = render_axis(panel_params, arrange[2], "x", "bottom", theme)
+      axes$bottom <- render_geo_scale(self, panel_params, theme, "bottom")
     }
 
-    list(
-      top = top,
-      bottom = bottom
-    )
+    axes
   },
 
   render_axis_v = function(self, panel_params, theme) {
     arrange <- panel_params$y.arrange %||% c("primary", "secondary")
+    axes <- CoordTrans$render_axis_v(panel_params, theme)
     if (any(self$pos %in% c("left", "l"))){
-      left = render_geo_scale(self, panel_params, theme, "left")
-    } else {
-      left = render_axis(panel_params, arrange[1], "y", "left", theme)
+      axes$left <- render_geo_scale(self, panel_params, theme, "left")
     }
     if (any(self$pos %in% c("right", "r"))){
-      right = render_geo_scale(self, panel_params, theme, "right")
-    } else {
-      right = render_axis(panel_params, arrange[2], "y", "right", theme)
+      axes$right <- render_geo_scale(self, panel_params, theme, "right")
     }
 
-    list(
-      left = left,
-      right = right
-    )
+    axes
   }
 )
 
@@ -198,22 +184,22 @@ render_geo_scale <- function(self, panel_params, theme, position){
   geo_grobs <- lapply(geo_scales, ggplotGrob)
 
   if(position == "bottom"){
-    axis <- render_axis(panel_params, "primary", "x", "bottom", theme)
+    axis <- CoordTrans$render_axis_h(panel_params, theme)$bottom
     gt <- gtable_col("axis", grobs = c(geo_grobs, list(axis)),
                      width = one, heights = unit.c(do.call(unit.c, self$height[ind]), grobHeight(axis)))
     justvp <- viewport(y = 1, just = "top", height = gtable_height(gt))
   }else if(position == "top"){
-    axis <- render_axis(panel_params, "primary", "x", "top", theme)
+    axis <- CoordTrans$render_axis_h(panel_params, theme)$top
     gt <- gtable_col("axis", grobs = c(list(axis), geo_grobs),
                      width = one, heights = unit.c(grobHeight(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(y = 0, just = "bottom", height = gtable_height(gt))
   }else if(position == "left"){
-    axis <- render_axis(panel_params, "primary", "y", "left", theme)
+    axis <- CoordTrans$render_axis_v(panel_params, theme)$left
     gt <- gtable_row("axis", grobs = c(list(axis), geo_grobs),
                      height = one, widths = unit.c(grobWidth(axis), do.call(unit.c, self$height[ind])))
     justvp <-  viewport(x = 1, just = "right", width = gtable_width(gt))
   }else if(position == "right"){
-    axis <- render_axis(panel_params, "primary", "y", "right", theme)
+    axis <- CoordTrans$render_axis_v(panel_params, theme)$right
     gt <- gtable_row("axis", grobs = c(geo_grobs, list(axis)),
                      height = one, widths = unit.c(do.call(unit.c, self$height[ind]), grobWidth(axis)))
     justvp <-  viewport(x = 0, just = "left", width = gtable_width(gt))
