@@ -192,17 +192,31 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
                   show.legend = FALSE, inherit.aes = FALSE)
       # add lines if requested
       if (!is.null(self$lwd[[ind]])) {
-        geo_scale <- geo_scale +
-          geom_segment(data = dat_list[[ind]],
-                       aes(y = min_age, yend = min_age),
-                       x = xmins[ind], xend = xmins[ind + 1],
-                       color = self$color[[ind]], lwd = self$lwd[[ind]],
-                       lty = self$lty[[ind]]) +
-          geom_segment(data = dat_list[[ind]],
-                       aes(y = max_age, yend = max_age),
-                       x = xmins[ind], xend = xmins[ind + 1],
-                       color = self$color[[ind]], lwd = self$lwd[[ind]],
-                       lty = self$lty[[ind]])
+        if (packageVersion("ggplot2") > "3.3.6") {
+          geo_scale <- geo_scale +
+            geom_segment(data = dat_list[[ind]],
+                         aes(y = min_age, yend = min_age),
+                         x = xmins[ind], xend = xmins[ind + 1],
+                         color = self$color[[ind]], linewidth = self$lwd[[ind]],
+                         lty = self$lty[[ind]]) +
+            geom_segment(data = dat_list[[ind]],
+                         aes(y = max_age, yend = max_age),
+                         x = xmins[ind], xend = xmins[ind + 1],
+                         color = self$color[[ind]], linewidth = self$lwd[[ind]],
+                         lty = self$lty[[ind]])
+        } else {
+          geo_scale <- geo_scale +
+            geom_segment(data = dat_list[[ind]],
+                         aes(y = min_age, yend = min_age),
+                         x = xmins[ind], xend = xmins[ind + 1],
+                         color = self$color[[ind]], size = self$lwd[[ind]],
+                         lty = self$lty[[ind]]) +
+            geom_segment(data = dat_list[[ind]],
+                         aes(y = max_age, yend = max_age),
+                         x = xmins[ind], xend = xmins[ind + 1],
+                         color = self$color[[ind]], size = self$lwd[[ind]],
+                         lty = self$lty[[ind]])
+        }
       }
     }
 
