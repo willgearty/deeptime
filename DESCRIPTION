@@ -1,6 +1,6 @@
 Package: deeptime
 Title: Plotting Tools for Anyone Working in Deep Time
-Version: 0.2.3.9004
+Version: 0.2.3.9005
 Authors@R: person("William", "Gearty", email = "willgearty@gmail.com", role = c("aut", "cre"))
 Maintainer: William Gearty <willgearty@gmail.com>
 Description: Extends the functionality of other plotting packages like

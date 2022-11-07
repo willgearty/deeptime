@@ -1185,6 +1185,6 @@
 <text x='653.76' y='366.64' style='font-size: 8.80px; font-family: sans;' textLength='39.63px' lengthAdjust='spacingAndGlyphs'>Ediacaran</text>
 <text x='653.76' y='383.92' style='font-size: 8.80px; font-family: sans;' textLength='45.01px' lengthAdjust='spacingAndGlyphs'>Cryogenian</text>
 <text x='653.76' y='401.20' style='font-size: 8.80px; font-family: sans;' textLength='26.91px' lengthAdjust='spacingAndGlyphs'>Tonian</text>
-<text x='27.90' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='96.15px' lengthAdjust='spacingAndGlyphs'>scale_color_geo</text>
+<text x='27.90' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='141.65px' lengthAdjust='spacingAndGlyphs'>scale_discrete_geo new</text>
 </g>
 </svg>

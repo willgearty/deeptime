@@ -378,6 +378,6 @@
 <polyline points='39.84,433.50 42.58,433.50 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <text x='378.55' y='568.24' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='45.24px' lengthAdjust='spacingAndGlyphs'>Age (Ma)</text>
 <text transform='translate(13.05,277.87) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='66.04px' lengthAdjust='spacingAndGlyphs'>Coral Genera</text>
-<text x='42.58' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='104.94px' lengthAdjust='spacingAndGlyphs'>scale on all facets</text>
+<text x='42.58' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='132.83px' lengthAdjust='spacingAndGlyphs'>scale on all facets new</text>
 </g>
 </svg>

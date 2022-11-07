@@ -6,7 +6,7 @@ test_that("scale_fill_geo works", {
     geom_point(aes(x = x, y = y, fill = color), shape = 21) +
     scale_fill_geo("periods", name = "Period") +
     theme_classic()
-  expect_doppelganger("scale_fill_geo", gg)
+  expect_doppelganger_deeptime("scale_fill_geo", gg)
 })
 
 test_that("scale_color_geo works", {
@@ -19,7 +19,7 @@ test_that("scale_color_geo works", {
     scale_color_geo("periods", name = "Period") +
     coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
     theme_classic()
-  expect_doppelganger("scale_color_geo", gg)
+  expect_doppelganger_deeptime("scale_color_geo", gg)
 })
 
 test_that("scale_discrete_geo works", {
@@ -32,6 +32,6 @@ test_that("scale_discrete_geo works", {
     scale_discrete_geo("periods", c("color", "fill"), name = "Period") +
     coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
     theme_classic()
-  expect_doppelganger("scale_discrete_geo", gg)
+  expect_doppelganger_deeptime("scale_discrete_geo", gg)
 })
 

@@ -12,11 +12,12 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}, ggplot2 ${{ matrix.ggplot2 }})
 
     strategy:
       fail-fast: false
       matrix:
+        ggplot2: ["3.3.6", "3.4.0"]
         config:
           - {os: macOS-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
@@ -43,6 +44,12 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+
+      - name: Install ggplot2 ${{ matrix.ggplot2 }}
+        run: |
+          install.packages("remotes")
+          remotes::install_version("ggplot2", version = "${{ matrix.ggplot2 }}")
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         env:

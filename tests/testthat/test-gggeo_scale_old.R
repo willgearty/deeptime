@@ -1,7 +1,5 @@
 test_that("gggeo_scale_old() works", {
-  if(!suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
-    skip("divDyn not available for gggeo_scale_old")
-  }
+  skip_if_not_installed("divDyn")
   p <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
@@ -10,11 +8,9 @@ test_that("gggeo_scale_old() works", {
     theme_classic()
   gg <- gggeo_scale_old(p)
   expect_true(is.ggplot(gg))
-  expect_doppelganger("gggeo_scale_old()", gg)
+  expect_doppelganger_deeptime("gggeo_scale_old()", gg)
 
-  if(!suppressPackageStartupMessages(require(gsloid, quietly = TRUE))) {
-    skip("gsloid not available for gggeo_scale_old")
-  }
+  skip_if_not_installed("gsloid")
   p <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
     scale_y_reverse("Time (Ma)") +
@@ -24,5 +20,5 @@ test_that("gggeo_scale_old() works", {
   gg <- gggeo_scale_old(p, dat = "Geomagnetic Polarity Chron", pos = "left", rot = 90, skip = "PL4", size = 5)
   gg <- gggeo_scale_old(gg, dat = "Planktic foraminiferal Primary Biozones", pos = "r", rot = 90, skip = "PL4", size = 4)
   expect_true(is.ggplot(gg))
-  expect_doppelganger("gggeo_scale_old() left and right", gg)
+  expect_doppelganger_deeptime("gggeo_scale_old() left and right", gg)
 })

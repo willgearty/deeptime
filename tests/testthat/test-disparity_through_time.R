@@ -1,7 +1,6 @@
 test_that("disparity_through_time() works", {
-  if(!suppressPackageStartupMessages(require(dispRity, quietly = TRUE))) {
-    skip("dispRity not available for disparity_through_time")
-  }
+  skip_if_not_installed("dispRity")
+
   crinoids <- as.data.frame(demo_data$wright$matrix[[1]][, 1:2])
   crinoids$time <- "before extinction"
   crinoids$time[demo_data$wright$subsets$after$elements] <- "after extinction"
@@ -10,5 +9,5 @@ test_that("disparity_through_time() works", {
   gg <- disparity_through_time(time~V1*V2, groups = time, aspect = c(2,1), xlim = c(-.6,.6), ylim = c(-.5,.5),
                          col.regions = "lightgreen", col.point = c("red","blue"))
   expect_true(is(gg, "trellis"))
-  expect_doppelganger("disparity_through_time()", gg)
+  expect_doppelganger_deeptime("disparity_through_time()", gg)
 })

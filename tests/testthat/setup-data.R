@@ -37,3 +37,33 @@ if(suppressPackageStartupMessages(require(phytools, quietly = TRUE))) {
 if(suppressPackageStartupMessages(require(dispRity, quietly = TRUE))) {
   data(demo_data)
 }
+
+suppressPackageStartupMessages(require(gsloid, quietly = TRUE))
+suppressPackageStartupMessages(require(ggtree, quietly = TRUE))
+suppressPackageStartupMessages(require(dispRity, quietly = TRUE))
+
+# copied from vdiffr
+str_standardise <- function(s, sep = "-") {
+  s <- gsub("[^a-z0-9]", sep, tolower(s))
+  s <- gsub(paste0(sep, sep, "+"), sep, s)
+  s <- gsub(paste0("^", sep, "|", sep, "$"), "", s)
+  s
+}
+
+expect_doppelganger_deeptime <- function(title, fig) {
+  title_new <- paste(title, "new")
+  title_old <- paste(title, "old")
+  if (packageVersion("ggplot2") > "3.3.6") {
+    fig_name <- str_standardise(title_old)
+    file <- paste0(fig_name, ".svg")
+    announce_snapshot_file(name = file)
+
+    expect_doppelganger(title_new, fig)
+  } else {
+    fig_name <- str_standardise(title_new)
+    file <- paste0(fig_name, ".svg")
+    announce_snapshot_file(name = file)
+
+    expect_doppelganger(title_old, fig)
+  }
+}

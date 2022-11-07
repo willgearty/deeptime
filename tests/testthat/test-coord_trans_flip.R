@@ -6,5 +6,5 @@ test_that("coord_trans_flip() works", {
   params <- ggplot_build(gg)$layout$panel_params[[1]]
   expect_equal(params$x.range, log10(c(1, 6)))
   expect_equal(params$y.range, log10(c(50, 500)))
-  expect_doppelganger("coord_trans_flip()", gg)
+  expect_doppelganger_deeptime("coord_trans_flip()", gg)
 })

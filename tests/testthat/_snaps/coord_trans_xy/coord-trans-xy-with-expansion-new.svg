@@ -372,6 +372,6 @@
 <line x1='690.32' y1='303.40' x2='693.77' y2='303.40' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
 <line x1='690.32' y1='281.88' x2='693.77' y2='281.88' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
 <line x1='690.32' y1='260.35' x2='693.77' y2='260.35' style='stroke-width: 0.38; stroke: #FFFFFF; stroke-linecap: butt;' />
-<text x='30.83' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='190.06px' lengthAdjust='spacingAndGlyphs'>coord_trans_xy() with expansion</text>
+<text x='30.83' y='14.56' style='font-size: 13.20px; font-family: sans;' textLength='217.95px' lengthAdjust='spacingAndGlyphs'>coord_trans_xy() with expansion new</text>
 </g>
 </svg>
