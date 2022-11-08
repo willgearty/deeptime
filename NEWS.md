@@ -1,9 +1,12 @@
-# development version
+# deeptime 0.3.0
+deeptime now requires ggplot2 version 3.3.0 or higher. Several new features and fixed compatibility with various ggplot2 versions.
 
 * Added coord_geo_polar(), for adding timescales to polar plots (#33)
 * Added color and fill discrete scales that use the GTS colors (#43)
 * Fixed coord_geo_polar() and coord_trans_xy() for ggplot2 version 3.4.0 (#44)
-* deeptime now requires ggplot2 version 3.3.0 or higher
+* Fixed coord_geo() for ggplot2 version 3.4.0
+* Added tests for both ggplot2 version 3.3.6 and 3.4.0
+* Removed uses of getFromNamespace (#45)
 
 # deeptime 0.2.3
 
