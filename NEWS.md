@@ -1,3 +1,5 @@
+# development version
+
 # deeptime 0.3.0
 deeptime now requires ggplot2 version 3.3.0 or higher. Several new features and fixed compatibility with various ggplot2 versions.
 
