@@ -3,7 +3,7 @@
 \docType{data}
 \name{eons}
 \alias{eons}
-\title{Eon data from the International Commission on Stratigraphy (v2022/02)}
+\title{Eon data from the International Commission on Stratigraphy (v2022/10)}
 \format{
 A data frame with 3 rows and 5 variables:
 \describe{
@@ -22,7 +22,7 @@ eons
 }
 \description{
 A dataset containing the boundary ages, abbreviations, and colors for the eons of the Geologic Time Scale.
-Based on The ICS International Chronostratigraphic Chart (v2022/02), by Cohen, Finney, Gibbard, and Fan.
+Based on The ICS International Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
 }
 \seealso{
 Other timescales: 
