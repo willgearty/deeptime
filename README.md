@@ -56,7 +56,7 @@ ggplot(coral_div) +
   theme_classic()
 ```
 
-![example bottom scale](man/figures/example_bottom.png)
+<img src="man/figures/example_bottom.png">
 
 ### Combine plots with timescales and plots without timescales
 ```r
@@ -85,7 +85,7 @@ ggarrange2(
 )
 ```
 
-![example ggarrange2](man/figures/ggarrange2.png)
+<img src="man/figures/ggarrange2.png">
 
 ### Plot disparity through time
 ```r
@@ -139,4 +139,4 @@ ggplot() +
   theme(panel.spacing = unit(1, "lines"), panel.background = element_blank())
 ```
 
-![example disparity_ggplot](man/figures/disparity_ggplot.png)
+<img src="man/figures/disparity_ggplot.png">
