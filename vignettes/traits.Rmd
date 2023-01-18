@@ -26,8 +26,6 @@ data(demo_data)
 library(phytools)
 data(mammal.tree)
 data(mammal.data)
-# Load ggrepel for adding labels
-library(ggrepel)
 ```
 
 ## Plot disparity through time
@@ -81,14 +79,13 @@ disparity_through_time(time~V2*V1, data = crinoids, groups = time, aspect = c(1.
 ```
 
 ## Phylomorphospaces
-Often, trait data will be accompanied with a phylogeny. You may want to visualize both your phylogeny, the traits of your species, and the evolution of the trait along your phylogeny. To accomplish this, you can create a two-dimensional phylomorphospace. `phytools` has a function for accomplishing this in base R. The `geom_phylomorpho()` function in `deeptime` will help you accomplish this with `ggplot`. Note that the labels are used here for demonstration purposes and may not be desirable for finished products because they can obscure the phylogenetic relationships.
+Often, trait data will be accompanied with a phylogeny. You may want to visualize both your phylogeny, the traits of your species, and the evolution of the trait along your phylogeny. To accomplish this, you can create a two-dimensional phylomorphospace. `phytools` has a function for accomplishing this in base R. The `geom_phylomorpho()` function in `deeptime` will help you accomplish this with `ggplot`. Note that labels can be added using `geom_label()` or `geom_label_repel()`, but they are not demonstrated here because they would obscure the phylogenetic relationships.
 ```{r message = FALSE, warning = FALSE}
 mammal.data <- mammal.data %>%
   rownames_to_column("label")
 
 ggplot(mammal.data, aes(x = bodyMass, y = homeRange, label = label)) +
   geom_phylomorpho(mammal.tree) +
-  geom_label_repel(size = 3) +
   theme_classic()
 ```
 
