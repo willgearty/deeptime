@@ -59,7 +59,7 @@ statistical transformation and will affect the visual appearance of geoms. The m
 is that it also adds a geological timescale to the background of the plot.
 }
 \details{
-If a custom data.frame is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
+If a custom data.frame is provided (with \code{dat}), it should consist of at least 2 columns of data. See \code{data(periods)} for an example.
 \itemize{
   \item The \code{max_age} column lists the oldest boundary of each time interval.
   \item The \code{min_age} column lists the youngest boundary of each time interval.

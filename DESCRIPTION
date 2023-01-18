@@ -44,5 +44,8 @@ Suggests:
     ggtree (>= 3.6.1),
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/revdeps: revdepcheck
