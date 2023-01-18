@@ -1,4 +1,21 @@
 url: http://williamgearty.com/deeptime/
 template:
   bootstrap: 5
+  bootswatch: flatly
 
+development:
+  mode: auto
+
+authors:
+  William Gearty:
+    href: https://williamgearty.com
+
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - coord_geo
+  - phylogenies
+  - traits
+  - ggarrange2
+  - coord

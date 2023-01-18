@@ -1,8 +1,8 @@
 ---
-title: "deeptime coordinate systems"
+title: "Expanding coordinate systems"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{deeptime coordinate systems}
+  %\VignetteIndexEntry{Expanding coordinate systems}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
