@@ -25,20 +25,6 @@ data(RaiaCopesRule)
 <div style="text-align: justify">
 ## The history of arranging and combining plots
 Combining multiple plots together into figures is a key component of developing publishable data visualizations. Many other packages provide ways to combine and arrange plots. For example, the `gridExtra` package has the [`grid.arrange()` function](https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html) which allows the user to arrange plots in fairly complex layouts. However, the main drawback (for most cases) of this function is that the components of the plots (axes, labels, panels, etc.) are not aligned. The [`ggarrange()` function](https://cran.r-project.org/web/packages/egg/vignettes/Overview.html#arranging-and-aligning-multiple-plots) in the `egg` package uses a 3x3 decomposition of the individual plots to align some of the plot components. The central cells correspond to the core panels, surrounded by axes, legends, etc.
-```{r message = FALSE}
-library(egg)
-p1 <- ggplot(ammoniteTraitsRaia) +
-  geom_point(aes(x = Log_D, y = FD)) +
-  labs(x = "Body size", y = "Suture complexity") +
-  theme_classic()
-
-p2 <- ggplot(ammoniteTraitsRaia) +
-  geom_point(aes(x = Log_D, y = log_dur)) +
-  labs(x = "Body size", y = "Stratigraphic duration (myr)") +
-  theme_classic()
-
-ggarrange(p1, p2, debug = TRUE)
-```
 
 ## Arranging plots with deeptime
 `deeptime` expands on this functionality with `ggarrange2()` to perform 7x7 decomposition of individual plots, as shown below. This ensures that more components of the individual plots are aligned with one another (e.g., the axis labels, the axis tick labels). The central cell corresponds to the plot panel(s), the rectangle of cells around that corresponds to the axes, the rectangle of cells around that corresponds to the axis titles, and the rectangle of cells around that corresponds to legends.
