@@ -1,5 +1,9 @@
 # development version
 
+* Updated built-in timescales to 2022/10 version of GTS
+* Added a geom for making phylomorphospaces
+* Added vignettes
+
 # deeptime 0.3.0
 deeptime now requires ggplot2 version 3.3.0 or higher. Several new features and fixed compatibility with various ggplot2 versions.
 
