@@ -9,7 +9,7 @@
 <!-- badges: end -->
 
 ## Overview
-Extends the functionality of other plotting packages like
+__deeptime__ extends the functionality of other plotting packages like
 `{ggplot2}` and `{lattice}` to help facilitate the plotting of data over long time
 intervals, including, but not limited to, geological, evolutionary, and ecological
 data. The primary goal of __deeptime__ is to enable users to add highly customizable

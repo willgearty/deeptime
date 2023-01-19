@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggarrange2.R
 \name{ggarrange2}
 \alias{ggarrange2}
-\title{ggarrange2}
+\title{Combine and arrange multiple ggplot-like objects}
 \usage{
 ggarrange2(
   ...,

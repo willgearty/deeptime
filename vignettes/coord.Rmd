@@ -1,8 +1,8 @@
 ---
-title: "Expanding coordinate systems"
+title: "Transforming coordinate systems"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Expanding coordinate systems}
+  %\VignetteIndexEntry{Transforming coordinate systems}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

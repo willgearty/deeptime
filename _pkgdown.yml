@@ -83,7 +83,7 @@ reference:
   - ggarrange2
   - gtable_frame2
 
-- title: Expanding coordinate systems
+- title: Transforming coordinate systems
   desc: >
     These functions can be used to modify the way that your data is plotted
     by `{ggplot2}`.

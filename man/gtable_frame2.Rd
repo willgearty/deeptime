@@ -2,7 +2,7 @@
 % Please edit documentation in R/ggarrange2.R
 \name{gtable_frame2}
 \alias{gtable_frame2}
-\title{gtable_frame2}
+\title{Decompose a ggplot gtable}
 \usage{
 gtable_frame2(
   g,
@@ -24,7 +24,10 @@ gtable_frame2(
 7x7 gtable wrapping the plot
 }
 \description{
-Reformat the gtable associated with a ggplot object into a 7x7 gtable where the central cell corresponds to the plot panel(s), the rectangle of cells around that corresponds to the axes, and the rectangle of cells around that corresponds to the axis titles.
+Reformat the gtable associated with a ggplot object into a 7x7 gtable where
+the central cell corresponds to the plot panel(s), the rectangle of cells
+around that corresponds to the axes, and the rectangle of cells around that
+corresponds to the axis titles.
 }
 \examples{
 library(grid)
