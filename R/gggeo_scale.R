@@ -5,7 +5,7 @@ gggeo_scale <- function(obj, ...) {
   UseMethod("gggeo_scale")
 }
 
-#' Add a geologic scale to ggplots
+#' Add a geologic scale to ggplots (deprecated)
 #'
 #' This function takes a ggplot object and adds a geologic time scale at the specified side.
 #'

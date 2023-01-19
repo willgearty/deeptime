@@ -2,7 +2,7 @@
 % Please edit documentation in R/gggeo_scale_old.R
 \name{gggeo_scale_old}
 \alias{gggeo_scale_old}
-\title{Add a geologic scale to ggplots (old version)}
+\title{Add a geologic scale to ggplots (old version) (deprecated)}
 \usage{
 gggeo_scale_old(
   gg,

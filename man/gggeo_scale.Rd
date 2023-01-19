@@ -6,7 +6,7 @@
 \alias{gggeo_scale.ggplot}
 \alias{gggeo_scale.geo_scale}
 \alias{print.geo_scale}
-\title{Add a geologic scale to ggplots}
+\title{Add a geologic scale to ggplots (deprecated)}
 \usage{
 gggeo_scale(obj, ...)
 

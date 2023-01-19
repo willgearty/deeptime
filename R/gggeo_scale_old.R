@@ -1,4 +1,4 @@
-#' Add a geologic scale to ggplots (old version)
+#' Add a geologic scale to ggplots (old version) (deprecated)
 #'
 #' This function takes a ggplot object and adds a geologic time scale at the specified side.
 #'
