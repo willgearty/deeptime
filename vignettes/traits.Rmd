@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align 
 ```
 
 <div style="text-align: justify">
-Many packages exist to visualize trait data for biological species. `deeptime` similarly has a few novel ways to help you plot your data in useful ways. We'll first load some packages and example data so we can demonstrate some of this functionality.
+Many packages exist to visualize trait data for biological species. __deeptime__ similarly has a few novel ways to help you plot your data in useful ways. We'll first load some packages and example data so we can demonstrate some of this functionality.
 
 ```{r message = FALSE}
 # Load deeptime
@@ -29,7 +29,7 @@ data(mammal.data)
 ```
 
 ## Plot disparity through time
-A common way to visualize trait data, especially for fossil species, is to show the two-dimensional trait distribution for several time intervals. This allows the viewer to easily compare the trait distribution through time. However, producing such a plot has historically been very time intensive, often involving the use of custom code and image editing software (e.g., [Inkscape](https://inkscape.org/)). While a single function to accomplish such a visualization still does not exist for `ggplot2` (yet...), the `coord_trans_xy()` function can be used to generate a similar plot with sheared trait space across several time intervals.
+A common way to visualize trait data, especially for fossil species, is to show the two-dimensional trait distribution for several time intervals. This allows the viewer to easily compare the trait distribution through time. However, producing such a plot has historically been very time intensive, often involving the use of custom code and image editing software (e.g., [Inkscape](https://inkscape.org/)). While a single function to accomplish such a visualization still does not exist for `{ggplot2}` (yet...), the `coord_trans_xy()` function can be used to generate a similar plot with sheared trait space across several time intervals.
 
 ```{r}
 #make transformer
@@ -45,10 +45,14 @@ crinoids$time[demo_data$wright$subsets$after$elements] <- "after extinction"
 square <- data.frame(V1 = c(-.6, -.6, .6, .6), V2 = c(-.4, .4, .4, -.4))
 
 ggplot() +
-  geom_segment(data = data.frame(x = -.6, y = seq(-.4, .4,.2), xend = .6, yend = seq(-0.4, .4, .2)),
-               aes(x = x, y = y, xend = xend, yend=yend), linetype = "dashed", color = "grey") +
-  geom_segment(data = data.frame(x = seq(-.6, .6, .2), y = -.4, xend = seq(-.6, .6, .2), yend = .4),
-               aes(x = x, y = y, xend = xend, yend=yend), linetype = "dashed", color = "grey") +
+  geom_segment(data = data.frame(x = -.6, y = seq(-.4, .4,.2),
+                                 xend = .6, yend = seq(-0.4, .4, .2)),
+               aes(x = x, y = y, xend = xend, yend=yend),
+               linetype = "dashed", color = "grey") +
+  geom_segment(data = data.frame(x = seq(-.6, .6, .2), y = -.4,
+                                 xend = seq(-.6, .6, .2), yend = .4),
+               aes(x = x, y = y, xend = xend, yend=yend),
+               linetype = "dashed", color = "grey") +
   geom_polygon(data = square, aes(x = V1, y = V2), fill = NA, color = "black") +
   geom_point(data = crinoids, aes(x = V1, y = V2), color = 'black') +
   coord_trans_xy(trans = trans, expand = FALSE) +
@@ -59,7 +63,7 @@ ggplot() +
 ```
 
 ### Disparity in base R
-The `disparity_through_time()` function accomplishes nearly all of the work for you if you are comfortable plotting within the `lattice` framework (base R). Note that it may take some tweaking (especially the `aspect` argument) to get the results to look the way you want.
+The `disparity_through_time()` function accomplishes nearly all of the work for you if you are comfortable plotting within the `{lattice}` framework (base R). Note that it may take some tweaking (especially the `aspect` argument) to get the results to look the way you want.
 
 ```{r, fig.height = 4}
 crinoids$time <- factor(crinoids$time)
@@ -79,7 +83,7 @@ disparity_through_time(time~V2*V1, data = crinoids, groups = time, aspect = c(1.
 ```
 
 ## Phylomorphospaces
-Often, trait data will be accompanied with a phylogeny. You may want to visualize both your phylogeny, the traits of your species, and the evolution of the trait along your phylogeny. To accomplish this, you can create a two-dimensional phylomorphospace. `phytools` has a function for accomplishing this in base R. The `geom_phylomorpho()` function in `deeptime` will help you accomplish this with `ggplot`. Note that labels can be added using `geom_label()` or `geom_label_repel()`, but they are not demonstrated here because they would obscure the phylogenetic relationships.
+Often, trait data will be accompanied with a phylogeny. You may want to visualize both your phylogeny, the traits of your species, and the evolution of the trait along your phylogeny. To accomplish this, you can create a two-dimensional phylomorphospace. The `{phytools}` package has the `phytools::phylomorphospace()` function for accomplishing this in base R. The `geom_phylomorpho()` function in __deeptime__ will help you accomplish this with `ggplot()`. Note that labels can be added using `geom_label()` or `ggrepel::geom_label_repel()`, but they are not demonstrated here because they would obscure the phylogenetic relationships.
 ```{r message = FALSE, warning = FALSE}
 mammal.data <- mammal.data %>%
   rownames_to_column("label")

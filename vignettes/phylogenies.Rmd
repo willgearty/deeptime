@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align 
 ```
 
 <div style="text-align: justify">
-`coord_geo()` is also designed to work smoothly with phylogenies that are plotted with the `ggtree` package. First let's load some important packages.
+`coord_geo()` is also designed to work smoothly with phylogenies that are plotted with the [ggtree](https://www.bioconductor.org/packages/ggtree) package. First let's load some important packages.
 
 ```{r message = FALSE}
 # Load deeptime
@@ -30,7 +30,7 @@ data(RaiaCopesRule)
 ```
 
 ## Timescales and phylogenies
-Now, let's plot some phylogenies with timescales! Note that by default the time axis increases toward the tips for trees plotted with `ggtree`, so you must use the `revts()` function from `ggtree` to change the x-axis values to increasing negative values. Note that once you've done this, you will need to set `neg = TRUE` in `coord_geo()`. Furthermore, any time axis limits that you set will need to be negative. Here we also use the `scale_x_continuous()` function to relabel the negative x-axis values with positive labels.
+Now, let's plot some phylogenies with timescales! Note that by default the time axis increases toward the tips for trees plotted with `ggtree()`, so you must use the `revts()` function from [ggtree](https://www.bioconductor.org/packages/ggtree) to change the x-axis values to increasing negative values. Note that once you've done this, you will need to set `neg = TRUE` in `coord_geo()`. Furthermore, any time axis limits that you set will need to be negative. Here we also use the `scale_x_continuous()` function to relabel the negative x-axis values with positive labels.
 ```{r}
 p <- ggtree(mammal.tree) +
   coord_geo(xlim = c(-75, 0), ylim = c(-2, Ntip(mammal.tree)), neg = TRUE, abbrv = FALSE) +
@@ -61,7 +61,7 @@ revts(ggtree(mammal.tree)) +
 ```
 
 ### Circular phylogenies with "stacked" timescales
-Timescales can even be "stacked" like with `coord_geo()`, although the stacking occurs in a circular fashion. In this case, we use `scale_y_continuous()` to add a small expansion to the y-axis (which is now the theta axis) so the numbers don't overlap with the phylogeny. We also use the `prop` and `start` arguments to specify how the different timescales are oriented and split within the polar space. The `axis.line.r`, `axis.text.r`, `axis.ticks.r`, and `axis.ticks.length.r` ggplot2 theme elements can be modified just like their x and y counterparts to change the appearance of the radial axis. The default settings work well for a horizontal axis pointing towards the right, but these theme settings will need to be modified for other orientations such as in this example.
+Timescales can even be "stacked" like with `coord_geo()`, although the stacking occurs in a circular fashion. In this case, we use `scale_y_continuous()` to add a small expansion to the y-axis (which is now the theta axis) so the numbers don't overlap with the phylogeny. We also use the `prop` and `start` arguments to specify how the different timescales are oriented and split within the polar space. The `axis.line.r`, `axis.text.r`, `axis.ticks.r`, and `axis.ticks.length.r` ggplot2 `theme()` elements can be modified just like their x and y counterparts to change the appearance of the radial axis. The default settings work well for a horizontal axis pointing towards the right, but these theme settings will need to be modified for other orientations such as in this example.
 ```{r message = FALSE}
 revts(ggtree(mammal.tree)) +
   coord_geo_polar(dat = list("stages", "periods"), alpha = .5,
@@ -72,5 +72,5 @@ revts(ggtree(mammal.tree)) +
 ```
 
 ### Disclaimer
-Note that `coord_geo_polar()` has been tested with the plotting of ultrametric and non-ultrametric phylogenies with `ggtree`, but it may have unexpected behavior when combined with other functions from `ggtree`. Furthermore, `coord_geo_polar()` may be useful (albeit perhaps abstract) for plotting other types of data, but this has not been investigated.
+Note that `coord_geo_polar()` has been tested with the plotting of ultrametric and non-ultrametric phylogenies with `ggtree::ggtree()`, but it may have unexpected behavior when combined with other functions from [ggtree](https://www.bioconductor.org/packages/ggtree). Furthermore, `coord_geo_polar()` may be useful (albeit perhaps abstract) for plotting other types of data, but this has not been investigated.
 </div>

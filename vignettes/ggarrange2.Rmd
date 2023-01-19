@@ -27,7 +27,7 @@ data(RaiaCopesRule)
 Combining multiple plots together into figures is a key component of developing publishable data visualizations. Many other packages provide ways to combine and arrange plots. For example, the `gridExtra` package has the [`grid.arrange()` function](https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html) which allows the user to arrange plots in fairly complex layouts. However, the main drawback (for most cases) of this function is that the components of the plots (axes, labels, panels, etc.) are not aligned. The [`ggarrange()` function](https://cran.r-project.org/web/packages/egg/vignettes/Overview.html#arranging-and-aligning-multiple-plots) in the `egg` package uses a 3x3 decomposition of the individual plots to align some of the plot components. The central cells correspond to the core panels, surrounded by axes, legends, etc.
 
 ## Arranging plots with deeptime
-`deeptime` expands on this functionality with `ggarrange2()` to perform 7x7 decomposition of individual plots, as shown below. This ensures that more components of the individual plots are aligned with one another (e.g., the axis labels, the axis tick labels). The central cell corresponds to the plot panel(s), the rectangle of cells around that corresponds to the axes, the rectangle of cells around that corresponds to the axis titles, and the rectangle of cells around that corresponds to legends.
+__deeptime__ expands on this functionality with `ggarrange2()` to perform 7x7 decomposition of individual plots, as shown below. This ensures that more components of the individual plots are aligned with one another (e.g., the axis labels, the axis tick labels). The central cell corresponds to the plot panel(s), the rectangle of cells around that corresponds to the axes, the rectangle of cells around that corresponds to the axis titles, and the rectangle of cells around that corresponds to legends.
 ```{r}
 p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   geom_point() +
@@ -70,6 +70,6 @@ ggarrange2(p1, p2, p3, layout = matrix(c(1, 2, 0, 3), nrow = 2, byrow = TRUE),
 ## Other resources for arranging plots
 Note that I provide no guarantee that `ggarrange2()` solves every problem when arranging plots. The following other options may also be very useful:
 
-- The `cowplot` package has the [`plot_grid()` function](https://wilkelab.org/cowplot/articles/plot_grid.html) which accomplishes many of the same features as `ggarrange2()`.
-- The [`patchwork` package](https://patchwork.data-imaginist.com/) has very intuitive tools for combining and arranging plots (e.g, using mathematical symbols).
+- The `{cowplot}` package has the `cowplot::plot_grid()` function which accomplishes many of the same features as `ggarrange2()`.
+- The `{patchwork}` has very intuitive tools for combining and arranging plots (e.g, using mathematical symbols).
 </div>

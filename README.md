@@ -10,9 +10,9 @@
 
 ## Overview
 Extends the functionality of other plotting packages like
-`ggplot2` and `lattice` to help facilitate the plotting of data over long time
+`{ggplot2}` and `{lattice}` to help facilitate the plotting of data over long time
 intervals, including, but not limited to, geological, evolutionary, and ecological
-data. The primary goal of 'deeptime' is to enable users to add highly customizable
+data. The primary goal of __deeptime__ is to enable users to add highly customizable
 timescales to their visualizations. Other functions are also included to assist
 with other areas of deep time visualization.
 
@@ -36,7 +36,7 @@ library(tidyverse)
 
 ### Add timescales to plots
 
-The main function of `deeptime` is `coord_geo()`, which functions just like `coord_trans()` from `ggplot2`.
+The main function of __deeptime__ is `coord_geo()`, which functions just like `coord_trans()` from `{ggplot2}`.
 You can use this function to add highly customizable timescales to a wide variety of ggplots.
 
 ```r

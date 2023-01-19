@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align 
 
 <div style="text-align: justify">
 
-The main function of `deeptime` is `coord_geo()`, which functions just like `coord_trans()` from `ggplot2`.
+The main function of __deeptime__ is `coord_geo()`, which functions just like `coord_trans()` from `{ggplot2}`.
 You can use this function to add highly customizable timescales to a wide variety of ggplots. Before we begin, let's load some necessary packages first.
 
 ```{r message = FALSE}
@@ -29,7 +29,7 @@ library(gsloid)
 ```
 
 ## Adding geological timescales
-First, let's summarize some coral data to generate a diversity curve that we'll be able to plot:
+First, let's summarize some coral data from the `divDyn` package to generate a diversity curve that we'll be able to plot:
 ```{r message = FALSE}
 # this is not a proper diversity curve but it gets the point across
 coral_div <- corals %>% filter(stage != "") %>%
@@ -38,7 +38,7 @@ coral_div <- corals %>% filter(stage != "") %>%
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
                         stages$min_age[match(stage, stages$name)])/2)
 ```
-Now, we can plot the data and add a geological timescale. The default behavior is to add the ICS periods to the bottom axis. The data used for this is included in the package (`periods`) along with data for `eons`, `stages`, `epochs`, and `eras`. Note that the function assumes that age is decreasing towards the present.
+Now, we can plot the data and add a geological timescale. The default behavior is to add the ICS periods to the bottom axis. The data used for this is included in the package (`?periods`) along with data for `?eons`, `?stages`, `?epochs`, and `?eras`. Note that the function assumes that age is decreasing towards the present.
 ```{r}
 ggplot(coral_div) +
   geom_line(aes(x = stage_age, y = n)) +
@@ -49,7 +49,7 @@ ggplot(coral_div) +
 ```
 
 ### Scales on other axes
-You can add the timescale to whichever axis you'd like by setting the `pos` argument. For example, `pos = "left"` can be used to put the timescale on the left axis. Also, note that we're using the "Geomagnetic Polarity Chron" timescale here. This is one of more than 35 regional and global timescales that are available through `deeptime` from the [Macrostrat](https://macrostrat.org/api/defs/timescales?all) database.
+You can add the timescale to whichever axis you'd like by setting the `pos` argument. For example, `pos = "left"` can be used to put the timescale on the left axis. Also, note that we're using the "Geomagnetic Polarity Chron" timescale here. This is one of more than 35 regional and global timescales that are available through __deeptime__ from the [Macrostrat](https://macrostrat.org/api/defs/timescales?all) database (see `getScaleData()`).
 ```{r}
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
@@ -118,7 +118,7 @@ ggplot(coral_div_diet) +
 ```
 
 ### Resize labels to fit inside interval rectangles
-`coord_geo()` can use the [ggfittext package](https://wilkox.org/ggfittext/index.html) to resize the interval labels. This can be enabled by setting `size` to `"auto"`. Additional arguments can be passed to `geom_fit_text()` as a list using the `fittext_args` argument.
+`coord_geo()` can use the `{ggfittext}` package to resize the interval labels. This can be enabled by setting `size` to `"auto"`. Additional arguments can be passed to `ggfittext::geom_fit_text()` as a list using the `fittext_args` argument.
 
 ```{r}
 ggplot(coral_div) +
@@ -131,7 +131,7 @@ ggplot(coral_div) +
 ```
 
 ## Scales on discrete axes
-`coord_geo()` will automatically detect if your axis is discrete. The categories of the discrete axis (which can be reordered using the `limits` argument of `scale_[x/y]_discrete()`) should match the `name` column of the timescale data (`dat`). You can use the arguments of `theme()` and `scale_[x/y]_discrete()` to optionally remove the labels and tick marks.
+`coord_geo()` will automatically detect if your axis is discrete. The categories of the discrete axis (which can be reordered using the `limits` argument of `scale_x_discrete()`/`scale_y_discrete()`) should match the `name` column of the timescale data (`dat`). You can use the arguments of `theme()` and `scale_[x/y]_discrete()` to optionally remove the labels and tick marks.
 ```{r message = FALSE}
 # use the coral occurrence data from above
 coral_div_dis <- corals %>% filter(period != "") %>%
@@ -174,7 +174,7 @@ ggplot(coral_div_dis) +
 ```
 
 ## Geological timescale color scales for ggplot
-In addition to adding a timescale to a plot, you may also want to color your data based on it's age. `deeptime` has `scale_[color/fill]_geo()` for this very purpose! Note that currently these scales only work with discrete data. The default behavior is for the color/fill aesthetic values to match the names of the intervals in `dat`.
+In addition to adding a timescale to a plot, you may also want to color your data based on it's age. __deeptime__ has `scale_color_geo()` and `scale_fill_geo()` for this very purpose! Note that currently these scales only work with discrete data. The default behavior is for the color/fill aesthetic values to match the names of the intervals in `dat`.
 ```{r}
 ggplot(coral_div_dis, aes(x = n, y = diet, fill = period)) +
   geom_col() +
@@ -185,7 +185,7 @@ ggplot(coral_div_dis, aes(x = n, y = diet, fill = period)) +
 ```
 
 ## More advanced topics
-Looking to learn about more advanced features of `deeptime`? Look no further:
+Looking to learn about more advanced features of __deeptime__? Look no further:
 
 - [Plotting phylogenies with timescales](phylogenies.html)
 - [Plotting trait data](traits.html)

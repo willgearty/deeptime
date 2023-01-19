@@ -2,6 +2,8 @@ url: http://williamgearty.com/deeptime/
 template:
   bootstrap: 5
   bootswatch: flatly
+  bslib:
+    navbar-padding-y: 8px
 
 development:
   mode: auto
@@ -19,3 +21,73 @@ articles:
   - traits
   - ggarrange2
   - coord
+
+reference:
+- title: Adding geological timescales to plots
+  desc: >
+    The original purpose of deeptime, `coord_geo()` adds a highly
+    customizable timescale to any `{ggplot2}` plot. Other functions now supplement
+    it to aid in the visualization of data over long time scales.
+  contents:
+  - coord_geo
+  - scale_color_geo
+  - getScaleData
+
+- subtitle: Built-in interval data
+  desc: >
+    deeptime includes a selection of built-in interval data from the
+    most up-to-date Geological Time Scale. These dataframes include name,
+    max age, min age, abbreviation, and color columns.
+  contents:
+  - eons
+  - eras
+  - periods
+  - epochs
+  - stages
+
+- subtitle: Deprecated functions
+  desc: >
+    The following functions represent the first and second iterations of what is
+    now `coord_geo()`. These functions still work but are considered
+    "deprecated". There is no plan to remove them in the immediate future (for
+    those who used them or still use them in their code), but there is no
+    guarantee they will be supported ad infinitum.
+  contents:
+  - gggeo_scale
+  - gggeo_scale_old
+
+- title: Adding geological timescales to phylogenies
+  desc: >
+    These functions can be used to add timescales specifically to phylogenies
+    that are plotted with [ggtree](https://www.bioconductor.org/packages/ggtree).
+  contents:
+  - coord_geo
+  - coord_geo_polar
+  - scale_color_geo
+  - getScaleData
+
+- title: Plotting trait data
+  desc: >
+    These functions can be used for visualizing species trait data.
+  contents:
+  - geom_phylomorpho
+  - disparity_through_time
+  - panel.disparity
+  - coord_trans_xy
+
+- title: Combining and arranging plots
+  desc: >
+    These functions can be used to combine and arrange plots into
+    publishable-quality figures.
+  contents:
+  - ggarrange2
+  - gtable_frame2
+
+- title: Expanding coordinate systems
+  desc: >
+    These functions can be used to modify the way that your data is plotted
+    by `{ggplot2}`.
+  contents:
+  - coord_trans_flip
+  - coord_trans_xy
+
