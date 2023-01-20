@@ -1,4 +1,4 @@
-# deeptime (development version)
+# deeptime 1.0.0
 
 * Updated built-in timescales to 2022/10 version of GTS
 * Added a geom for making phylomorphospaces
