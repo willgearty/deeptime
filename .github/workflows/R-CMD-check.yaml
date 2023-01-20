@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ggplot2: ["3.3.6", "3.4.0"]
+        ggplot2: ["3.3.6", ">= 3.4.0"]
         config:
           - {os: macOS-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
@@ -54,8 +54,19 @@ jobs:
           remotes::install_version("ggplot2", version = "${{ matrix.ggplot2 }}")
         shell: Rscript {0}
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: run default R CMD Check
+        uses: r-lib/actions/check-r-package@v2
         env:
           _R_CHECK_FORCE_SUGGESTS_: 0
         with:
           upload-snapshots: true
+        if: ${{ matrix.ggplot2 != '3.3.6' }}
+      - name: run R CMD Check without vignettes
+        uses: r-lib/actions/check-r-package@v2
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: 0
+        with:
+          args: 'c("--no-manual", "--as-cran", "--no-vignettes", "--ignore-vignettes")'
+          build_args: 'c("--no-manual", "--no-build-vignettes")'
+          upload-snapshots: true
+        if: ${{ matrix.ggplot2 == '3.3.6' }}
