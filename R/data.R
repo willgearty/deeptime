@@ -12,7 +12,7 @@
 #'   \item{color}{the colors for each eon, according to the Commission for the Geological Map of the World}
 #' }
 #' @family timescales
-#' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20eons}
+#' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eons>
 "eons"
 
 #' Era data from the International Commission on Stratigraphy (v2022/10)
@@ -29,7 +29,7 @@
 #'   \item{color}{the colors for each era, according to the Commission for the Geological Map of the World}
 #' }
 #' @family timescales
-#' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20eras}
+#' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eras>
 "eras"
 
 #' Period data from the International Commission on Stratigraphy (v2022/10)
@@ -46,7 +46,7 @@
 #'   \item{color}{the colors for each period, according to the Commission for the Geological Map of the World}
 #' }
 #' @family timescales
-#' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20periods}
+#' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20periods>
 "periods"
 
 #' Epoch data from the International Commission on Stratigraphy (v2022/10)
@@ -63,7 +63,7 @@
 #'   \item{color}{the colors for each epoch, according to the Commission for the Geological Map of the World}
 #' }
 #' @family timescales
-#' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20epochs}
+#' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20epochs>
 "epochs"
 
 #' Stage data from the International Commission on Stratigraphy (v2022/10)
@@ -80,5 +80,5 @@
 #'   \item{color}{the colors for each stage, according to the Commission for the Geological Map of the World}
 #' }
 #' @family timescales
-#' @source \url{https://stratigraphy.org} via \url{https://macrostrat.org/api/v2/defs/intervals?timescale=international\%20ages}
+#' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20ages>
 "stages"

@@ -20,34 +20,34 @@ coord_trans_xy(
 
 \item{xlim, ylim}{Limits for the x and y axes.}
 
-\item{expand}{If `TRUE`, the default, adds a small expansion factor to
-the limits to ensure that data and axes don't overlap. If `FALSE`,
-limits are taken exactly from the data or `xlim`/`ylim`.}
+\item{expand}{If \code{TRUE}, the default, adds a small expansion factor to
+the limits to ensure that data and axes don't overlap. If \code{FALSE},
+limits are taken exactly from the data or \code{xlim}/\code{ylim}.}
 
-\item{default}{Is this the default coordinate system? If `FALSE` (the default),
+\item{default}{Is this the default coordinate system? If \code{FALSE} (the default),
 then replacing this coordinate system with another one creates a message alerting
-the user that the coordinate system is being replaced. If `TRUE`, that warning
+the user that the coordinate system is being replaced. If \code{TRUE}, that warning
 is suppressed.}
 
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
-setting of `"on"` (the default) means yes, and a setting of `"off"`
-means no. In most cases, the default of `"on"` should not be changed,
-as setting `clip = "off"` can cause unexpected results. It allows
+setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
+means no. In most cases, the default of \code{"on"} should not be changed,
+as setting \code{clip = "off"} can cause unexpected results. It allows
 drawing of data points anywhere on the plot, including in the plot margins. If
-limits are set via `xlim` and `ylim` and some data points fall outside those
+limits are set via \code{xlim} and \code{ylim} and some data points fall outside those
 limits, then those data points may show up in places such as the axes, the
 legend, the plot title, or the plot margins.}
 }
 \description{
-\code{coord_trans_xy} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
+\code{coord_trans_xy} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it occurs after
 statistical transformation and will affect the visual appearance of geoms. The main difference
 is that it takes a single transformer that is applied to the x and y axes simultaneously. Any
-transformers produced by \code{\link[ggforce]{linear_trans}} that have x and y arguments should work,
-but any other transformers produced using \code{\link[scales]{trans_new}} that take x and y arguments
+transformers produced by \code{\link[ggforce:linear_trans]{ggforce::linear_trans()}} that have x and y arguments should work,
+but any other transformers produced using \code{\link[scales:trans_new]{scales::trans_new()}} that take x and y arguments
 should also work. Axis limits will be adjusted to account for transformation unless limits are
-specified with `xlim` or `ylim`. This only works with geoms where all points are defined with x and y
-coordinates (e.g. \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{geom_polygon}}). This does not currently work with geoms where point
-coordinates are extrapolated (e.g. \code{\link[ggplot2]{geom_rect}}).
+specified with \code{xlim} or \code{ylim}. This only works with geoms where all points are defined with x and y
+coordinates (e.g. \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, \code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}}). This does not currently work with geoms where point
+coordinates are extrapolated (e.g., \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}}).
 }
 \examples{
 #make transformer

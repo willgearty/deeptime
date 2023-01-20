@@ -1,14 +1,14 @@
 #' Transformed XY Cartesian coordinate system
 #'
-#' \code{coord_trans_xy} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
+#' `coord_trans_xy` behaves similarly to [ggplot2::coord_trans()] in that it occurs after
 #' statistical transformation and will affect the visual appearance of geoms. The main difference
 #' is that it takes a single transformer that is applied to the x and y axes simultaneously. Any
-#' transformers produced by \code{\link[ggforce]{linear_trans}} that have x and y arguments should work,
-#' but any other transformers produced using \code{\link[scales]{trans_new}} that take x and y arguments
+#' transformers produced by [ggforce::linear_trans()] that have x and y arguments should work,
+#' but any other transformers produced using [scales::trans_new()] that take x and y arguments
 #' should also work. Axis limits will be adjusted to account for transformation unless limits are
 #' specified with `xlim` or `ylim`. This only works with geoms where all points are defined with x and y
-#' coordinates (e.g. \code{\link[ggplot2]{geom_point}}, \code{\link[ggplot2]{geom_polygon}}). This does not currently work with geoms where point
-#' coordinates are extrapolated (e.g. \code{\link[ggplot2]{geom_rect}}).
+#' coordinates (e.g. [ggplot2::geom_point()], [ggplot2::geom_polygon()]). This does not currently work with geoms where point
+#' coordinates are extrapolated (e.g., [ggplot2::geom_rect()]).
 #'
 #' @param trans Transformer for x and y axes.
 #' @param xlim,ylim Limits for the x and y axes.

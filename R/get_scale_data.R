@@ -1,14 +1,14 @@
 #' Get geological timescale data
 #'
 #' This function takes a name of a geological timescale and returns data for the timescale.
-#' Valid names include those of built-in \code{data.frames} (\code{\link{periods}},
-#' \code{\link{epochs}}, \code{\link{stages}}, \code{\link{eons}}, or \code{\link{eras}}),
+#' Valid names include those of built-in `data.frames` ([periods()],
+#' [epochs()], [stages()], [eons()], or [eras()]),
 #' partial matches of those names (e.g., "per" or "stage"),
 #' and exact matches to those hosted by Macrostrat (see full list here:
-#' \url{https://macrostrat.org/api/defs/timescales?all}).
+#' <https://macrostrat.org/api/defs/timescales?all>).
 #'
 #' @param name The name of the desired timescale.
-#' @return A \code{data.frame} with the following columns:
+#' @return A `data.frame` with the following columns:
 #'   \item{name}{the names of the time intervals.}
 #'   \item{max_age}{the oldest boundaries of the time intervals, in millions of years.}
 #'   \item{min_age}{the youngest boundaries of the time intervals, in millions of years.}
@@ -17,7 +17,7 @@
 #' @importFrom utils read.csv
 #' @importFrom curl nslookup
 #' @export
-getScaleData <- function(name){
+get_scale_data <- function(name) {
   possible_names <- c("periods", "epochs", "stages", "eras", "eons")
   name_match <- charmatch(name, possible_names)
   if (!is.na(name_match)) {
@@ -67,4 +67,19 @@ getScaleData <- function(name){
     dat <- clean_dat
   }
   dat
+}
+
+
+#' Get geological timescale data
+#'
+#' @description
+#' `r lifecycle::badge("deprecated")`
+#'
+#' `getScaleData()` was renamed to [get_scale_data()] as of **deeptime** version
+#' 1.0.0 to create a more consistent API.
+#' @keywords internal
+#' @export
+getScaleData <- function(name){
+  lifecycle::deprecate_warn("1.0.0", "getScaleData()", "get_scale_data()")
+  get_scale_data(name)
 }

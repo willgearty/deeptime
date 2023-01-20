@@ -6,7 +6,7 @@
 \alias{gggeo_scale.ggplot}
 \alias{gggeo_scale.geo_scale}
 \alias{print.geo_scale}
-\title{Add a geologic scale to ggplots (deprecated)}
+\title{Add a geologic scale below ggplots using \emph{grid}}
 \usage{
 gggeo_scale(obj, ...)
 
@@ -79,7 +79,7 @@ gggeo_scale(obj, ...)
 \arguments{
 \item{obj}{An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced by this function).}
 
-\item{...}{further arguments passed to \code{\link[grid]{grid.draw}}.}
+\item{...}{further arguments passed to \code{\link[grid:grid.draw]{grid::grid.draw()}}.}
 
 \item{lims}{The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.}
 
@@ -125,16 +125,23 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 A geo_scale object. Basically a gtable object but with the axis limits included.
 }
 \description{
-This function takes a ggplot object and adds a geologic time scale at the specified side.
-}
-\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+This function takes a ggplot object and adds a geologic time scale at the specified side using the grid and gtable packages.
+
 If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
-  The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
-  The \code{max_age} column lists the oldest boundary of each time interval.
-  The \code{min_age} column lists the youngest boundary of each time interval.
-  The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-  The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+The \code{max_age} column lists the oldest boundary of each time interval.
+The \code{min_age} column lists the youngest boundary of each time interval.
+The \code{abbr} column is optional and lists abbreviations that may be used as labels.
+The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 }
+\section{Life cycle}{
+
+This function is soft-deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime} version 1.0.0.
+It may be removed in the future.
+}
+
 \examples{
 library(ggplot2)
 # bottom scale by default
@@ -199,3 +206,4 @@ p <- revts(p)
 gggeo_scale(p, neg = TRUE)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

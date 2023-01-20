@@ -54,16 +54,16 @@ Custom fill colors can be provided with this option (overriding the \code{color}
 \item{prop}{This is the rotational proportion of the background that the scale takes up.}
 }
 \description{
-\code{coord_geo_polar} behaves similarly to \code{\link[ggplot2]{coord_polar}} in that it occurs after
+\code{coord_geo_polar} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_polar()}} in that it occurs after
 statistical transformation and will affect the visual appearance of geoms. The main difference
 is that it also adds a geological timescale to the background of the plot.
 }
 \details{
 If a custom data.frame is provided (with \code{dat}), it should consist of at least 2 columns of data. See \code{data(periods)} for an example.
 \itemize{
-  \item The \code{max_age} column lists the oldest boundary of each time interval.
-  \item The \code{min_age} column lists the youngest boundary of each time interval.
-  \item The \code{color} column is optional and lists a \link[ggplot2]{color} for the background for each time interval.
+\item The \code{max_age} column lists the oldest boundary of each time interval.
+\item The \code{min_age} column lists the youngest boundary of each time interval.
+\item The \code{color} column is optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color} for the background for each time interval.
 }
 
 \code{dat} may also be a list of values and/or dataframes if multiple time scales should be added to the background.

@@ -4,9 +4,9 @@ calculateAxisComponents <- function(...) {
 
 #' Combined wireframe and cloud panel
 #'
-#' Plots the provided data on 2-D surfaces within a 3-D framework. See \code{\link{disparity_through_time}}.
-#' @param x,y,z,groups,subscripts,... Same as for \code{\link[lattice]{panel.cloud}}
-#' @return No return value, plots the results of both \code{\link[lattice]{panel.cloud}} and \code{\link[lattice]{panel.wireframe}}.
+#' Plots the provided data on 2-D surfaces within a 3-D framework. See [disparity_through_time()].
+#' @param x,y,z,groups,subscripts,... Same as for [lattice::panel.cloud()]
+#' @return No return value, plots the results of both [lattice::panel.cloud()] and [lattice::panel.wireframe()].
 #' @importFrom lattice panel.wireframe panel.cloud
 #' @export
 panel.disparity <- function(x,y,z,groups,subscripts,...) {
@@ -45,26 +45,26 @@ panel.disparity <- function(x,y,z,groups,subscripts,...) {
 
 #' Disparity through time plot using lattice
 #'
-#' Plots points on 2-D surfaces within a a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
+#' Plots points on 2-D surfaces within a a 3-D framework. See [lattice::wireframe()] and [lattice::panel.cloud()] for customization options.
 #'
-#' @param x a formula (most likely of the form \code{z ~ x * y})
+#' @param x a formula (most likely of the form `z ~ x * y`)
 #' @param data a data frame in which variables in the formula are to be evaluated
-#' @param groups a variable in \code{data} to be used as a grouping variable (this is probably the z variable)
-#' @param scales a list specifying how the axes are drawn (see \code{\link[lattice]{xyplot}} for details)
+#' @param groups a variable in `data` to be used as a grouping variable (this is probably the z variable)
+#' @param scales a list specifying how the axes are drawn (see [lattice::xyplot()] for details)
 #' @param pch the point type
 #' @param col.point color(s) for points on surfaces
-#' @param drape logical, whether the surfaces should be colored based on \code{col.regions} and \code{alpha.regions}
+#' @param drape logical, whether the surfaces should be colored based on `col.regions` and `alpha.regions`
 #' @param col.regions color(s) for surfaces
 #' @param alpha.regions alpha value(s) for surfaces
-#' @param colorkey logical, should a legend be drawn (or a list describing the legend; see \code{\link[lattice]{levelplot}} for details)
+#' @param colorkey logical, should a legend be drawn (or a list describing the legend; see [lattice::levelplot()] for details)
 #' @param screen a list of the rotations that should be applied to each axis
 #' @param R.mat a transformational matrix that is applied to the orientation of the axes
 #' @param aspect a numeric vector of length 2, giving the relative aspects of the y-size/x-size and z-size/x-size of the enclosing cube
 #' @param perspective logical, whether to plot a perspective view
-#' @param par.settings plotting settings (see \code{\link[lattice]{trellis.par.set}})
-#' @param lattice.options lattice settings (see \code{\link[lattice]{lattice.options}})
-#' @param ... Other arguments passed to \code{\link[lattice]{wireframe}}
-#' @return An object of class \code{"trellis"}, as output by \code{\link[lattice]{wireframe}}.
+#' @param par.settings plotting settings (see [lattice::trellis.par.set()])
+#' @param lattice.options lattice settings (see [lattice::lattice.options()])
+#' @param ... Other arguments passed to [lattice::wireframe()]
+#' @return An object of class `"trellis"`, as output by [lattice::wireframe()].
 #' @importFrom lattice wireframe
 #' @export
 #' @examples

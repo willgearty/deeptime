@@ -42,12 +42,12 @@ or C) a custom data.frame of time interval boundaries (see Details).}
 
 \item{xlim, ylim}{Limits for the x and y axes.}
 
-\item{xtrans, ytrans}{Transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.}
+\item{xtrans, ytrans}{Transformers for the x and y axes. For more information see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
 
-\item{clip}{Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.}
+\item{clip}{Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
 
-\item{expand}{If `FALSE`, the default, limits are taken exactly from the data or `xlim`/`ylim`.
-If `TRUE`, adds a small expansion factor to the limits to ensure that data and axes don't overlap.}
+\item{expand}{If \code{FALSE}, the default, limits are taken exactly from the data or \code{xlim}/\code{ylim}.
+If \code{TRUE}, adds a small expansion factor to the limits to ensure that data and axes don't overlap.}
 
 \item{fill}{The fill color of the boxes. The default is to use the \code{color} column included in \code{dat}.
 If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
@@ -71,7 +71,7 @@ Custom label colors can be provided with this option (overriding the \code{lab_c
 
 \item{skip}{A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.}
 
-\item{size}{Label size. Either a number as you would specify in \code{\link[ggplot2]{geom_text}} or \code{"auto"} to use \code{\link[ggfittext]{geom_fit_text}}.}
+\item{size}{Label size. Either a number as you would specify in \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} or \code{"auto"} to use \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}.}
 
 \item{lwd}{Line width.}
 
@@ -83,10 +83,10 @@ Custom label colors can be provided with this option (overriding the \code{lab_c
 
 \item{dat_is_discrete}{Are the ages in \code{dat} already converted for a discrete scale?}
 
-\item{fittext_args}{A list of named arguments to provide to \code{\link[ggfittext]{geom_fit_text}}. Only used if \code{size} is set to \code{"auto"}.}
+\item{fittext_args}{A list of named arguments to provide to \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}. Only used if \code{size} is set to \code{"auto"}.}
 }
 \description{
-\code{coord_geo} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
+\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it occurs after
 statistical transformation and will affect the visual appearance of geoms. The main difference
 is that it also adds a geological timescale to the specified side of the plot.
 }
@@ -94,12 +94,12 @@ is that it also adds a geological timescale to the specified side of the plot.
 Transforming the side with the scale is not currently implemented.
 If a custom data.frame is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
 \itemize{
-  \item The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
-  \item The \code{max_age} column lists the oldest boundary of each time interval.
-  \item The \code{min_age} column lists the youngest boundary of each time interval.
-  \item The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-  \item The \code{color} column is also optional and lists a \link[ggplot2]{color} for the background for each time interval.
-  \item The \code{lab_color} column is also optional and lists a \link[ggplot2]{color} for the label for each time interval.
+\item The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+\item The \code{max_age} column lists the oldest boundary of each time interval.
+\item The \code{min_age} column lists the youngest boundary of each time interval.
+\item The \code{abbr} column is optional and lists abbreviations that may be used as labels.
+\item The \code{color} column is also optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color} for the background for each time interval.
+\item The \code{lab_color} column is also optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color} for the label for each time interval.
 }
 
 If the axis of the time scale is discrete, \code{max_age} and \code{min_age} will

@@ -39,9 +39,9 @@ disparity_through_time(
 
 \item{col.point}{color(s) for points on surfaces}
 
-\item{scales}{a list specifying how the axes are drawn (see \code{\link[lattice]{xyplot}} for details)}
+\item{scales}{a list specifying how the axes are drawn (see \code{\link[lattice:xyplot]{lattice::xyplot()}} for details)}
 
-\item{colorkey}{logical, should a legend be drawn (or a list describing the legend; see \code{\link[lattice]{levelplot}} for details)}
+\item{colorkey}{logical, should a legend be drawn (or a list describing the legend; see \code{\link[lattice:levelplot]{lattice::levelplot()}} for details)}
 
 \item{screen}{a list of the rotations that should be applied to each axis}
 
@@ -57,17 +57,17 @@ disparity_through_time(
 
 \item{R.mat}{a transformational matrix that is applied to the orientation of the axes}
 
-\item{par.settings}{plotting settings (see \code{\link[lattice]{trellis.par.set}})}
+\item{par.settings}{plotting settings (see \code{\link[lattice:trellis.par.get]{lattice::trellis.par.set()}})}
 
-\item{lattice.options}{lattice settings (see \code{\link[lattice]{lattice.options}})}
+\item{lattice.options}{lattice settings (see \code{\link[lattice:lattice.options]{lattice::lattice.options()}})}
 
-\item{...}{Other arguments passed to \code{\link[lattice]{wireframe}}}
+\item{...}{Other arguments passed to \code{\link[lattice:cloud]{lattice::wireframe()}}}
 }
 \value{
-An object of class \code{"trellis"}, as output by \code{\link[lattice]{wireframe}}.
+An object of class \code{"trellis"}, as output by \code{\link[lattice:cloud]{lattice::wireframe()}}.
 }
 \description{
-Plots points on 2-D surfaces within a a 3-D framework. See \code{\link[lattice]{wireframe}} and \code{\link[lattice]{panel.cloud}} for customization options.
+Plots points on 2-D surfaces within a a 3-D framework. See \code{\link[lattice:cloud]{lattice::wireframe()}} and \code{\link[lattice:panel.cloud]{lattice::panel.cloud()}} for customization options.
 }
 \examples{
 g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),

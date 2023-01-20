@@ -20,14 +20,11 @@ with other areas of deep time visualization.
 ```r
 # get the stable version from CRAN
 install.packages("deeptime")
-```
-::: {.pkgdown-devel}
-```r
+
 # or get the development version from github
 # install.packages("devtools")
 devtools::install_github("willgearty/deeptime")
 ```
-:::
 
 ## Usage
 

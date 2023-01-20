@@ -50,13 +50,13 @@ position adjustment function. Use the latter if you need to change the
 settings of the adjustment.}
 
 \item{...}{Other arguments passed on to both
-\code{\link[ggplot2]{geom_segment}} and \code{\link[ggplot2]{geom_point}}.}
+\code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}} and \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.}
 
 \item{seg_args}{A list of arguments passed only to
-\code{\link[ggplot2]{geom_segment}}.}
+\code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.}
 
 \item{point_args}{A list of arguments passed only to
-\code{\link[ggplot2]{geom_point}}.}
+\code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.}
 
 \item{arrow}{specification for arrow heads, as created by \code{\link[grid:arrow]{grid::arrow()}}.}
 
@@ -82,16 +82,16 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 }
 \description{
-This behaves similar to \code{\link[phytools]{phylomorphospace}}, but is
-for plotting a 2-D phylomorphospace with \code{\link[ggplot2]{ggplot}}.
+This behaves similar to \code{\link[phytools:phylomorphospace]{phytools::phylomorphospace()}}, but is
+for plotting a 2-D phylomorphospace with \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
 This function works like any other \code{ggplot2} geom; it can be
 combined with other geoms (see the example below), and the output can be
 modified using scales, themes, etc.
 }
 \details{
-The ancestral states are estimated using \code{\link[phytools]{fastAnc}}.
-The nodes are connected using \code{\link[ggplot2]{geom_segment}},
-while the tips are indicated using \code{\link[ggplot2]{geom_point}}.
+The ancestral states are estimated using \code{\link[phytools:fastAnc]{phytools::fastAnc()}}.
+The nodes are connected using \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}},
+while the tips are indicated using \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
 
 The default expectation is that the order of the data is the same order as
 the tip labels of the tree (\code{tree$tip.label}). However, if this is not

@@ -1,8 +1,8 @@
 #' Transformed and flipped Cartesian coordinate system
 #'
-#' \code{coord_trans_flip} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
+#' `coord_trans_flip` behaves similarly to [ggplot2::coord_trans()] in that it occurs after
 #' statistical transformation and will affect the visual appearance of geoms. The main difference
-#' is that it also flips the x and y coordinates like \code{\link[ggplot2]{coord_flip}}.
+#' is that it also flips the x and y coordinates like [ggplot2::coord_flip()].
 #'
 #' @importFrom ggplot2 ggproto
 #' @inheritParams ggplot2::coord_trans

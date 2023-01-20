@@ -2,7 +2,7 @@
 % Please edit documentation in R/gggeo_scale_old.R
 \name{gggeo_scale_old}
 \alias{gggeo_scale_old}
-\title{Add a geologic scale to ggplots (old version) (deprecated)}
+\title{Add a geologic scale on top of ggplots}
 \usage{
 gggeo_scale_old(
   gg,
@@ -58,16 +58,24 @@ Custom fill colors can be provided with this option and will be recycled if/as n
 A ggplot object.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 This function takes a ggplot object and adds a geologic time scale at the specified side.
 }
 \details{
 If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
-  The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
-  The \code{max_age} column lists the oldest boundary of each time interval.
-  The \code{min_age} column lists the youngest boundary of each time interval.
-  The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-  The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+The \code{max_age} column lists the oldest boundary of each time interval.
+The \code{min_age} column lists the youngest boundary of each time interval.
+The \code{abbr} column is optional and lists abbreviations that may be used as labels.
+The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
 }
+\section{Life cycle}{
+
+This function is soft-deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime} version 1.0.0.
+It may be removed in the future.
+}
+
 \examples{
 library(ggplot2)
 # bottom scale by default
@@ -128,3 +136,4 @@ p <- revts(p)
 gggeo_scale_old(p, neg = TRUE)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

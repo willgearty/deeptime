@@ -1,27 +1,27 @@
 #' Plot a 2-D phylomorphospace in ggplot2
 #'
-#' This behaves similar to \code{\link[phytools]{phylomorphospace}}, but is
-#' for plotting a 2-D phylomorphospace with \code{\link[ggplot2]{ggplot}}.
-#' This function works like any other \code{ggplot2} geom; it can be
+#' This behaves similar to [phytools::phylomorphospace()], but is
+#' for plotting a 2-D phylomorphospace with [ggplot2::ggplot()].
+#' This function works like any other `ggplot2` geom; it can be
 #' combined with other geoms (see the example below), and the output can be
 #' modified using scales, themes, etc.
 #'
-#' The ancestral states are estimated using \code{\link[phytools]{fastAnc}}.
-#' The nodes are connected using \code{\link[ggplot2]{geom_segment}},
-#' while the tips are indicated using \code{\link[ggplot2]{geom_point}}.
+#' The ancestral states are estimated using [phytools::fastAnc()].
+#' The nodes are connected using [ggplot2::geom_segment()],
+#' while the tips are indicated using [ggplot2::geom_point()].
 #'
 #' The default expectation is that the order of the data is the same order as
-#' the tip labels of the tree (\code{tree$tip.label}). However, if this is not
-#' the case, you can map the optional \code{label} aesthetic to a column in the
+#' the tip labels of the tree (`tree$tip.label`). However, if this is not
+#' the case, you can map the optional `label` aesthetic to a column in the
 #' data that contains the tip names (see example below).
 #'
 #' @param tree An object of class "phylo".
 #' @param seg_args A list of arguments passed only to
-#'   \code{\link[ggplot2]{geom_segment}}.
+#'   [ggplot2::geom_segment()].
 #' @param point_args A list of arguments passed only to
-#'   \code{\link[ggplot2]{geom_point}}.
+#'   [ggplot2::geom_point()].
 #' @param ... Other arguments passed on to both
-#'   \code{\link[ggplot2]{geom_segment}} and \code{\link[ggplot2]{geom_point}}.
+#'   [ggplot2::geom_segment()] and [ggplot2::geom_point()].
 #' @importFrom ggplot2 layer
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_segment

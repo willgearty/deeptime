@@ -3,6 +3,8 @@
 * Updated built-in timescales to 2022/10 version of GTS
 * Added a geom for making phylomorphospaces
 * Added vignettes
+* Renamed getScaleData() to get_scale_data()
+* Soft deprecated gggeo_scale() and gggeo_scale_old()
 
 # deeptime 0.3.0
 deeptime now requires ggplot2 version 3.3.0 or higher. Several new features and fixed compatibility with various ggplot2 versions.

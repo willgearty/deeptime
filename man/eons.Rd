@@ -7,11 +7,11 @@
 \format{
 A data frame with 3 rows and 5 variables:
 \describe{
-  \item{name}{eon name}
-  \item{max_age}{maximum age, in millions of years}
-  \item{min_age}{minimum age, in millions of years}
-  \item{abbr}{eon name abbreviations}
-  \item{color}{the colors for each eon, according to the Commission for the Geological Map of the World}
+\item{name}{eon name}
+\item{max_age}{maximum age, in millions of years}
+\item{min_age}{minimum age, in millions of years}
+\item{abbr}{eon name abbreviations}
+\item{color}{the colors for each eon, according to the Commission for the Geological Map of the World}
 }
 }
 \source{

@@ -1,23 +1,30 @@
-#' Add a geologic scale to ggplots (old version) (deprecated)
+#' Add a geologic scale on top of ggplots
+#'
+#' @description
+#' `r lifecycle::badge('deprecated')`
 #'
 #' This function takes a ggplot object and adds a geologic time scale at the specified side.
 #'
-#' If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
-#'   The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
-#'   The \code{max_age} column lists the oldest boundary of each time interval.
-#'   The \code{min_age} column lists the youngest boundary of each time interval.
-#'   The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-#'   The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+#' @details
+#' If custom data is provided (with `dat`), it should consist of at least 3 columns of data. See `data(periods)` for an example.
+#'   The `name` column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+#'   The `max_age` column lists the oldest boundary of each time interval.
+#'   The `min_age` column lists the youngest boundary of each time interval.
+#'   The `abbr` column is optional and lists abbreviations that may be used as labels.
+#'   The `color` column is also optional and lists a hex color code (which can be obtained with `rgb()`) for each time interval.
+#' @section Life cycle:
+#' This function is soft-deprecated in favor of [coord_geo()] as of **deeptime** version 1.0.0.
+#' It may be removed in the future.
 #' @param gg The ggplot object.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-#'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
+#'   B) a string indicating a timescale from macrostrat (see list here: <https://macrostrat.org/api/defs/timescales?all>),
 #'   or C) a custom dataframe of time interval boundaries (see Details).
-#' @param fill The fill color of the boxes. The default is to use the colors included in \code{dat}.
-#'   If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
+#' @param fill The fill color of the boxes. The default is to use the colors included in `dat`.
+#'   If a custom dataset is provided with `dat` without color and without fill, a greyscale will be used.
 #'   Custom fill colors can be provided with this option and will be recycled if/as necessary.
 #' @param color The outline color of the interval boxes.
 #' @param alpha The transparency of the fill colors.
-#' @param height The proportional height (or width if \code{pos} is \code{left} or \code{right}) of the entire plot to use for the scale.
+#' @param height The proportional height (or width if `pos` is `left` or `right`) of the entire plot to use for the scale.
 #' @param gap The proportional height (or width) of the entire plot to use as a gap between the axis and the scale.
 #' @param pos Which side to add the scale to (left, right, top, or bottom). First letter may also be used.
 #' @param lab Whether to include labels.
@@ -27,6 +34,7 @@
 #' @param size Label size.
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @return A ggplot object.
+#' @keywords internal
 #' @export
 #' @importFrom ggplot2 ggplot geom_rect geom_text aes scale_fill_manual ggplot_build
 #' @importFrom ggnewscale new_scale_fill
@@ -90,10 +98,11 @@
 #' p <- revts(p)
 #' gggeo_scale_old(p, neg = TRUE)
 gggeo_scale_old <- function(gg, dat = "periods", fill = NULL, color = "black", alpha = 1, height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0, abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"), size = 5, neg = FALSE) {
+  lifecycle::deprecate_soft("1.0.0", "gggeo_scale_old()", "coord_geo()")
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
-    dat <- getScaleData(dat)
+    dat <- get_scale_data(dat)
   }
   if(neg){
     dat$max_age <- -1 * (dat$max_age)

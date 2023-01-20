@@ -3,63 +3,63 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label", "name", "tran
 
 #' Transformed coordinate system with geological timescale
 #'
-#' \code{coord_geo} behaves similarly to \code{\link[ggplot2]{coord_trans}} in that it occurs after
+#' `coord_geo` behaves similarly to [ggplot2::coord_trans()] in that it occurs after
 #' statistical transformation and will affect the visual appearance of geoms. The main difference
 #' is that it also adds a geological timescale to the specified side of the plot.
 #'
 #' Transforming the side with the scale is not currently implemented.
-#' If a custom data.frame is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
+#' If a custom data.frame is provided (with `dat`), it should consist of at least 3 columns of data. See `data(periods)` for an example.
 #' \itemize{
-#'   \item The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
-#'   \item The \code{max_age} column lists the oldest boundary of each time interval.
-#'   \item The \code{min_age} column lists the youngest boundary of each time interval.
-#'   \item The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-#'   \item The \code{color} column is also optional and lists a \link[ggplot2]{color} for the background for each time interval.
-#'   \item The \code{lab_color} column is also optional and lists a \link[ggplot2]{color} for the label for each time interval.
+#'   \item The `name` column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+#'   \item The `max_age` column lists the oldest boundary of each time interval.
+#'   \item The `min_age` column lists the youngest boundary of each time interval.
+#'   \item The `abbr` column is optional and lists abbreviations that may be used as labels.
+#'   \item The `color` column is also optional and lists a [color][ggplot2::color] for the background for each time interval.
+#'   \item The `lab_color` column is also optional and lists a [color][ggplot2::color] for the label for each time interval.
 #' }
 #'
-#' If the axis of the time scale is discrete, \code{max_age} and \code{min_age} will
+#' If the axis of the time scale is discrete, `max_age` and `min_age` will
 #' automatically be converted to the discrete scale. In this case, the categories
-#' of the discrete axis should match the values in the \code{name} column. If the ages
-#' within \code{dat} are already discretized, you can set \code{dat_is_discrete} to
-#' \code{TRUE} to prevent this automatic conversion. This can be useful for adding a
+#' of the discrete axis should match the values in the `name` column. If the ages
+#' within `dat` are already discretized, you can set `dat_is_discrete` to
+#' `TRUE` to prevent this automatic conversion. This can be useful for adding a
 #' time scale where categories and time intervals are not 1:1.
 #'
-#' \code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-#' In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab}, \code{lab_color},
-#' \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{neg}, \code{bord},
-#' \code{center_end_labels}, and \code{dat_is_discrete} can also be lists.
-#' If these lists are not as long as \code{pos}, the elements will be recycled.
+#' `pos` may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
+#' In this case, `dat`, `fill`, `color`, `alpha`, `height`, `lab`, `lab_color`,
+#' `rot`, `abbrv`, `skip`, `size`, `lwd`, `neg`, `bord`,
+#' `center_end_labels`, and `dat_is_discrete` can also be lists.
+#' If these lists are not as long as `pos`, the elements will be recycled.
 #' If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
 #' @param pos Which side to add the scale to (left, right, top, or bottom). First letter may also be used.
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-#'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
+#'   B) a string indicating a timescale from macrostrat (see list here: <https://macrostrat.org/api/defs/timescales?all>),
 #'   or C) a custom data.frame of time interval boundaries (see Details).
 #' @param xlim,ylim Limits for the x and y axes.
-#' @param xtrans,ytrans Transformers for the x and y axes. For more information see \code{\link[ggplot2]{coord_trans}}.
-#' @param clip Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2]{coord_trans}}.
+#' @param xtrans,ytrans Transformers for the x and y axes. For more information see [ggplot2::coord_trans()].
+#' @param clip Should drawing be clipped to the extent of the plot panel? For more information see [ggplot2::coord_trans()].
 #' @param expand If `FALSE`, the default, limits are taken exactly from the data or `xlim`/`ylim`.
 #'   If `TRUE`, adds a small expansion factor to the limits to ensure that data and axes don't overlap.
-#' @param fill The fill color of the boxes. The default is to use the \code{color} column included in \code{dat}.
-#'   If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
-#'   Custom fill colors can be provided with this option (overriding the \code{color} column) and will be recycled if/as necessary.
+#' @param fill The fill color of the boxes. The default is to use the `color` column included in `dat`.
+#'   If a custom dataset is provided with `dat` without a `color` column and without fill, a greyscale will be used.
+#'   Custom fill colors can be provided with this option (overriding the `color` column) and will be recycled if/as necessary.
 #' @param color The outline color of the interval boxes.
 #' @param alpha The transparency of the fill colors.
-#' @param height The height (or width if \code{pos} is \code{left} or \code{right}) of the scale.
+#' @param height The height (or width if `pos` is `left` or `right`) of the scale.
 #' @param lab Whether to include labels.
-#' @param lab_color The color of the labels. The default is to use the \code{lab_color} column included in \code{dat}.
-#'   If a custom dataset is provided with \code{dat} without a \code{lab_color} column and without fill, all labels will be black.
-#'   Custom label colors can be provided with this option (overriding the \code{lab_color} column) and will be recycled if/as necessary.
+#' @param lab_color The color of the labels. The default is to use the `lab_color` column included in `dat`.
+#'   If a custom dataset is provided with `dat` without a `lab_color` column and without fill, all labels will be black.
+#'   Custom label colors can be provided with this option (overriding the `lab_color` column) and will be recycled if/as necessary.
 #' @param rot The amount of counter-clockwise rotation to add to the labels (in degrees).
 #' @param abbrv If including labels, whether to use abbreviations instead of full interval names.
-#' @param skip A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.
-#' @param size Label size. Either a number as you would specify in \code{\link[ggplot2]{geom_text}} or \code{"auto"} to use \code{\link[ggfittext]{geom_fit_text}}.
+#' @param skip A vector of interval names indicating which intervals should not be labeled. If `abbrv` is `TRUE`, this can also include interval abbreviations.
+#' @param size Label size. Either a number as you would specify in [ggplot2::geom_text()] or `"auto"` to use [ggfittext::geom_fit_text()].
 #' @param lwd Line width.
 #' @param neg Set this to true if your x-axis is using negative values.
-#' @param bord A vector specifying on which sides of the scale to add borders (same options as \code{pos}).
+#' @param bord A vector specifying on which sides of the scale to add borders (same options as `pos`).
 #' @param center_end_labels Should labels be centered within the visible range of intervals at the ends of the axis?
-#' @param dat_is_discrete Are the ages in \code{dat} already converted for a discrete scale?
-#' @param fittext_args A list of named arguments to provide to \code{\link[ggfittext]{geom_fit_text}}. Only used if \code{size} is set to \code{"auto"}.
+#' @param dat_is_discrete Are the ages in `dat` already converted for a discrete scale?
+#' @param fittext_args A list of named arguments to provide to [ggfittext::geom_fit_text()]. Only used if `size` is set to `"auto"`.
 #' @importFrom ggplot2 ggproto
 #' @import scales
 #' @export
@@ -220,7 +220,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos, lab, lab_color, r
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
-    dat <- getScaleData(dat)
+    dat <- get_scale_data(dat)
   }
 
   #if the axis is discrete, adjust the data accordingly

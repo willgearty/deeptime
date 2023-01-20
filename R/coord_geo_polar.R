@@ -1,47 +1,47 @@
 #' Polar coordinate system with geological timescale
 #'
-#' \code{coord_geo_polar} behaves similarly to \code{\link[ggplot2]{coord_polar}} in that it occurs after
+#' `coord_geo_polar` behaves similarly to [ggplot2::coord_polar()] in that it occurs after
 #' statistical transformation and will affect the visual appearance of geoms. The main difference
 #' is that it also adds a geological timescale to the background of the plot.
 #'
-#' If a custom data.frame is provided (with \code{dat}), it should consist of at least 2 columns of data. See \code{data(periods)} for an example.
+#' If a custom data.frame is provided (with `dat`), it should consist of at least 2 columns of data. See `data(periods)` for an example.
 #' \itemize{
-#'   \item The \code{max_age} column lists the oldest boundary of each time interval.
-#'   \item The \code{min_age} column lists the youngest boundary of each time interval.
-#'   \item The \code{color} column is optional and lists a \link[ggplot2]{color} for the background for each time interval.
+#'   \item The `max_age` column lists the oldest boundary of each time interval.
+#'   \item The `min_age` column lists the youngest boundary of each time interval.
+#'   \item The `color` column is optional and lists a [color][ggplot2::color] for the background for each time interval.
 #' }
 #'
-#' \code{dat} may also be a list of values and/or dataframes if multiple time scales should be added to the background.
-#' Scales will be added sequentially starting at \code{start} and going in the specified \code{direction}.
-#' By default the scales will all be equal in circular/rotational proportion, but this can be overriden with \code{prop}.
-#' If \code{dat} is a list, \code{fill}, \code{alpha}, \code{lwd}, \code{lty}, \code{color}, \code{neg}, and \code{prop} can also be lists.
-#' If these lists are not as long as \code{dat}, the elements will be recycled.
+#' `dat` may also be a list of values and/or dataframes if multiple time scales should be added to the background.
+#' Scales will be added sequentially starting at `start` and going in the specified `direction`.
+#' By default the scales will all be equal in circular/rotational proportion, but this can be overriden with `prop`.
+#' If `dat` is a list, `fill`, `alpha`, `lwd`, `lty`, `color`, `neg`, and `prop` can also be lists.
+#' If these lists are not as long as `dat`, the elements will be recycled.
 #' If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
 #'
-#' If the sum of the \code{prop} values is greater than 1, the proportions will be scaled such that they sum to 1.
-#' However, the \code{prop} values may sum to less than 1 if the user would like blank space in the background.
+#' If the sum of the `prop` values is greater than 1, the proportions will be scaled such that they sum to 1.
+#' However, the `prop` values may sum to less than 1 if the user would like blank space in the background.
 #'
-#' The \code{axis.line.r}, \code{axis.text.r}, \code{axis.ticks.r}, and \code{axis.ticks.length.r}
-#' ggplot2 \link[ggplot2:theme]{theme elements} can be modified just like their x and y counterparts
+#' The `axis.line.r`, `axis.text.r`, `axis.ticks.r`, and `axis.ticks.length.r`
+#' ggplot2 [theme elements][ggplot2::theme] can be modified just like their x and y counterparts
 #' to change the appearance of the radius axis. The default settings work well for a horizontal axis
 #' pointing towards the right, but these theme settings will need to be modified for other orientations.
-#' The default value for \code{axis.line.r} is \code{element_line()}.
-#' The default value for \code{axis.text.r} is \code{element_text(size = 3.5, vjust = -2, hjust = NA)}.
-#' The default value for \code{axis.ticks.r} is \code{element_line()}.
-#' The default value for \code{axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that the units
-#' for this element are meaningless and only the numeric value will be used (but a \code{unit} must still be used).
+#' The default value for `axis.line.r` is `element_line()`.
+#' The default value for `axis.text.r` is `element_text(size = 3.5, vjust = -2, hjust = NA)`.
+#' The default value for `axis.ticks.r` is `element_line()`.
+#' The default value for `axis.ticks.length.r` is `unit(1.5, "points")`. However, note that the units
+#' for this element are meaningless and only the numeric value will be used (but a `unit` must still be used).
 #'
 #' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-#'   B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
+#'   B) a string indicating a timescale from macrostrat (see list here: <https://macrostrat.org/api/defs/timescales?all>),
 #'   or C) a custom data.frame of time interval boundaries (see Details).
-#' @param fill The fill color of the background. The default is to use the \code{color} column included in \code{dat}.
-#'   If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
-#'   Custom fill colors can be provided with this option (overriding the \code{color} column) and will be recycled if/as necessary.
+#' @param fill The fill color of the background. The default is to use the `color` column included in `dat`.
+#'   If a custom dataset is provided with `dat` without a `color` column and without fill, a greyscale will be used.
+#'   Custom fill colors can be provided with this option (overriding the `color` column) and will be recycled if/as necessary.
 #' @param alpha The transparency of the fill colors.
-#' @param lwd Line width for lines between intervals. Set to \code{NULL} to remove lines.
+#' @param lwd Line width for lines between intervals. Set to `NULL` to remove lines.
 #' @param lty Line type for lines between intervals.
 #' @param color The color of the lines between intervals.
-#' @param neg Set this to true if your theta-axis is using negative values. This is often true if you are using \code{ggtree}.
+#' @param neg Set this to true if your theta-axis is using negative values. This is often true if you are using `ggtree`.
 #' @param prop This is the rotational proportion of the background that the scale takes up.
 #' @inheritParams ggplot2::coord_polar
 #' @importFrom ggplot2 ggproto
@@ -141,7 +141,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
       if (is(dat, "data.frame")) {
         #just use the supplied data
       } else {
-        dat <- getScaleData(dat)
+        dat <- get_scale_data(dat)
       }
 
       if (neg) {

@@ -19,7 +19,7 @@ data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 B) a string indicating a timescale from macrostrat (see list here:
 \url{https://macrostrat.org/api/defs/timescales?all}),
 or C) a custom data.frame of time interval boundaries
-(see \code{\link{coord_geo}}).}
+(see \code{\link[=coord_geo]{coord_geo()}}).}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:discrete_scale]{ggplot2::discrete_scale}}

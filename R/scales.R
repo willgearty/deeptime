@@ -9,9 +9,9 @@
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here:
-#'   \url{https://macrostrat.org/api/defs/timescales?all}),
+#'   <https://macrostrat.org/api/defs/timescales?all>),
 #'   or C) a custom data.frame of time interval boundaries
-#'   (see \code{\link{coord_geo}}).
+#'   (see [coord_geo()]).
 #' @export
 #' @examples
 #' library(ggplot2)
@@ -52,7 +52,7 @@ scale_discrete_geo <- function(dat, aesthetics, ...) {
   if(is(dat, "data.frame")){
     #just use the supplied data
   }else{
-    dat <- getScaleData(dat)
+    dat <- get_scale_data(dat)
   }
   if (!all(c("name", "color") %in% colnames(dat))) {
     stop("Either `name` or `color` is not a named column in `dat`")

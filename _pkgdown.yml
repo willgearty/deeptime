@@ -1,4 +1,4 @@
-url: http://williamgearty.com/deeptime/
+url: https://williamgearty.com/deeptime/
 template:
   bootstrap: 5
   bootswatch: flatly
@@ -31,7 +31,7 @@ reference:
   contents:
   - coord_geo
   - scale_color_geo
-  - getScaleData
+  - get_scale_data
 
 - subtitle: Built-in interval data
   desc: >
@@ -51,7 +51,9 @@ reference:
     now `coord_geo()`. These functions still work but are considered
     "deprecated". There is no plan to remove them in the immediate future (for
     those who used them or still use them in their code), but there is no
-    guarantee they will be supported ad infinitum.
+    guarantee they will be supported ad infinitum. Users are strongly encouraged
+    to use `coord_geo()` instead, which has more features and is still under
+    active development.
   contents:
   - gggeo_scale
   - gggeo_scale_old
@@ -64,7 +66,7 @@ reference:
   - coord_geo
   - coord_geo_polar
   - scale_color_geo
-  - getScaleData
+  - get_scale_data
 
 - title: Plotting trait data
   desc: >
