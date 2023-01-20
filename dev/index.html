@@ -38,7 +38,7 @@
     
     <a class="navbar-brand me-2" href="index.html">deeptime</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.0.9003</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.3.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,13 +97,11 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get the stable version from CRAN</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"deeptime"</span><span class="op">)</span></span></code></pre></div>
-<div class="pkgdown-devel">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># or get the development version from github</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"deeptime"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or get the development version from github</span></span>
 <span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"willgearty/deeptime"</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -111,7 +109,7 @@
 <div class="section level3">
 <h3 id="load-packages">Load packages<a class="anchor" aria-label="anchor" href="#load-packages"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/willgearty/deeptime" class="external-link">deeptime</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -119,7 +117,7 @@
 <h3 id="add-timescales-to-plots">Add timescales to plots<a class="anchor" aria-label="anchor" href="#add-timescales-to-plots"></a>
 </h3>
 <p>The main function of <strong>deeptime</strong> is <code><a href="reference/coord_geo.html">coord_geo()</a></code>, which functions just like <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html" class="external-link">coord_trans()</a></code> from <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. You can use this function to add highly customizable timescales to a wide variety of ggplots.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">divDyn</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">corals</span><span class="op">)</span></span>
 <span><span class="co"># this is not a proper diversity curve but it gets the point across</span></span>
@@ -139,7 +137,7 @@
 <div class="section level3">
 <h3 id="combine-plots-with-timescales-and-plots-without-timescales">Combine plots with timescales and plots without timescales<a class="anchor" aria-label="anchor" href="#combine-plots-with-timescales-and-plots-without-timescales"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dwbapst/paleotree" class="external-link">paleotree</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">RaiaCopesRule</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ammoniteTraitsRaia</span><span class="op">)</span> <span class="op">+</span></span>
@@ -168,7 +166,7 @@
 <div class="section level3">
 <h3 id="plot-disparity-through-time">Plot disparity through time<a class="anchor" aria-label="anchor" href="#plot-disparity-through-time"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#make transformer</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com" class="external-link">ggforce</a></span><span class="op">)</span></span>
 <span><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggforce.data-imaginist.com/reference/linear_trans.html" class="external-link">linear_trans</a></span><span class="op">(</span><span class="fu">shear</span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
