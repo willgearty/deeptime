@@ -4,6 +4,18 @@ template:
   bootswatch: flatly
   bslib:
     navbar-padding-y: 8px
+  includes:
+    in_header: |
+       <!-- Google tag (gtag.js) -->
+       <script async src="https://www.googletagmanager.com/gtag/js?id=UA-53338219-2"></script>
+       <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', 'UA-53338219-2');
+       </script>
+
 
 development:
   mode: auto
