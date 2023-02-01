@@ -1,6 +1,7 @@
 test_that("geom_phylomorpho works", {
   skip_if_not_installed("ape")
   library(ape)
+  set.seed(1234)
   tr <- rtree(10)
   dat <- data.frame(x = runif(10), y = runif(10), label = tr$tip.label,
                     row.names = tr$tip.label)
