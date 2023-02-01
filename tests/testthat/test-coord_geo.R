@@ -38,11 +38,19 @@ test_that("scales on different sides works", {
   gg <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time/1000), orientation = "y") +
     scale_y_reverse("Time (Ma)", sec.axis = sec_axis(~.)) +
-    scale_x_reverse() +
     coord_geo(dat = list("Geomagnetic Polarity Chron", "Planktic foraminiferal Primary Biozones"),
-              xlim = c(6,2), ylim = c(5.5,0), pos = list("l", "r"), rot = 90, skip = "PL4", size = list(5, 4)) +
+              xlim = c(6,2), ylim = c(5.5,0), pos = list("l", "r"), rot = 90, skip = "PL4", size = list(5, 4),
+              xtrans = "sqrt") +
     theme_classic()
-  expect_doppelganger_deeptime("scales on different sides", gg)
+  expect_doppelganger_deeptime("scales on different sides1", gg)
+  gg <- ggplot(lisiecki2005) +
+    geom_line(aes(y = d18O, x = Time/1000), orientation = "x") +
+    scale_x_reverse("Time (Ma)", sec.axis = sec_axis(~.)) +
+    coord_geo(dat = list("Geomagnetic Polarity Chron", "Planktic foraminiferal Primary Biozones"),
+              ylim = c(6,2), xlim = c(5.5,0), pos = list("t", "b"), skip = "PL4", size = list(5, 4),
+              ytrans = "log10") +
+    theme_classic()
+  expect_doppelganger_deeptime("scales on different sides2", gg)
 })
 
 test_that("scales on facetted plot works", {
@@ -113,7 +121,7 @@ test_that("ggtree scale works with only fossil taxa", {
   skip_if_not_installed("ggtree")
   skip_if_not_installed("paleotree")
   gg <- ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
-    coord_geo(xlim = c(-163.5,-66), ylim = c(-2,Ntip(ceratopsianTreeRaia)), pos = list("bottom", "bottom"),
+    coord_geo(xlim = c(-163.5,-50), ylim = c(-2,Ntip(ceratopsianTreeRaia)), pos = list("bottom", "bottom"),
               skip = c("Paleocene", "Middle Jurassic"), dat = list("epochs", "periods"), abbrv = FALSE,
               size = list(4,5), neg = TRUE, center_end_labels = TRUE) +
     scale_x_continuous(breaks = -rev(epochs$max_age), labels = rev(epochs$max_age)) +
