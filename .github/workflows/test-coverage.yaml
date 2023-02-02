@@ -28,10 +28,12 @@ jobs:
 
       - name: Test coverage
         run: |
+          excl <- list("R/zzz.R"=1:1e6)
           covr::codecov(
             quiet = FALSE,
             clean = FALSE,
-            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
+            install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package"),
+            line_exclusions = excl
           )
         shell: Rscript {0}
 
