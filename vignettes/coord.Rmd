@@ -44,22 +44,28 @@ library(ggforce)
 trans <- linear_trans(shear(50, 0))
 
 # set up data to be plotted
-square <- data.frame(disp = c(min(mtcars$disp), min(mtcars$disp),
-                              max(mtcars$disp), max(mtcars$disp)),
-                     wt = c(min(mtcars$wt), max(mtcars$wt),
-                              max(mtcars$wt), min(mtcars$wt)))
+square <- data.frame(
+  disp = c(
+    min(mtcars$disp), min(mtcars$disp),
+    max(mtcars$disp), max(mtcars$disp)
+  ),
+  wt = c(
+    min(mtcars$wt), max(mtcars$wt),
+    max(mtcars$wt), min(mtcars$wt)
+  )
+)
 
 # plot data normally
 library(ggplot2)
 ggplot(mtcars, aes(disp, wt)) +
   geom_polygon(data = square, fill = NA, color = "black") +
-  geom_point(color = 'black') +
+  geom_point(color = "black") +
   coord_cartesian() +
   theme_classic()
 # plot data with transformation
 ggplot(mtcars, aes(disp, wt)) +
   geom_polygon(data = square, fill = NA, color = "black") +
-  geom_point(color = 'black') +
+  geom_point(color = "black") +
   coord_trans_xy(trans = trans, expand = TRUE) +
   theme_classic()
 ```

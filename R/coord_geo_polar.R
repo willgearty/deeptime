@@ -59,8 +59,10 @@
 #'
 #' # multiple scales
 #' revts(ggtree(tree)) +
-#'   coord_geo_polar(dat = list("stages", "periods"), alpha = .5,
-#'                   prop = list(0.75, .25), start = pi/4, lty = "dashed") +
+#'   coord_geo_polar(
+#'     dat = list("stages", "periods"), alpha = .5,
+#'     prop = list(0.75, .25), start = pi / 4, lty = "dashed"
+#'   ) +
 #'   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02))) +
 #'   theme(axis.text.r = element_text(size = 3.5, hjust = .75, vjust = .75))
 #' @examplesIf require(ggtree) && require(paleotree)
@@ -70,11 +72,10 @@
 #' ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
 #'   coord_geo_polar(dat = "stages")
 coord_geo_polar <- function(dat = "periods", theta = "y",
-                            start = -pi/2, direction = -1, clip = "off",
+                            start = -pi / 2, direction = -1, clip = "off",
                             fill = NULL, alpha = 1,
                             lwd = .25, color = "grey80", lty = "solid",
                             neg = TRUE, prop = 1) {
-
   dat <- make_list(dat)
   n_scales <- length(dat)
 
@@ -82,20 +83,20 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
   r <- if (theta == "x") "y" else "x"
 
   ggproto(NULL, CoordGeoPolar,
-          theta = theta, r = r,
-          start = start, direction = sign(direction), clip = clip,
-          dat = dat,
-          fill = rep(make_list(fill), length.out = n_scales),
-          alpha = rep(make_list(alpha), length.out = n_scales),
-          lwd = rep(make_list(lwd), length.out = n_scales),
-          lty = rep(make_list(lty), length.out = n_scales),
-          color = rep(make_list(color), length.out = n_scales),
-          neg = rep(make_list(neg), length.out = n_scales),
-          prop = rep(make_list(prop), length.out = n_scales)
+    theta = theta, r = r,
+    start = start, direction = sign(direction), clip = clip,
+    dat = dat,
+    fill = rep(make_list(fill), length.out = n_scales),
+    alpha = rep(make_list(alpha), length.out = n_scales),
+    lwd = rep(make_list(lwd), length.out = n_scales),
+    lty = rep(make_list(lty), length.out = n_scales),
+    color = rep(make_list(color), length.out = n_scales),
+    neg = rep(make_list(neg), length.out = n_scales),
+    prop = rep(make_list(prop), length.out = n_scales)
   )
 }
 
-rename <- function (x, replace) {
+rename <- function(x, replace) {
   current_names <- names(x)
   old_names <- names(replace)
   missing_names <- setdiff(old_names, current_names)
@@ -116,7 +117,7 @@ rename_data <- function(coord, data) {
 }
 
 #' @importFrom grid grobName
-ggname <- function (prefix, grob) {
+ggname <- function(prefix, grob) {
   grob$name <- grobName(grob, prefix)
   grob
 }
@@ -139,7 +140,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     # convert, subset, and adjust data
     clean_dat <- function(dat, fill, neg) {
       if (is(dat, "data.frame")) {
-        #just use the supplied data
+        # just use the supplied data
       } else {
         dat <- get_scale_data(dat)
       }
@@ -152,32 +153,33 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
       if (!is.null(fill)) {
         dat$color <- rep(fill, length.out = nrow(dat))
       } else if (!("color" %in% colnames(dat))) {
-        dat$color <- rep(c("grey60","grey80"), length.out = nrow(dat))
+        dat$color <- rep(c("grey60", "grey80"), length.out = nrow(dat))
       }
 
       if (neg) {
         dat$max_age[(dat$max_age < min(r_lims) & dat$min_age < min(r_lims)) |
-                      (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))] <- min(r_lims)
+          (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))] <- min(r_lims)
         dat$min_age[(dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
-                      (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))] <- max(r_lims)
+          (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))] <- max(r_lims)
       } else {
         dat$max_age[(dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
-                      (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))] <- max(r_lims)
+          (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))] <- max(r_lims)
         dat$min_age[(dat$max_age > min(r_lims) & dat$min_age < min(r_lims)) |
-                      (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))] <- min(r_lims)
+          (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))] <- min(r_lims)
       }
       subset(dat, max_age <= max(r_lims) & min_age >= min(r_lims))
     }
 
     dat_list <- mapply(clean_dat,
-                       dat = self$dat,
-                       fill = self$fill,
-                       neg = self$neg,
-                       SIMPLIFY = FALSE)
+      dat = self$dat,
+      fill = self$fill,
+      neg = self$neg,
+      SIMPLIFY = FALSE
+    )
 
     prop_sum <- do.call(sum, self$prop)
     if (prop_sum > 1) {
-      prop_list <- lapply(self$prop, function(prop) prop/prop_sum)
+      prop_list <- lapply(self$prop, function(prop) prop / prop_sum)
     } else {
       prop_list <- self$prop
     }
@@ -186,91 +188,111 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     geo_scale <- ggplot()
     for (ind in seq_along(dat_list)) {
       geo_scale <- geo_scale +
-        geom_rect(data = dat_list[[ind]],
-                  aes(ymin = min_age, ymax = max_age, fill = color),
-                  xmin = xmins[ind], xmax = xmins[ind + 1], alpha = self$alpha[[ind]],
-                  show.legend = FALSE, inherit.aes = FALSE)
+        geom_rect(
+          data = dat_list[[ind]],
+          aes(ymin = min_age, ymax = max_age, fill = color),
+          xmin = xmins[ind], xmax = xmins[ind + 1], alpha = self$alpha[[ind]],
+          show.legend = FALSE, inherit.aes = FALSE
+        )
       # add lines if requested
       if (!is.null(self$lwd[[ind]])) {
         if (packageVersion("ggplot2") > "3.3.6") {
           geo_scale <- geo_scale +
-            geom_segment(data = dat_list[[ind]],
-                         aes(y = min_age, yend = min_age),
-                         x = xmins[ind], xend = xmins[ind + 1],
-                         color = self$color[[ind]], linewidth = self$lwd[[ind]],
-                         lty = self$lty[[ind]]) +
-            geom_segment(data = dat_list[[ind]],
-                         aes(y = max_age, yend = max_age),
-                         x = xmins[ind], xend = xmins[ind + 1],
-                         color = self$color[[ind]], linewidth = self$lwd[[ind]],
-                         lty = self$lty[[ind]])
+            geom_segment(
+              data = dat_list[[ind]],
+              aes(y = min_age, yend = min_age),
+              x = xmins[ind], xend = xmins[ind + 1],
+              color = self$color[[ind]], linewidth = self$lwd[[ind]],
+              lty = self$lty[[ind]]
+            ) +
+            geom_segment(
+              data = dat_list[[ind]],
+              aes(y = max_age, yend = max_age),
+              x = xmins[ind], xend = xmins[ind + 1],
+              color = self$color[[ind]], linewidth = self$lwd[[ind]],
+              lty = self$lty[[ind]]
+            )
         } else {
           geo_scale <- geo_scale +
-            geom_segment(data = dat_list[[ind]],
-                         aes(y = min_age, yend = min_age),
-                         x = xmins[ind], xend = xmins[ind + 1],
-                         color = self$color[[ind]], size = self$lwd[[ind]],
-                         lty = self$lty[[ind]]) +
-            geom_segment(data = dat_list[[ind]],
-                         aes(y = max_age, yend = max_age),
-                         x = xmins[ind], xend = xmins[ind + 1],
-                         color = self$color[[ind]], size = self$lwd[[ind]],
-                         lty = self$lty[[ind]])
+            geom_segment(
+              data = dat_list[[ind]],
+              aes(y = min_age, yend = min_age),
+              x = xmins[ind], xend = xmins[ind + 1],
+              color = self$color[[ind]], size = self$lwd[[ind]],
+              lty = self$lty[[ind]]
+            ) +
+            geom_segment(
+              data = dat_list[[ind]],
+              aes(y = max_age, yend = max_age),
+              x = xmins[ind], xend = xmins[ind + 1],
+              color = self$color[[ind]], size = self$lwd[[ind]],
+              lty = self$lty[[ind]]
+            )
         }
       }
     }
 
     # add an axis
-    axis_line <- calc_element('axis.line.r', theme)
-    axis_text <- calc_element('axis.text.r', theme)
-    axis_ticks <- calc_element('axis.ticks.r', theme)
-    axis_ticks_length <- calc_element('axis.ticks.length.r', theme)
+    axis_line <- calc_element("axis.line.r", theme)
+    axis_text <- calc_element("axis.text.r", theme)
+    axis_ticks <- calc_element("axis.ticks.r", theme)
+    axis_ticks_length <- calc_element("axis.ticks.length.r", theme)
     if (!is(axis_line, "element_blank")) {
       if (packageVersion("ggplot2") > "3.3.6") {
         geo_scale <- geo_scale +
-          geom_vline(xintercept = 0, color = axis_line$colour %||% NA,
-                     linewidth = axis_line$linewidth %||% NA,
-                     linetype = axis_line$linetype %||% NA)
+          geom_vline(
+            xintercept = 0, color = axis_line$colour %||% NA,
+            linewidth = axis_line$linewidth %||% NA,
+            linetype = axis_line$linetype %||% NA
+          )
       } else {
         geo_scale <- geo_scale +
-          geom_vline(xintercept = 0, color = axis_line$colour %||% NA,
-                     size = axis_line$size %||% NA,
-                     linetype = axis_line$linetype %||% NA)
+          geom_vline(
+            xintercept = 0, color = axis_line$colour %||% NA,
+            size = axis_line$size %||% NA,
+            linetype = axis_line$linetype %||% NA
+          )
       }
     }
     if (!is(axis_text, "element_blank")) {
       geo_scale <- geo_scale +
-        annotate(geom = "text", label = panel_params$r.labels,
-                 x = 0, y = panel_params$r.major,
-                 color = axis_text$colour %||% NA,
-                 size = axis_text$size %||% NA,
-                 family = axis_text$family %||% NA,
-                 fontface = axis_text$face %||% "plain",
-                 angle = axis_text$angle %||% 0,
-                 lineheight = axis_text$lineheight %||% NA,
-                 hjust = -axis_text$hjust %||% NA,
-                 vjust = -axis_text$vjust %||% NA)
+        annotate(
+          geom = "text", label = panel_params$r.labels,
+          x = 0, y = panel_params$r.major,
+          color = axis_text$colour %||% NA,
+          size = axis_text$size %||% NA,
+          family = axis_text$family %||% NA,
+          fontface = axis_text$face %||% "plain",
+          angle = axis_text$angle %||% 0,
+          lineheight = axis_text$lineheight %||% NA,
+          hjust = -axis_text$hjust %||% NA,
+          vjust = -axis_text$vjust %||% NA
+        )
     }
     if (!is(axis_ticks, "element_blank")) {
       tick_length <- as.numeric(axis_ticks_length %||% unit(0, "points")) / (90 / abs(diff(r_lims)))
-      rs <- sapply(panel_params$r.major, function(r) sqrt((r - min(r_lims)) ^ 2 + tick_length ^ 2))
-      thetas <- sapply(rs, function(r) asin(tick_length/r))
+      rs <- sapply(panel_params$r.major, function(r) sqrt((r - min(r_lims))^2 + tick_length^2))
+      thetas <- sapply(rs, function(r) asin(tick_length / r))
       if (packageVersion("ggplot2") > "3.3.6") {
         geo_scale <- geo_scale +
-          annotate(geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
-                   y = min(r_lims) + rs, yend = panel_params$r.major,
-                   color = axis_ticks$colour %||% NA,
-                   linewidth = axis_ticks$linewidth %||% NA,
-                   linetype = axis_ticks$linetype %||% NA,
-                   lineend = axis_ticks$lineend %||% NA)
+          annotate(
+            geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
+            y = min(r_lims) + rs, yend = panel_params$r.major,
+            color = axis_ticks$colour %||% NA,
+            linewidth = axis_ticks$linewidth %||% NA,
+            linetype = axis_ticks$linetype %||% NA,
+            lineend = axis_ticks$lineend %||% NA
+          )
       } else {
         geo_scale <- geo_scale +
-          annotate(geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
-                   y = min(r_lims) + rs, yend = panel_params$r.major,
-                   color = axis_ticks$colour %||% NA,
-                   size = axis_ticks$size %||% NA,
-                   linetype = axis_ticks$linetype %||% NA,
-                   lineend = axis_ticks$lineend %||% NA)
+          annotate(
+            geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
+            y = min(r_lims) + rs, yend = panel_params$r.major,
+            color = axis_ticks$colour %||% NA,
+            size = axis_ticks$size %||% NA,
+            linetype = axis_ticks$linetype %||% NA,
+            lineend = axis_ticks$lineend %||% NA
+          )
       }
     }
     # should there be an axis label?

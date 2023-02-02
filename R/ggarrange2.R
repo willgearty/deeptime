@@ -23,33 +23,37 @@
 #'   geom_point()
 #'
 #' p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
-#'   geom_point() + facet_wrap( ~ cyl, ncol=2, scales = 'free') +
-#'   guides(colour='none') +
+#'   geom_point() +
+#'   facet_wrap(~cyl, ncol = 2, scales = "free") +
+#'   guides(colour = "none") +
 #'   theme()
 #'
 #' p3 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
-#'   geom_point() + facet_grid(. ~ cyl, scales = 'free')
+#'   geom_point() +
+#'   facet_grid(. ~ cyl, scales = "free")
 #'
-#' g1 <- ggplotGrob(p1);
-#' g2 <- ggplotGrob(p2);
-#' g3 <- ggplotGrob(p3);
+#' g1 <- ggplotGrob(p1)
+#' g2 <- ggplotGrob(p2)
+#' g3 <- ggplotGrob(p3)
 #' fg1 <- gtable_frame2(g1)
 #' fg2 <- gtable_frame2(g2)
-#' fg12 <- gtable_frame2(gtable_rbind(fg1,fg2), width=unit(2,'null'), height=unit(1,'null'))
-#' fg3 <- gtable_frame2(g3, width=unit(1,'null'), height=unit(1,'null'))
+#' fg12 <- gtable_frame2(gtable_rbind(fg1, fg2), width = unit(2, "null"), height = unit(1, "null"))
+#' fg3 <- gtable_frame2(g3, width = unit(1, "null"), height = unit(1, "null"))
 #' grid.newpage()
 #' combined <- gtable_cbind(fg12, fg3)
 #' grid.draw(combined)
 gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), debug = FALSE) {
-  if(is(g, "dummy")) return(g)
+  if (is(g, "dummy")) {
+    return(g)
+  }
   panels <- g$layout[grepl("panel", g$layout[["name"]]), ]
   background <- gtable_filter(g, "background")
   ll <- unique(panels$l)
   tt <- unique(panels$t)
   fixed_ar <- g$respect
   if (fixed_ar) {
-    ar <- as.numeric(g$heights[tt[1]])/as.numeric(g$widths[ll[1]])
-    height <- width * (ar/length(ll))
+    ar <- as.numeric(g$heights[tt[1]]) / as.numeric(g$widths[ll[1]])
+    height <- width * (ar / length(ll))
     g$respect <- FALSE
   }
 
@@ -58,64 +62,64 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   fg <- nullGrob()
 
-  #pull out the top axis, axis title, and other stuff
+  # pull out the top axis, axis title, and other stuff
   top <- g[seq(1, min(tt) - 1), seq(min(ll), max(ll))]
   top_ind <- c()
-  if (any(grepl("axis", top$layout$name))){
+  if (any(grepl("axis", top$layout$name))) {
     ind <- sort(unique(top$layout$t[grep("axis", top$layout$name)]))
-    axist <- top[ind,]
+    axist <- top[ind, ]
     top_ind <- c(top_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
     axist <- gtable_add_grob(gtable_add_rows(axist, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
     axist <- fg
   }
-  if (any(grepl("xlab", top$layout$name))){
+  if (any(grepl("xlab", top$layout$name))) {
     ind <- sort(unique(top$layout$t[grep("xlab", top$layout$name)]))
-    xlabt <- top[ind,]
+    xlabt <- top[ind, ]
     top_ind <- c(top_ind, ind)
     # add a dummy grob to make sure the title sticks to the bottom
     xlabt <- gtable_add_grob(gtable_add_rows(xlabt, unit(1, "null"), 0), fg, t = 1, l = 1)
   } else {
     xlabt <- fg
   }
-  if (length(top_ind) == nrow(top)){
+  if (length(top_ind) == nrow(top)) {
     top <- fg
-  } else if (length(top_ind) > 0){
-    top <- top[-top_ind,]
+  } else if (length(top_ind) > 0) {
+    top <- top[-top_ind, ]
   }
 
-  #pull out the bottom axis, axis title, and other stuff
+  # pull out the bottom axis, axis title, and other stuff
   bottom <- g[seq(max(tt) + 1, nrow(g)), seq(min(ll), max(ll))]
   bottom_ind <- c()
-  if (any(grepl("axis", bottom$layout$name))){
+  if (any(grepl("axis", bottom$layout$name))) {
     ind <- sort(unique(bottom$layout$t[grep("axis", bottom$layout$name)]))
-    axisb <- bottom[ind,]
+    axisb <- bottom[ind, ]
     bottom_ind <- c(bottom_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
     axisb <- gtable_add_grob(gtable_add_rows(axisb, unit(1, "null"), -1), fg, t = nrow(axisb), l = 1)
   } else {
     axisb <- fg
   }
-  if (any(grepl("xlab", bottom$layout$name))){
+  if (any(grepl("xlab", bottom$layout$name))) {
     ind <- sort(unique(bottom$layout$t[grep("xlab", bottom$layout$name)]))
-    xlabb <- bottom[ind,]
+    xlabb <- bottom[ind, ]
     bottom_ind <- c(bottom_ind, ind)
     # add a dummy grob to make sure the title sticks to the top
     xlabb <- gtable_add_grob(gtable_add_rows(xlabb, unit(1, "null"), -1), fg, t = nrow(xlabb), l = 1)
   } else {
     xlabb <- fg
   }
-  if (length(bottom_ind) == nrow(bottom)){
+  if (length(bottom_ind) == nrow(bottom)) {
     bottom <- fg
-  } else if (length(bottom_ind) > 0){
-    bottom <- bottom[-bottom_ind,]
+  } else if (length(bottom_ind) > 0) {
+    bottom <- bottom[-bottom_ind, ]
   }
 
-  #pull out the left axis, axis title, and other stuff
+  # pull out the left axis, axis title, and other stuff
   left <- g[seq(min(tt), max(tt)), seq(1, min(ll) - 1)]
   left_ind <- c()
-  if (any(grepl("axis", left$layout$name))){
+  if (any(grepl("axis", left$layout$name))) {
     ind <- sort(unique(left$layout$l[grep("axis", left$layout$name)]))
     axisl <- left[, ind]
     left_ind <- c(left_ind, ind)
@@ -124,7 +128,7 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     axisl <- fg
   }
-  if (any(grepl("ylab", left$layout$name))){
+  if (any(grepl("ylab", left$layout$name))) {
     ind <- sort(unique(left$layout$l[grep("ylab", left$layout$name)]))
     ylabl <- left[, ind]
     left_ind <- c(left_ind, ind)
@@ -133,16 +137,16 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     ylabl <- fg
   }
-  if (length(left_ind) == nrow(left)){
+  if (length(left_ind) == nrow(left)) {
     left <- fg
-  } else if (length(left_ind) > 0){
+  } else if (length(left_ind) > 0) {
     left <- left[, -left_ind]
   }
 
-  #pull out the right axis, axis title, and other stuff
+  # pull out the right axis, axis title, and other stuff
   right <- g[seq(min(tt), max(tt)), seq(max(ll) + 1, ncol(g))]
   right_ind <- c()
-  if (any(grepl("axis", right$layout$name))){
+  if (any(grepl("axis", right$layout$name))) {
     ind <- sort(unique(right$layout$l[grep("axis", right$layout$name)]))
     axisr <- right[, ind]
     right_ind <- c(right_ind, ind)
@@ -151,7 +155,7 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     axisr <- fg
   }
-  if (any(grepl("ylab", right$layout$name))){
+  if (any(grepl("ylab", right$layout$name))) {
     ind <- sort(unique(right$layout$l[grep("ylab", right$layout$name)]))
     ylabr <- right[, ind]
     right_ind <- c(right_ind, ind)
@@ -160,9 +164,9 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   } else {
     ylabr <- fg
   }
-  if (length(right_ind) == nrow(right)){
+  if (length(right_ind) == nrow(right)) {
     right <- fg
-  } else if (length(right_ind) > 0){
+  } else if (length(right_ind) > 0) {
     right <- right[, -right_ind]
   }
 
@@ -188,46 +192,56 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   }
 
   ## 7x7 cells (corners contain nullGrob)
-  grobs <- list(fg,   fg,    fg,    top,    fg,    fg,    fg,
-                fg,   fg,    fg,    xlabt,  fg,    fg,    fg,
-                fg,   fg,    fg,    axist,  fg,    fg,    fg,
-                left, ylabl, axisl, core,   axisr, ylabr, right,
-                fg,   fg,    fg,    axisb,  fg,    fg,    fg,
-                fg,   fg,    fg,    xlabb,  fg,    fg,    fg,
-                fg,   fg,    fg,    bottom, fg,    fg,    fg)
+  grobs <- list(
+    fg, fg, fg, top, fg, fg, fg,
+    fg, fg, fg, xlabt, fg, fg, fg,
+    fg, fg, fg, axist, fg, fg, fg,
+    left, ylabl, axisl, core, axisr, ylabr, right,
+    fg, fg, fg, axisb, fg, fg, fg,
+    fg, fg, fg, xlabb, fg, fg, fg,
+    fg, fg, fg, bottom, fg, fg, fg
+  )
 
-  widths <- unit.c(if (is(left, "null")) unit(0, "null") else sum(left$widths),
-                   if (is(ylabl, "zeroGrob") | is(ylabl, "null")) unit(0, "null") else sum(ylabl$widths),
-                   if (is(axisl, "zeroGrob") | is(axisl, "null")) unit(0, "null") else sum(axisl$widths),
-                   width,
-                   if (is(axisr, "zeroGrob") | is(axisr, "null")) unit(0, "null") else sum(axisr$widths),
-                   if (is(ylabr, "zeroGrob") | is(ylabr, "null")) unit(0, "null") else sum(ylabr$widths),
-                   if (is(right, "null")) unit(0, "null") else sum(right$widths))
-  heights <- unit.c(if (is(top, "null")) unit(0, "null") else sum(top$heights),
-                    if (is(xlabt, "zeroGrob") | is(xlabt, "null")) unit(0, "null") else sum(xlabt$heights),
-                    if (is(axist, "zeroGrob") | is(axist, "null")) unit(0, "null") else sum(axist$heights),
-                    height,
-                    if (is(axisb, "zeroGrob") | is(axisb, "null")) unit(0, "null") else sum(axisb$heights),
-                    if (is(xlabb, "zeroGrob") | is(xlabb, "null")) unit(0, "null") else sum(xlabb$heights),
-                    if (is(bottom, "null")) unit(0, "null") else sum(bottom$heights))
-  all <- gtable_matrix("all", grobs = matrix(grobs, ncol = 7, nrow = 7, byrow = TRUE),
-                               widths = widths, heights = heights)
+  widths <- unit.c(
+    if (is(left, "null")) unit(0, "null") else sum(left$widths),
+    if (is(ylabl, "zeroGrob") | is(ylabl, "null")) unit(0, "null") else sum(ylabl$widths),
+    if (is(axisl, "zeroGrob") | is(axisl, "null")) unit(0, "null") else sum(axisl$widths),
+    width,
+    if (is(axisr, "zeroGrob") | is(axisr, "null")) unit(0, "null") else sum(axisr$widths),
+    if (is(ylabr, "zeroGrob") | is(ylabr, "null")) unit(0, "null") else sum(ylabr$widths),
+    if (is(right, "null")) unit(0, "null") else sum(right$widths)
+  )
+  heights <- unit.c(
+    if (is(top, "null")) unit(0, "null") else sum(top$heights),
+    if (is(xlabt, "zeroGrob") | is(xlabt, "null")) unit(0, "null") else sum(xlabt$heights),
+    if (is(axist, "zeroGrob") | is(axist, "null")) unit(0, "null") else sum(axist$heights),
+    height,
+    if (is(axisb, "zeroGrob") | is(axisb, "null")) unit(0, "null") else sum(axisb$heights),
+    if (is(xlabb, "zeroGrob") | is(xlabb, "null")) unit(0, "null") else sum(xlabb$heights),
+    if (is(bottom, "null")) unit(0, "null") else sum(bottom$heights)
+  )
+  all <- gtable_matrix("all",
+    grobs = matrix(grobs, ncol = 7, nrow = 7, byrow = TRUE),
+    widths = widths, heights = heights
+  )
 
   if (debug) {
     hints <- rectGrob(gp = gpar(fill = NA, lty = 2, lwd = 0.2))
     tl <- expand.grid(t = 1:7, l = 1:7)
-    all <- gtable_add_grob(all, replicate(49, hints, simplify = FALSE), t = tl$t,
-                                   l = tl$l, z = Inf, name = "debug")
+    all <- gtable_add_grob(all, replicate(49, hints, simplify = FALSE),
+      t = tl$t,
+      l = tl$l, z = Inf, name = "debug"
+    )
   }
 
-  #name grobs
+  # name grobs
   all$layout[1:49, "name"] <- "null"
-  all$layout[c(4,11,18,22,23,24,25,26,27,28,32,39,46), "name"] <- c("left","ylab-l","axis-l","top","xlab-t","axis-t","panel","axis-b","xlab-b","bottom","axis-r","ylab-r","right")
+  all$layout[c(4, 11, 18, 22, 23, 24, 25, 26, 27, 28, 32, 39, 46), "name"] <- c("left", "ylab-l", "axis-l", "top", "xlab-t", "axis-t", "panel", "axis-b", "xlab-b", "bottom", "axis-r", "ylab-r", "right")
 
-  #move panel to bottom of plot
+  # move panel to bottom of plot
   all$layout$z[25] <- 0
 
-  #add background
+  # add background
   all <- gtable_add_grob(all, background, 1, 1, 7, 7, name = "background", z = -Inf)
 
   if (fixed_ar) {
@@ -237,8 +251,10 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   all
 }
 
-.tmp <- gtable::gtable_matrix("placeholder", matrix(replicate(49, grid::nullGrob(), simplify = FALSE),
-                                                    7, 7), widths = rep(unit(1, "null"), 7), heights = rep(unit(1, "null"), 7))
+.tmp <- gtable::gtable_matrix("placeholder", matrix(
+  replicate(49, grid::nullGrob(), simplify = FALSE),
+  7, 7
+), widths = rep(unit(1, "null"), 7), heights = rep(unit(1, "null"), 7))
 .tmp$layout$name[25] <- "panel"
 class(.tmp) <- c(class(.tmp), "dummy")
 
@@ -303,27 +319,28 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
 #'   geom_point()
 #' p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
-#'   geom_point() + facet_wrap( ~ cyl, ncol=2, scales = 'free') +
-#'   guides(colour='none') +
+#'   geom_point() +
+#'   facet_wrap(~cyl, ncol = 2, scales = "free") +
+#'   guides(colour = "none") +
 #'   theme()
-#' ggarrange2(p1, p2, widths = c(2,1), labels = c('a', 'b'))
+#' ggarrange2(p1, p2, widths = c(2, 1), labels = c("a", "b"))
 #'
 #' p3 <- ggplot() +
 #'   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
-#'  scale_x_reverse() +
-#'  coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
-#'  theme_classic()
-#' ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
+#'   scale_x_reverse() +
+#'   coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
+#'   theme_classic()
+#' ggarrange2(ggarrange2(p1, p2, widths = c(2, 1), draw = FALSE), p3, nrow = 2)
 ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol = NULL, widths = NULL,
-                      heights = NULL, byrow = TRUE, top = NULL, bottom = NULL, left = NULL, right = NULL,
-                      padding = unit(0.5, "line"), margin = unit(0.5, "line"), clip = "on", draw = TRUE, newpage = TRUE, debug = FALSE,
-                      labels = NULL, label.args = list(gp = gpar(font = 4, cex = 1.2))) {
+                       heights = NULL, byrow = TRUE, top = NULL, bottom = NULL, left = NULL, right = NULL,
+                       padding = unit(0.5, "line"), margin = unit(0.5, "line"), clip = "on", draw = TRUE, newpage = TRUE, debug = FALSE,
+                       labels = NULL, label.args = list(gp = gpar(font = 4, cex = 1.2))) {
   n <- length(plots)
-  #convert any non-grobs to grobs
-  plots_grobs <- lapply(plots, function(x) if(is(x, "grob")) x else ggplotGrob(x))
+  # convert any non-grobs to grobs
+  plots_grobs <- lapply(plots, function(x) if (is(x, "grob")) x else ggplotGrob(x))
 
   ## check layout is consistent, if supplied
-  if (!is.null(layout) && is.matrix(layout)){
+  if (!is.null(layout) && is.matrix(layout)) {
     layout[layout <= 0 | layout > n] <- NA
     nrow <- nrow(layout)
     ncol <- ncol(layout)
@@ -349,10 +366,10 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   }
   ## work out the missing one
   if (is.null(nrow) && !is.null(ncol)) {
-    nrow <- ceiling(n/ncol)
+    nrow <- ceiling(n / ncol)
   }
   if (is.null(ncol) && !is.null(nrow)) {
-    ncol <- ceiling(n/nrow)
+    ncol <- ceiling(n / nrow)
   }
 
   ## it may happen that sufficient info was passed, but incompatible with number of grobs
@@ -367,7 +384,7 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   }
 
   ## setup layout if not specified
-  if (is.null(layout)){
+  if (is.null(layout)) {
     layout <- matrix(c(1:n, rep(NA, max(0, nrow * ncol - n))), nrow = nrow, ncol = ncol, byrow = byrow)
   }
 
@@ -394,17 +411,21 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   }
 
   ## sizes
-  if (is.null(widths))
+  if (is.null(widths)) {
     widths <- lapply(rep(1, n), unit, "null")
-  if (is.null(heights))
+  }
+  if (is.null(heights)) {
     heights <- lapply(rep(1, n), unit, "null")
+  }
 
   # user may naively have passed grid units, but only unit.list units work well with `[`
   # so convert to this class
-  if (is.unit(widths))
+  if (is.unit(widths)) {
     widths <- as.unit.list(widths)
-  if (is.unit(heights))
+  }
+  if (is.unit(heights)) {
     widths <- as.unit.list(heights)
+  }
 
   # indexing is problematic, wrap in list
   if (is.unit(widths) && length(widths) == 1) {
@@ -422,15 +443,16 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
     splits <- cut(seqgrobs, ncol, labels = seq_len(ncol))
     ## widths and heights refer to the layout repeat for corresponding grobs
 
-    repw <- rep_len(seq_along(widths), length.out=n)
-    reph <- rep_len(seq_along(heights), length.out=n)
+    repw <- rep_len(seq_along(widths), length.out = n)
+    reph <- rep_len(seq_along(heights), length.out = n)
     widths <- c(matrix(widths[repw], ncol = ncol, byrow = TRUE))
     heights <- c(matrix(heights[reph], ncol = ncol, byrow = FALSE))
-
   }
 
-  fg <- mapply(gtable_frame2, g = grobs, width = widths, height = heights, MoreArgs = list(debug = debug),
-               SIMPLIFY = FALSE)
+  fg <- mapply(gtable_frame2,
+    g = grobs, width = widths, height = heights, MoreArgs = list(debug = debug),
+    SIMPLIFY = FALSE
+  )
 
   if (!is.null(labels) && length(labels) > 0) {
     stopifnot(length(labels) == length(fg))
@@ -438,8 +460,10 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
     labels <- do.call(label_grid, c(list(labels), label.args))
     # add each grob to the whole gtable
     fg <- mapply(function(g, l) {
-      gtable_add_grob(g, l, t = 1, l = 1, b = nrow(g), r = ncol(g), z = Inf,
-                      clip = "off", name = "label")
+      gtable_add_grob(g, l,
+        t = 1, l = 1, b = nrow(g), r = ncol(g), z = Inf,
+        clip = "off", name = "label"
+      )
     }, g = fg, l = labels, SIMPLIFY = FALSE)
   }
 
@@ -479,19 +503,22 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   if (is.grob(right)) {
     w <- grobWidth(right) + padding
     gt <- gtable_add_cols(gt, widths = w, -1)
-    gt <- gtable_add_grob(gt, right, t = 1, b = nrow(gt), l = ncol(gt), r = ncol(gt),
-                          z = Inf, clip = clip)
+    gt <- gtable_add_grob(gt, right,
+      t = 1, b = nrow(gt), l = ncol(gt), r = ncol(gt),
+      z = Inf, clip = clip
+    )
   }
 
   gt <- gtable_add_padding(gt, margin)
 
   if (draw) {
-    if (newpage)
+    if (newpage) {
       grid.newpage()
+    }
     grid.draw(gt)
   }
   class(gt) <- c("ggarrange2", class(gt))
-  invisible(gt)  # return the full gtable
+  invisible(gt) # return the full gtable
 }
 
 ##' @noRd

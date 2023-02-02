@@ -9,38 +9,41 @@ calculateAxisComponents <- function(...) {
 #' @return No return value, plots the results of both [lattice::panel.cloud()] and [lattice::panel.wireframe()].
 #' @importFrom lattice panel.wireframe panel.cloud
 #' @export
-panel.disparity <- function(x,y,z,groups,subscripts,...) {
+panel.disparity <- function(x, y, z, groups, subscripts, ...) {
   args <- list(...)
   xlabelinfo <- calculateAxisComponents(args$xlim,
-                                        at = args$scales.3d$x.scales$at,
-                                        num.limit = NULL,
-                                        labels = args$scales.3d$x.scales$labels,
-                                        logsc = args$scales.3d$x.scales$log,
-                                        abbreviate = args$scales.3d$x.scales$abbreviate,
-                                        minlength = args$scales.3d$x.scales$minlength,
-                                        format.posixt = args$scales.3d$x.scales$format,
-                                        n = args$scales.3d$x.scales$tick.number)
+    at = args$scales.3d$x.scales$at,
+    num.limit = NULL,
+    labels = args$scales.3d$x.scales$labels,
+    logsc = args$scales.3d$x.scales$log,
+    abbreviate = args$scales.3d$x.scales$abbreviate,
+    minlength = args$scales.3d$x.scales$minlength,
+    format.posixt = args$scales.3d$x.scales$format,
+    n = args$scales.3d$x.scales$tick.number
+  )
   ylabelinfo <- calculateAxisComponents(args$ylim,
-                                        at = args$scales.3d$y.scales$at,
-                                        num.limit = NULL,
-                                        labels = args$scales.3d$y.scales$labels,
-                                        logsc = args$scales.3d$y.scales$log,
-                                        abbreviate = args$scales.3d$y.scales$abbreviate,
-                                        minlength = args$scales.3d$y.scales$minlength,
-                                        format.posixt = args$scales.3d$y.scales$format,
-                                        n = args$scales.3d$y.scales$tick.number)
+    at = args$scales.3d$y.scales$at,
+    num.limit = NULL,
+    labels = args$scales.3d$y.scales$labels,
+    logsc = args$scales.3d$y.scales$log,
+    abbreviate = args$scales.3d$y.scales$abbreviate,
+    minlength = args$scales.3d$y.scales$minlength,
+    format.posixt = args$scales.3d$y.scales$format,
+    n = args$scales.3d$y.scales$tick.number
+  )
   zlabelinfo <- calculateAxisComponents(args$zlim,
-                                        at = args$scales.3d$z.scales$at,
-                                        num.limit = NULL,
-                                        labels = args$scales.3d$z.scales$labels,
-                                        logsc = args$scales.3d$z.scales$log,
-                                        abbreviate = args$scales.3d$z.scales$abbreviate,
-                                        minlength = args$scales.3d$z.scales$minlength,
-                                        format.posixt = args$scales.3d$z.scales$format,
-                                        n = args$scales.3d$z.scales$tick.number)
+    at = args$scales.3d$z.scales$at,
+    num.limit = NULL,
+    labels = args$scales.3d$z.scales$labels,
+    logsc = args$scales.3d$z.scales$log,
+    abbreviate = args$scales.3d$z.scales$abbreviate,
+    minlength = args$scales.3d$z.scales$minlength,
+    format.posixt = args$scales.3d$z.scales$format,
+    n = args$scales.3d$z.scales$tick.number
+  )
   tmp <- expand.grid(x = sort(union(xlabelinfo$at, xlabelinfo$num.limit)), y = sort(union(ylabelinfo$at, ylabelinfo$num.limit)), gr = zlabelinfo$at)
-  panel.wireframe(x=tmp$x,y=tmp$y,z=tmp$gr,groups=tmp$gr,subscripts=seq(1:nrow(tmp)),...)
-  panel.cloud(x=x,y=y,z=z,groups=groups,subscripts=subscripts,par.box=list("col" = NA),...)
+  panel.wireframe(x = tmp$x, y = tmp$y, z = tmp$gr, groups = tmp$gr, subscripts = seq(1:nrow(tmp)), ...)
+  panel.cloud(x = x, y = y, z = z, groups = groups, subscripts = subscripts, par.box = list("col" = NA), ...)
 }
 
 #' Disparity through time plot using lattice
@@ -68,42 +71,57 @@ panel.disparity <- function(x,y,z,groups,subscripts,...) {
 #' @importFrom lattice wireframe
 #' @export
 #' @examples
-#' g <- data.frame(x = runif(100, 0, 60), y = runif(100,0,10),
-#'                 z = factor(rep(periods$name[1:5], each=20),
-#'                 levels = periods$name[1:5]))
-#' disparity_through_time(z~x*y, data = g, groups = z, aspect = c(1.5,2),
-#'                        xlim = c(0,60), ylim = c(0,10), col.regions = "lightgreen",
-#'                        col.point = c("red","blue"))
+#' g <- data.frame(
+#'   x = runif(100, 0, 60), y = runif(100, 0, 10),
+#'   z = factor(rep(periods$name[1:5], each = 20),
+#'     levels = periods$name[1:5]
+#'   )
+#' )
+#' disparity_through_time(z ~ x * y,
+#'   data = g, groups = z, aspect = c(1.5, 2),
+#'   xlim = c(0, 60), ylim = c(0, 10), col.regions = "lightgreen",
+#'   col.point = c("red", "blue")
+#' )
 disparity_through_time <- function(x, data, groups, pch = 16, col.point = c("blue"),
-                                   scales = list(arrows = FALSE, distance = 1, col = "black",
-                                                 z = list(rot = 90)),
-                                   colorkey = FALSE, screen = list(z = 90, x = 70, y = 180), aspect = c(1.5,4),
+                                   scales = list(
+                                     arrows = FALSE, distance = 1, col = "black",
+                                     z = list(rot = 90)
+                                   ),
+                                   colorkey = FALSE, screen = list(z = 90, x = 70, y = 180), aspect = c(1.5, 4),
                                    drape = TRUE, col.regions = c("white"), alpha.regions = c(1),
-                                   perspective = FALSE, R.mat = matrix(c(1,1,0,0,
-                                                                         0,1,0,0,
-                                                                         0,0,1,0,
-                                                                         0,0,0,1),
-                                                                       4,4),
-                                   par.settings = list(axis.line = list(col = "transparent"),
-                                                       layout.heights = list(
-                                                         top.padding = 0,
-                                                         main.key.padding = 0,
-                                                         key.axis.padding = 0,
-                                                         axis.xlab.padding = 0,
-                                                         xlab.key.padding = 0,
-                                                         key.sub.padding = 0,
-                                                         bottom.padding = 0),
-                                                       layout.widths = list(
-                                                         left.padding = 0,
-                                                         key.ylab.padding = 0,
-                                                         ylab.axis.padding = 0,
-                                                         axis.key.padding = 0,
-                                                         right.padding = 0)
+                                   perspective = FALSE, R.mat = matrix(
+                                     c(
+                                       1, 1, 0, 0,
+                                       0, 1, 0, 0,
+                                       0, 0, 1, 0,
+                                       0, 0, 0, 1
+                                     ),
+                                     4, 4
+                                   ),
+                                   par.settings = list(
+                                     axis.line = list(col = "transparent"),
+                                     layout.heights = list(
+                                       top.padding = 0,
+                                       main.key.padding = 0,
+                                       key.axis.padding = 0,
+                                       axis.xlab.padding = 0,
+                                       xlab.key.padding = 0,
+                                       key.sub.padding = 0,
+                                       bottom.padding = 0
+                                     ),
+                                     layout.widths = list(
+                                       left.padding = 0,
+                                       key.ylab.padding = 0,
+                                       ylab.axis.padding = 0,
+                                       axis.key.padding = 0,
+                                       right.padding = 0
+                                     )
                                    ),
                                    lattice.options = list(axis.padding = list(factor = 0)), ...) {
-  eval(substitute(wireframe(x = x, data = data, groups = groups, pch = pch, col.point = col.point, scales = scales,
-            colorkey = colorkey, screen = screen, panel = panel.disparity, aspect = aspect,
-            drape = drape, col.regions = col.regions, alpha.regions = alpha.regions, perspective = perspective,
-            R.mat = R.mat, par.settings = par.settings, lattice.options = lattice.options, ...)))
+  eval(substitute(wireframe(
+    x = x, data = data, groups = groups, pch = pch, col.point = col.point, scales = scales,
+    colorkey = colorkey, screen = screen, panel = panel.disparity, aspect = aspect,
+    drape = drape, col.regions = col.regions, alpha.regions = alpha.regions, perspective = perspective,
+    R.mat = R.mat, par.settings = par.settings, lattice.options = lattice.options, ...
+  )))
 }
-

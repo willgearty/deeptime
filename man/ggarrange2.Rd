@@ -79,15 +79,16 @@ library(ggplot2)
 p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   geom_point()
 p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
-  geom_point() + facet_wrap( ~ cyl, ncol=2, scales = 'free') +
-  guides(colour='none') +
+  geom_point() +
+  facet_wrap(~cyl, ncol = 2, scales = "free") +
+  guides(colour = "none") +
   theme()
-ggarrange2(p1, p2, widths = c(2,1), labels = c('a', 'b'))
+ggarrange2(p1, p2, widths = c(2, 1), labels = c("a", "b"))
 
 p3 <- ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
- scale_x_reverse() +
- coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
- theme_classic()
-ggarrange2(ggarrange2(p1, p2, widths = c(2,1), draw = FALSE), p3, nrow = 2)
+  scale_x_reverse() +
+  coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
+  theme_classic()
+ggarrange2(ggarrange2(p1, p2, widths = c(2, 1), draw = FALSE), p3, nrow = 2)
 }

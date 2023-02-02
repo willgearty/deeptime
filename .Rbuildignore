@@ -8,6 +8,7 @@ cran-comments.md
 ^CRAN-SUBMISSION$
 ^revdep$
 codecov.yml
+^LICENSE\.md$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$

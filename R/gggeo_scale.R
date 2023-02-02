@@ -64,10 +64,10 @@ gggeo_scale <- function(obj, ...) {
 #'
 #' # can specify any side of the plot
 #' p <- ggplot() +
-#'  geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 1000))) +
-#'  scale_y_reverse() +
-#'  coord_cartesian(xlim = c(0, 8), ylim = c(1000, 0), expand = FALSE) +
-#'  theme_classic()
+#'   geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 1000))) +
+#'   scale_y_reverse() +
+#'   coord_cartesian(xlim = c(0, 8), ylim = c(1000, 0), expand = FALSE) +
+#'   theme_classic()
 #' gggeo_scale(p, pos = "left", rot = 90)
 #'
 #' # can add multiple scales
@@ -86,15 +86,21 @@ gggeo_scale <- function(obj, ...) {
 #'   scale_y_reverse() +
 #'   coord_cartesian(xlim = c(0, 10), ylim = c(65, 0), expand = FALSE) +
 #'   theme_classic()
-#' p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
-#'                  abbrv = FALSE)
-#' gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
-#'             size = 2.5, abbrv = FALSE)
+#' p <- gggeo_scale(p,
+#'   dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
+#'   abbrv = FALSE
+#' )
+#' gggeo_scale(p,
+#'   dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
+#'   size = 2.5, abbrv = FALSE
+#' )
 #'
-#' #can add scales to a faceted plot
-#' #use gggeo_scale_old() if you have more than one column
-#' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8),
-#'                  z = sample(c(1, 2, 3, 4), 1000, TRUE))
+#' # can add scales to a faceted plot
+#' # use gggeo_scale_old() if you have more than one column
+#' df <- data.frame(
+#'   x = runif(1000, 0, 541), y = runif(1000, 0, 8),
+#'   z = sample(c(1, 2, 3, 4), 1000, TRUE)
+#' )
 #' p <- ggplot(df) +
 #'   geom_point(aes(x, y)) +
 #'   scale_x_reverse() +
@@ -103,14 +109,14 @@ gggeo_scale <- function(obj, ...) {
 #'   facet_wrap(~z, ncol = 1)
 #' gggeo_scale(p)
 #'
-#' #can even add a scale to a phylogeny (using ggtree)
+#' # can even add a scale to a phylogeny (using ggtree)
 #' @examplesIf require(ggtree)
 #' library(phytools)
 #' library(ggtree)
-#' tree <- pbtree(b = .03, d = .01,  n=100)
+#' tree <- pbtree(b = .03, d = .01, n = 100)
 #' p <- ggtree(tree) +
 #'   coord_cartesian(xlim = c(-500, 0), ylim = c(-2, Ntip(tree)), expand = FALSE) +
-#'   scale_x_continuous(breaks=seq(-500, 0, 100), labels=abs(seq(-500, 0, 100))) +
+#'   scale_x_continuous(breaks = seq(-500, 0, 100), labels = abs(seq(-500, 0, 100))) +
 #'   theme_tree2()
 #' p <- revts(p)
 #' gggeo_scale(p, neg = TRUE)
@@ -120,179 +126,207 @@ gggeo_scale.gtable <- function(obj, lims, dat = "periods", fill = NULL, color = 
                                size = 5, lwd = .25, margin = unit(0, "line"), neg = FALSE,
                                bord = c("left", "right", "top", "bottom"),
                                center_end_labels = FALSE, ...) {
-  if(is(dat, "data.frame")){
-    #just use the supplied data
-  }else{
+  if (is(dat, "data.frame")) {
+    # just use the supplied data
+  } else {
     dat <- get_scale_data(dat)
   }
-  if(neg){
+  if (neg) {
     dat$max_age <- -1 * (dat$max_age)
     dat$min_age <- -1 * (dat$min_age)
   }
-  dat$mid_age <- (dat$max_age + dat$min_age)/2
-  if(!is.null(fill)){
+  dat$mid_age <- (dat$max_age + dat$min_age) / 2
+  if (!is.null(fill)) {
     dat$color <- rep(fill, length.out = nrow(dat))
-  }else if(!("color" %in% colnames(dat))){
-    dat$color <- rep(c("grey60","grey80"), length.out = nrow(dat))
+  } else if (!("color" %in% colnames(dat))) {
+    dat$color <- rep(c("grey60", "grey80"), length.out = nrow(dat))
   }
-  if(abbrv & "abbr" %in% colnames(dat)){
+  if (abbrv & "abbr" %in% colnames(dat)) {
     dat$label <- dat$abbr
-  }else{
+  } else {
     dat$label <- dat$name
   }
   dat$label[dat$name %in% skip] <- ""
 
-  #make ggplot of scale
+  # make ggplot of scale
   gg_scale <- ggplot() +
-    geom_rect(data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
-              ymin = 0, ymax = 1, color = NA, alpha = alpha,
-              show.legend = FALSE, inherit.aes = FALSE)
+    geom_rect(
+      data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
+      ymin = 0, ymax = 1, color = NA, alpha = alpha,
+      show.legend = FALSE, inherit.aes = FALSE
+    )
   if (packageVersion("ggplot2") > "3.3.6") {
     gg_scale <- gg_scale +
-      geom_segment(data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
-                   color = color, linewidth = lwd) +
-      geom_segment(data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
-                   color = color, linewidth = lwd) +
+      geom_segment(
+        data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
+        color = color, linewidth = lwd
+      ) +
+      geom_segment(
+        data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
+        color = color, linewidth = lwd
+      ) +
       scale_fill_manual(values = setNames(dat$color, dat$color)) +
       theme_void()
   } else {
     gg_scale <- gg_scale +
-      geom_segment(data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
-                   color = color, size = lwd) +
-      geom_segment(data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
-                   color = color, size = lwd) +
+      geom_segment(
+        data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
+        color = color, size = lwd
+      ) +
+      geom_segment(
+        data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
+        color = color, size = lwd
+      ) +
       scale_fill_manual(values = setNames(dat$color, dat$color)) +
       theme_void()
   }
 
   rev_axis <- FALSE
-  #if left or right, rotate accordingly, otherwise, just use coord_cartesian
-  if(pos %in% c("bottom", "top", "b", "t")){
-    if(is.list(lims)){
+  # if left or right, rotate accordingly, otherwise, just use coord_cartesian
+  if (pos %in% c("bottom", "top", "b", "t")) {
+    if (is.list(lims)) {
       rev_axis <- lims$x$scale$trans$name == "reverse"
       lims <- lims$x.range * c(1, -1)[rev_axis + 1]
-    }else{
+    } else {
       rev_axis <- lims[1] > lims[2]
     }
     gg_scale <- gg_scale +
-      coord_cartesian(xlim = lims, ylim = c(0,1), expand = FALSE)
-  }else if(pos %in% c("left", "right","l","r")){
-    if(is.list(lims)){
+      coord_cartesian(xlim = lims, ylim = c(0, 1), expand = FALSE)
+  } else if (pos %in% c("left", "right", "l", "r")) {
+    if (is.list(lims)) {
       rev_axis <- lims$y$scale$trans$name == "reverse"
       lims <- lims$y.range * c(1, -1)[rev_axis + 1]
-    }else{
+    } else {
       rev_axis <- lims[1] > lims[2]
     }
     gg_scale <- gg_scale +
-      coord_flip(xlim = lims, ylim = c(0,1), expand = FALSE)
+      coord_flip(xlim = lims, ylim = c(0, 1), expand = FALSE)
   }
 
-  #Add labels
+  # Add labels
   if (center_end_labels) {
-    #center the labels for the time periods at the ends of the axis
+    # center the labels for the time periods at the ends of the axis
     max_end <- (dat$max_age > max(lims) & dat$min_age < max(lims)) | (dat$max_age < max(lims) & dat$min_age > max(lims))
     min_end <- (dat$max_age > min(lims) & dat$min_age < min(lims)) | (dat$max_age < min(lims) & dat$min_age > min(lims))
-    if (any(max_end)){
-      ends <- dat[max_end,c("min_age","max_age")]
-      dat$mid_age[max_end] <- (ends[ends < max(lims) & ends > min(lims)] + max(lims))/2
+    if (any(max_end)) {
+      ends <- dat[max_end, c("min_age", "max_age")]
+      dat$mid_age[max_end] <- (ends[ends < max(lims) & ends > min(lims)] + max(lims)) / 2
     }
-    if (any(min_end)){
-      ends <- dat[min_end,c("min_age","max_age")]
-      dat$mid_age[min_end] <- (ends[ends < max(lims) & ends > min(lims)] + min(lims))/2
+    if (any(min_end)) {
+      ends <- dat[min_end, c("min_age", "max_age")]
+      dat$mid_age[min_end] <- (ends[ends < max(lims) & ends > min(lims)] + min(lims)) / 2
     }
   }
   gg_scale <- gg_scale +
-    geom_text(data = dat, aes(x = mid_age, label = label), y = .5,
-              vjust = "middle", hjust = "middle", size = size, angle = rot,
-              inherit.aes = FALSE)
+    geom_text(
+      data = dat, aes(x = mid_age, label = label), y = .5,
+      vjust = "middle", hjust = "middle", size = size, angle = rot,
+      inherit.aes = FALSE
+    )
 
-  #Add border
+  # Add border
   bord_lims <- lims
-  bord_lims[(if(neg) bord_lims > 0 else bord_lims < 0)] <- 0
+  bord_lims[(if (neg) bord_lims > 0 else bord_lims < 0)] <- 0
 
   if (packageVersion("ggplot2") > "3.3.6") {
-    if("left" %in% bord | "l" %in% bord){
+    if ("left" %in% bord | "l" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
-                     color = color, linewidth = if(bord_lims[1] == lims[1]) lwd * 2 else lwd)
+        annotate("segment",
+          x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
+          color = color, linewidth = if (bord_lims[1] == lims[1]) lwd * 2 else lwd
+        )
     }
-    if("right" %in% bord | "r" %in% bord){
+    if ("right" %in% bord | "r" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
-                 color = color, linewidth = if(bord_lims[2] == lims[2]) lwd * 2 else lwd)
+        annotate("segment",
+          x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
+          color = color, linewidth = if (bord_lims[2] == lims[2]) lwd * 2 else lwd
+        )
     }
-    if("top" %in% bord | "t" %in% bord){
+    if ("top" %in% bord | "t" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
-                 color = color, linewidth = lwd * 2)
+        annotate("segment",
+          x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
+          color = color, linewidth = lwd * 2
+        )
     }
-    if("bottom" %in% bord | "b" %in% bord){
+    if ("bottom" %in% bord | "b" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
-                     color = color, linewidth = lwd * 2)
+        annotate("segment",
+          x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
+          color = color, linewidth = lwd * 2
+        )
     }
   } else {
-    if("left" %in% bord | "l" %in% bord){
+    if ("left" %in% bord | "l" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
-                 color = color, size = if(bord_lims[1] == lims[1]) lwd * 2 else lwd)
+        annotate("segment",
+          x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
+          color = color, size = if (bord_lims[1] == lims[1]) lwd * 2 else lwd
+        )
     }
-    if("right" %in% bord | "r" %in% bord){
+    if ("right" %in% bord | "r" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
-                 color = color, size = if(bord_lims[2] == lims[2]) lwd * 2 else lwd)
+        annotate("segment",
+          x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
+          color = color, size = if (bord_lims[2] == lims[2]) lwd * 2 else lwd
+        )
     }
-    if("top" %in% bord | "t" %in% bord){
+    if ("top" %in% bord | "t" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
-                 color = color, size = lwd * 2)
+        annotate("segment",
+          x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
+          color = color, size = lwd * 2
+        )
     }
-    if("bottom" %in% bord | "b" %in% bord){
+    if ("bottom" %in% bord | "b" %in% bord) {
       gg_scale <- gg_scale +
-        annotate("segment", x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
-                 color = color, size = lwd * 2)
+        annotate("segment",
+          x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
+          color = color, size = lwd * 2
+        )
     }
   }
 
-  #reverse axis if necessary
-  if(rev_axis){
+  # reverse axis if necessary
+  if (rev_axis) {
     gg_scale <- gg_scale + scale_x_reverse()
   }
 
-  #convert to grob
+  # convert to grob
   grob_scale <- ggplotGrob(gg_scale)
 
-  #find panels
+  # find panels
   panels <- obj$layout[grepl("panel", obj$layout[["name"]]), 1:4]
 
-  #add a row or column in the proper spot
-  #then put the scale grob in the proper spot
-  if(pos %in% c("top","t")){
-    for(i in unique(panels$t)){
+  # add a row or column in the proper spot
+  # then put the scale grob in the proper spot
+  if (pos %in% c("top", "t")) {
+    for (i in unique(panels$t)) {
       obj <- gtable_add_rows(obj, heights = height, pos = i - 1)
     }
-    for(i in 1:nrow(panels)){
+    for (i in 1:nrow(panels)) {
       obj <- gtable_add_grob(obj, grob_scale, t = panels$t[i], l = panels$l[i], r = panels$r[i], name = "axis-scale")
     }
-  }else if(pos %in% c("bottom","b")){
-    for(i in unique(panels$b)){
+  } else if (pos %in% c("bottom", "b")) {
+    for (i in unique(panels$b)) {
       obj <- gtable_add_rows(obj, heights = height, pos = i)
     }
-    for(i in 1:nrow(panels)){
+    for (i in 1:nrow(panels)) {
       obj <- gtable_add_grob(obj, grob_scale, t = panels$b[i] + 1, l = panels$l[i], r = panels$r[i], name = "axis-scale")
     }
-  }else if(pos %in% c("left", "l")){
-    for(i in unique(panels$l)){
+  } else if (pos %in% c("left", "l")) {
+    for (i in unique(panels$l)) {
       obj <- gtable_add_cols(obj, widths = height, pos = i - 1)
     }
-    for(i in 1:nrow(panels)){
+    for (i in 1:nrow(panels)) {
       obj <- gtable_add_grob(obj, grob_scale, t = panels$t[i], l = panels$l[i], b = panels$b[i], name = "axis-scale")
     }
-  }else if(pos %in% c("right","r")){
-    for(i in unique(panels$r)){
+  } else if (pos %in% c("right", "r")) {
+    for (i in unique(panels$r)) {
       obj <- gtable_add_cols(obj, widths = height, pos = i)
     }
-    for(i in 1:nrow(panels)){
+    for (i in 1:nrow(panels)) {
       obj <- gtable_add_grob(obj, grob_scale, t = panels$t[i], l = panels$r[i] + 1, b = panels$b[i], name = "axis-scale")
     }
   }
@@ -310,14 +344,16 @@ gggeo_scale.ggplot <- function(obj, dat = "periods", fill = NULL, color = "black
                                abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                size = 5, lwd = .25, margin = unit(0, "line"), neg = FALSE,
                                bord = c("left", "right", "top", "bottom"),
-                               center_end_labels = FALSE, ...){
+                               center_end_labels = FALSE, ...) {
   lims <- ggplot_build(obj)$layout$panel_params[[1]]
-  #convert input to grob and gtable layout
+  # convert input to grob and gtable layout
   grob_gg <- ggplotGrob(obj)
   gt <- gtable_frame2(grob_gg)
-  gggeo_scale.gtable(gt, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
-                     margin = margin, neg = neg, bord = bord, center_end_labels = center_end_labels)
+  gggeo_scale.gtable(gt,
+    lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
+    pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
+    margin = margin, neg = neg, bord = bord, center_end_labels = center_end_labels
+  )
 }
 
 #' @keywords internal
@@ -328,11 +364,13 @@ gggeo_scale.geo_scale <- function(obj, dat = "periods", fill = NULL, color = "bl
                                   abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
                                   size = 5, lwd = .25, margin = unit(0, "line"), neg = FALSE,
                                   bord = c("left", "right", "top", "bottom"),
-                                  center_end_labels = FALSE, ...){
+                                  center_end_labels = FALSE, ...) {
   lims <- obj$lims
-  gggeo_scale.gtable(obj, lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
-                     pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
-                     margin = margin, neg = neg, bord = bord, center_end_labels = center_end_labels)
+  gggeo_scale.gtable(obj,
+    lims = lims, dat = dat, fill = fill, color = color, alpha = alpha, height = height,
+    pos = pos, lab = lab, rot = rot, abbrv = abbrv, skip = skip, size = size, lwd = lwd,
+    margin = margin, neg = neg, bord = bord, center_end_labels = center_end_labels
+  )
 }
 
 #' @param x An object of class geo_scale.

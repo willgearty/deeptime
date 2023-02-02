@@ -118,21 +118,23 @@ If individual values (or vectors) are used for these parameters, they will be ap
 }
 \examples{
 library(ggplot2)
-#single scale on bottom
+# single scale on bottom
 ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
   scale_x_reverse() +
-  coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
+  coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
   theme_classic()
 
-#stack multiple scales
+# stack multiple scales
 ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
   scale_x_reverse() +
-  coord_geo(xlim = c(100, 0), ylim = c(0,8), pos = as.list(rep("bottom", 3)),
-  dat = list("stages", "epochs", "periods"),
-  height = list(unit(4, "lines"), unit(4, "lines"), unit(2, "line")),
-  rot = list(90, 90, 0), size = list(2.5, 2.5, 5), abbrv = FALSE) +
+  coord_geo(
+    xlim = c(100, 0), ylim = c(0, 8), pos = as.list(rep("bottom", 3)),
+    dat = list("stages", "epochs", "periods"),
+    height = list(unit(4, "lines"), unit(4, "lines"), unit(2, "line")),
+    rot = list(90, 90, 0), size = list(2.5, 2.5, 5), abbrv = FALSE
+  ) +
   theme_classic()
 }
 \keyword{datasets}

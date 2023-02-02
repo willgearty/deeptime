@@ -103,8 +103,10 @@ library(ggplot2)
 \dontshow{if (require(ape)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ape)
 tr <- rtree(10)
-dat <- data.frame(x = runif(10), y = runif(10), label = tr$tip.label,
-                  row.names = tr$tip.label)
+dat <- data.frame(
+  x = runif(10), y = runif(10), label = tr$tip.label,
+  row.names = tr$tip.label
+)
 ggplot(dat, aes(x = x, y = y, label = label)) +
   geom_phylomorpho(tr) +
   geom_label(size = 5)

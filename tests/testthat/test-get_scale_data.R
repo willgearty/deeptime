@@ -10,8 +10,10 @@ test_that("get_scale_data works", {
 
   expect_error(get_scale_data("e"))
   expect_error(get_scale_data("international house of pancakes"))
-  expect_named(get_scale_data("North American Land Mammal Ages"),
-               c("name", "max_age", "min_age", "abbr", "color"))
+  expect_named(
+    get_scale_data("North American Land Mammal Ages"),
+    c("name", "max_age", "min_age", "abbr", "color")
+  )
 })
 
 test_that("getScaleData is deprecated", {

@@ -50,26 +50,26 @@ coordinates (e.g. \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, \code
 coordinates are extrapolated (e.g., \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}}).
 }
 \examples{
-#make transformer
+# make transformer
 library(ggforce)
 trans <- linear_trans(shear(2, 0), rotate(-pi / 3))
 
-#set up data to be plotted
+# set up data to be plotted
 square <- data.frame(x = c(0, 0, 4, 4), y = c(0, 1, 1, 0))
 points <- data.frame(x = runif(100, 0, 4), y = runif(100, 0, 1))
 
-#plot data normally
+# plot data normally
 library(ggplot2)
 ggplot(data = points, aes(x = x, y = y)) +
   geom_polygon(data = square, fill = NA, color = "black") +
-  geom_point(color = 'black') +
+  geom_point(color = "black") +
   coord_cartesian(expand = FALSE) +
   theme_classic()
 
-#plot data with transformation
+# plot data with transformation
 ggplot(data = points, aes(x = x, y = y)) +
   geom_polygon(data = square, fill = NA, color = "black") +
-  geom_point(color = 'black') +
+  geom_point(color = "black") +
   coord_trans_xy(trans = trans, expand = FALSE) +
   theme_classic()
 }

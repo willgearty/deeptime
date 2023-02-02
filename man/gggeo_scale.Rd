@@ -154,10 +154,10 @@ gggeo_scale(p)
 
 # can specify any side of the plot
 p <- ggplot() +
- geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 1000))) +
- scale_y_reverse() +
- coord_cartesian(xlim = c(0, 8), ylim = c(1000, 0), expand = FALSE) +
- theme_classic()
+  geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 1000))) +
+  scale_y_reverse() +
+  coord_cartesian(xlim = c(0, 8), ylim = c(1000, 0), expand = FALSE) +
+  theme_classic()
 gggeo_scale(p, pos = "left", rot = 90)
 
 # can add multiple scales
@@ -176,15 +176,21 @@ p <- ggplot() +
   scale_y_reverse() +
   coord_cartesian(xlim = c(0, 10), ylim = c(65, 0), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
-                 abbrv = FALSE)
-gggeo_scale(p, dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
-            size = 2.5, abbrv = FALSE)
+p <- gggeo_scale(p,
+  dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
+  abbrv = FALSE
+)
+gggeo_scale(p,
+  dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
+  size = 2.5, abbrv = FALSE
+)
 
-#can add scales to a faceted plot
-#use gggeo_scale_old() if you have more than one column
-df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, 0, 8),
-                 z = sample(c(1, 2, 3, 4), 1000, TRUE))
+# can add scales to a faceted plot
+# use gggeo_scale_old() if you have more than one column
+df <- data.frame(
+  x = runif(1000, 0, 541), y = runif(1000, 0, 8),
+  z = sample(c(1, 2, 3, 4), 1000, TRUE)
+)
 p <- ggplot(df) +
   geom_point(aes(x, y)) +
   scale_x_reverse() +
@@ -193,14 +199,14 @@ p <- ggplot(df) +
   facet_wrap(~z, ncol = 1)
 gggeo_scale(p)
 
-#can even add a scale to a phylogeny (using ggtree)
+# can even add a scale to a phylogeny (using ggtree)
 \dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(phytools)
 library(ggtree)
-tree <- pbtree(b = .03, d = .01,  n=100)
+tree <- pbtree(b = .03, d = .01, n = 100)
 p <- ggtree(tree) +
   coord_cartesian(xlim = c(-500, 0), ylim = c(-2, Ntip(tree)), expand = FALSE) +
-  scale_x_continuous(breaks=seq(-500, 0, 100), labels=abs(seq(-500, 0, 100))) +
+  scale_x_continuous(breaks = seq(-500, 0, 100), labels = abs(seq(-500, 0, 100))) +
   theme_tree2()
 p <- revts(p)
 gggeo_scale(p, neg = TRUE)

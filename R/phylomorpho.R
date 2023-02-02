@@ -31,8 +31,10 @@
 #' @examplesIf require(ape)
 #' library(ape)
 #' tr <- rtree(10)
-#' dat <- data.frame(x = runif(10), y = runif(10), label = tr$tip.label,
-#'                   row.names = tr$tip.label)
+#' dat <- data.frame(
+#'   x = runif(10), y = runif(10), label = tr$tip.label,
+#'   row.names = tr$tip.label
+#' )
 #' ggplot(dat, aes(x = x, y = y, label = label)) +
 #'   geom_phylomorpho(tr) +
 #'   geom_label(size = 5)
@@ -61,8 +63,8 @@ geom_phylomorpho <- function(tree, mapping = NULL, data = NULL,
         lineend = lineend,
         linejoin = linejoin,
         na.rm = na.rm,
-        ...), seg_args
-      )
+        ...
+      ), seg_args)
     ),
     layer(
       data = data,
@@ -74,8 +76,8 @@ geom_phylomorpho <- function(tree, mapping = NULL, data = NULL,
       inherit.aes = inherit.aes,
       params = c(list(
         na.rm = na.rm,
-        ...), point_args
-      )
+        ...
+      ), point_args)
     )
   )
 }
@@ -89,7 +91,7 @@ StatPhylomorpho <- ggproto("StatPhylomorpho", Stat,
     data
   },
   compute_panel = function(self, data, scales, params, tree) {
-    if(nrow(data) != length(tree$tip.label)) stop("X must contain the same
+    if (nrow(data) != length(tree$tip.label)) stop("X must contain the same
                                                   number of rows as species in
                                                   tree.")
     if ("label" %in% colnames(data)) {
@@ -100,18 +102,24 @@ StatPhylomorpho <- ggproto("StatPhylomorpho", Stat,
     }
     # copied from phytools
     A <- apply(data, 2, fastAnc, tree = tree)
-    aa <- setNames(c(data[tree$tip.label, "x"], A[, 1]),
-                   c(1:length(tree$tip.label), rownames(A)))
-    bb <- setNames(c(data[tree$tip.label, "y"], A[, 2]),
-                   c(1:length(tree$tip.label), rownames(A)))
+    aa <- setNames(
+      c(data[tree$tip.label, "x"], A[, 1]),
+      c(1:length(tree$tip.label), rownames(A))
+    )
+    bb <- setNames(
+      c(data[tree$tip.label, "y"], A[, 2]),
+      c(1:length(tree$tip.label), rownames(A))
+    )
     XX <- matrix(aa[as.character(tree$edge)], nrow(tree$edge), 2)
     YY <- matrix(bb[as.character(tree$edge)], nrow(tree$edge), 2)
     xx <- setNames(c(XX[1, 1], XX[, 2]), c(tree$edge[1, 1], tree$edge[, 2]))
     xx <- xx[order(as.numeric(names(xx)))]
-    yy <- setNames(c(YY[1, 1],YY[, 2]), c(tree$edge[1, 1], tree$edge[, 2]))
+    yy <- setNames(c(YY[1, 1], YY[, 2]), c(tree$edge[1, 1], tree$edge[, 2]))
     yy <- yy[order(as.numeric(names(yy)))]
-    df <- data.frame(x = xx[tree$edge[, 1]], xend = xx[tree$edge[, 2]],
-                     y = yy[tree$edge[, 1]], yend = yy[tree$edge[, 2]])
+    df <- data.frame(
+      x = xx[tree$edge[, 1]], xend = xx[tree$edge[, 2]],
+      y = yy[tree$edge[, 1]], yend = yy[tree$edge[, 2]]
+    )
     return(df)
   }
 )

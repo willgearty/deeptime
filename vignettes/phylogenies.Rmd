@@ -34,7 +34,7 @@ Now, let's plot some phylogenies with timescales! Note that by default the time 
 ```{r}
 p <- ggtree(mammal.tree) +
   coord_geo(xlim = c(-75, 0), ylim = c(-2, Ntip(mammal.tree)), neg = TRUE, abbrv = FALSE) +
-  scale_x_continuous(breaks=seq(-80, 0, 20), labels=abs(seq(-80, 0, 20))) +
+  scale_x_continuous(breaks = seq(-80, 0, 20), labels = abs(seq(-80, 0, 20))) +
   theme_tree2()
 revts(p)
 ```
@@ -43,10 +43,12 @@ revts(p)
 Many phylogenies only have fossil taxa in them (i.e., non-ultrametric). These can be handled by `coord_geo()` by using `position_nudge()` function. In most cases, you will want to nudge the time axis values (in this case, the x-axis) by the `root.time` of your phylogeny. Also, note that we have modified `plot.margin` here to accommodate the stacked timescale.
 ```{r}
 ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
-  coord_geo(xlim = c(-163.5, -66), ylim = c(-2, Ntip(ceratopsianTreeRaia)),
-            pos = list("bottom", "bottom"), skip = c("Paleocene", "Middle Jurassic"),
-            dat = list("epochs", "periods"), abbrv = FALSE,
-            size = list(4, 5), neg = TRUE, center_end_labels = TRUE) +
+  coord_geo(
+    xlim = c(-163.5, -66), ylim = c(-2, Ntip(ceratopsianTreeRaia)),
+    pos = list("bottom", "bottom"), skip = c("Paleocene", "Middle Jurassic"),
+    dat = list("epochs", "periods"), abbrv = FALSE,
+    size = list(4, 5), neg = TRUE, center_end_labels = TRUE
+  ) +
   scale_x_continuous(breaks = -rev(epochs$max_age), labels = rev(epochs$max_age)) +
   theme_tree2() +
   theme(plot.margin = margin(7, 11, 7, 11))
@@ -64,8 +66,10 @@ revts(ggtree(mammal.tree)) +
 Timescales can even be "stacked" like with `coord_geo()`, although the stacking occurs in a circular fashion. In this case, we use `scale_y_continuous()` to add a small expansion to the y-axis (which is now the theta axis) so the numbers don't overlap with the phylogeny. We also use the `prop` and `start` arguments to specify how the different timescales are oriented and split within the polar space. The `axis.line.r`, `axis.text.r`, `axis.ticks.r`, and `axis.ticks.length.r` ggplot2 `theme()` elements can be modified just like their x and y counterparts to change the appearance of the radial axis. The default settings work well for a horizontal axis pointing towards the right, but these theme settings will need to be modified for other orientations such as in this example.
 ```{r message = FALSE}
 revts(ggtree(mammal.tree)) +
-  coord_geo_polar(dat = list("stages", "periods"), alpha = .5,
-                  prop = list(0.66, .34), start = pi/4, lty = "dashed") +
+  coord_geo_polar(
+    dat = list("stages", "periods"), alpha = .5,
+    prop = list(0.66, .34), start = pi / 4, lty = "dashed"
+  ) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02))) +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20))) +
   theme(axis.text.r = element_text(size = 3.5, hjust = .25, vjust = .5))

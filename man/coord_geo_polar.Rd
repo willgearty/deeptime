@@ -98,8 +98,10 @@ revts(ggtree(tree)) +
 
 # multiple scales
 revts(ggtree(tree)) +
-  coord_geo_polar(dat = list("stages", "periods"), alpha = .5,
-                  prop = list(0.75, .25), start = pi/4, lty = "dashed") +
+  coord_geo_polar(
+    dat = list("stages", "periods"), alpha = .5,
+    prop = list(0.75, .25), start = pi / 4, lty = "dashed"
+  ) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02))) +
   theme(axis.text.r = element_text(size = 3.5, hjust = .75, vjust = .75))
 \dontshow{\}) # examplesIf}

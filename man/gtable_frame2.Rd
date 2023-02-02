@@ -37,20 +37,22 @@ p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   geom_point()
 
 p2 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
-  geom_point() + facet_wrap( ~ cyl, ncol=2, scales = 'free') +
-  guides(colour='none') +
+  geom_point() +
+  facet_wrap(~cyl, ncol = 2, scales = "free") +
+  guides(colour = "none") +
   theme()
 
 p3 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
-  geom_point() + facet_grid(. ~ cyl, scales = 'free')
+  geom_point() +
+  facet_grid(. ~ cyl, scales = "free")
 
-g1 <- ggplotGrob(p1);
-g2 <- ggplotGrob(p2);
-g3 <- ggplotGrob(p3);
+g1 <- ggplotGrob(p1)
+g2 <- ggplotGrob(p2)
+g3 <- ggplotGrob(p3)
 fg1 <- gtable_frame2(g1)
 fg2 <- gtable_frame2(g2)
-fg12 <- gtable_frame2(gtable_rbind(fg1,fg2), width=unit(2,'null'), height=unit(1,'null'))
-fg3 <- gtable_frame2(g3, width=unit(1,'null'), height=unit(1,'null'))
+fg12 <- gtable_frame2(gtable_rbind(fg1, fg2), width = unit(2, "null"), height = unit(1, "null"))
+fg3 <- gtable_frame2(g3, width = unit(1, "null"), height = unit(1, "null"))
 grid.newpage()
 combined <- gtable_cbind(fg12, fg3)
 grid.draw(combined)

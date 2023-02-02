@@ -74,20 +74,22 @@ Color scales using the colors in the Geological Time Scale graphics.
 }
 \examples{
 library(ggplot2)
-df <- data.frame(x = runif(1000, 0, 10), y = runif(1000, 0, 10),
-                 color = sample(periods$name, 1000, TRUE), shape = 21)
+df <- data.frame(
+  x = runif(1000, 0, 10), y = runif(1000, 0, 10),
+  color = sample(periods$name, 1000, TRUE), shape = 21
+)
 ggplot(df) +
   geom_point(aes(x = x, y = y, fill = color), shape = 21) +
   scale_fill_geo("periods", name = "Period") +
   theme_classic()
 
 # cut continuous variable into discrete
-df <-data.frame(x = runif(1000, 0, 1000), y = runif(1000, 0, 8))
+df <- data.frame(x = runif(1000, 0, 1000), y = runif(1000, 0, 8))
 df$color <- cut(df$x, c(periods$min_age, periods$max_age[22]), periods$name)
 ggplot(df) +
   geom_point(aes(x = x, y = y, color = color)) +
   scale_x_reverse() +
   scale_color_geo("periods", name = "Period") +
-  coord_geo(xlim = c(1000, 0), ylim = c(0,8)) +
+  coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
   theme_classic()
 }
