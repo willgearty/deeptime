@@ -240,7 +240,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
               color = self$color[[ind]], linewidth = self$lwd[[ind]],
               lty = self$lty[[ind]]
             )
-        } else {
+        } else { # nocov start
           geo_scale <- geo_scale +
             geom_segment(
               data = dat_list[[ind]],
@@ -256,7 +256,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
               color = self$color[[ind]], size = self$lwd[[ind]],
               lty = self$lty[[ind]]
             )
-        }
+        } # nocov end
       }
     }
 
@@ -273,14 +273,14 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
             linewidth = axis_line$linewidth %||% NA,
             linetype = axis_line$linetype %||% NA
           )
-      } else {
+      } else { # nocov start
         geo_scale <- geo_scale +
           geom_vline(
             xintercept = 0, color = axis_line$colour %||% NA,
             size = axis_line$size %||% NA,
             linetype = axis_line$linetype %||% NA
           )
-      }
+      } # nocov end
     }
     if (!is(axis_text, "element_blank")) {
       geo_scale <- geo_scale +
@@ -313,7 +313,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
             linetype = axis_ticks$linetype %||% NA,
             lineend = axis_ticks$lineend %||% NA
           )
-      } else {
+      } else { # nocov start
         geo_scale <- geo_scale +
           annotate(
             geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
@@ -323,7 +323,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
             linetype = axis_ticks$linetype %||% NA,
             lineend = axis_ticks$lineend %||% NA
           )
-      }
+      } # nocov end
     }
     # should there be an axis label?
 

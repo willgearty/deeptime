@@ -343,7 +343,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       ) +
       scale_fill_manual(values = setNames(dat$color, dat$color)) +
       theme_void()
-  } else {
+  } else { # nocov start
     gg_scale <- gg_scale +
       geom_segment(
         data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
@@ -355,7 +355,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       ) +
       scale_fill_manual(values = setNames(dat$color, dat$color)) +
       theme_void()
-  }
+  } # nocov end
 
   rev_axis <- FALSE
   # if left or right, rotate accordingly using coord_trans_flip,
@@ -463,7 +463,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
           color = color, linewidth = lwd * 2
         )
     }
-  } else {
+  } else { # nocov start
     if ("left" %in% bord || "l" %in% bord) {
       gg_scale <- gg_scale +
         annotate("segment",
@@ -492,7 +492,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
           color = color, size = lwd * 2
         )
     }
-  }
+  } # nocov end
 
   # reverse axis if necessary
   if (rev_axis) {
