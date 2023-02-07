@@ -32,7 +32,9 @@ ggarrange2(
 
 \item{plots}{list of ggplot, gtable, or geo_scale objects}
 
-\item{layout}{a matrix of integers specifying where each plot should go, like \code{mat} in \code{\link[graphics:layout]{graphics::layout()}}; \code{NA} or a value less than 0 or greater than the number of plots indicates a blank plot; overrides nrow/ncol/byrow}
+\item{layout}{a matrix of integers specifying where each plot should go, like
+\code{mat} in \code{\link[graphics:layout]{graphics::layout()}}; \code{NA} or a value less than 0 or greater than
+the number of plots indicates a blank plot; overrides nrow/ncol/byrow}
 
 \item{nrow}{number of rows}
 
@@ -54,7 +56,8 @@ ggarrange2(
 
 \item{padding}{unit of length one, margin around annotations}
 
-\item{margin}{vector of units of length 4: top, right, bottom, left (as in \code{\link[gtable:gtable_add_padding]{gtable::gtable_add_padding()}})}
+\item{margin}{vector of units of length 4: top, right, bottom, left (as in
+\code{\link[gtable:gtable_add_padding]{gtable::gtable_add_padding()}})}
 
 \item{clip}{argument of gtable}
 
@@ -64,7 +67,8 @@ ggarrange2(
 
 \item{debug}{logical, show layout with thin lines}
 
-\item{labels}{character labels used for annotation of subfigures (should be in the same order as \code{plots})}
+\item{labels}{character labels used for annotation of subfigures (should be
+in the same order as \code{plots})}
 
 \item{label.args}{label list of parameters for the formatting of labels}
 }
@@ -72,7 +76,8 @@ ggarrange2(
 gtable of aligned plots
 }
 \description{
-Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page, aligning the plot panels, axes, and axis titles.
+Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page,
+aligning the plot panels, axes, and axis titles.
 }
 \examples{
 library(ggplot2)

@@ -34,87 +34,116 @@ coord_geo(
 )
 }
 \arguments{
-\item{pos}{Which side to add the scale to (left, right, top, or bottom). First letter may also be used.}
+\item{pos}{Which side to add the scale to (left, right, top, or bottom).
+First letter may also be used.}
 
-\item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
-or C) a custom data.frame of time interval boundaries (see Details).}
+\item{dat}{Either A) a string indicating a built-in dataframe with interval
+data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
+B) a string indicating a timescale from macrostrat (see list here:
+\url{https://macrostrat.org/api/defs/timescales?all}), or C) a custom
+data.frame of time interval boundaries (see Details).}
 
 \item{xlim, ylim}{Limits for the x and y axes.}
 
-\item{xtrans, ytrans}{Transformers for the x and y axes. For more information see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
+\item{xtrans, ytrans}{Transformers for the x and y axes. For more information
+see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
 
-\item{clip}{Should drawing be clipped to the extent of the plot panel? For more information see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
+\item{clip}{Should drawing be clipped to the extent of the plot panel? For
+more information see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
 
-\item{expand}{If \code{FALSE}, the default, limits are taken exactly from the data or \code{xlim}/\code{ylim}.
-If \code{TRUE}, adds a small expansion factor to the limits to ensure that data and axes don't overlap.}
+\item{expand}{If \code{FALSE}, the default, limits are taken exactly from the data
+or \code{xlim}/\code{ylim}. If \code{TRUE}, adds a small expansion factor to the limits to
+ensure that data and axes don't overlap.}
 
-\item{fill}{The fill color of the boxes. The default is to use the \code{color} column included in \code{dat}.
-If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
-Custom fill colors can be provided with this option (overriding the \code{color} column) and will be recycled if/as necessary.}
+\item{fill}{The fill color of the boxes. The default is to use the \code{color}
+column included in \code{dat}. If a custom dataset is provided with \code{dat}
+without a \code{color} column and without fill, a greyscale will be used.
+Custom fill colors can be provided with this option (overriding the \code{color}
+column) and will be recycled if/as necessary.}
 
 \item{color}{The outline color of the interval boxes.}
 
 \item{alpha}{The transparency of the fill colors.}
 
-\item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the scale.}
+\item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the
+scale.}
 
 \item{lab}{Whether to include labels.}
 
-\item{lab_color}{The color of the labels. The default is to use the \code{lab_color} column included in \code{dat}.
-If a custom dataset is provided with \code{dat} without a \code{lab_color} column and without fill, all labels will be black.
-Custom label colors can be provided with this option (overriding the \code{lab_color} column) and will be recycled if/as necessary.}
+\item{lab_color}{The color of the labels. The default is to use the
+\code{lab_color} column included in \code{dat}. If a custom dataset is provided with
+\code{dat} without a \code{lab_color} column and without fill, all labels will be
+black. Custom label colors can be provided with this option (overriding the
+\code{lab_color} column) and will be recycled if/as necessary.}
 
-\item{rot}{The amount of counter-clockwise rotation to add to the labels (in degrees).}
+\item{rot}{The amount of counter-clockwise rotation to add to the labels
+(in degrees).}
 
-\item{abbrv}{If including labels, whether to use abbreviations instead of full interval names.}
+\item{abbrv}{If including labels, whether to use abbreviations instead of
+full interval names.}
 
-\item{skip}{A vector of interval names indicating which intervals should not be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval abbreviations.}
+\item{skip}{A vector of interval names indicating which intervals should not
+be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval
+abbreviations.}
 
-\item{size}{Label size. Either a number as you would specify in \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} or \code{"auto"} to use \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}.}
+\item{size}{Label size. Either a number as you would specify in
+\code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} or \code{"auto"} to use \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}.}
 
 \item{lwd}{Line width.}
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{A vector specifying on which sides of the scale to add borders (same options as \code{pos}).}
+\item{bord}{A vector specifying on which sides of the scale to add borders
+(same options as \code{pos}).}
 
-\item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
+\item{center_end_labels}{Should labels be centered within the visible range
+of intervals at the ends of the axis?}
 
-\item{dat_is_discrete}{Are the ages in \code{dat} already converted for a discrete scale?}
+\item{dat_is_discrete}{Are the ages in \code{dat} already converted for a discrete
+scale?}
 
-\item{fittext_args}{A list of named arguments to provide to \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}. Only used if \code{size} is set to \code{"auto"}.}
+\item{fittext_args}{A list of named arguments to provide to
+\code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}. Only used if \code{size} is set to \code{"auto"}.}
 }
 \description{
-\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it occurs after
-statistical transformation and will affect the visual appearance of geoms. The main difference
-is that it also adds a geological timescale to the specified side of the plot.
+\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it occurs
+after statistical transformation and will affect the visual appearance of
+geoms. The main difference is that it also adds a geological timescale to the
+specified side(s) of the plot.
 }
 \details{
 Transforming the side with the scale is not currently implemented.
-If a custom data.frame is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
+If a custom data.frame is provided (with \code{dat}), it should consist of at
+least 3 columns of data. See \code{data(periods)} for an example.
 \itemize{
-\item The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
+\item The \code{name} column lists the names of each time interval. These will
+be used as labels if no abbreviations are provided.
 \item The \code{max_age} column lists the oldest boundary of each time interval.
-\item The \code{min_age} column lists the youngest boundary of each time interval.
-\item The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-\item The \code{color} column is also optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color} for the background for each time interval.
-\item The \code{lab_color} column is also optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color} for the label for each time interval.
+\item The \code{min_age} column lists the youngest boundary of each time
+interval.
+\item The \code{abbr} column is optional and lists abbreviations that may be
+used as labels.
+\item The \code{color} column is also optional and lists a
+\link[ggplot2:aes_colour_fill_alpha]{color} for the background for each time interval.
+\item The \code{lab_color} column is also optional and lists a
+\link[ggplot2:aes_colour_fill_alpha]{color} for the label for each time interval.
 }
 
 If the axis of the time scale is discrete, \code{max_age} and \code{min_age} will
-automatically be converted to the discrete scale. In this case, the categories
-of the discrete axis should match the values in the \code{name} column. If the ages
-within \code{dat} are already discretized, you can set \code{dat_is_discrete} to
-\code{TRUE} to prevent this automatic conversion. This can be useful for adding a
-time scale where categories and time intervals are not 1:1.
+automatically be converted to the discrete scale. In this case, the
+categories of the discrete axis should match the values in the \code{name} column.
+If the ages within \code{dat} are already discretized, you can set
+\code{dat_is_discrete} to \code{TRUE} to prevent this automatic conversion. This can be
+useful for adding a time scale where categories and time intervals are not
+1:1.
 
-\code{pos} may also be a list of sides (including duplicates) if multiple time scales should be added to the plot.
-In this case, \code{dat}, \code{fill}, \code{color}, \code{alpha}, \code{height}, \code{lab}, \code{lab_color},
-\code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd}, \code{neg}, \code{bord},
-\code{center_end_labels}, and \code{dat_is_discrete} can also be lists.
+\code{pos} may also be a list of sides (including duplicates) if multiple time
+scales should be added to the plot. In this case, \code{dat}, \code{fill}, \code{color},
+\code{alpha}, \code{height}, \code{lab}, \code{lab_color}, \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd},
+\code{neg}, \code{bord}, \code{center_end_labels}, and \code{dat_is_discrete} can also be lists.
 If these lists are not as long as \code{pos}, the elements will be recycled.
-If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
+If individual values (or vectors) are used for these parameters, they will be
+applied to all time scales (and recycled as necessary).
 }
 \examples{
 library(ggplot2)

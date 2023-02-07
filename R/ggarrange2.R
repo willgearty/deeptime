@@ -9,7 +9,8 @@
 #' @param height requested height
 #' @param debug logical draw gtable cells
 #'
-#' @importFrom gtable gtable_matrix gtable_add_grob gtable_add_cols gtable_add_rows gtable_filter
+#' @importFrom gtable gtable_matrix gtable_filter
+#' @importFrom gtable gtable_add_grob gtable_add_cols gtable_add_rows
 #' @importFrom grid unit unit.c nullGrob rectGrob grid.newpage grid.draw
 #' @importFrom gridExtra gtable_rbind gtable_cbind
 #' @importFrom methods is
@@ -37,12 +38,14 @@
 #' g3 <- ggplotGrob(p3)
 #' fg1 <- gtable_frame2(g1)
 #' fg2 <- gtable_frame2(g2)
-#' fg12 <- gtable_frame2(gtable_rbind(fg1, fg2), width = unit(2, "null"), height = unit(1, "null"))
+#' fg12 <- gtable_frame2(gtable_rbind(fg1, fg2), width = unit(2, "null"),
+#'                       height = unit(1, "null"))
 #' fg3 <- gtable_frame2(g3, width = unit(1, "null"), height = unit(1, "null"))
 #' grid.newpage()
 #' combined <- gtable_cbind(fg12, fg3)
 #' grid.draw(combined)
-gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), debug = FALSE) {
+gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"),
+                          debug = FALSE) {
   if (is(g, "dummy")) {
     return(g)
   }
@@ -58,7 +61,6 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
   }
 
   core <- g[seq(min(tt), max(tt)), seq(min(ll), max(ll))]
-  kept_names <- g$layout$name[!grepl("axis|xlab|ylab", g$layout$name)]
 
   fg <- nullGrob()
 
@@ -70,7 +72,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     axist <- top[ind, ]
     top_ind <- c(top_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
-    axist <- gtable_add_grob(gtable_add_rows(axist, unit(1, "null"), 0), fg, t = 1, l = 1)
+    axist <- gtable_add_grob(gtable_add_rows(axist, unit(1, "null"), 0),
+                             fg, t = 1, l = 1)
   } else {
     axist <- fg
   }
@@ -79,7 +82,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     xlabt <- top[ind, ]
     top_ind <- c(top_ind, ind)
     # add a dummy grob to make sure the title sticks to the bottom
-    xlabt <- gtable_add_grob(gtable_add_rows(xlabt, unit(1, "null"), 0), fg, t = 1, l = 1)
+    xlabt <- gtable_add_grob(gtable_add_rows(xlabt, unit(1, "null"), 0),
+                             fg, t = 1, l = 1)
   } else {
     xlabt <- fg
   }
@@ -97,7 +101,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     axisb <- bottom[ind, ]
     bottom_ind <- c(bottom_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
-    axisb <- gtable_add_grob(gtable_add_rows(axisb, unit(1, "null"), -1), fg, t = nrow(axisb), l = 1)
+    axisb <- gtable_add_grob(gtable_add_rows(axisb, unit(1, "null"), -1),
+                             fg, t = nrow(axisb), l = 1)
   } else {
     axisb <- fg
   }
@@ -106,7 +111,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     xlabb <- bottom[ind, ]
     bottom_ind <- c(bottom_ind, ind)
     # add a dummy grob to make sure the title sticks to the top
-    xlabb <- gtable_add_grob(gtable_add_rows(xlabb, unit(1, "null"), -1), fg, t = nrow(xlabb), l = 1)
+    xlabb <- gtable_add_grob(gtable_add_rows(xlabb, unit(1, "null"), -1),
+                             fg, t = nrow(xlabb), l = 1)
   } else {
     xlabb <- fg
   }
@@ -124,7 +130,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     axisl <- left[, ind]
     left_ind <- c(left_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
-    axisl <- gtable_add_grob(gtable_add_cols(axisl, unit(1, "null"), 0), fg, 1, l = 1)
+    axisl <- gtable_add_grob(gtable_add_cols(axisl, unit(1, "null"), 0),
+                             fg, 1, l = 1)
   } else {
     axisl <- fg
   }
@@ -133,7 +140,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     ylabl <- left[, ind]
     left_ind <- c(left_ind, ind)
     # add a dummy grob to make sure the title sticks to the right
-    ylabl <- gtable_add_grob(gtable_add_cols(ylabl, unit(1, "null"), 0), fg, 1, l = 1)
+    ylabl <- gtable_add_grob(gtable_add_cols(ylabl, unit(1, "null"), 0),
+                             fg, 1, l = 1)
   } else {
     ylabl <- fg
   }
@@ -151,7 +159,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     axisr <- right[, ind]
     right_ind <- c(right_ind, ind)
     # add a dummy grob to make sure the axis sticks to the panel
-    axisr <- gtable_add_grob(gtable_add_cols(axisr, unit(1, "null")), fg, 1, l = ncol(axisr))
+    axisr <- gtable_add_grob(gtable_add_cols(axisr, unit(1, "null")),
+                             fg, 1, l = ncol(axisr))
   } else {
     axisr <- fg
   }
@@ -160,7 +169,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     ylabr <- right[, ind]
     right_ind <- c(right_ind, ind)
     # add a dummy grob to make sure the title sticks to the left
-    ylabr <- gtable_add_grob(gtable_add_cols(ylabr, unit(1, "null")), fg, 1, l = ncol(ylabr))
+    ylabr <- gtable_add_grob(gtable_add_cols(ylabr, unit(1, "null")),
+                             fg, 1, l = ncol(ylabr))
   } else {
     ylabr <- fg
   }
@@ -170,7 +180,8 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
     right <- right[, -right_ind]
   }
 
-  # add dummy grobs to make sure the "other stuff" sticks to the internal components
+  # add dummy grobs to make sure the "other stuff" sticks to the
+  # internal components
   if (!is(left, "null")) {
     left <- gtable_add_cols(left, unit(1, "null"), 0)
     left <- gtable_add_grob(left, fg, 1, l = 1)
@@ -204,20 +215,28 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   widths <- unit.c(
     if (is(left, "null")) unit(0, "null") else sum(left$widths),
-    if (is(ylabl, "zeroGrob") | is(ylabl, "null")) unit(0, "null") else sum(ylabl$widths),
-    if (is(axisl, "zeroGrob") | is(axisl, "null")) unit(0, "null") else sum(axisl$widths),
+    if (is(ylabl, "zeroGrob") |
+        is(ylabl, "null")) unit(0, "null") else sum(ylabl$widths),
+    if (is(axisl, "zeroGrob") |
+        is(axisl, "null")) unit(0, "null") else sum(axisl$widths),
     width,
-    if (is(axisr, "zeroGrob") | is(axisr, "null")) unit(0, "null") else sum(axisr$widths),
-    if (is(ylabr, "zeroGrob") | is(ylabr, "null")) unit(0, "null") else sum(ylabr$widths),
+    if (is(axisr, "zeroGrob") |
+        is(axisr, "null")) unit(0, "null") else sum(axisr$widths),
+    if (is(ylabr, "zeroGrob") |
+        is(ylabr, "null")) unit(0, "null") else sum(ylabr$widths),
     if (is(right, "null")) unit(0, "null") else sum(right$widths)
   )
   heights <- unit.c(
     if (is(top, "null")) unit(0, "null") else sum(top$heights),
-    if (is(xlabt, "zeroGrob") | is(xlabt, "null")) unit(0, "null") else sum(xlabt$heights),
-    if (is(axist, "zeroGrob") | is(axist, "null")) unit(0, "null") else sum(axist$heights),
+    if (is(xlabt, "zeroGrob") |
+        is(xlabt, "null")) unit(0, "null") else sum(xlabt$heights),
+    if (is(axist, "zeroGrob") |
+        is(axist, "null")) unit(0, "null") else sum(axist$heights),
     height,
-    if (is(axisb, "zeroGrob") | is(axisb, "null")) unit(0, "null") else sum(axisb$heights),
-    if (is(xlabb, "zeroGrob") | is(xlabb, "null")) unit(0, "null") else sum(xlabb$heights),
+    if (is(axisb, "zeroGrob") |
+        is(axisb, "null")) unit(0, "null") else sum(axisb$heights),
+    if (is(xlabb, "zeroGrob") |
+        is(xlabb, "null")) unit(0, "null") else sum(xlabb$heights),
     if (is(bottom, "null")) unit(0, "null") else sum(bottom$heights)
   )
   all <- gtable_matrix("all",
@@ -236,13 +255,16 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"), 
 
   # name grobs
   all$layout[1:49, "name"] <- "null"
-  all$layout[c(4, 11, 18, 22, 23, 24, 25, 26, 27, 28, 32, 39, 46), "name"] <- c("left", "ylab-l", "axis-l", "top", "xlab-t", "axis-t", "panel", "axis-b", "xlab-b", "bottom", "axis-r", "ylab-r", "right")
+  all$layout[c(4, 11, 18, 22, 23, 24, 25, 26, 27, 28, 32, 39, 46), "name"] <-
+    c("left", "ylab-l", "axis-l", "top", "xlab-t", "axis-t", "panel",
+      "axis-b", "xlab-b", "bottom", "axis-r", "ylab-r", "right")
 
   # move panel to bottom of plot
   all$layout$z[25] <- 0
 
   # add background
-  all <- gtable_add_grob(all, background, 1, 1, 7, 7, name = "background", z = -Inf)
+  all <- gtable_add_grob(all, background, 1, 1, 7, 7,
+                         name = "background", z = -Inf)
 
   if (fixed_ar) {
     all$respect <- TRUE
@@ -279,16 +301,20 @@ as.unit.list <- function(unit) {
 }
 
 #' @importFrom grid textGrob
-label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = textGrob) {
+label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ...,
+                       .fun = textGrob) {
   lapply(labels, .fun, x = x, hjust = hjust, y = y, vjust = vjust, ...)
 }
 
 #' Combine and arrange multiple ggplot-like objects
 #'
-#' Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page, aligning the plot panels, axes, and axis titles.
+#' Arrange multiple ggplot, grobified ggplot, or geo_scale objects on a page,
+#' aligning the plot panels, axes, and axis titles.
 #' @param ... ggplot, grobified ggplot (gtable), or geo_scale objects
 #' @param plots list of ggplot, gtable, or geo_scale objects
-#' @param layout a matrix of integers specifying where each plot should go, like `mat` in [graphics::layout()]; `NA` or a value less than 0 or greater than the number of plots indicates a blank plot; overrides nrow/ncol/byrow
+#' @param layout a matrix of integers specifying where each plot should go, like
+#'   `mat` in [graphics::layout()]; `NA` or a value less than 0 or greater than
+#'   the number of plots indicates a blank plot; overrides nrow/ncol/byrow
 #' @param nrow number of rows
 #' @param ncol number of columns
 #' @param heights list of requested heights
@@ -299,12 +325,14 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #' @param left optional string, or grob
 #' @param right optional string, or grob
 #' @param padding unit of length one, margin around annotations
-#' @param margin vector of units of length 4: top, right, bottom, left (as in [gtable::gtable_add_padding()])
+#' @param margin vector of units of length 4: top, right, bottom, left (as in
+#'   [gtable::gtable_add_padding()])
 #' @param clip argument of gtable
 #' @param newpage logical: draw on a new page
 #' @param draw logical: draw or return a grob
 #' @param debug logical, show layout with thin lines
-#' @param labels character labels used for annotation of subfigures (should be in the same order as `plots`)
+#' @param labels character labels used for annotation of subfigures (should be
+#'   in the same order as `plots`)
 #' @param label.args label list of parameters for the formatting of labels
 #' @importFrom grid is.unit is.grob gpar grobHeight grobWidth
 #' @importFrom grDevices n2mfrow
@@ -331,13 +359,18 @@ label_grid <- function(labels, x = 0, hjust = 0, y = 1, vjust = 1, ..., .fun = t
 #'   coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
 #'   theme_classic()
 #' ggarrange2(ggarrange2(p1, p2, widths = c(2, 1), draw = FALSE), p3, nrow = 2)
-ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol = NULL, widths = NULL,
-                       heights = NULL, byrow = TRUE, top = NULL, bottom = NULL, left = NULL, right = NULL,
-                       padding = unit(0.5, "line"), margin = unit(0.5, "line"), clip = "on", draw = TRUE, newpage = TRUE, debug = FALSE,
-                       labels = NULL, label.args = list(gp = gpar(font = 4, cex = 1.2))) {
+ggarrange2 <- function(..., plots = list(...),
+                       layout = NULL, nrow = NULL, ncol = NULL,
+                       widths = NULL, heights = NULL, byrow = TRUE,
+                       top = NULL, bottom = NULL, left = NULL, right = NULL,
+                       padding = unit(0.5, "line"), margin = unit(0.5, "line"),
+                       clip = "on", draw = TRUE, newpage = TRUE, debug = FALSE,
+                       labels = NULL,
+                       label.args = list(gp = gpar(font = 4, cex = 1.2))) {
   n <- length(plots)
   # convert any non-grobs to grobs
-  plots_grobs <- lapply(plots, function(x) if (is(x, "grob")) x else ggplotGrob(x))
+  plots_grobs <-
+    lapply(plots, function(x) if (is(x, "grob")) x else ggplotGrob(x))
 
   ## check layout is consistent, if supplied
   if (!is.null(layout) && is.matrix(layout)) {
@@ -347,8 +380,9 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
     byrow <- FALSE
   }
 
-  ## logic for the layout if nrow/ncol supplied, honour this if not, use length of
-  ## widths/heights, if supplied if nothing supplied, work out sensible defaults
+  ## logic for the layout if nrow/ncol supplied, honor this if not
+  ## use length of widths/heights, if supplied
+  ## if nothing supplied, work out sensible defaults
 
   ## nothing to be done but check inconsistency
   if (!is.null(ncol) && !is.null(widths)) {
@@ -372,8 +406,8 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
     ncol <- ceiling(n / nrow)
   }
 
-  ## it may happen that sufficient info was passed, but incompatible with number of grobs
-  ## (fewer cells)
+  ## it may happen that sufficient info was passed, but incompatible with number
+  ## of grobs (fewer cells)
   stopifnot(nrow * ncol >= n)
 
   ## last case: nothing exists
@@ -385,12 +419,14 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
 
   ## setup layout if not specified
   if (is.null(layout)) {
-    layout <- matrix(c(1:n, rep(NA, max(0, nrow * ncol - n))), nrow = nrow, ncol = ncol, byrow = byrow)
+    layout <- matrix(c(1:n, rep(NA, max(0, nrow * ncol - n))),
+                     nrow = nrow, ncol = ncol, byrow = byrow)
   }
 
   grobs <- vector(mode = "list", length = length(layout))
-  for (i in 1:length(layout)) {
-    grobs[[i]] <- if (is.na(layout[i])) .dummy_gtable else plots_grobs[[layout[[i]]]]
+  for (i in seq_along(layout)) {
+    grobs[[i]] <-
+      if (is.na(layout[i])) .dummy_gtable else plots_grobs[[layout[[i]]]]
   }
   n <- length(grobs)
 
@@ -418,8 +454,8 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
     heights <- lapply(rep(1, n), unit, "null")
   }
 
-  # user may naively have passed grid units, but only unit.list units work well with `[`
-  # so convert to this class
+  # user may naively have passed grid units, but only unit.list units work well
+  # with `[`, so convert to this class
   if (is.unit(widths)) {
     widths <- as.unit.list(widths)
   }
@@ -479,7 +515,8 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   if (is.grob(top)) {
     h <- grobHeight(top) + padding
     gt <- gtable_add_rows(gt, heights = h, 0)
-    gt <- gtable_add_grob(gt, top, t = 1, l = 1, r = ncol(gt), z = Inf, clip = clip)
+    gt <- gtable_add_grob(gt, top, t = 1, l = 1, r = ncol(gt),
+                          z = Inf, clip = clip)
   }
   if (is.character(bottom)) {
     bottom <- textGrob(bottom)
@@ -487,7 +524,8 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   if (is.grob(bottom)) {
     h <- grobHeight(bottom) + padding
     gt <- gtable_add_rows(gt, heights = h, -1)
-    gt <- gtable_add_grob(gt, bottom, t = nrow(gt), l = 1, r = ncol(gt), z = Inf, clip = clip)
+    gt <- gtable_add_grob(gt, bottom, t = nrow(gt), l = 1, r = ncol(gt),
+                          z = Inf, clip = clip)
   }
   if (is.character(left)) {
     left <- textGrob(left, rot = 90)
@@ -495,7 +533,8 @@ ggarrange2 <- function(..., plots = list(...), layout = NULL, nrow = NULL, ncol 
   if (is.grob(left)) {
     w <- grobWidth(left) + padding
     gt <- gtable_add_cols(gt, widths = w, 0)
-    gt <- gtable_add_grob(gt, left, t = 1, b = nrow(gt), l = 1, r = 1, z = Inf, clip = clip)
+    gt <- gtable_add_grob(gt, left, t = 1, b = nrow(gt), l = 1, r = 1,
+                          z = Inf, clip = clip)
   }
   if (is.character(right)) {
     right <- textGrob(right, rot = -90)

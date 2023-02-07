@@ -77,69 +77,91 @@ gggeo_scale(obj, ...)
 \method{print}{geo_scale}(x, ...)
 }
 \arguments{
-\item{obj}{An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced by this function).}
+\item{obj}{An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced
+by this function).}
 
 \item{...}{further arguments passed to \code{\link[grid:grid.draw]{grid::grid.draw()}}.}
 
-\item{lims}{The limits of the axis of the desired side of the plot. Only required if using a gtable object not created by this function.}
+\item{lims}{The limits of the axis of the desired side of the plot. Only
+required if using a gtable object not created by this function.}
 
-\item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
+\item{dat}{Either A) a string indicating a built-in dataframe with interval
+data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
+B) a string indicating a timescale from macrostrat (see list here:
+\url{https://macrostrat.org/api/defs/timescales?all}),
 or C) a custom dataframe of time interval boundaries (see Details).}
 
-\item{fill}{The fill color of the boxes. The default is to use the colors included in \code{dat}.
-If a custom dataset is provided with \code{dat} without color and without fill, a greyscale will be used.
-Custom fill colors can be provided with this option and will be recycled if/as necessary.}
+\item{fill}{The fill color of the boxes. The default is to use the colors
+included in \code{dat}. If a custom dataset is provided with \code{dat} without color
+and without fill, a greyscale will be used. Custom fill colors can be
+provided with this option and will be recycled if/as necessary.}
 
 \item{color}{The outline color of the interval boxes.}
 
 \item{alpha}{The transparency of the fill colors.}
 
-\item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the scale.}
+\item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the
+scale.}
 
-\item{pos}{Which side to add the scale to (left, right, top, or bottom). First letter may also be used.}
+\item{pos}{Which side to add the scale to (left, right, top, or bottom).
+First letter may also be used.}
 
 \item{lab}{Whether to include labels.}
 
-\item{rot}{The amount of counter-clockwise rotation to add to the labels (in degrees).}
+\item{rot}{The amount of counter-clockwise rotation to add to the labels (in
+degrees).}
 
-\item{abbrv}{If including labels, whether to use abbreviations instead of full interval names.}
+\item{abbrv}{If including labels, whether to use abbreviations instead of
+full interval names.}
 
-\item{skip}{A vector of interval names indicating which intervals should not be labeled.}
+\item{skip}{A vector of interval names indicating which intervals should not
+be labeled.}
 
 \item{size}{Label size.}
 
 \item{lwd}{Line width.}
 
-\item{margin}{The width of the margin around the returned object (can be a vector of length 4).}
+\item{margin}{The width of the margin around the returned object (can be a
+vector of length 4).}
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
 
-\item{bord}{A vector specifying on Which sides of the scale to add borders (same options as \code{pos}).}
+\item{bord}{A vector specifying on Which sides of the scale to add borders
+(same options as \code{pos}).}
 
-\item{center_end_labels}{Should labels be centered within the visible range of intervals at the ends of the axis?}
+\item{center_end_labels}{Should labels be centered within the visible range
+of intervals at the ends of the axis?}
 
 \item{x}{An object of class geo_scale.}
 }
 \value{
-A geo_scale object. Basically a gtable object but with the axis limits included.
+A geo_scale object. Basically a gtable object but with the axis
+limits included.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-This function takes a ggplot object and adds a geologic time scale at the specified side using the grid and gtable packages.
+This function takes a ggplot object and adds a geologic time scale at the
+specified side using the grid and gtable packages.
 
-If custom data is provided (with \code{dat}), it should consist of at least 3 columns of data. See \code{data(periods)} for an example.
-The \code{name} column lists the names of each time interval. These will be used as labels if no abbreviations are provided.
-The \code{max_age} column lists the oldest boundary of each time interval.
-The \code{min_age} column lists the youngest boundary of each time interval.
-The \code{abbr} column is optional and lists abbreviations that may be used as labels.
-The \code{color} column is also optional and lists a hex color code (which can be obtained with \code{rgb()}) for each time interval.
+If custom data is provided (with \code{dat}), it should consist of at least 3
+columns of data. See \code{data(periods)} for an example.
+\itemize{
+\item The \code{name} column lists the names of each time interval. These will
+be used as labels if no abbreviations are provided.
+\item The \code{max_age} column lists the oldest boundary of each time interval.
+\item The \code{min_age} column lists the youngest boundary of each time
+interval.
+\item The \code{abbr} column is optional and lists abbreviations that may be
+used as labels.
+\item The \code{color} column is also optional and lists a hex color code
+(which can be obtained with \code{rgb()}) for each time interval.
+}
 }
 \section{Life cycle}{
 
-This function is soft-deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime} version 1.0.0.
-It may be removed in the future.
+This function is soft-deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime}
+version 1.0.0. It may be removed in the future.
 }
 
 \examples{
@@ -167,23 +189,23 @@ p <- ggplot() +
   coord_cartesian(xlim = c(100, 0), ylim = c(0, 8), expand = FALSE) +
   theme_classic()
 p <- gggeo_scale(p, abbrv = FALSE)
-p <- gggeo_scale(p, dat = "epochs", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
-gggeo_scale(p, dat = "stages", height = unit(4, "lines"), rot = 90, size = 2.5, abbrv = FALSE)
+p <- gggeo_scale(p, dat = "epochs", height = unit(4, "lines"), rot = 90,
+                 size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "stages", height = unit(4, "lines"), rot = 90,
+            size = 2.5, abbrv = FALSE)
 
-# intervals on both sides for different timescales (ICS stages vs North American Land Mammal Ages)
+# intervals on both sides for different timescales (ICS stages vs North
+# American Land Mammal Ages)
 p <- ggplot() +
   geom_point(aes(x = runif(1000, 0, 10), y = runif(1000, 0, 65))) +
   scale_y_reverse() +
   coord_cartesian(xlim = c(0, 10), ylim = c(65, 0), expand = FALSE) +
   theme_classic()
-p <- gggeo_scale(p,
-  dat = "stages", pos = "left", height = unit(4, "lines"), size = 2.5,
-  abbrv = FALSE
-)
-gggeo_scale(p,
-  dat = "North American Land Mammal Ages", pos = "right", height = unit(4, "lines"),
-  size = 2.5, abbrv = FALSE
-)
+p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"),
+  size = 2.5, abbrv = FALSE)
+gggeo_scale(p, dat = "North American Land Mammal Ages",
+            pos = "right", height = unit(4, "lines"),
+            size = 2.5, abbrv = FALSE)
 
 # can add scales to a faceted plot
 # use gggeo_scale_old() if you have more than one column
@@ -205,8 +227,10 @@ library(phytools)
 library(ggtree)
 tree <- pbtree(b = .03, d = .01, n = 100)
 p <- ggtree(tree) +
-  coord_cartesian(xlim = c(-500, 0), ylim = c(-2, Ntip(tree)), expand = FALSE) +
-  scale_x_continuous(breaks = seq(-500, 0, 100), labels = abs(seq(-500, 0, 100))) +
+  coord_cartesian(xlim = c(-500, 0), ylim = c(-2, Ntip(tree)),
+                  expand = FALSE) +
+  scale_x_continuous(breaks = seq(-500, 0, 100),
+                     labels = abs(seq(-500, 0, 100))) +
   theme_tree2()
 p <- revts(p)
 gggeo_scale(p, neg = TRUE)

@@ -1,48 +1,66 @@
 #' Polar coordinate system with geological timescale
 #'
-#' `coord_geo_polar` behaves similarly to [ggplot2::coord_polar()] in that it occurs after
-#' statistical transformation and will affect the visual appearance of geoms. The main difference
-#' is that it also adds a geological timescale to the background of the plot.
+#' `coord_geo_polar` behaves similarly to [ggplot2::coord_polar()] in that it
+#' occurs after statistical transformation and will affect the visual appearance
+#' of geoms. The main difference is that it also adds a geological timescale to
+#' the background of the plot.
 #'
-#' If a custom data.frame is provided (with `dat`), it should consist of at least 2 columns of data. See `data(periods)` for an example.
+#' If a custom data.frame is provided (with `dat`), it should consist of at
+#' least 2 columns of data. See `data(periods)` for an example.
 #' \itemize{
 #'   \item The `max_age` column lists the oldest boundary of each time interval.
-#'   \item The `min_age` column lists the youngest boundary of each time interval.
-#'   \item The `color` column is optional and lists a [color][ggplot2::color] for the background for each time interval.
+#'   \item The `min_age` column lists the youngest boundary of each time
+#'      interval.
+#'   \item The `color` column is optional and lists a [color][ggplot2::color]
+#'      for the background for each time interval.
 #' }
 #'
-#' `dat` may also be a list of values and/or dataframes if multiple time scales should be added to the background.
-#' Scales will be added sequentially starting at `start` and going in the specified `direction`.
-#' By default the scales will all be equal in circular/rotational proportion, but this can be overriden with `prop`.
-#' If `dat` is a list, `fill`, `alpha`, `lwd`, `lty`, `color`, `neg`, and `prop` can also be lists.
-#' If these lists are not as long as `dat`, the elements will be recycled.
-#' If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
+#' `dat` may also be a list of values and/or dataframes if multiple time scales
+#' should be added to the background. Scales will be added sequentially starting
+#' at `start` and going in the specified `direction`. By default the scales will
+#' all be equal in circular/rotational proportion, but this can be overridden
+#' with `prop`. If `dat` is a list, `fill`, `alpha`, `lwd`, `lty`, `color`,
+#' `neg`, and `prop` can also be lists. If these lists are not as long as `dat`,
+#' the elements will be recycled. If individual values (or vectors) are used for
+#' these parameters, they will be applied to all time scales (and recycled as
+#' necessary).
 #'
-#' If the sum of the `prop` values is greater than 1, the proportions will be scaled such that they sum to 1.
-#' However, the `prop` values may sum to less than 1 if the user would like blank space in the background.
+#' If the sum of the `prop` values is greater than 1, the proportions will be
+#' scaled such that they sum to 1. However, the `prop` values may sum to less
+#' than 1 if the user would like blank space in the background.
 #'
 #' The `axis.line.r`, `axis.text.r`, `axis.ticks.r`, and `axis.ticks.length.r`
-#' ggplot2 [theme elements][ggplot2::theme] can be modified just like their x and y counterparts
-#' to change the appearance of the radius axis. The default settings work well for a horizontal axis
-#' pointing towards the right, but these theme settings will need to be modified for other orientations.
+#' ggplot2 [theme elements][ggplot2::theme] can be modified just like their x
+#' and y counterparts to change the appearance of the radius axis. The default
+#' settings work well for a horizontal axis pointing towards the right, but
+#' these theme settings will need to be modified for other orientations.
 #' The default value for `axis.line.r` is `element_line()`.
-#' The default value for `axis.text.r` is `element_text(size = 3.5, vjust = -2, hjust = NA)`.
+#' The default value for `axis.text.r` is
+#' `element_text(size = 3.5, vjust = -2, hjust = NA)`.
 #' The default value for `axis.ticks.r` is `element_line()`.
-#' The default value for `axis.ticks.length.r` is `unit(1.5, "points")`. However, note that the units
-#' for this element are meaningless and only the numeric value will be used (but a `unit` must still be used).
+#' The default value for `axis.ticks.length.r` is `unit(1.5, "points")`.
+#' However, note that the units for this element are meaningless and only the
+#' numeric value will be used (but a `unit` must still be used).
 #'
-#' @param dat Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-#'   B) a string indicating a timescale from macrostrat (see list here: <https://macrostrat.org/api/defs/timescales?all>),
-#'   or C) a custom data.frame of time interval boundaries (see Details).
-#' @param fill The fill color of the background. The default is to use the `color` column included in `dat`.
-#'   If a custom dataset is provided with `dat` without a `color` column and without fill, a greyscale will be used.
-#'   Custom fill colors can be provided with this option (overriding the `color` column) and will be recycled if/as necessary.
+#' @param dat Either A) a string indicating a built-in dataframe with interval
+#'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
+#'   B) a string indicating a timescale from macrostrat (see list here:
+#'   <https://macrostrat.org/api/defs/timescales?all>), or C) a custom
+#'   data.frame of time interval boundaries (see Details).
+#' @param fill The fill color of the background. The default is to use the
+#'   `color` column included in `dat`. If a custom dataset is provided with
+#'   `dat` without a `color` column and without fill, a greyscale will be used.
+#'   Custom fill colors can be provided with this option (overriding the `color`
+#'   column) and will be recycled if/as necessary.
 #' @param alpha The transparency of the fill colors.
-#' @param lwd Line width for lines between intervals. Set to `NULL` to remove lines.
+#' @param lwd Line width for lines between intervals. Set to `NULL` to remove
+#'   lines.
 #' @param lty Line type for lines between intervals.
 #' @param color The color of the lines between intervals.
-#' @param neg Set this to true if your theta-axis is using negative values. This is often true if you are using `ggtree`.
-#' @param prop This is the rotational proportion of the background that the scale takes up.
+#' @param neg Set this to true if your theta-axis is using negative values. This
+#'   is often true if you are using `ggtree`.
+#' @param prop This is the rotational proportion of the background that the
+#'   scale takes up.
 #' @inheritParams ggplot2::coord_polar
 #' @importFrom ggplot2 ggproto
 #' @importFrom rlang arg_match0
@@ -69,7 +87,8 @@
 #' library(ggplot2)
 #' library(paleotree)
 #' data(RaiaCopesRule)
-#' ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
+#' ggtree(ceratopsianTreeRaia,
+#'        position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
 #'   coord_geo_polar(dat = "stages")
 coord_geo_polar <- function(dat = "periods", theta = "y",
                             start = -pi / 2, direction = -1, clip = "off",
@@ -126,8 +145,9 @@ ggname <- function(prefix, grob) {
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom ggplot2 ggproto CoordPolar ggproto_parent coord_polar theme_void geom_vline
-#' @importFrom ggplot2 geom_rect geom_segment scale_x_continuous scale_fill_manual calc_element
+#' @importFrom ggplot2 ggproto CoordPolar ggproto_parent coord_polar theme_void
+#' @importFrom ggplot2 geom_vline geom_rect geom_segment
+#' @importFrom ggplot2 scale_x_continuous scale_fill_manual calc_element
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||%
 #' @importFrom utils packageVersion
@@ -157,15 +177,23 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
       }
 
       if (neg) {
-        dat$max_age[(dat$max_age < min(r_lims) & dat$min_age < min(r_lims)) |
-          (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))] <- min(r_lims)
-        dat$min_age[(dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
-          (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))] <- max(r_lims)
+        dat$max_age[
+          (dat$max_age < min(r_lims) & dat$min_age < min(r_lims)) |
+            (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))
+        ] <- min(r_lims)
+        dat$min_age[
+          (dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
+            (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))
+        ] <- max(r_lims)
       } else {
-        dat$max_age[(dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
-          (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))] <- max(r_lims)
-        dat$min_age[(dat$max_age > min(r_lims) & dat$min_age < min(r_lims)) |
-          (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))] <- min(r_lims)
+        dat$max_age[
+          (dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
+            (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))
+        ] <- max(r_lims)
+        dat$min_age[
+          (dat$max_age > min(r_lims) & dat$min_age < min(r_lims)) |
+            (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))
+        ] <- min(r_lims)
       }
       subset(dat, max_age <= max(r_lims) & min_age >= min(r_lims))
     }
@@ -270,8 +298,10 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
         )
     }
     if (!is(axis_ticks, "element_blank")) {
-      tick_length <- as.numeric(axis_ticks_length %||% unit(0, "points")) / (90 / abs(diff(r_lims)))
-      rs <- sapply(panel_params$r.major, function(r) sqrt((r - min(r_lims))^2 + tick_length^2))
+      tick_length <- as.numeric(axis_ticks_length %||%
+                                  unit(0, "points")) / (90 / abs(diff(r_lims)))
+      rs <- sapply(panel_params$r.major,
+                   function(r) sqrt((r - min(r_lims))^2 + tick_length^2))
       thetas <- sapply(rs, function(r) asin(tick_length / r))
       if (packageVersion("ggplot2") > "3.3.6") {
         geo_scale <- geo_scale +

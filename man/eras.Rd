@@ -11,7 +11,8 @@ A data frame with 10 rows and 5 variables:
 \item{max_age}{maximum age, in millions of years}
 \item{min_age}{minimum age, in millions of years}
 \item{abbr}{era name abbreviations}
-\item{color}{the colors for each era, according to the Commission for the Geological Map of the World}
+\item{color}{the colors for each era, according to the Commission for the
+Geological Map of the World}
 }
 }
 \source{
@@ -21,8 +22,9 @@ A data frame with 10 rows and 5 variables:
 eras
 }
 \description{
-A dataset containing the boundary ages, abbreviations, and colors for the eras of the Geologic Time Scale.
-Based on The ICS International Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+A dataset containing the boundary ages, abbreviations, and colors for the
+eras of the Geologic Time Scale. Based on The ICS International
+Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
 }
 \seealso{
 Other timescales: 

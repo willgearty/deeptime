@@ -8,7 +8,8 @@ test_that("coord_geo_polar works", {
   expect_true(is(ggplot_build(gg)$layout$coord, "CoordGeoPolar"))
   expect_doppelganger_deeptime("coord_geo_polar", gg)
   skip_if_not_installed("phytools")
-  expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$r.range, c(-max(nodeHeights(tree)), 0))
+  expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$r.range,
+               c(-max(nodeHeights(tree)), 0))
 })
 
 test_that("stacking scales works", {
@@ -25,7 +26,8 @@ test_that("stacking scales works", {
 
 test_that("ggtree scale works with only fossil taxa", {
   skip_if_not_installed("paleotree")
-  gg <- ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
+  gg <- ggtree(ceratopsianTreeRaia,
+               position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
     coord_geo_polar(dat = "stages")
   expect_doppelganger_deeptime("scale on fossil ggtree", gg)
 })

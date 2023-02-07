@@ -33,8 +33,10 @@ test_that("gggeo_scale() works", {
     scale_x_reverse() +
     coord_cartesian(xlim = c(6, 2), ylim = c(5.5, 0)) +
     theme_classic()
-  gg <- gggeo_scale(p, dat = "Geomagnetic Polarity Chron", pos = "left", rot = 90, skip = "PL4", size = 5)
-  gg <- gggeo_scale(gg, dat = "Planktic foraminiferal Primary Biozones", pos = "r", rot = 90, skip = "PL4", size = 4)
+  gg <- gggeo_scale(p, dat = "Geomagnetic Polarity Chron", pos = "left",
+                    rot = 90, skip = "PL4", size = 5)
+  gg <- gggeo_scale(gg, dat = "Planktic foraminiferal Primary Biozones",
+                    pos = "r", rot = 90, skip = "PL4", size = 4)
   expect_true(gtable::is.gtable(gg))
   expect_doppelganger_deeptime("gggeo_scale() left and right", gg)
 })

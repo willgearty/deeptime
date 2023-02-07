@@ -31,23 +31,29 @@ disparity_through_time(
 \arguments{
 \item{x}{a formula (most likely of the form \code{z ~ x * y})}
 
-\item{data}{a data frame in which variables in the formula are to be evaluated}
+\item{data}{a data frame in which variables in the formula are to be
+evaluated}
 
-\item{groups}{a variable in \code{data} to be used as a grouping variable (this is probably the z variable)}
+\item{groups}{a variable in \code{data} to be used as a grouping variable (this is
+probably the z variable)}
 
 \item{pch}{the point type}
 
 \item{col.point}{color(s) for points on surfaces}
 
-\item{scales}{a list specifying how the axes are drawn (see \code{\link[lattice:xyplot]{lattice::xyplot()}} for details)}
+\item{scales}{a list specifying how the axes are drawn (see
+\code{\link[lattice:xyplot]{lattice::xyplot()}} for details)}
 
-\item{colorkey}{logical, should a legend be drawn (or a list describing the legend; see \code{\link[lattice:levelplot]{lattice::levelplot()}} for details)}
+\item{colorkey}{logical, should a legend be drawn (or a list describing the
+legend; see \code{\link[lattice:levelplot]{lattice::levelplot()}} for details)}
 
 \item{screen}{a list of the rotations that should be applied to each axis}
 
-\item{aspect}{a numeric vector of length 2, giving the relative aspects of the y-size/x-size and z-size/x-size of the enclosing cube}
+\item{aspect}{a numeric vector of length 2, giving the relative aspects of
+the y-size/x-size and z-size/x-size of the enclosing cube}
 
-\item{drape}{logical, whether the surfaces should be colored based on \code{col.regions} and \code{alpha.regions}}
+\item{drape}{logical, whether the surfaces should be colored based on
+\code{col.regions} and \code{alpha.regions}}
 
 \item{col.regions}{color(s) for surfaces}
 
@@ -55,7 +61,8 @@ disparity_through_time(
 
 \item{perspective}{logical, whether to plot a perspective view}
 
-\item{R.mat}{a transformational matrix that is applied to the orientation of the axes}
+\item{R.mat}{a transformational matrix that is applied to the orientation of
+the axes}
 
 \item{par.settings}{plotting settings (see \code{\link[lattice:trellis.par.get]{lattice::trellis.par.set()}})}
 
@@ -67,7 +74,9 @@ disparity_through_time(
 An object of class \code{"trellis"}, as output by \code{\link[lattice:cloud]{lattice::wireframe()}}.
 }
 \description{
-Plots points on 2-D surfaces within a a 3-D framework. See \code{\link[lattice:cloud]{lattice::wireframe()}} and \code{\link[lattice:panel.cloud]{lattice::panel.cloud()}} for customization options.
+Plots points on 2-D surfaces within a a 3-D framework. See
+\code{\link[lattice:cloud]{lattice::wireframe()}} and \code{\link[lattice:panel.cloud]{lattice::panel.cloud()}} for customization
+options.
 }
 \examples{
 g <- data.frame(

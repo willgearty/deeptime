@@ -92,8 +92,8 @@ StatPhylomorpho <- ggproto("StatPhylomorpho", Stat,
   },
   compute_panel = function(self, data, scales, params, tree) {
     if (nrow(data) != length(tree$tip.label)) stop("X must contain the same
-                                                  number of rows as species in
-                                                  tree.")
+                                                   number of rows as species in
+                                                   tree.")
     if ("label" %in% colnames(data)) {
       rownames(data) <- data$label
       data$label <- NULL
@@ -104,11 +104,11 @@ StatPhylomorpho <- ggproto("StatPhylomorpho", Stat,
     A <- apply(data, 2, fastAnc, tree = tree)
     aa <- setNames(
       c(data[tree$tip.label, "x"], A[, 1]),
-      c(1:length(tree$tip.label), rownames(A))
+      c(seq_along(tree$tip.label), rownames(A))
     )
     bb <- setNames(
       c(data[tree$tip.label, "y"], A[, 2]),
-      c(1:length(tree$tip.label), rownames(A))
+      c(seq_along(tree$tip.label), rownames(A))
     )
     XX <- matrix(aa[as.character(tree$edge)], nrow(tree$edge), 2)
     YY <- matrix(bb[as.character(tree$edge)], nrow(tree$edge), 2)

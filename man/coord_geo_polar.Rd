@@ -22,9 +22,11 @@ coord_geo_polar(
 )
 }
 \arguments{
-\item{dat}{Either A) a string indicating a built-in dataframe with interval data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here: \url{https://macrostrat.org/api/defs/timescales?all}),
-or C) a custom data.frame of time interval boundaries (see Details).}
+\item{dat}{Either A) a string indicating a built-in dataframe with interval
+data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
+B) a string indicating a timescale from macrostrat (see list here:
+\url{https://macrostrat.org/api/defs/timescales?all}), or C) a custom
+data.frame of time interval boundaries (see Details).}
 
 \item{theta}{variable to map angle to (\code{x} or \code{y})}
 
@@ -37,54 +39,70 @@ is applied clockwise or anticlockwise depending on value of \code{direction}.}
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
 means no. For details, please see \code{\link[ggplot2:coord_cartesian]{coord_cartesian()}}.}
 
-\item{fill}{The fill color of the background. The default is to use the \code{color} column included in \code{dat}.
-If a custom dataset is provided with \code{dat} without a \code{color} column and without fill, a greyscale will be used.
-Custom fill colors can be provided with this option (overriding the \code{color} column) and will be recycled if/as necessary.}
+\item{fill}{The fill color of the background. The default is to use the
+\code{color} column included in \code{dat}. If a custom dataset is provided with
+\code{dat} without a \code{color} column and without fill, a greyscale will be used.
+Custom fill colors can be provided with this option (overriding the \code{color}
+column) and will be recycled if/as necessary.}
 
 \item{alpha}{The transparency of the fill colors.}
 
-\item{lwd}{Line width for lines between intervals. Set to \code{NULL} to remove lines.}
+\item{lwd}{Line width for lines between intervals. Set to \code{NULL} to remove
+lines.}
 
 \item{color}{The color of the lines between intervals.}
 
 \item{lty}{Line type for lines between intervals.}
 
-\item{neg}{Set this to true if your theta-axis is using negative values. This is often true if you are using \code{ggtree}.}
+\item{neg}{Set this to true if your theta-axis is using negative values. This
+is often true if you are using \code{ggtree}.}
 
-\item{prop}{This is the rotational proportion of the background that the scale takes up.}
+\item{prop}{This is the rotational proportion of the background that the
+scale takes up.}
 }
 \description{
-\code{coord_geo_polar} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_polar()}} in that it occurs after
-statistical transformation and will affect the visual appearance of geoms. The main difference
-is that it also adds a geological timescale to the background of the plot.
+\code{coord_geo_polar} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_polar()}} in that it
+occurs after statistical transformation and will affect the visual appearance
+of geoms. The main difference is that it also adds a geological timescale to
+the background of the plot.
 }
 \details{
-If a custom data.frame is provided (with \code{dat}), it should consist of at least 2 columns of data. See \code{data(periods)} for an example.
+If a custom data.frame is provided (with \code{dat}), it should consist of at
+least 2 columns of data. See \code{data(periods)} for an example.
 \itemize{
 \item The \code{max_age} column lists the oldest boundary of each time interval.
-\item The \code{min_age} column lists the youngest boundary of each time interval.
-\item The \code{color} column is optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color} for the background for each time interval.
+\item The \code{min_age} column lists the youngest boundary of each time
+interval.
+\item The \code{color} column is optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color}
+for the background for each time interval.
 }
 
-\code{dat} may also be a list of values and/or dataframes if multiple time scales should be added to the background.
-Scales will be added sequentially starting at \code{start} and going in the specified \code{direction}.
-By default the scales will all be equal in circular/rotational proportion, but this can be overriden with \code{prop}.
-If \code{dat} is a list, \code{fill}, \code{alpha}, \code{lwd}, \code{lty}, \code{color}, \code{neg}, and \code{prop} can also be lists.
-If these lists are not as long as \code{dat}, the elements will be recycled.
-If individual values (or vectors) are used for these parameters, they will be applied to all time scales (and recycled as necessary).
+\code{dat} may also be a list of values and/or dataframes if multiple time scales
+should be added to the background. Scales will be added sequentially starting
+at \code{start} and going in the specified \code{direction}. By default the scales will
+all be equal in circular/rotational proportion, but this can be overridden
+with \code{prop}. If \code{dat} is a list, \code{fill}, \code{alpha}, \code{lwd}, \code{lty}, \code{color},
+\code{neg}, and \code{prop} can also be lists. If these lists are not as long as \code{dat},
+the elements will be recycled. If individual values (or vectors) are used for
+these parameters, they will be applied to all time scales (and recycled as
+necessary).
 
-If the sum of the \code{prop} values is greater than 1, the proportions will be scaled such that they sum to 1.
-However, the \code{prop} values may sum to less than 1 if the user would like blank space in the background.
+If the sum of the \code{prop} values is greater than 1, the proportions will be
+scaled such that they sum to 1. However, the \code{prop} values may sum to less
+than 1 if the user would like blank space in the background.
 
 The \code{axis.line.r}, \code{axis.text.r}, \code{axis.ticks.r}, and \code{axis.ticks.length.r}
-ggplot2 \link[ggplot2:theme]{theme elements} can be modified just like their x and y counterparts
-to change the appearance of the radius axis. The default settings work well for a horizontal axis
-pointing towards the right, but these theme settings will need to be modified for other orientations.
+ggplot2 \link[ggplot2:theme]{theme elements} can be modified just like their x
+and y counterparts to change the appearance of the radius axis. The default
+settings work well for a horizontal axis pointing towards the right, but
+these theme settings will need to be modified for other orientations.
 The default value for \code{axis.line.r} is \code{element_line()}.
-The default value for \code{axis.text.r} is \code{element_text(size = 3.5, vjust = -2, hjust = NA)}.
+The default value for \code{axis.text.r} is
+\code{element_text(size = 3.5, vjust = -2, hjust = NA)}.
 The default value for \code{axis.ticks.r} is \code{element_line()}.
-The default value for \code{axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that the units
-for this element are meaningless and only the numeric value will be used (but a \code{unit} must still be used).
+The default value for \code{axis.ticks.length.r} is \code{unit(1.5, "points")}.
+However, note that the units for this element are meaningless and only the
+numeric value will be used (but a \code{unit} must still be used).
 }
 \examples{
 library(ggplot2)
@@ -109,7 +127,8 @@ revts(ggtree(tree)) +
 library(ggplot2)
 library(paleotree)
 data(RaiaCopesRule)
-ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
+ggtree(ceratopsianTreeRaia,
+       position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
   coord_geo_polar(dat = "stages")
 \dontshow{\}) # examplesIf}
 }

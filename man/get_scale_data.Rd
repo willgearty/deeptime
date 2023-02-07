@@ -12,14 +12,18 @@ get_scale_data(name)
 \value{
 A \code{data.frame} with the following columns:
 \item{name}{the names of the time intervals.}
-\item{max_age}{the oldest boundaries of the time intervals, in millions of years.}
-\item{min_age}{the youngest boundaries of the time intervals, in millions of years.}
-\item{abbr}{either traditional abbreviations of the names of the time intervals (if they exist) or custom abbreviations created with R.}
-\item{color}{hex color codes associated with the time intervals (if applicable).}
+\item{max_age}{the oldest boundaries of the time intervals, in millions of
+years.}
+\item{min_age}{the youngest boundaries of the time intervals, in millions
+of years.}
+\item{abbr}{either traditional abbreviations of the names of the time
+intervals (if they exist) or custom abbreviations created with R.}
+\item{color}{hex color codes associated with the time intervals (if
+applicable).}
 }
 \description{
-This function takes a name of a geological timescale and returns data for the timescale.
-Valid names include those of built-in \code{data.frames} (\code{\link[=periods]{periods()}},
+This function takes a name of a geological timescale and returns data for the
+timescale. Valid names include those of built-in \code{data.frames} (\code{\link[=periods]{periods()}},
 \code{\link[=epochs]{epochs()}}, \code{\link[=stages]{stages()}}, \code{\link[=eons]{eons()}}, or \code{\link[=eras]{eras()}}),
 partial matches of those names (e.g., "per" or "stage"),
 and exact matches to those hosted by Macrostrat (see full list here:

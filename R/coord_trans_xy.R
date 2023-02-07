@@ -1,34 +1,22 @@
 #' Transformed XY Cartesian coordinate system
 #'
-#' `coord_trans_xy` behaves similarly to [ggplot2::coord_trans()] in that it occurs after
-#' statistical transformation and will affect the visual appearance of geoms. The main difference
-#' is that it takes a single transformer that is applied to the x and y axes simultaneously. Any
-#' transformers produced by [ggforce::linear_trans()] that have x and y arguments should work,
-#' but any other transformers produced using [scales::trans_new()] that take x and y arguments
-#' should also work. Axis limits will be adjusted to account for transformation unless limits are
-#' specified with `xlim` or `ylim`. This only works with geoms where all points are defined with x and y
-#' coordinates (e.g. [ggplot2::geom_point()], [ggplot2::geom_polygon()]). This does not currently work with geoms where point
-#' coordinates are extrapolated (e.g., [ggplot2::geom_rect()]).
+#' `coord_trans_xy` behaves similarly to [ggplot2::coord_trans()] in that it
+#' occurs after statistical transformation and will affect the visual appearance
+#' of geoms. The main difference is that it takes a single transformer that is
+#' applied to the x and y axes simultaneously. Any transformers produced by
+#' [ggforce::linear_trans()] that have x and y arguments should work,
+#' but any other transformers produced using [scales::trans_new()] that take x
+#' and y arguments should also work. Axis limits will be adjusted to account for
+#' transformation unless limits are specified with `xlim` or `ylim`. This only
+#' works with geoms where all points are defined with x and y
+#' coordinates (e.g., [ggplot2::geom_point()], [ggplot2::geom_polygon()]). This
+#' does not currently work with geoms where point coordinates are extrapolated
+#' (e.g., [ggplot2::geom_rect()]).
 #'
 #' @param trans Transformer for x and y axes.
-#' @param xlim,ylim Limits for the x and y axes.
-#' @param expand If `TRUE`, the default, adds a small expansion factor to
-#'   the limits to ensure that data and axes don't overlap. If `FALSE`,
-#'   limits are taken exactly from the data or `xlim`/`ylim`.
-#' @param default Is this the default coordinate system? If `FALSE` (the default),
-#'   then replacing this coordinate system with another one creates a message alerting
-#'   the user that the coordinate system is being replaced. If `TRUE`, that warning
-#'   is suppressed.
-#' @param clip Should drawing be clipped to the extent of the plot panel? A
-#'   setting of `"on"` (the default) means yes, and a setting of `"off"`
-#'   means no. In most cases, the default of `"on"` should not be changed,
-#'   as setting `clip = "off"` can cause unexpected results. It allows
-#'   drawing of data points anywhere on the plot, including in the plot margins. If
-#'   limits are set via `xlim` and `ylim` and some data points fall outside those
-#'   limits, then those data points may show up in places such as the axes, the
-#'   legend, the plot title, or the plot margins.
 #' @importFrom ggplot2 ggproto
 #' @importFrom ggforce linear_trans
+#' @inheritParams ggplot2::coord_cartesian
 #' @export
 #' @examples
 #' # make transformer
@@ -67,17 +55,25 @@ coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL,
 
 #' @importFrom ggplot2 expansion
 default_expansion <- function(scale, discrete = expansion(add = 0.6),
-                              continuous = expansion(mult = 0.05), expand = TRUE) {
+                              continuous = expansion(mult = 0.05),
+                              expand = TRUE) {
   if (!expand) {
     return(expansion(0, 0))
   }
 
-  if (!inherits(scale$expand, "waiver")) scale$expand else if (scale$is_discrete()) discrete else continuous
+  if (!inherits(scale$expand, "waiver")) {
+    scale$expand
+  } else if (scale$is_discrete()) {
+    discrete
+  } else {
+    continuous
+  }
 }
 
 expand_range4 <- function(limits, expand) {
   if (!(is.numeric(expand) && length(expand) %in% c(2, 4))) {
-    cli::cli_abort("{.arg expand} must be a numeric vector with 2 or 4 elements")
+    cli::cli_abort("{.arg expand} must be a numeric vector with 2 or 4
+                   elements")
   }
 
   if (all(!is.finite(limits))) {
@@ -132,8 +128,10 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     lims <- expand.grid(x = limits$x, y = limits$y)
     lims_trans <- self$trans$transform(lims$x, lims$y)
     limits_trans <- data.frame(
-      x = if (scale_x$trans$name == "reverse") rev(range(lims_trans$x)) else range(lims_trans$x),
-      y = if (scale_y$trans$name == "reverse") rev(range(lims_trans$y)) else range(lims_trans$y)
+      x = if (scale_x$trans$name == "reverse") rev(range(lims_trans$x))
+            else range(lims_trans$x),
+      y = if (scale_y$trans$name == "reverse") rev(range(lims_trans$y))
+            else range(lims_trans$y)
     )
     # range expansion expects values in increasing order, which may not be true
     # for reciprocal/reverse transformations
@@ -170,27 +168,33 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     c(
       list(
         x = view_scale_primary(scale_x, continuous_range = scale_range_x),
-        x.sec = view_scale_secondary(scale_x, continuous_range = scale_range_x_sec),
+        x.sec = view_scale_secondary(scale_x,
+                                     continuous_range = scale_range_x_sec),
         x.range = out_x$range,
         x.range.coord = range_x_coord,
         x.labels = out_x$labels,
         x.major = rescale(out_x$major_source, 0:1, scale_range_x),
         x.minor = rescale(out_x$minor_source, 0:1, scale_range_x),
         x.sec.labels = out_x_sec$sec.labels,
-        x.sec.major = rescale(out_x_sec$sec.major_source, 0:1, scale_range_x_sec),
-        x.sec.minor = rescale(out_x_sec$sec.minor_source, 0:1, scale_range_x_sec)
+        x.sec.major = rescale(out_x_sec$sec.major_source,
+                              0:1, scale_range_x_sec),
+        x.sec.minor = rescale(out_x_sec$sec.minor_source,
+                              0:1, scale_range_x_sec)
       ),
       list(
         y = view_scale_primary(scale_y, continuous_range = scale_range_y),
-        y.sec = view_scale_secondary(scale_y, continuous_range = scale_range_y_sec),
+        y.sec = view_scale_secondary(scale_y,
+                                     continuous_range = scale_range_y_sec),
         y.range = out_y$range,
         y.range.coord = range_y_coord,
         y.labels = out_y$labels,
         y.major = rescale(out_y$major_source, 0:1, scale_range_y),
         y.minor = rescale(out_y$minor_source, 0:1, scale_range_y),
         y.sec.labels = out_y_sec$sec.labels,
-        y.sec.major = rescale(out_y_sec$sec.major_source, 0:1, scale_range_y_sec),
-        y.sec.minor = rescale(out_y_sec$sec.minor_source, 0:1, scale_range_y_sec)
+        y.sec.major = rescale(out_y_sec$sec.major_source,
+                              0:1, scale_range_y_sec),
+        y.sec.minor = rescale(out_y_sec$sec.minor_source,
+                              0:1, scale_range_y_sec)
       )
     )
   },
@@ -221,18 +225,19 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     }
     # TODO: transform corners for geom_rect?
     new_data
-    # CoordCartesian$transform(new_data, panel_params)
   }
 )
 
 view_scale_primary <- function(scale, limits = scale$get_limits(),
-                               continuous_range = scale$dimension(limits = limits)) {
+                               continuous_range =
+                                 scale$dimension(limits = limits)) {
   if (!scale$is_discrete()) {
     # continuous_range can be specified in arbitrary order, but
     # continuous scales expect the one in ascending order.
     continuous_scale_sorted <- sort(continuous_range)
     breaks <- scale$get_breaks(continuous_scale_sorted)
-    minor_breaks <- scale$get_breaks_minor(b = breaks, limits = continuous_scale_sorted)
+    minor_breaks <- scale$get_breaks_minor(b = breaks,
+                                           limits = continuous_scale_sorted)
   } else {
     breaks <- scale$get_breaks(limits)
     minor_breaks <- scale$get_breaks_minor(b = breaks, limits = limits)
@@ -264,8 +269,11 @@ scale_flip_position <- function(scale) {
 }
 
 view_scale_secondary <- function(scale, limits = scale$get_limits(),
-                                 continuous_range = scale$dimension(limits = limits)) {
-  if (is.null(scale$secondary.axis) || inherits(scale$secondary.axis, "waiver") || scale$secondary.axis$empty()) {
+                                 continuous_range =
+                                   scale$dimension(limits = limits)) {
+  if (is.null(scale$secondary.axis) ||
+      inherits(scale$secondary.axis, "waiver") ||
+      scale$secondary.axis$empty()) {
     # if there is no second axis, return the primary scale with no guide
     # this guide can be overridden using guides()
     primary_scale <- view_scale_primary(scale, limits, continuous_range)
@@ -305,7 +313,9 @@ view_scale_secondary <- function(scale, limits = scale$get_limits(),
       get_breaks_minor = function(self) self$break_info$minor_source,
       break_positions = function(self) self$break_info$major,
       break_positions_minor = function(self) self$break_info$minor,
-      get_labels = function(self, breaks = self$get_breaks()) self$break_info$labels,
+      get_labels = function(self, breaks = self$get_breaks()) {
+        self$break_info$labels
+      },
       rescale = function(x) rescale(x, from = break_info$range, to = c(0, 1))
     )
   }
@@ -333,7 +343,9 @@ ViewScale <- ggproto("ViewScale", NULL,
   get_limits = function(self) self$limits,
   get_breaks = function(self) self$breaks,
   get_breaks_minor = function(self) self$minor_breaks,
-  get_labels = function(self, breaks = self$get_breaks()) self$scale$get_labels(breaks),
+  get_labels = function(self, breaks = self$get_breaks()) {
+    self$scale$get_labels(breaks)
+  },
   rescale = function(self, x) {
     self$scale$rescale(x, self$limits, self$continuous_range)
   },
