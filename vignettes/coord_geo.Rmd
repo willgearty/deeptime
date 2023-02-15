@@ -19,8 +19,10 @@ You can use this function to add highly customizable timescales to a wide variet
 ```{r message = FALSE}
 # Load deeptime
 library(deeptime)
-# Load tidyverse (includes ggplot2)
-library(tidyverse)
+# Load other packages
+library(ggplot2)
+library(dplyr)
+library(magrittr) # for piping
 # Load divDyn for coral data
 library(divDyn)
 data(corals)

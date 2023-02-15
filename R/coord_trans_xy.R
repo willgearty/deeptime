@@ -16,6 +16,7 @@
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto
 #' @importFrom ggforce linear_trans
+#' @importFrom cli cli_abort
 #' @inheritParams ggplot2::coord_cartesian
 #' @export
 #' @examples
@@ -72,8 +73,8 @@ default_expansion <- function(scale, discrete = expansion(add = 0.6),
 
 expand_range4 <- function(limits, expand) {
   if (!(is.numeric(expand) && length(expand) %in% c(2, 4))) {
-    cli::cli_abort("{.arg expand} must be a numeric vector with 2 or 4
-                   elements")
+    cli_abort("{.arg expand} must be a numeric vector with 2 or 4
+              elements")
   }
 
   if (all(!is.finite(limits))) {

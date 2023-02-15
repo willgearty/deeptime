@@ -38,7 +38,8 @@ Imports:
     phytools,
     lifecycle
 Suggests: 
-    tidyverse,
+    dplyr,
+    magrittr,
     divDyn,
     gsloid,
     ape,

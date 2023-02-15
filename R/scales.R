@@ -5,6 +5,7 @@
 #' @inheritParams ggplot2::scale_discrete_manual
 #' @inheritDotParams ggplot2::discrete_scale -expand -position -palette -breaks
 #' @importFrom ggplot2 discrete_scale
+#' @importFrom cli cli_abort
 #' @rdname scale_geo
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
@@ -63,8 +64,8 @@ scale_discrete_geo <- function(dat, aesthetics, ...) {
 
   pal <- function(n) {
     if (n > length(values)) {
-      cli::cli_abort("Insufficient values in manual scale. {n} needed but only
-                     {length(values)} provided.")
+      cli_abort("Insufficient values in manual scale. {n} needed but only
+                {length(values)} provided.")
     }
     values
   }

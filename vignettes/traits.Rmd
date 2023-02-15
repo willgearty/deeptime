@@ -17,8 +17,10 @@ Many packages exist to visualize trait data for biological species. __deeptime__
 ```{r message = FALSE}
 # Load deeptime
 library(deeptime)
-# Load tidyverse (includes ggplot2)
-library(tidyverse)
+# Load other packages
+library(ggplot2)
+library(dplyr)
+library(magrittr) # for piping
 # Load dispRity for example data
 library(dispRity)
 data(demo_data)
@@ -101,8 +103,7 @@ disparity_through_time(time ~ V2 * V1,
 ## Phylomorphospaces
 Often, trait data will be accompanied with a phylogeny. You may want to visualize both your phylogeny, the traits of your species, and the evolution of the trait along your phylogeny. To accomplish this, you can create a two-dimensional phylomorphospace. The `{phytools}` package has the `phytools::phylomorphospace()` function for accomplishing this in base R. The `geom_phylomorpho()` function in __deeptime__ will help you accomplish this with `ggplot()`. Note that labels can be added using `geom_label()` or `ggrepel::geom_label_repel()`, but they are not demonstrated here because they would obscure the phylogenetic relationships.
 ```{r message = FALSE, warning = FALSE}
-mammal.data <- mammal.data %>%
-  rownames_to_column("label")
+mammal.data$label <- rownames(mammal.data)
 
 ggplot(mammal.data, aes(x = bodyMass, y = homeRange, label = label)) +
   geom_phylomorpho(mammal.tree) +

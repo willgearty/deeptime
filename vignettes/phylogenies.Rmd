@@ -17,8 +17,10 @@ knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align 
 ```{r message = FALSE}
 # Load deeptime
 library(deeptime)
-# Load tidyverse (includes ggplot2)
-library(tidyverse)
+# Load other packages
+library(ggplot2)
+library(dplyr)
+library(magrittr) # for piping
 # Load ggtree
 library(ggtree)
 # Load phytools for some example data
