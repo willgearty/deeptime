@@ -280,7 +280,6 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"),
 .tmp$layout$name[25] <- "panel"
 class(.tmp) <- c(class(.tmp), "dummy")
 
-#' @export
 .dummy_gtable <- .tmp
 
 upgradeUnit <- function(...) {
