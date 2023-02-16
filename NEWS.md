@@ -1,3 +1,9 @@
+# deeptime 1.0.1
+
+* Fixed the bounds of the Kungurian stage in the built-in stages data
+* Updated License to GPL >= 3
+* Changed tidyverse to dplyr and magrittr in Suggests and vignettes
+
 # deeptime 1.0.0
 
 * Updated built-in timescales to 2022/10 version of GTS
