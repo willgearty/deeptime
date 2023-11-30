@@ -1,3 +1,7 @@
+# deeptime (development version)
+
+* Fixed the interaction between coord_geo() and ggsave() (#49)
+
 # deeptime 1.0.1
 
 * Fixed the bounds of the Kungurian stage in the built-in stages data
