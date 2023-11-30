@@ -213,6 +213,11 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     }
     xmins <- cumsum(c(0, prop_list))
 
+    # do this so ggsave gets the whole plot
+    old_plot <- last_plot()
+    on.exit(set_last_plot(old_plot))
+
+    # assemble the timescale background as a ggplot
     geo_scale <- ggplot()
     for (ind in seq_along(dat_list)) {
       geo_scale <- geo_scale +

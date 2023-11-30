@@ -324,8 +324,10 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
   }
   dat$label[dat$name %in% skip] <- ""
 
+  # do this so ggsave gets the whole plot
   old_plot <- last_plot()
   on.exit(set_last_plot(old_plot))
+
   # make ggplot of scale
   gg_scale <- ggplot() +
     geom_rect(
