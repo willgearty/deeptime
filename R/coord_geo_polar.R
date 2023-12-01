@@ -148,6 +148,7 @@ ggname <- function(prefix, grob) {
 #' @importFrom ggplot2 ggproto CoordPolar ggproto_parent coord_polar theme_void
 #' @importFrom ggplot2 geom_vline geom_rect geom_segment
 #' @importFrom ggplot2 scale_x_continuous scale_fill_manual calc_element
+#' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||%
 #' @importFrom utils packageVersion
