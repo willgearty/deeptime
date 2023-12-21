@@ -5,11 +5,13 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  schedule:
+    - cron: '30 5 1 * *'
 
 name: R-CMD-check
 
 env:
-  R_BIOC_VERSION: 3.16
+  R_BIOC_VERSION: 3.18
 
 jobs:
   R-CMD-check:

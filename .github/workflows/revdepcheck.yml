@@ -39,6 +39,8 @@ on:
       - "!**revdepcheck.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
+  schedule:
+    - cron: '30 5 1 * *'
 
 name: revdep-check
 
