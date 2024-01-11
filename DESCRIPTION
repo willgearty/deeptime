@@ -39,10 +39,10 @@ Imports:
     lifecycle
 Suggests: 
     dplyr,
-    magrittr,
     divDyn,
     gsloid,
     ape,
+    palaeoverse,
     paleotree,
     dispRity,
     ggtree (>= 3.6.1),

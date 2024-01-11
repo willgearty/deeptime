@@ -47,6 +47,10 @@ if (suppressPackageStartupMessages(require(dispRity, quietly = TRUE))) {
   data(demo_data)
 }
 
+if (suppressPackageStartupMessages(require(palaeoverse, quietly = TRUE))) {
+  data(tetrapods)
+}
+
 suppressPackageStartupMessages(require(gsloid, quietly = TRUE))
 suppressPackageStartupMessages(require(ggtree, quietly = TRUE))
 suppressPackageStartupMessages(require(dispRity, quietly = TRUE))

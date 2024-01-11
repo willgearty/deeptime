@@ -32,7 +32,6 @@ devtools::install_github("willgearty/deeptime")
 ```r
 library(deeptime)
 library(dplyr)
-library(magrittr)
 ```
 
 ### Add timescales to plots

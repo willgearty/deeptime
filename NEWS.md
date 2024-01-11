@@ -1,6 +1,7 @@
 # deeptime (development version)
 
 * Fixed the interaction between coord_geo() and ggsave() (#49)
+* Added geom_points_range(), a function designed for visualizing temporal occurrence data
 
 # deeptime 1.0.1
 

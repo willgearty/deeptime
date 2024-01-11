@@ -20,7 +20,6 @@ library(deeptime)
 # Load other packages
 library(ggplot2)
 library(dplyr)
-library(magrittr) # for piping
 # Load dispRity for example data
 library(dispRity)
 data(demo_data)

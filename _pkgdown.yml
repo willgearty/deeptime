@@ -30,9 +30,10 @@ articles:
   contents:
   - coord_geo
   - phylogenies
-  - traits
-  - ggarrange2
   - coord
+  - traits
+  - time
+  - ggarrange2
 
 reference:
 - title: Adding geological timescales to plots
@@ -80,6 +81,14 @@ reference:
   - scale_color_geo
   - get_scale_data
 
+- title: Transforming coordinate systems
+  desc: >
+    These functions can be used to modify the way that your data is plotted
+    by `{ggplot2}`.
+  contents:
+  - coord_trans_flip
+  - coord_trans_xy
+
 - title: Plotting trait data
   desc: >
     These functions can be used for visualizing species trait data.
@@ -89,6 +98,13 @@ reference:
   - panel.disparity
   - coord_trans_xy
 
+  - title: Plotting temporal data
+  desc: >
+    These functions can be used for visualizing temporal data.
+  contents:
+  - geom_points_range
+  - stat_points_range
+
 - title: Combining and arranging plots
   desc: >
     These functions can be used to combine and arrange plots into
@@ -96,12 +112,3 @@ reference:
   contents:
   - ggarrange2
   - gtable_frame2
-
-- title: Transforming coordinate systems
-  desc: >
-    These functions can be used to modify the way that your data is plotted
-    by `{ggplot2}`.
-  contents:
-  - coord_trans_flip
-  - coord_trans_xy
-

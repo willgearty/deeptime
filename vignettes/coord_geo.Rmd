@@ -22,7 +22,6 @@ library(deeptime)
 # Load other packages
 library(ggplot2)
 library(dplyr)
-library(magrittr) # for piping
 # Load divDyn for coral data
 library(divDyn)
 data(corals)
@@ -192,17 +191,6 @@ ggplot(coral_div_dis) +
   ) +
   theme_classic() +
   theme(axis.ticks.length.x = unit(0, "lines"))
-```
-
-## Geological timescale color scales for ggplot
-In addition to adding a timescale to a plot, you may also want to color your data based on it's age. __deeptime__ has `scale_color_geo()` and `scale_fill_geo()` for this very purpose! Note that currently these scales only work with discrete data. The default behavior is for the color/fill aesthetic values to match the names of the intervals in `dat`.
-```{r}
-ggplot(coral_div_dis, aes(x = n, y = diet, fill = period)) +
-  geom_col() +
-  scale_fill_geo(periods) +
-  xlab("Coral Genera") +
-  ylab("Diet") +
-  theme_classic()
 ```
 
 ## More advanced topics

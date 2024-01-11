@@ -75,5 +75,5 @@ ggarrange2(p1, p2, p3,
 Note that I provide no guarantee that `ggarrange2()` solves every problem when arranging plots. The following other options may also be very useful:
 
 - The `{cowplot}` package has the `cowplot::plot_grid()` function which accomplishes many of the same features as `ggarrange2()`.
-- The `{patchwork}` has very intuitive tools for combining and arranging plots (e.g, using mathematical symbols).
+- The `{patchwork}` package has very intuitive tools for combining and arranging plots (e.g., using mathematical symbols).
 </div>
