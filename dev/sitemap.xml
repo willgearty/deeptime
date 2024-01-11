@@ -19,6 +19,9 @@
     <loc>https://williamgearty.com/deeptime/dev/articles/phylogenies.html</loc>
   </url>
   <url>
+    <loc>https://williamgearty.com/deeptime/dev/articles/time.html</loc>
+  </url>
+  <url>
     <loc>https://williamgearty.com/deeptime/dev/articles/traits.html</loc>
   </url>
   <url>
@@ -59,6 +62,9 @@
   </url>
   <url>
     <loc>https://williamgearty.com/deeptime/dev/reference/geom_phylomorpho.html</loc>
+  </url>
+  <url>
+    <loc>https://williamgearty.com/deeptime/dev/reference/geom_points_range.html</loc>
   </url>
   <url>
     <loc>https://williamgearty.com/deeptime/dev/reference/getScaleData.html</loc>

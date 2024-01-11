@@ -6,8 +6,9 @@ articles:
   coord_geo: coord_geo.html
   ggarrange2: ggarrange2.html
   phylogenies: phylogenies.html
+  time: time.html
   traits: traits.html
-last_built: 2023-12-21T17:11Z
+last_built: 2024-01-11T23:27Z
 urls:
   reference: https://williamgearty.com/deeptime/reference
   article: https://williamgearty.com/deeptime/articles
