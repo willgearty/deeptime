@@ -98,7 +98,7 @@ reference:
   - panel.disparity
   - coord_trans_xy
 
-  - title: Plotting temporal data
+- title: Plotting temporal data
   desc: >
     These functions can be used for visualizing temporal data.
   contents:
