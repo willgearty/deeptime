@@ -167,18 +167,35 @@ GeomPointsRange <- ggproto("GeomPointsRange", Geom,
       names(df) <- standardise_aes_names(names(df))
       df <- self$use_defaults(df)
       # add background lines as a grob
-      grob_list <- gList(grob_list,
-                         GeomLinerange$draw_panel(df, panel_params, coord,
-                                                  flipped_aes = flipped_aes,
-                                                  na.rm = na.rm))
+      if (packageVersion("ggplot2") > "3.3.6") {
+        grob_list <- gList(grob_list,
+                           GeomLinerange$draw_panel(df, panel_params, coord,
+                                                    flipped_aes = flipped_aes,
+                                                    na.rm = na.rm))
+      } else { # nocov start
+        grob_list <- gList(grob_list,
+                           GeomLinerange$draw_panel(df, panel_params, coord,
+                                                    flipped_aes = flipped_aes))
+      } # nocov end
       # flip the data back if needed
       data <- flip_data(data, flipped_aes)
     }
     # add the normal grobs
+    if (packageVersion("ggplot2") > "3.3.6") {
+      grob_list <- gList(
+        grob_list,
+        GeomLinerange$draw_panel(unique(data), panel_params, coord,
+                                 flipped_aes = flipped_aes, na.rm = na.rm)
+      )
+    } else { # nocov start
+      grob_list <- gList(
+        grob_list,
+        GeomLinerange$draw_panel(unique(data), panel_params, coord,
+                                 flipped_aes = flipped_aes)
+      )
+    } # nocov end
     grob_list <- gList(
       grob_list,
-      GeomLinerange$draw_panel(unique(data), panel_params, coord,
-                               flipped_aes = flipped_aes, na.rm = na.rm),
       GeomPoint$draw_panel(transform(data, size = size * fatten),
                            panel_params, coord, na.rm = na.rm)
     )
