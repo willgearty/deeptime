@@ -53,12 +53,12 @@ test_that("ggarrange2() works", {
   expect_doppelganger_deeptime("ggarrange2() no heights layout",
                                gtable::gtable_show_layout(gg4))
 
-  dgt <- .dummy_gtable
-  dgt$respect <- TRUE
-  gg5 <- ggarrange2(p1, .dummy_gtable,
+  p1_grob <- ggplotGrob(p1)
+  p1_grob$respect <- TRUE
+  gg5 <- ggarrange2(p1_grob, .dummy_gtable,
                     top = "Test1", bottom = "Test2",
                     left = "Test3", right = "Test4",
-                    newpage = TRUE, draw = FALSE)
+                    newpage = TRUE, draw = TRUE)
   expect_true(gtable::is.gtable(gg5))
   expect_doppelganger_deeptime("ggarrange2() no dims", print(gg5))
   expect_doppelganger_deeptime("ggarrange2() no dims layout",
