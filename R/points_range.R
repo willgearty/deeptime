@@ -185,10 +185,3 @@ GeomPointsRange <- ggproto("GeomPointsRange", Geom,
     gTree(name = "geom_points_range", children = grob_list)
   }
 )
-
-#' @importFrom grid grobName
-ggname <- function(prefix, grob) {
-  # copied from ggplot2
-  grob$name <- grobName(grob, prefix)
-  grob
-}
