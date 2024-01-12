@@ -36,10 +36,29 @@ test_that("ggarrange2() works", {
     nrow = 2, widths = unit(60, "lines"),
     heights = c(unit(20, "lines"), unit(40, "lines")),
     top = "Test1", bottom = "Test2", left = "Test3", right = "Test4",
-    newpage = TRUE, draw = TRUE
+    newpage = TRUE
   )
   expect_true(gtable::is.gtable(gg3))
   expect_doppelganger_deeptime("double ggarrange2()", print(gg3))
   expect_doppelganger_deeptime("double ggarrange2() layout",
                                gtable::gtable_show_layout(gg3))
+
+  gg4 <- ggarrange2(p1, .dummy_gtable,
+                    ncol = 2, heights = unit(20, "lines"),
+                    top = "Test1", bottom = "Test2",
+                    left = "Test3", right = "Test4",
+                    newpage = TRUE)
+  expect_true(gtable::is.gtable(gg4))
+  expect_doppelganger_deeptime("ggarrange2() no heights", print(gg4))
+  expect_doppelganger_deeptime("ggarrange2() no heights layout",
+                               gtable::gtable_show_layout(gg4))
+
+  gg5 <- ggarrange2(p1, .dummy_gtable,
+                    top = "Test1", bottom = "Test2",
+                    left = "Test3", right = "Test4",
+                    newpage = TRUE)
+  expect_true(gtable::is.gtable(gg5))
+  expect_doppelganger_deeptime("ggarrange2() no dims", print(gg5))
+  expect_doppelganger_deeptime("ggarrange2() no dims layout",
+                               gtable::gtable_show_layout(gg5))
 })

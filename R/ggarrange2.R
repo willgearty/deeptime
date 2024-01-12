@@ -459,7 +459,7 @@ ggarrange2 <- function(..., plots = list(...),
     widths <- as.unit.list(widths)
   }
   if (is.unit(heights)) {
-    widths <- as.unit.list(heights)
+    heights <- as.unit.list(heights)
   }
 
   # indexing is problematic, wrap in list

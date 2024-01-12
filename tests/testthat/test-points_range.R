@@ -49,4 +49,11 @@ test_that("geom_points_range works", {
   expect_true(is(gg$layers[[1]]$geom, "GeomPointsRange"))
   expect_true(is(gg$layers[[1]]$stat, "StatPointsRange"))
   expect_doppelganger_deeptime("geom_points_range_bg", gg)
+
+  stat_obj <- stat_points_range(data = occdf,
+                                aes(y = reorder(taxon, bed, min), x = bed,
+                                    fill = certainty, linetype = certainty))
+  expect_true(is(stat_obj, "gg"))
+  expect_true(is(stat_obj$geom, "GeomPointsRange"))
+  expect_true(is(stat_obj$stat, "StatPointsRange"))
 })
