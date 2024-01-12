@@ -125,7 +125,7 @@ StatPointsRange <- ggproto("StatPointsRange", Stat,
     # flip the data back if needed
     data <- flip_data(data, flipped_aes)
     data
-  },
+  }
 )
 
 #' @importFrom ggplot2 ggproto Geom GeomPoint GeomLinerange draw_key_pointrange
@@ -183,7 +183,7 @@ GeomPointsRange <- ggproto("GeomPointsRange", Geom,
                            panel_params, coord, na.rm = na.rm)
     )
     gTree(name = "geom_points_range", children = grob_list)
-  },
+  }
 )
 
 #' @importFrom grid grobName
