@@ -35,4 +35,23 @@ test_that("scale_discrete_geo works", {
     coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
     theme_classic()
   expect_doppelganger_deeptime("scale_discrete_geo", gg)
+
+  # test error catching
+  expect_error(
+    ggplot(df) +
+      geom_point(aes(x = x, y = y, color = color, fill = color), shape = 21) +
+      scale_x_reverse() +
+      scale_discrete_geo(data.frame(x = 1, y = 2), c("color", "fill")) +
+      coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
+      theme_classic()
+  )
+
+  df$color <- factor(seq_len(nrow(df)))
+  gg <- ggplot(df) +
+    geom_point(aes(x = x, y = y, color = color, fill = color), shape = 21) +
+    scale_x_reverse() +
+    scale_discrete_geo("periods", c("color", "fill")) +
+    coord_geo(xlim = c(1000, 0), ylim = c(0, 8)) +
+    theme_classic()
+  expect_error(print(gg))
 })

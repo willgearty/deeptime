@@ -53,6 +53,8 @@ test_that("ggarrange2() works", {
   expect_doppelganger_deeptime("ggarrange2() no heights layout",
                                gtable::gtable_show_layout(gg4))
 
+  dgt <- .dummy_gtable
+  dgt$respect <- TRUE
   gg5 <- ggarrange2(p1, .dummy_gtable,
                     top = "Test1", bottom = "Test2",
                     left = "Test3", right = "Test4",
