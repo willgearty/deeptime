@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ggplot2: ["3.3.6", ">= 3.4.0"]
+        ggplot2: ["3.4.0", "> 3.4.0"] # to make sure it still works with the oldest supported version
         config:
           - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}

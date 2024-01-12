@@ -183,31 +183,17 @@ gggeo_scale.gtable <-
       ymin = 0, ymax = 1, color = NA, alpha = alpha,
       show.legend = FALSE, inherit.aes = FALSE
     )
-  if (packageVersion("ggplot2") > "3.3.6") {
-    gg_scale <- gg_scale +
-      geom_segment(
-        data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
-        color = color, linewidth = lwd
-      ) +
-      geom_segment(
-        data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
-        color = color, linewidth = lwd
-      ) +
-      scale_fill_manual(values = setNames(dat$color, dat$color)) +
-      theme_void()
-  } else { # nocov start
-    gg_scale <- gg_scale +
-      geom_segment(
-        data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
-        color = color, size = lwd
-      ) +
-      geom_segment(
-        data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
-        color = color, size = lwd
-      ) +
-      scale_fill_manual(values = setNames(dat$color, dat$color)) +
-      theme_void()
-  } # nocov end
+  gg_scale <- gg_scale +
+    geom_segment(
+      data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
+      color = color, linewidth = lwd
+    ) +
+    geom_segment(
+      data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
+      color = color, linewidth = lwd
+    ) +
+    scale_fill_manual(values = setNames(dat$color, dat$color)) +
+    theme_void()
 
   rev_axis <- FALSE
   # if left or right, rotate accordingly, otherwise, just use coord_cartesian
@@ -260,67 +246,36 @@ gggeo_scale.gtable <-
   bord_lims <- lims
   bord_lims[(if (neg) bord_lims > 0 else bord_lims < 0)] <- 0
 
-  if (packageVersion("ggplot2") > "3.3.6") {
-    if ("left" %in% bord || "l" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
-          color = color,
-          linewidth = if (bord_lims[1] == lims[1]) lwd * 2 else lwd
-        )
-    }
-    if ("right" %in% bord || "r" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
-          color = color,
-          linewidth = if (bord_lims[2] == lims[2]) lwd * 2 else lwd
-        )
-    }
-    if ("top" %in% bord || "t" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
-          color = color, linewidth = lwd * 2
-        )
-    }
-    if ("bottom" %in% bord || "b" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
-          color = color, linewidth = lwd * 2
-        )
-    }
-  } else { # nocov start
-    if ("left" %in% bord || "l" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
-          color = color, size = if (bord_lims[1] == lims[1]) lwd * 2 else lwd
-        )
-    }
-    if ("right" %in% bord || "r" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
-          color = color, size = if (bord_lims[2] == lims[2]) lwd * 2 else lwd
-        )
-    }
-    if ("top" %in% bord || "t" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
-          color = color, size = lwd * 2
-        )
-    }
-    if ("bottom" %in% bord || "b" %in% bord) {
-      gg_scale <- gg_scale +
-        annotate("segment",
-          x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
-          color = color, size = lwd * 2
-        )
-    }
-  } # nocov end
+  if ("left" %in% bord || "l" %in% bord) {
+    gg_scale <- gg_scale +
+      annotate("segment",
+        x = bord_lims[1], xend = bord_lims[1], y = 0, yend = 1,
+        color = color,
+        linewidth = if (bord_lims[1] == lims[1]) lwd * 2 else lwd
+      )
+  }
+  if ("right" %in% bord || "r" %in% bord) {
+    gg_scale <- gg_scale +
+      annotate("segment",
+        x = bord_lims[2], xend = bord_lims[2], y = 0, yend = 1,
+        color = color,
+        linewidth = if (bord_lims[2] == lims[2]) lwd * 2 else lwd
+      )
+  }
+  if ("top" %in% bord || "t" %in% bord) {
+    gg_scale <- gg_scale +
+      annotate("segment",
+        x = bord_lims[1], xend = bord_lims[2], y = 1, yend = 1,
+        color = color, linewidth = lwd * 2
+      )
+  }
+  if ("bottom" %in% bord || "b" %in% bord) {
+    gg_scale <- gg_scale +
+      annotate("segment",
+        x = bord_lims[1], xend = bord_lims[2], y = 0, yend = 0,
+        color = color, linewidth = lwd * 2
+      )
+  }
 
   # reverse axis if necessary
   if (rev_axis) {

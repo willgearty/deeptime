@@ -151,7 +151,6 @@ ggname <- function(prefix, grob) {
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||%
-#' @importFrom utils packageVersion
 CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
   render_bg = function(self, panel_params, theme) {
     panel_params <- rename_data(self, panel_params)
@@ -230,39 +229,21 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
         )
       # add lines if requested
       if (!is.null(self$lwd[[ind]])) {
-        if (packageVersion("ggplot2") > "3.3.6") {
-          geo_scale <- geo_scale +
-            geom_segment(
-              data = dat_list[[ind]],
-              aes(y = min_age, yend = min_age),
-              x = xmins[ind], xend = xmins[ind + 1],
-              color = self$color[[ind]], linewidth = self$lwd[[ind]],
-              lty = self$lty[[ind]]
-            ) +
-            geom_segment(
-              data = dat_list[[ind]],
-              aes(y = max_age, yend = max_age),
-              x = xmins[ind], xend = xmins[ind + 1],
-              color = self$color[[ind]], linewidth = self$lwd[[ind]],
-              lty = self$lty[[ind]]
-            )
-        } else { # nocov start
-          geo_scale <- geo_scale +
-            geom_segment(
-              data = dat_list[[ind]],
-              aes(y = min_age, yend = min_age),
-              x = xmins[ind], xend = xmins[ind + 1],
-              color = self$color[[ind]], size = self$lwd[[ind]],
-              lty = self$lty[[ind]]
-            ) +
-            geom_segment(
-              data = dat_list[[ind]],
-              aes(y = max_age, yend = max_age),
-              x = xmins[ind], xend = xmins[ind + 1],
-              color = self$color[[ind]], size = self$lwd[[ind]],
-              lty = self$lty[[ind]]
-            )
-        } # nocov end
+        geo_scale <- geo_scale +
+          geom_segment(
+            data = dat_list[[ind]],
+            aes(y = min_age, yend = min_age),
+            x = xmins[ind], xend = xmins[ind + 1],
+            color = self$color[[ind]], linewidth = self$lwd[[ind]],
+            lty = self$lty[[ind]]
+          ) +
+          geom_segment(
+            data = dat_list[[ind]],
+            aes(y = max_age, yend = max_age),
+            x = xmins[ind], xend = xmins[ind + 1],
+            color = self$color[[ind]], linewidth = self$lwd[[ind]],
+            lty = self$lty[[ind]]
+          )
       }
     }
 
@@ -272,21 +253,12 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     axis_ticks <- calc_element("axis.ticks.r", theme)
     axis_ticks_length <- calc_element("axis.ticks.length.r", theme)
     if (!is(axis_line, "element_blank")) {
-      if (packageVersion("ggplot2") > "3.3.6") {
-        geo_scale <- geo_scale +
-          geom_vline(
-            xintercept = 0, color = axis_line$colour %||% NA,
-            linewidth = axis_line$linewidth %||% NA,
-            linetype = axis_line$linetype %||% NA
-          )
-      } else { # nocov start
-        geo_scale <- geo_scale +
-          geom_vline(
-            xintercept = 0, color = axis_line$colour %||% NA,
-            size = axis_line$size %||% NA,
-            linetype = axis_line$linetype %||% NA
-          )
-      } # nocov end
+      geo_scale <- geo_scale +
+        geom_vline(
+          xintercept = 0, color = axis_line$colour %||% NA,
+          linewidth = axis_line$linewidth %||% NA,
+          linetype = axis_line$linetype %||% NA
+        )
     }
     if (!is(axis_text, "element_blank")) {
       geo_scale <- geo_scale +
@@ -309,27 +281,15 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
       rs <- sapply(panel_params$r.major,
                    function(r) sqrt((r - min(r_lims))^2 + tick_length^2))
       thetas <- sapply(rs, function(r) asin(tick_length / r))
-      if (packageVersion("ggplot2") > "3.3.6") {
-        geo_scale <- geo_scale +
-          annotate(
-            geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
-            y = min(r_lims) + rs, yend = panel_params$r.major,
-            color = axis_ticks$colour %||% NA,
-            linewidth = axis_ticks$linewidth %||% NA,
-            linetype = axis_ticks$linetype %||% NA,
-            lineend = axis_ticks$lineend %||% NA
-          )
-      } else { # nocov start
-        geo_scale <- geo_scale +
-          annotate(
-            geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
-            y = min(r_lims) + rs, yend = panel_params$r.major,
-            color = axis_ticks$colour %||% NA,
-            size = axis_ticks$size %||% NA,
-            linetype = axis_ticks$linetype %||% NA,
-            lineend = axis_ticks$lineend %||% NA
-          )
-      } # nocov end
+      geo_scale <- geo_scale +
+        annotate(
+          geom = "segment", x = 1 - thetas / (2 * pi), xend = 1,
+          y = min(r_lims) + rs, yend = panel_params$r.major,
+          color = axis_ticks$colour %||% NA,
+          linewidth = axis_ticks$linewidth %||% NA,
+          linetype = axis_ticks$linetype %||% NA,
+          lineend = axis_ticks$lineend %||% NA
+        )
     }
     # should there be an axis label?
 
