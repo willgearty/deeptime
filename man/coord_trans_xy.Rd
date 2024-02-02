@@ -44,7 +44,7 @@ occurs after statistical transformation and will affect the visual appearance
 of geoms. The main difference is that it takes a single transformer that is
 applied to the x and y axes simultaneously. Any transformers produced by
 \code{\link[ggforce:linear_trans]{ggforce::linear_trans()}} that have x and y arguments should work,
-but any other transformers produced using \code{\link[scales:trans_new]{scales::trans_new()}} that take x
+but any other transformers produced using \code{\link[scales:new_transform]{scales::trans_new()}} that take x
 and y arguments should also work. Axis limits will be adjusted to account for
 transformation unless limits are specified with \code{xlim} or \code{ylim}. This only
 works with geoms where all points are defined with x and y
