@@ -26,8 +26,10 @@
 #' @param background_line A named list of aesthetic values to use for plotted
 #'   line segments that span the entire `y` or `x` range for each `x` or `y`
 #'   category. The default aesthetics will be used for any aesthetics that are
-#'   not specified in the list. If NULL (the default), no line segments will be
-#'   plotted.
+#'   not specified in the list. This can be useful if the plotted groups of
+#'   points don't overlap but you want a continuous line connecting all points
+#'   for a given `x` or `y` category. If NULL (the default), no line segments
+#'   will be plotted.
 #' @param ... Arguments passed on to both [ggplot2::geom_linerange()] and
 #'   [ggplot2::geom_point()].
 #' @importFrom ggplot2 layer

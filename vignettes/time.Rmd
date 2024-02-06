@@ -93,15 +93,18 @@ ggplot(data = occdf) +
   theme_classic()
 ```
 
-Note that our uncertain lines (0) overlap with our certain lines (1), so there is a continuous line spanning each taxon's entire range. However, if we tweak some of the data, we can change that, causing a gap in the ranges:
+Note that our uncertain lines (0) always overlap with our certain lines (1), so there is a continuous line spanning each taxon's entire range. However, if we tweak some of the data, we can change that, causing a gap in the ranges. Note that in this engineered example, the uncertain and certain ranges for _Diictodon_ no longer overlap, so there is a gap between them:
 
 ```{r}
 oldest_certain <- occdf %>%
   filter(accepted_name == "Diictodon", certainty == 1) %>%
   pull(age) %>% max()
 
+n_uncertain <- sum(occdf$accepted_name == "Diictodon" & occdf$certainty == 0)
+
+# make the uncertain points all much older
 occdf$age[occdf$accepted_name == "Diictodon" & occdf$certainty == 0] <-
-  oldest_certain + 10
+  oldest_certain + runif(n_uncertain, 15, 30)
 
 ggplot(data = occdf) +
   geom_points_range(aes(x = age, y = accepted_name,
@@ -114,7 +117,7 @@ ggplot(data = occdf) +
   theme_classic()
 ```
 
-We can fix this by using the `background_line` argument, which can be a list of aesthetic values to use for the background line segments:
+However, if we want a line connecting these groups of points, we can fix this by using the `background_line` argument, which can be a list of aesthetic values to use for the background line segments:
 
 ```{r}
 ggplot(data = occdf) +
