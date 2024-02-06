@@ -130,8 +130,14 @@ see <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html" cla
 
 
 <dt>clip</dt>
-<dd><p>Should drawing be clipped to the extent of the plot panel? For
-more information see <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html" class="external-link">ggplot2::coord_trans()</a></code>.</p></dd>
+<dd><p>Should drawing be clipped to the extent of the plot panel? A
+setting of <code>"on"</code> (the default) means yes, and a setting of <code>"off"</code>
+means no. In most cases, the default of <code>"on"</code> should not be changed,
+as setting <code>clip = "off"</code> can cause unexpected results. It allows
+drawing of data points anywhere on the plot, including in the plot margins. If
+limits are set via <code>xlim</code> and <code>ylim</code> and some data points fall outside those
+limits, then those data points may show up in places such as the axes, the
+legend, the plot title, or the plot margins.</p></dd>
 
 
 <dt>expand</dt>

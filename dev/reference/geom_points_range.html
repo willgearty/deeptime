@@ -173,8 +173,10 @@ to either <code>"x"</code> or <code>"y"</code>. See the <em>Orientation</em> sec
 <dd><p>A named list of aesthetic values to use for plotted
 line segments that span the entire <code>y</code> or <code>x</code> range for each <code>x</code> or <code>y</code>
 category. The default aesthetics will be used for any aesthetics that are
-not specified in the list. If NULL (the default), no line segments will be
-plotted.</p></dd>
+not specified in the list. This can be useful if the plotted groups of
+points don't overlap but you want a continuous line connecting all points
+for a given <code>x</code> or <code>y</code> category. If NULL (the default), no line segments
+will be plotted.</p></dd>
 
 
 <dt>show.legend</dt>
