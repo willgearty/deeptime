@@ -295,7 +295,8 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
 
     colors <- do.call(c, lapply(dat_list, function(dat) dat$color))
     geo_scale <- geo_scale +
-      coord_polar(start = self$start, direction = self$direction) +
+      coord_polar(start = self$start, direction = self$direction,
+                  clip = self$clip) +
       scale_fill_manual(values = setNames(colors, colors)) +
       scale_x_continuous(limits = c(0, 1)) +
       theme_void()

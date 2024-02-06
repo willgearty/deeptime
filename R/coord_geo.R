@@ -49,11 +49,8 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #'   B) a string indicating a timescale from macrostrat (see list here:
 #'   <https://macrostrat.org/api/defs/timescales?all>), or C) a custom
 #'   data.frame of time interval boundaries (see Details).
-#' @param xlim,ylim Limits for the x and y axes.
 #' @param xtrans,ytrans Transformers for the x and y axes. For more information
 #'   see [ggplot2::coord_trans()].
-#' @param clip Should drawing be clipped to the extent of the plot panel? For
-#'   more information see [ggplot2::coord_trans()].
 #' @param expand If `FALSE`, the default, limits are taken exactly from the data
 #'   or `xlim`/`ylim`. If `TRUE`, adds a small expansion factor to the limits to
 #'   ensure that data and axes don't overlap.
@@ -91,6 +88,7 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #'   scale?
 #' @param fittext_args A list of named arguments to provide to
 #'   [ggfittext::geom_fit_text()]. Only used if `size` is set to `"auto"`.
+#' @inheritParams ggplot2::coord_trans
 #' @importFrom ggplot2 ggproto
 #' @import scales
 #' @export
@@ -359,7 +357,8 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
     }
     gg_scale <- gg_scale +
-      coord_trans(x = self$trans$x, xlim = lims, ylim = c(0, 1), expand = FALSE)
+      coord_trans(x = self$trans$x, xlim = lims, ylim = c(0, 1), expand = FALSE,
+                  clip = self$clip)
   } else if (pos %in% c("left", "right", "l", "r")) {
     if (discrete) {
       lims <- panel_params$y.range
@@ -369,7 +368,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
     }
     gg_scale <- gg_scale +
       coord_trans_flip(x = self$trans$y, xlim = lims, ylim = c(0, 1),
-                       expand = FALSE)
+                       expand = FALSE, clip = self$clip)
   }
 
   # Add labels

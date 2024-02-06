@@ -48,8 +48,14 @@ data.frame of time interval boundaries (see Details).}
 \item{xtrans, ytrans}{Transformers for the x and y axes. For more information
 see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
 
-\item{clip}{Should drawing be clipped to the extent of the plot panel? For
-more information see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
+\item{clip}{Should drawing be clipped to the extent of the plot panel? A
+setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
+means no. In most cases, the default of \code{"on"} should not be changed,
+as setting \code{clip = "off"} can cause unexpected results. It allows
+drawing of data points anywhere on the plot, including in the plot margins. If
+limits are set via \code{xlim} and \code{ylim} and some data points fall outside those
+limits, then those data points may show up in places such as the axes, the
+legend, the plot title, or the plot margins.}
 
 \item{expand}{If \code{FALSE}, the default, limits are taken exactly from the data
 or \code{xlim}/\code{ylim}. If \code{TRUE}, adds a small expansion factor to the limits to
