@@ -91,7 +91,7 @@
 #'        position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
 #'   coord_geo_polar(dat = "stages")
 coord_geo_polar <- function(dat = "periods", theta = "y",
-                            start = -pi / 2, direction = -1, clip = "off",
+                            start = -pi / 2, direction = -1, clip = "on",
                             fill = NULL, alpha = 1,
                             lwd = .25, color = "grey80", lty = "solid",
                             neg = TRUE, prop = 1) {
