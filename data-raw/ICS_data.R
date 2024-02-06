@@ -4,6 +4,9 @@ int_types <- c(
 )
 
 for (int_type in names(int_types)) {
+  # Get the old data from within the package
+  old_dat <- eval(parse(text = paste0("deeptime::", int_type)))
+
   # Get ICS data from Macrostrat
   raw_dat <- read.csv(url(paste0("https://macrostrat.org/api/v2/defs/intervals",
                                  "?format=csv&timescale=international%20",
@@ -19,6 +22,9 @@ for (int_type in names(int_types)) {
                use.classes = TRUE, named = FALSE)[no_abbr]
   clean_dat$abbr[clean_dat$name == "Stage 10"] <- "S10" # fix abbreviation
   assign(int_type, clean_dat)
-  do.call(eval(parse(text = "usethis::use_data")),
-          list(as.name(int_type), overwrite = TRUE))
+
+  if (!identical(old_dat, clean_dat)) {
+    do.call(eval(parse(text = "usethis::use_data")),
+            list(as.name(int_type), overwrite = TRUE))
+  }
 }
