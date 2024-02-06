@@ -75,8 +75,10 @@ to either \code{"x"} or \code{"y"}. See the \emph{Orientation} section for more 
 \item{background_line}{A named list of aesthetic values to use for plotted
 line segments that span the entire \code{y} or \code{x} range for each \code{x} or \code{y}
 category. The default aesthetics will be used for any aesthetics that are
-not specified in the list. If NULL (the default), no line segments will be
-plotted.}
+not specified in the list. This can be useful if the plotted groups of
+points don't overlap but you want a continuous line connecting all points
+for a given \code{x} or \code{y} category. If NULL (the default), no line segments
+will be plotted.}
 
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.

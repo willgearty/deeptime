@@ -1,5 +1,5 @@
 # deeptime (development version)
-deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces several new features and bug fixes.
+deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces new features and bug fixes.
 
 * Fixed the interaction between coord_geo() and ggsave() (#49)
 * Added geom_points_range(), a function designed for visualizing temporal occurrence data
