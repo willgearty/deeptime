@@ -11,7 +11,7 @@ coord_geo_polar(
   theta = "y",
   start = -pi/2,
   direction = -1,
-  clip = "off",
+  clip = "on",
   fill = NULL,
   alpha = 1,
   lwd = 0.25,
