@@ -16,18 +16,20 @@ coord_geo(
   clip = "on",
   expand = FALSE,
   fill = NULL,
-  color = "black",
   alpha = 1,
   height = unit(2, "line"),
+  bord = c("left", "right", "top", "bottom"),
+  lwd = 0.25,
+  color = "black",
   lab = TRUE,
   lab_color = NULL,
   rot = 0,
-  abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  family = "sans",
+  fontface = "plain",
   size = 5,
-  lwd = 0.25,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+  abbrv = TRUE,
   neg = FALSE,
-  bord = c("left", "right", "top", "bottom"),
   center_end_labels = FALSE,
   dat_is_discrete = FALSE,
   fittext_args = list()
@@ -67,12 +69,17 @@ without a \code{color} column and without fill, a greyscale will be used.
 Custom fill colors can be provided with this option (overriding the \code{color}
 column) and will be recycled if/as necessary.}
 
-\item{color}{The outline color of the interval boxes.}
-
 \item{alpha}{The transparency of the fill colors.}
 
 \item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the
 scale.}
+
+\item{bord}{A vector specifying on which sides of the scale to add borders
+(same options as \code{pos}).}
+
+\item{lwd}{Line width.}
+
+\item{color}{The outline color of the interval boxes.}
 
 \item{lab}{Whether to include labels.}
 
@@ -85,22 +92,24 @@ black. Custom label colors can be provided with this option (overriding the
 \item{rot}{The amount of counter-clockwise rotation to add to the labels
 (in degrees).}
 
-\item{abbrv}{If including labels, whether to use abbreviations instead of
-full interval names.}
+\item{family}{The font family to use for the labels. There are only three
+fonts that are guaranteed to work everywhere: “sans” (the default),
+“serif”, or “mono”.}
+
+\item{fontface}{The font face to use for the labels. The standard options are
+"plain" (default), "bold", "italic", and "bold.italic".}
+
+\item{size}{Label size. Either a number as you would specify in
+\code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} or \code{"auto"} to use \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}.}
 
 \item{skip}{A vector of interval names indicating which intervals should not
 be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval
 abbreviations.}
 
-\item{size}{Label size. Either a number as you would specify in
-\code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} or \code{"auto"} to use \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}.}
-
-\item{lwd}{Line width.}
+\item{abbrv}{If including labels, whether to use abbreviations instead of
+full interval names.}
 
 \item{neg}{Set this to true if your x-axis is using negative values.}
-
-\item{bord}{A vector specifying on which sides of the scale to add borders
-(same options as \code{pos}).}
 
 \item{center_end_labels}{Should labels be centered within the visible range
 of intervals at the ends of the axis?}
@@ -143,11 +152,12 @@ If the ages within \code{dat} are already discretized, you can set
 useful for adding a time scale where categories and time intervals are not
 1:1.
 
-\code{pos} may also be a list of sides (including duplicates) if multiple time
-scales should be added to the plot. In this case, \code{dat}, \code{fill}, \code{color},
-\code{alpha}, \code{height}, \code{lab}, \code{lab_color}, \code{rot}, \code{abbrv}, \code{skip}, \code{size}, \code{lwd},
-\code{neg}, \code{bord}, \code{center_end_labels}, and \code{dat_is_discrete} can also be lists.
-If these lists are not as long as \code{pos}, the elements will be recycled.
+\code{pos} may also be a \code{list} of sides (including duplicates) if multiple time
+scales should be added to the plot. In this case, \code{dat}, \code{fill}, \code{alpha},
+\code{height}, \code{bord}, \code{lwd}, \code{color}, \code{lab}, \code{lab_color}, \code{rot}, \code{family},
+\code{fontface}, \code{size}, \code{skip}, \code{abbrv}, \code{neg}, \code{center_end_labels}, and
+\code{dat_is_discrete} can also be \code{list}s. If these \code{list}s are not as long as
+\code{pos}, the elements will be recycled.
 If individual values (or vectors) are used for these parameters, they will be
 applied to all time scales (and recycled as necessary).
 }

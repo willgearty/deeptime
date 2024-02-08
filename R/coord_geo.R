@@ -35,11 +35,12 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #' useful for adding a time scale where categories and time intervals are not
 #' 1:1.
 #'
-#' `pos` may also be a list of sides (including duplicates) if multiple time
-#' scales should be added to the plot. In this case, `dat`, `fill`, `color`,
-#' `alpha`, `height`, `lab`, `lab_color`, `rot`, `abbrv`, `skip`, `size`, `lwd`,
-#' `neg`, `bord`, `center_end_labels`, and `dat_is_discrete` can also be lists.
-#' If these lists are not as long as `pos`, the elements will be recycled.
+#' `pos` may also be a `list` of sides (including duplicates) if multiple time
+#' scales should be added to the plot. In this case, `dat`, `fill`, `alpha`,
+#' `height`, `bord`, `lwd`, `color`, `lab`, `lab_color`, `rot`, `family`,
+#' `fontface`, `size`, `skip`, `abbrv`, `neg`, `center_end_labels`, and
+#' `dat_is_discrete` can also be `list`s. If these `list`s are not as long as
+#' `pos`, the elements will be recycled.
 #' If individual values (or vectors) are used for these parameters, they will be
 #' applied to all time scales (and recycled as necessary).
 #' @param pos Which side to add the scale to (left, right, top, or bottom).
@@ -78,6 +79,11 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #'   abbreviations.
 #' @param size Label size. Either a number as you would specify in
 #'   [ggplot2::geom_text()] or `"auto"` to use [ggfittext::geom_fit_text()].
+#' @param family The font family to use for the labels. There are only three
+#'   fonts that are guaranteed to work everywhere: “sans” (the default),
+#'   “serif”, or “mono”.
+#' @param fontface The font face to use for the labels. The standard options are
+#'   "plain" (default), "bold", "italic", and "bold.italic".
 #' @param lwd Line width.
 #' @param neg Set this to true if your x-axis is using negative values.
 #' @param bord A vector specifying on which sides of the scale to add borders
@@ -115,12 +121,13 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
                       xtrans = identity_trans(), ytrans = identity_trans(),
                       clip = "on", expand = FALSE,
-                      fill = NULL, color = "black", alpha = 1,
-                      height = unit(2, "line"),
-                      lab = TRUE, lab_color = NULL, rot = 0, abbrv = TRUE,
-                      skip = c("Quaternary", "Holocene", "Late Pleistocene"),
-                      size = 5, lwd = .25, neg = FALSE,
+                      fill = NULL, alpha = 1, height = unit(2, "line"),
                       bord = c("left", "right", "top", "bottom"),
+                      lwd = .25, color = "black",
+                      lab = TRUE, lab_color = NULL, rot = 0,
+                      family = "sans", fontface = "plain", size = 5,
+                      skip = c("Quaternary", "Holocene", "Late Pleistocene"),
+                      abbrv = TRUE, neg = FALSE,
                       center_end_labels = FALSE, dat_is_discrete = FALSE,
                       fittext_args = list()) {
   # resolve transformers
@@ -143,6 +150,8 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
     lab_color = rep(make_list(lab_color), length.out = n_scales),
     rot = rep(make_list(rot), length.out = n_scales),
     abbrv = rep(make_list(abbrv), length.out = n_scales),
+    family = rep(make_list(family), length.out = n_scales),
+    fontface = rep(make_list(fontface), length.out = n_scales),
     skip = rep(make_list(skip), length.out = n_scales),
     size = rep(make_list(size), length.out = n_scales),
     lwd = rep(make_list(lwd), length.out = n_scales),
@@ -212,6 +221,8 @@ render_geo_scale <- function(self, panel_params, theme, position) {
     lab_color = self$lab_color[ind],
     rot = self$rot[ind],
     abbrv = self$abbrv[ind],
+    family = self$family[ind],
+    fontface = self$fontface[ind],
     skip = self$skip[ind],
     size = self$size[ind],
     lwd = self$lwd[ind],
@@ -275,7 +286,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
 make_geo_scale <- function(self, dat, fill, color, alpha, pos,
-                           lab, lab_color, rot, abbrv, skip,
+                           lab, lab_color, rot, abbrv, family, fontface, skip,
                            size, lwd, neg, bord,
                            center_end_labels, dat_is_discrete,
                            panel_params, theme, fittext_args) {
@@ -396,7 +407,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
             ymin = 0, ymax = 1,
             xmin = min_age, xmax = max_age,
             color = lab_color
-          ), angle = rot,
+          ), angle = rot, family = family, fontface = fontface,
           show.legend = FALSE, inherit.aes = FALSE, !!!fittext_args
         )
     } else {
@@ -405,6 +416,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
           data = dat, aes(x = mid_age, label = label, color = lab_color),
           y = .5,
           vjust = "middle", hjust = "middle", size = size, angle = rot,
+          family = family, fontface = fontface,
           show.legend = FALSE, inherit.aes = FALSE
         )
     }

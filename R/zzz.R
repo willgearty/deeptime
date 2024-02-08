@@ -1,4 +1,5 @@
 .onLoad <- function(...) {
+  # coord_geo_polar theme elements
   ggplot2::register_theme_elements(
     axis.line.r = ggplot2::element_line(),
     axis.text.r = ggplot2::element_text(size = 3.5, vjust = -2, hjust = NA),
