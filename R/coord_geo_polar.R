@@ -11,6 +11,8 @@
 #'   \item The `max_age` column lists the oldest boundary of each time interval.
 #'   \item The `min_age` column lists the youngest boundary of each time
 #'      interval.
+#'   \item The `abbr` column is optional and lists abbreviations that may be
+#'     used as labels.
 #'   \item The `color` column is optional and lists a [color][ggplot2::color]
 #'      for the background for each time interval.
 #' }
@@ -19,11 +21,12 @@
 #' should be added to the background. Scales will be added sequentially starting
 #' at `start` and going in the specified `direction`. By default the scales will
 #' all be equal in circular/rotational proportion, but this can be overridden
-#' with `prop`. If `dat` is a list, `fill`, `alpha`, `lwd`, `lty`, `color`,
-#' `neg`, and `prop` can also be lists. If these lists are not as long as `dat`,
-#' the elements will be recycled. If individual values (or vectors) are used for
-#' these parameters, they will be applied to all time scales (and recycled as
-#' necessary).
+#' with `prop`. If `dat` is a list, `fill`, `alpha`, `lwd`, `color`, `lty`,
+#' `lab`, `abbrv`, `skip`, `neg`, `prop`, and `textpath_args` can also be lists
+#' (N.B. `textpath_args` would be a list of lists). If these lists are not as
+#' long as `dat`, the elements will be recycled. If individual values (or
+#' vectors) are used for these parameters, they will be applied to all time
+#' scales (and recycled as necessary).
 #'
 #' If the sum of the `prop` values is greater than 1, the proportions will be
 #' scaled such that they sum to 1. However, the `prop` values may sum to less
@@ -33,18 +36,24 @@
 #' ggplot2 [theme elements][ggplot2::theme] can be modified just like their x
 #' and y counterparts to change the appearance of the radius axis. The default
 #' settings work well for a horizontal axis pointing towards the right, but
-#' these theme settings will need to be modified for other orientations.
-#' The default value for `axis.line.r` is `element_line()`.
-#' The default value for `axis.text.r` is
-#' `element_text(size = 3.5, vjust = -2, hjust = NA)`.
-#' The default value for `axis.ticks.r` is `element_line()`.
-#' The default value for `axis.ticks.length.r` is `unit(1.5, "points")`.
-#' However, note that the units for this element are meaningless and only the
-#' numeric value will be used (but a `unit` must still be used).
+#' these theme settings will need to be modified for other orientations. The
+#' default value for `axis.line.r` is `element_line()`. The default value for
+#' `axis.text.r` is `element_text(size = 3.5, vjust = -2, hjust = NA)`. The
+#' default value for `axis.ticks.r` is `element_line()`. The default value for
+#' `axis.ticks.length.r` is `unit(1.5, "points")`. However, note that the units
+#' for this element are meaningless and only the numeric value will be used (but
+#' a `unit` must still be used).
+#'
+#' Care must be taken when adding labels to plots, as they are very likely to
+#' overlap with the plot under the default settings. The `textpath_args`
+#' argument can be used to adjust the settings for the plotting of the labels.
+#' See [geomtextpath::geom_textpath()] for details about the available
+#' arguments. Also note that the curvature of the labels may vary based on the
+#' distance from the origin. This is why `abbrv` is set to `TRUE` by default.
 #'
 #' @param dat Either A) a string indicating a built-in dataframe with interval
-#'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-#'   B) a string indicating a timescale from macrostrat (see list here:
+#'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"), B) a
+#'   string indicating a timescale from macrostrat (see list here:
 #'   <https://macrostrat.org/api/defs/timescales?all>), or C) a custom
 #'   data.frame of time interval boundaries (see Details).
 #' @param fill The fill color of the background. The default is to use the
@@ -57,10 +66,20 @@
 #'   lines.
 #' @param lty Line type for lines between intervals.
 #' @param color The color of the lines between intervals.
+#' @param lab Whether to include labels.
+#' @param abbrv If including labels, whether to use abbreviations instead of
+#'   full interval names.
+#' @param skip A vector of interval names indicating which intervals should not
+#'   be labeled. If `abbrv` is `TRUE`, this can also include interval
+#'   abbreviations.
 #' @param neg Set this to true if your theta-axis is using negative values. This
-#'   is often true if you are using `ggtree`.
+#'   is usually true if you are using `ggtree`.
 #' @param prop This is the rotational proportion of the background that the
 #'   scale takes up.
+#' @param textpath_args A list of named arguments to provide to
+#'   [geomtextpath::geom_textpath()]. Only used if `lab` is set to `TRUE`.
+#'   Useful arguments include `color` (font color), `family` (font family),
+#'   `fontface`, `hjust` (radial adjustment), and `size` (font size).
 #' @inheritParams ggplot2::coord_polar
 #' @importFrom ggplot2 ggproto
 #' @importFrom rlang arg_match0
@@ -94,7 +113,10 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
                             start = -pi / 2, direction = -1, clip = "on",
                             fill = NULL, alpha = 1,
                             lwd = .25, color = "grey80", lty = "solid",
-                            neg = TRUE, prop = 1) {
+                            lab = FALSE, abbrv = TRUE,
+                            skip = c("Quaternary", "Holocene",
+                                     "Late Pleistocene"),
+                            neg = TRUE, prop = 1, textpath_args = list()) {
   dat <- make_list(dat)
   n_scales <- length(dat)
 
@@ -110,8 +132,12 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
     lwd = rep(make_list(lwd), length.out = n_scales),
     lty = rep(make_list(lty), length.out = n_scales),
     color = rep(make_list(color), length.out = n_scales),
+    lab = rep(make_list(lab), length.out = n_scales),
+    skip = rep(make_list(skip), length.out = n_scales),
+    abbrv = rep(make_list(abbrv), length.out = n_scales),
     neg = rep(make_list(neg), length.out = n_scales),
-    prop = rep(make_list(prop), length.out = n_scales)
+    prop = rep(make_list(prop), length.out = n_scales),
+    textpath_args = rep(list(textpath_args), length.out = n_scales)
   )
 }
 
@@ -150,7 +176,8 @@ ggname <- function(prefix, grob) {
 #' @importFrom ggplot2 scale_x_continuous scale_fill_manual calc_element
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom grid addGrob reorderGrob grid.ls
-#' @importFrom rlang %||%
+#' @importFrom rlang %||% exec
+#' @importFrom geomtextpath geom_textpath
 CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
   render_bg = function(self, panel_params, theme) {
     panel_params <- rename_data(self, panel_params)
@@ -220,9 +247,10 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     # assemble the timescale background as a ggplot
     geo_scale <- ggplot()
     for (ind in seq_along(dat_list)) {
+      dat_ind <- dat_list[[ind]]
       geo_scale <- geo_scale +
         geom_rect(
-          data = dat_list[[ind]],
+          data = dat_ind,
           aes(ymin = min_age, ymax = max_age, fill = color),
           xmin = xmins[ind], xmax = xmins[ind + 1], alpha = self$alpha[[ind]],
           show.legend = FALSE, inherit.aes = FALSE
@@ -231,19 +259,31 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
       if (!is.null(self$lwd[[ind]])) {
         geo_scale <- geo_scale +
           geom_segment(
-            data = dat_list[[ind]],
+            data = dat_ind,
             aes(y = min_age, yend = min_age),
             x = xmins[ind], xend = xmins[ind + 1],
             color = self$color[[ind]], linewidth = self$lwd[[ind]],
             lty = self$lty[[ind]]
           ) +
           geom_segment(
-            data = dat_list[[ind]],
+            data = dat_ind,
             aes(y = max_age, yend = max_age),
             x = xmins[ind], xend = xmins[ind + 1],
             color = self$color[[ind]], linewidth = self$lwd[[ind]],
             lty = self$lty[[ind]]
           )
+      }
+      # add labels if requested
+      if (self$lab[[ind]]) {
+        if (self$abbrv[[ind]] && "abbr" %in% colnames(dat_ind)) {
+          dat_ind$name <- dat_ind$abbr
+        }
+        dat_temp <- dat_ind[rep(seq_len(nrow(dat_ind)), each = 2), ]
+        geo_scale <- geo_scale +
+          exec(geom_textpath, data = dat_temp,
+               aes(y = (min_age + max_age) / 2, label = name),
+               x = rep(c(xmins[ind], xmins[ind + 1]), nrow(dat_ind)),
+               text_only = TRUE, !!!self$textpath_args[[ind]])
       }
     }
 

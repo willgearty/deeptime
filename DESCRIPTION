@@ -36,7 +36,8 @@ Imports:
     curl,
     cli,
     phytools,
-    lifecycle
+    lifecycle,
+    geomtextpath
 Suggests: 
     dplyr,
     divDyn,

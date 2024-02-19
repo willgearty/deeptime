@@ -17,14 +17,18 @@ coord_geo_polar(
   lwd = 0.25,
   color = "grey80",
   lty = "solid",
+  lab = FALSE,
+  abbrv = TRUE,
+  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
   neg = TRUE,
-  prop = 1
+  prop = 1,
+  textpath_args = list()
 )
 }
 \arguments{
 \item{dat}{Either A) a string indicating a built-in dataframe with interval
-data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here:
+data from the ICS ("periods", "epochs", "stages", "eons", or "eras"), B) a
+string indicating a timescale from macrostrat (see list here:
 \url{https://macrostrat.org/api/defs/timescales?all}), or C) a custom
 data.frame of time interval boundaries (see Details).}
 
@@ -54,11 +58,25 @@ lines.}
 
 \item{lty}{Line type for lines between intervals.}
 
+\item{lab}{Whether to include labels.}
+
+\item{abbrv}{If including labels, whether to use abbreviations instead of
+full interval names.}
+
+\item{skip}{A vector of interval names indicating which intervals should not
+be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval
+abbreviations.}
+
 \item{neg}{Set this to true if your theta-axis is using negative values. This
-is often true if you are using \code{ggtree}.}
+is usually true if you are using \code{ggtree}.}
 
 \item{prop}{This is the rotational proportion of the background that the
 scale takes up.}
+
+\item{textpath_args}{A list of named arguments to provide to
+\code{\link[geomtextpath:geom_textpath]{geomtextpath::geom_textpath()}}. Only used if \code{lab} is set to \code{TRUE}.
+Useful arguments include \code{color} (font color), \code{family} (font family),
+\code{fontface}, \code{hjust} (radial adjustment), and \code{size} (font size).}
 }
 \description{
 \code{coord_geo_polar} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_polar()}} in that it
@@ -73,6 +91,8 @@ least 2 columns of data. See \code{data(periods)} for an example.
 \item The \code{max_age} column lists the oldest boundary of each time interval.
 \item The \code{min_age} column lists the youngest boundary of each time
 interval.
+\item The \code{abbr} column is optional and lists abbreviations that may be
+used as labels.
 \item The \code{color} column is optional and lists a \link[ggplot2:aes_colour_fill_alpha]{color}
 for the background for each time interval.
 }
@@ -81,11 +101,12 @@ for the background for each time interval.
 should be added to the background. Scales will be added sequentially starting
 at \code{start} and going in the specified \code{direction}. By default the scales will
 all be equal in circular/rotational proportion, but this can be overridden
-with \code{prop}. If \code{dat} is a list, \code{fill}, \code{alpha}, \code{lwd}, \code{lty}, \code{color},
-\code{neg}, and \code{prop} can also be lists. If these lists are not as long as \code{dat},
-the elements will be recycled. If individual values (or vectors) are used for
-these parameters, they will be applied to all time scales (and recycled as
-necessary).
+with \code{prop}. If \code{dat} is a list, \code{fill}, \code{alpha}, \code{lwd}, \code{color}, \code{lty},
+\code{lab}, \code{abbrv}, \code{skip}, \code{neg}, \code{prop}, and \code{textpath_args} can also be lists
+(N.B. \code{textpath_args} would be a list of lists). If these lists are not as
+long as \code{dat}, the elements will be recycled. If individual values (or
+vectors) are used for these parameters, they will be applied to all time
+scales (and recycled as necessary).
 
 If the sum of the \code{prop} values is greater than 1, the proportions will be
 scaled such that they sum to 1. However, the \code{prop} values may sum to less
@@ -95,14 +116,20 @@ The \code{axis.line.r}, \code{axis.text.r}, \code{axis.ticks.r}, and \code{axis.
 ggplot2 \link[ggplot2:theme]{theme elements} can be modified just like their x
 and y counterparts to change the appearance of the radius axis. The default
 settings work well for a horizontal axis pointing towards the right, but
-these theme settings will need to be modified for other orientations.
-The default value for \code{axis.line.r} is \code{element_line()}.
-The default value for \code{axis.text.r} is
-\code{element_text(size = 3.5, vjust = -2, hjust = NA)}.
-The default value for \code{axis.ticks.r} is \code{element_line()}.
-The default value for \code{axis.ticks.length.r} is \code{unit(1.5, "points")}.
-However, note that the units for this element are meaningless and only the
-numeric value will be used (but a \code{unit} must still be used).
+these theme settings will need to be modified for other orientations. The
+default value for \code{axis.line.r} is \code{element_line()}. The default value for
+\code{axis.text.r} is \code{element_text(size = 3.5, vjust = -2, hjust = NA)}. The
+default value for \code{axis.ticks.r} is \code{element_line()}. The default value for
+\code{axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that the units
+for this element are meaningless and only the numeric value will be used (but
+a \code{unit} must still be used).
+
+Care must be taken when adding labels to plots, as they are very likely to
+overlap with the plot under the default settings. The \code{textpath_args}
+argument can be used to adjust the settings for the plotting of the labels.
+See \code{\link[geomtextpath:geom_textpath]{geomtextpath::geom_textpath()}} for details about the available
+arguments. Also note that the curvature of the labels may vary based on the
+distance from the origin. This is why \code{abbrv} is set to \code{TRUE} by default.
 }
 \examples{
 library(ggplot2)

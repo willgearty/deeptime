@@ -5,6 +5,7 @@ deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces n
 * Added geom_points_range(), a function designed for visualizing temporal occurrence data
 * Fixed `size = "auto"` when `center_end_labels = TRUE` in coord_geo()
 * Added `family` and `fontface` arguments to coord_geo()
+* Added the ability to include interval labels with coord_geo_polar() (#48)
 
 # deeptime 1.0.1
 
