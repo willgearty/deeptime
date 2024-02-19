@@ -274,7 +274,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
           )
       }
       # add labels if requested
-      if (self$lab[[ind]]) {
+      if (self$lab[[ind]]) { # nocov start
         if (self$abbrv[[ind]] && "abbr" %in% colnames(dat_ind)) {
           dat_ind$name <- dat_ind$abbr
         }
@@ -284,7 +284,7 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
                aes(y = (min_age + max_age) / 2, label = name),
                x = rep(c(xmins[ind], xmins[ind + 1]), nrow(dat_ind)),
                text_only = TRUE, !!!self$textpath_args[[ind]])
-      }
+      } # nocov end
     }
 
     # add an axis

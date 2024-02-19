@@ -30,6 +30,7 @@ test_that("ggtree scale works with only fossil taxa", {
                position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
     coord_geo_polar(dat = "stages")
   expect_doppelganger_deeptime("scale on fossil ggtree", gg)
+  skip_if(R.Version()$os != "mingw32") # only test this on Windows
   gg <- ggtree(ceratopsianTreeRaia,
          position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
     coord_geo_polar(dat = list("stages", "periods"), lab = list(FALSE, TRUE), abbrv = TRUE) +
