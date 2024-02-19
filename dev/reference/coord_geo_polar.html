@@ -88,8 +88,12 @@ the background of the plot.</p>
 <span>  lwd <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"grey80"</span>,</span>
 <span>  lty <span class="op">=</span> <span class="st">"solid"</span>,</span>
+<span>  lab <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  abbrv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  skip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Quaternary"</span>, <span class="st">"Holocene"</span>, <span class="st">"Late Pleistocene"</span><span class="op">)</span>,</span>
 <span>  neg <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  prop <span class="op">=</span> <span class="fl">1</span></span>
+<span>  prop <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  textpath_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -97,8 +101,8 @@ the background of the plot.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>dat</dt>
 <dd><p>Either A) a string indicating a built-in dataframe with interval
-data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here:
+data from the ICS ("periods", "epochs", "stages", "eons", or "eras"), B) a
+string indicating a timescale from macrostrat (see list here:
 <a href="https://macrostrat.org/api/defs/timescales?all" class="external-link">https://macrostrat.org/api/defs/timescales?all</a>), or C) a custom
 data.frame of time interval boundaries (see Details).</p></dd>
 
@@ -147,14 +151,36 @@ lines.</p></dd>
 <dd><p>Line type for lines between intervals.</p></dd>
 
 
+<dt>lab</dt>
+<dd><p>Whether to include labels.</p></dd>
+
+
+<dt>abbrv</dt>
+<dd><p>If including labels, whether to use abbreviations instead of
+full interval names.</p></dd>
+
+
+<dt>skip</dt>
+<dd><p>A vector of interval names indicating which intervals should not
+be labeled. If <code>abbrv</code> is <code>TRUE</code>, this can also include interval
+abbreviations.</p></dd>
+
+
 <dt>neg</dt>
 <dd><p>Set this to true if your theta-axis is using negative values. This
-is often true if you are using <code>ggtree</code>.</p></dd>
+is usually true if you are using <code>ggtree</code>.</p></dd>
 
 
 <dt>prop</dt>
 <dd><p>This is the rotational proportion of the background that the
 scale takes up.</p></dd>
+
+
+<dt>textpath_args</dt>
+<dd><p>A list of named arguments to provide to
+<code><a href="https://allancameron.github.io/geomtextpath/reference/geom_textpath.html" class="external-link">geomtextpath::geom_textpath()</a></code>. Only used if <code>lab</code> is set to <code>TRUE</code>.
+Useful arguments include <code>color</code> (font color), <code>family</code> (font family),
+<code>fontface</code>, <code>hjust</code> (radial adjustment), and <code>size</code> (font size).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -163,17 +189,20 @@ scale takes up.</p></dd>
 least 2 columns of data. See <code>data(periods)</code> for an example.</p><ul><li><p>The <code>max_age</code> column lists the oldest boundary of each time interval.</p></li>
 <li><p>The <code>min_age</code> column lists the youngest boundary of each time
 interval.</p></li>
+<li><p>The <code>abbr</code> column is optional and lists abbreviations that may be
+used as labels.</p></li>
 <li><p>The <code>color</code> column is optional and lists a <a href="https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html" class="external-link">color</a>
 for the background for each time interval.</p></li>
 </ul><p><code>dat</code> may also be a list of values and/or dataframes if multiple time scales
 should be added to the background. Scales will be added sequentially starting
 at <code>start</code> and going in the specified <code>direction</code>. By default the scales will
 all be equal in circular/rotational proportion, but this can be overridden
-with <code>prop</code>. If <code>dat</code> is a list, <code>fill</code>, <code>alpha</code>, <code>lwd</code>, <code>lty</code>, <code>color</code>,
-<code>neg</code>, and <code>prop</code> can also be lists. If these lists are not as long as <code>dat</code>,
-the elements will be recycled. If individual values (or vectors) are used for
-these parameters, they will be applied to all time scales (and recycled as
-necessary).</p>
+with <code>prop</code>. If <code>dat</code> is a list, <code>fill</code>, <code>alpha</code>, <code>lwd</code>, <code>color</code>, <code>lty</code>,
+<code>lab</code>, <code>abbrv</code>, <code>skip</code>, <code>neg</code>, <code>prop</code>, and <code>textpath_args</code> can also be lists
+(N.B. <code>textpath_args</code> would be a list of lists). If these lists are not as
+long as <code>dat</code>, the elements will be recycled. If individual values (or
+vectors) are used for these parameters, they will be applied to all time
+scales (and recycled as necessary).</p>
 <p>If the sum of the <code>prop</code> values is greater than 1, the proportions will be
 scaled such that they sum to 1. However, the <code>prop</code> values may sum to less
 than 1 if the user would like blank space in the background.</p>
@@ -181,14 +210,19 @@ than 1 if the user would like blank space in the background.</p>
 ggplot2 <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme elements</a> can be modified just like their x
 and y counterparts to change the appearance of the radius axis. The default
 settings work well for a horizontal axis pointing towards the right, but
-these theme settings will need to be modified for other orientations.
-The default value for <code>axis.line.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>.
-The default value for <code>axis.text.r</code> is
-<code>element_text(size = 3.5, vjust = -2, hjust = NA)</code>.
-The default value for <code>axis.ticks.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>.
-The default value for <code>axis.ticks.length.r</code> is <code>unit(1.5, "points")</code>.
-However, note that the units for this element are meaningless and only the
-numeric value will be used (but a <code>unit</code> must still be used).</p>
+these theme settings will need to be modified for other orientations. The
+default value for <code>axis.line.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for
+<code>axis.text.r</code> is <code>element_text(size = 3.5, vjust = -2, hjust = NA)</code>. The
+default value for <code>axis.ticks.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for
+<code>axis.ticks.length.r</code> is <code>unit(1.5, "points")</code>. However, note that the units
+for this element are meaningless and only the numeric value will be used (but
+a <code>unit</code> must still be used).</p>
+<p>Care must be taken when adding labels to plots, as they are very likely to
+overlap with the plot under the default settings. The <code>textpath_args</code>
+argument can be used to adjust the settings for the plotting of the labels.
+See <code><a href="https://allancameron.github.io/geomtextpath/reference/geom_textpath.html" class="external-link">geomtextpath::geom_textpath()</a></code> for details about the available
+arguments. Also note that the curvature of the labels may vary based on the
+distance from the origin. This is why <code>abbrv</code> is set to <code>TRUE</code> by default.</p>
     </div>
 
     <div class="section level2">
