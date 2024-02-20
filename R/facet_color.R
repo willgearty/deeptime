@@ -217,7 +217,7 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
 }
 
 check_number_whole <- function(...) {
-  asNamespace("ggplot2")$check_number_whole(...)
+  asNamespace("rlang")$check_number_whole(...)
 }
 
 wrap_as_facets_list <- function(...) {
