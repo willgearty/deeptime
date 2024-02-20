@@ -28,6 +28,8 @@ if (suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
        periods$min_age[match(coral_div_dis$period, periods$name)]) / 2
   coral_div_dis <-
     coral_div_dis[rev(order(coral_div_dis$period_age)), , drop = FALSE]
+  coral_div_dis$period <- factor(coral_div_dis$period,
+                                 levels = unique(coral_div_dis$period))
 }
 
 if (suppressPackageStartupMessages(require(ape, quietly = TRUE))) {

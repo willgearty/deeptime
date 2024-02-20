@@ -1,0 +1,251 @@
+#' Lay out panels in a grid with colored strips
+#'
+#' `facet_grid_color` behaves similarly to [ggplot2::facet_grid()] in that it
+#' forms a matrix of panels defined by row and column faceting variables. The
+#' main difference is that it also allows the user to specify the background
+#' colors of the individual facet strips using the `colors` argument. If you
+#' have only one variable with many levels, try [facet_wrap_color()].
+#'
+#' @param colors Specifies which colors to use to replace the strip backgrounds.
+#'   Either A) a function that returns a color for a given strip label, B) the
+#'   character name of a function that does the same, C) a named character
+#'   vector with names matching strip labels and values indicating the desired
+#'   colors, or D) a data.frame representing a lookup table with columns named
+#'   "name" (matching strip labels) and "color" (indicating desired colors). If
+#'   the function returns
+#' @inheritParams ggplot2::facet_grid
+#' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
+#' @importFrom rlang arg_match0 is_function
+#' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' df <- data.frame(x = 1:10, y = 1:10, period = c("Permian", "Triassic"))
+#' ggplot(df) +
+#'   geom_point(aes(x, y)) +
+#'   facet_grid_color(cols = vars(period), colors = periods)
+facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
+                             space = "fixed", shrink = TRUE,
+                             labeller = "label_value", colors = stages,
+                             as.table = TRUE, switch = NULL,
+                             drop = TRUE, margins = FALSE) {
+  colors <- convert_colors(colors)
+
+  # function and arguments copied from ggplot 3.4.4
+  # TODO: update when ggplot 3.5.0 comes out
+
+  # Should become a warning in a future release
+  if (is.logical(cols)) {
+    margins <- cols
+    cols <- NULL
+  }
+
+  scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x",
+                                              "free_y", "free"))
+  free <- list(
+    x = any(scales %in% c("free_x", "free")),
+    y = any(scales %in% c("free_y", "free"))
+  )
+
+  space <- arg_match0(space %||% "fixed", c("fixed", "free_x",
+                                            "free_y", "free"))
+  space_free <- list(
+    x = any(space %in% c("free_x", "free")),
+    y = any(space %in% c("free_y", "free"))
+  )
+
+  if (!is.null(switch) && !switch %in% c("both", "x", "y")) {
+    cli::cli_abort("{.arg switch} must be either {.val both}, {.val x}, or {.val y}")
+  }
+
+  facets_list <- grid_as_facets_list(rows, cols)
+
+  # Check for deprecated labellers
+  labeller <- check_labeller(labeller)
+
+  ggproto(NULL, FacetGridColor,
+          shrink = shrink,
+          params = list(rows = facets_list$rows, cols = facets_list$cols,
+                        margins = margins, free = free, space_free = space_free,
+                        labeller = labeller, colors = colors,
+                        as.table = as.table, switch = switch, drop = drop)
+  )
+}
+
+grid_as_facets_list <- function(...) {
+  asNamespace("ggplot2")$grid_as_facets_list(...)
+}
+
+check_labeller <- function(...) {
+  asNamespace("ggplot2")$check_labeller(...)
+}
+
+#' @importFrom rlang is_function
+convert_colors <- function(colors) {
+  # convert colors to a function
+  if (!is_function(colors)) {
+    if (is.character(colors) && !is.null(names(colors))) {
+      name <- names(colors)
+      color <- unname(colors)
+      colors <- function(x) {
+        if (x %in% name) color[which(x == name)[1]] else NA
+      }
+    } else if (is.character(colors) && length(colors) == 1) {
+      colors <- match.fun(colors)
+    } else if (is.data.frame(colors)) {
+      if (all(c("name", "color") %in% names(colors))) {
+        name <- colors$name
+        color <- colors$color
+        colors <- function(x) {
+          if (x %in% name) color[which(x == name)[1]] else NA
+        }
+      } else {
+        stop("If using a data.frame for `colors`, the data.frame must have
+              columns named 'name' and 'color'.")
+      }
+    } else {
+      stop("Invalid type for `colors`; only functions, function names, named
+            character vectors, and data.frames are allowed.")
+    }
+  }
+  return(colors)
+}
+
+#' @rdname facet_grid_color
+#' @format NULL
+#' @usage NULL
+#' @export
+#' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
+FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
+  shrink = TRUE,
+  draw_panels = function(panels, layout, x_scales, y_scales, ranges, coord,
+                         data, theme, params, self) {
+    panel_table <-
+      ggproto_parent(FacetGrid, self)$draw_panels(panels, layout,
+                                                  x_scales, y_scales, ranges,
+                                                  coord, data, theme, params)
+    strips <- grep("strip", panel_table$layout$name)
+    for (i in strips) {
+      label <-
+        panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$label
+      fill <- tryCatch(params$colors(label), error = function(e) NA)
+      if (!is.na(fill)) {
+        panel_table$grobs[[i]]$grobs[[1]]$children[[1]]$gp$fill <- fill
+      }
+    }
+    panel_table
+  }
+)
+
+#' Wrap a 1d ribbon of panels into 2d with colored strips
+#'
+#' `facet_wrap_color` behaves similarly to [ggplot2::facet_wrap()] in that it
+#' wraps a 1d sequence of panels into 2d. The main difference is that it also
+#' allows the user to specify the background colors of the individual facet
+#' strips using the `colors` argument. This is generally a better use of screen
+#' space than [facet_grid_color()] because most displays are roughly
+#' rectangular.
+#'
+#' @param colors Specifies which colors to use to replace the strip backgrounds.
+#'   Either A) a function that returns a color for a given strip label, B) the
+#'   character name of a function that does the same, C) a named character
+#'   vector with names matching strip labels and values indicating the desired
+#'   colors, or D) a data.frame representing a lookup table with columns named
+#'   "name" (matching strip labels) and "color" (indicating desired colors). If
+#'   the function returns
+#' @inheritParams ggplot2::facet_wrap
+#' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
+#' @importFrom rlang arg_match0
+#' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' df <- data.frame(x = 1:10, y = 1:10, period = c("Permian", "Triassic"))
+#' ggplot(df) +
+#'   geom_point(aes(x, y)) +
+#'   facet_wrap_color(vars(period), colors = periods)
+facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
+                             shrink = TRUE, labeller = "label_value",
+                             colors = stages, as.table = TRUE, drop = TRUE,
+                             dir = "h", strip.position = 'top') {
+  colors <- convert_colors(colors)
+
+  # function and arguments copied from ggplot 3.4.4
+  # TODO: update when ggplot 3.5.0 comes out
+  scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x",
+                                              "free_y", "free"))
+  dir <- arg_match0(dir, c("h", "v"))
+  free <- list(
+    x = any(scales %in% c("free_x", "free")),
+    y = any(scales %in% c("free_y", "free"))
+  )
+
+  # Check for deprecated labellers
+  labeller <- check_labeller(labeller)
+
+  # Flatten all facets dimensions into a single one
+  facets <- wrap_as_facets_list(facets)
+
+  strip.position <- arg_match0(strip.position, c("top", "bottom",
+                                                 "left", "right"))
+
+  check_number_whole(ncol, allow_null = TRUE, min = 1)
+  check_number_whole(nrow, allow_null = TRUE, min = 1)
+
+  if (identical(dir, "v")) {
+    # swap
+    tmp <- ncol
+    ncol <- nrow
+    nrow <- tmp
+  }
+
+  ggproto(NULL, FacetWrapColor,
+          shrink = shrink,
+          params = list(
+            facets = facets,
+            free = free,
+            as.table = as.table,
+            strip.position = strip.position,
+            drop = drop,
+            ncol = ncol,
+            nrow = nrow,
+            labeller = labeller,
+            colors = colors,
+            dir = dir
+          )
+  )
+}
+
+check_number_whole <- function(...) {
+  asNamespace("ggplot2")$check_number_whole(...)
+}
+
+wrap_as_facets_list <- function(...) {
+  asNamespace("ggplot2")$wrap_as_facets_list(...)
+}
+
+#' @rdname facet_wrap_color
+#' @format NULL
+#' @usage NULL
+#' @export
+#' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
+FacetWrapColor <- ggproto("FacetWrapColor", FacetWrap,
+  shrink = TRUE,
+  draw_panels = function(panels, layout, x_scales, y_scales, ranges, coord,
+                         data, theme, params, self) {
+    panel_table <-
+      ggproto_parent(FacetWrap, self)$draw_panels(panels, layout,
+                                                  x_scales, y_scales, ranges,
+                                                  coord, data, theme, params)
+    strips <- grep("strip", panel_table$layout$name)
+    for (i in strips) {
+      label <-
+        panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$label
+      fill <- tryCatch(params$colors(label), error = function(e) NA)
+      if (!is.na(fill)) {
+        panel_table$grobs[[i]]$grobs[[1]]$children[[1]]$gp$fill <- fill
+      }
+    }
+    panel_table
+  }
+)
