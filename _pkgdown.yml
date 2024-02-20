@@ -100,10 +100,12 @@ reference:
 
 - title: Plotting temporal data
   desc: >
-    These functions can be used for visualizing temporal data.
+    These functions can be used for visualizing categorical temporal data.
   contents:
   - geom_points_range
   - stat_points_range
+  - facet_grid_color
+  - facet_wrap_color
 
 - title: Combining and arranging plots
   desc: >
