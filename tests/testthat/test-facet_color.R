@@ -19,10 +19,25 @@ test_that("facet_grid_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_grid_color", gg)
-  expect_error(gg_base + facet_grid_color(cols = "blue"))
-  expect_error(gg_base + facet_grid_color(cols = 5))
   expect_error(gg_base +
-                 facet_grid_color(cols = data.frame(colors = c("blue",))))
+                 facet_grid_color(cols = vars(period), colors = "blue"))
+  expect_error(gg_base +
+                 facet_grid_color(cols = vars(period), colors = 5))
+  expect_error(gg_base +
+                 facet_grid_color(cols = vars(period),
+                                  colors = data.frame(colors = c("blue", "red"))
+                                  ))
+  gg <- gg_base +
+    facet_grid_color(cols = vars(period),
+                     colors = setNames(periods$color, periods$name))
+  expect_no_error(gg)
+  expect_doppelganger_deeptime("facet_grid_color with named vector", gg)
+
+  period_color <- function(period) periods$color[match(period, periods$name)]
+  gg <- gg_base +
+    facet_grid_color(cols = vars(period), colors = period_color)
+  expect_no_error(gg)
+  expect_doppelganger_deeptime("facet_grid_color with function", gg)
 })
 
 test_that("facet_wrap_color works", {
