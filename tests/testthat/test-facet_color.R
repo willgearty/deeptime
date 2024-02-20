@@ -1,13 +1,13 @@
 test_that("facet_grid_color works", {
   skip_if_not_installed("divDyn")
-  gg <- ggplot(coral_div_dis) +
+  gg_base <- ggplot(coral_div_dis) +
     geom_col(aes(x = diet, y = n, fill = diet)) +
     scale_x_discrete("Diet", labels = NULL) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_fill_viridis_d() +
     ylab("Coral Genera") +
-    facet_grid_color(cols = vars(period), colors = periods) +
     theme(axis.ticks.length.x = unit(0, "lines"))
+  gg <- gg_base + facet_grid_color(cols = vars(period), colors = periods)
   expect_true(is(ggplot_build(gg)$layout$facet, "FacetGridColor"))
   expect_true(is(ggplot_build(gg)$layout$facet, "FacetGrid"))
   gg_gtable <- ggplot_gtable(ggplot_build(gg))
@@ -19,6 +19,10 @@ test_that("facet_grid_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_grid_color", gg)
+  expect_error(gg_base + facet_grid_color(cols = "blue"))
+  expect_error(gg_base + facet_grid_color(cols = 5))
+  expect_error(gg_base +
+                 facet_grid_color(cols = data.frame(colors = c("blue",))))
 })
 
 test_that("facet_wrap_color works", {

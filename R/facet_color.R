@@ -55,7 +55,8 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
   )
 
   if (!is.null(switch) && !switch %in% c("both", "x", "y")) {
-    cli::cli_abort("{.arg switch} must be either {.val both}, {.val x}, or {.val y}")
+    cli::cli_abort("{.arg switch} must be either {.val both}, {.val x}, or
+                    {.val y}")
   }
 
   facets_list <- grid_as_facets_list(rows, cols)
@@ -167,7 +168,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
                              shrink = TRUE, labeller = "label_value",
                              colors = stages, as.table = TRUE, drop = TRUE,
-                             dir = "h", strip.position = 'top') {
+                             dir = "h", strip.position = "top") {
   colors <- convert_colors(colors)
 
   # function and arguments copied from ggplot 3.4.4
