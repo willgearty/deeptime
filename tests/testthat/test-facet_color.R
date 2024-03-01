@@ -38,18 +38,25 @@ test_that("facet_grid_color works", {
     facet_grid_color(cols = vars(period), colors = period_color)
   expect_no_error(gg)
   expect_doppelganger_deeptime("facet_grid_color with function", gg)
+  # check warnings
+  if (packageVersion("ggplot2") < "3.5.0") {
+    expect_warning(gg_base + facet_grid_color(vars(period), axes = "all"))
+    expect_warning(gg_base + facet_grid_color(vars(period),
+                                              axis.labels = "all"))
+  }
 })
 
 test_that("facet_wrap_color works", {
   skip_if_not_installed("divDyn")
-  gg <- ggplot(coral_div_dis) +
+  gg_base <- ggplot(coral_div_dis) +
     geom_col(aes(x = diet, y = n, fill = diet)) +
     scale_x_discrete("Diet", labels = NULL) +
     scale_y_continuous(expand = c(0, 0)) +
     scale_fill_viridis_d() +
     ylab("Coral Genera") +
-    facet_wrap_color(vars(period), colors = periods) +
     theme(axis.ticks.length.x = unit(0, "lines"))
+  gg <- gg_base +
+    facet_wrap_color(vars(period), colors = periods)
   expect_true(is(ggplot_build(gg)$layout$facet, "FacetWrapColor"))
   expect_true(is(ggplot_build(gg)$layout$facet, "FacetWrap"))
   gg_gtable <- ggplot_gtable(ggplot_build(gg))
@@ -61,4 +68,11 @@ test_that("facet_wrap_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_wrap_color", gg)
+
+  # check warnings
+  if (packageVersion("ggplot2") < "3.5.0") {
+    expect_warning(gg_base + facet_wrap_color(vars(period), axes = "all"))
+    expect_warning(gg_base + facet_wrap_color(vars(period),
+                                              axis.labels = "all"))
+  }
 })
