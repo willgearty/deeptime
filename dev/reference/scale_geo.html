@@ -88,8 +88,8 @@ or C) a custom data.frame of time interval boundaries
 
 <dt>...</dt>
 <dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/discrete_scale.html" class="external-link">ggplot2::discrete_scale</a></code></p><dl><dt><code>scale_name</code></dt>
-<dd><p>The name of the scale that should be used for error messages
-associated with this scale.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> The name of the scale
+that should be used for error messages associated with this scale.</p></dd>
 
     <dt><code>name</code></dt>
 <dd><p>The name of the scale. Used as the axis or legend title. If
@@ -135,6 +135,9 @@ The default, <code>TRUE</code>, uses the levels that appear in the data;
     <dt><code>guide</code></dt>
 <dd><p>A function used to create a guide or its name. See
 <code><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides()</a></code> for more information.</p></dd>
+
+    <dt><code>call</code></dt>
+<dd><p>The <code>call</code> used to construct the scale for reporting messages.</p></dd>
 
     <dt><code>super</code></dt>
 <dd><p>The super class to use for the constructed scale</p></dd>
