@@ -42,7 +42,7 @@ test_that("scales on different sides works", {
     scale_y_reverse("Time (Ma)", sec.axis = sec_axis(~.)) +
     coord_geo(dat = list("Geomagnetic Polarity Chron",
                          "Planktic foraminiferal Primary Biozones"),
-              xlim = c(6, 2), ylim = c(5.5, 0), pos = list("l", "r"), rot = 90,
+              xlim = c(2, 6), ylim = c(5.5, 0), pos = list("l", "r"), rot = 90,
               skip = "PL4", size = list(5, 4), xtrans = "sqrt") +
     theme_classic()
   expect_doppelganger_deeptime("scales on different sides1", gg)
@@ -51,7 +51,7 @@ test_that("scales on different sides works", {
     scale_x_reverse("Time (Ma)", sec.axis = sec_axis(~.)) +
     coord_geo(dat = list("Geomagnetic Polarity Chron",
                          "Planktic foraminiferal Primary Biozones"),
-              ylim = c(6, 2), xlim = c(5.5, 0), pos = list("t", "b"),
+              ylim = c(2, 6), xlim = c(5.5, 0), pos = list("t", "b"),
               skip = "PL4", size = list(5, 4), ytrans = "log10") +
     theme_classic()
   expect_doppelganger_deeptime("scales on different sides2", gg)
