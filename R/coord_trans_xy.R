@@ -4,14 +4,18 @@
 #' occurs after statistical transformation and will affect the visual appearance
 #' of geoms. The main difference is that it takes a single transformer that is
 #' applied to the x and y axes simultaneously. Any transformers produced by
-#' [ggforce::linear_trans()] that have x and y arguments should work,
-#' but any other transformers produced using [scales::trans_new()] that take x
-#' and y arguments should also work. Axis limits will be adjusted to account for
-#' transformation unless limits are specified with `xlim` or `ylim`. This only
-#' works with geoms where all points are defined with x and y
-#' coordinates (e.g., [ggplot2::geom_point()], [ggplot2::geom_polygon()]). This
-#' does not currently work with geoms where point coordinates are extrapolated
-#' (e.g., [ggplot2::geom_rect()]).
+#' [ggforce::linear_trans()] that have x and y arguments should work, but any
+#' other transformers produced using [scales::trans_new()] that take x and y
+#' arguments should also work. Axis limits will be adjusted to account for
+#' transformation unless limits are specified with `xlim` or `ylim`.
+#'
+#' @details This coordinate system only works with geoms where all points are
+#'   defined with x and y coordinates (e.g., [ggplot2::geom_point()],
+#'   [ggplot2::geom_polygon()]). This does not currently work with geoms where
+#'   point coordinates are extrapolated (e.g., [ggplot2::geom_rect()]). Also,
+#'   for ggplot2 3.5.0 and later, this coordinate system does not currently
+#'   support "capping" axes. I hope to support these geoms and features in the
+#'   future.
 #'
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto
@@ -70,7 +74,8 @@ dist_euclidean <- function(...) {
 #' @format NULL
 #' @usage NULL
 #' @importFrom ggplot2 ggproto CoordCartesian CoordTrans ggproto_parent
-#' @importFrom scales rescale
+#' @importFrom ggplot2 transform_position
+#' @importFrom scales rescale squish_infinite
 #' @export
 CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
   distance = function(self, x, y, panel_params) {
@@ -140,6 +145,7 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
                                      continuous_range = scale_range_x_sec),
         x.range = out_x$range,
         x.range.coord = range_x_coord,
+        x.full.range = final_scale_limits$x[c(1, 4)],
         x.labels = out_x$labels,
         x.major = rescale(out_x$major_source, 0:1, scale_range_x),
         x.minor = rescale(out_x$minor_source, 0:1, scale_range_x),
@@ -155,6 +161,7 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
                                      continuous_range = scale_range_y_sec),
         y.range = out_y$range,
         y.range.coord = range_y_coord,
+        y.full.range = final_scale_limits$y[c(1, 4)],
         y.labels = out_y$labels,
         y.major = rescale(out_y$major_source, 0:1, scale_range_y),
         y.minor = rescale(out_y$minor_source, 0:1, scale_range_y),
@@ -169,9 +176,19 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
   transform = function(self, data, panel_params) {
     new_data <- data
     # transform x and y coordinates
-    if ("x" %in% colnames(data)) {
-      # a bit of a hack for axis tick labels
-      if (all(data$x == -Inf)) {
+    if ("x" %in% colnames(new_data)) {
+      # hacks for axis lines
+      if (all(data$y == panel_params$y.full.range[1])) {
+        new_data$x <- rescale(data$x, 0:1, range(data$x))
+      } else if (all(data$y == panel_params$y.full.range[2])) {
+        new_data$x <- rescale(data$x, 0:1, range(data$x))
+      } else if (all(data$x == panel_params$x.full.range[1])) {
+        new_data$y <- rescale(data$y, 0:1, range(data$y))
+      } else if (all(data$x == panel_params$x.full.range[2])) {
+        new_data$y <- rescale(data$y, 0:1, range(data$y))
+      }
+      # hacks for axis tick labels
+      else if (all(new_data$x == -Inf)) {
         new_data$y <- rescale(data$y, 0:1, panel_params$y$continuous_range)
       } else if (all(data$x == Inf)) {
         new_data$y <- rescale(data$y, 0:1, panel_params$y.sec$continuous_range)
@@ -186,13 +203,13 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
       }
     }
     # transform end points for segments
-    if ("xend" %in% colnames(data)) {
-      temp_data <- self$trans$transform(data$xend, data$yend)
+    if ("xend" %in% colnames(new_data)) {
+      temp_data <- self$trans$transform(new_data$xend, data$yend)
       new_data$xend <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)
       new_data$yend <- rescale(temp_data$y, 0:1, panel_params$y.range.coord)
     }
     # TODO: transform corners for geom_rect?
-    new_data
+    transform_position(new_data, squish_infinite, squish_infinite)
   }
 )
 
