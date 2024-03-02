@@ -70,5 +70,5 @@ scale_discrete_geo <- function(dat, aesthetics, ...) {
     values
   }
 
-  discrete_scale(aesthetics, "geo", pal, breaks = names(values), ...)
+  discrete_scale(aesthetics, palette = pal, breaks = names(values), ...)
 }
