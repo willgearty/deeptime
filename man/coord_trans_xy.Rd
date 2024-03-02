@@ -43,14 +43,20 @@ legend, the plot title, or the plot margins.}
 occurs after statistical transformation and will affect the visual appearance
 of geoms. The main difference is that it takes a single transformer that is
 applied to the x and y axes simultaneously. Any transformers produced by
-\code{\link[ggforce:linear_trans]{ggforce::linear_trans()}} that have x and y arguments should work,
-but any other transformers produced using \code{\link[scales:new_transform]{scales::trans_new()}} that take x
-and y arguments should also work. Axis limits will be adjusted to account for
-transformation unless limits are specified with \code{xlim} or \code{ylim}. This only
-works with geoms where all points are defined with x and y
-coordinates (e.g., \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, \code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}}). This
-does not currently work with geoms where point coordinates are extrapolated
-(e.g., \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}}).
+\code{\link[ggforce:linear_trans]{ggforce::linear_trans()}} that have x and y arguments should work, but any
+other transformers produced using \code{\link[scales:new_transform]{scales::trans_new()}} that take x and y
+arguments should also work. Axis limits will be adjusted to account for
+transformation unless limits are specified with \code{xlim} or \code{ylim}.
+}
+\details{
+This coordinate system only works with geoms where all points are
+defined with x and y coordinates (e.g., \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}},
+\code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}}). This does not currently work with geoms where
+point coordinates are extrapolated (e.g., \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}}).
+Furthermore, when used with ggplot2 3.5.0 and later, some transformation
+edge cases may cause problems with rendering axis lines. This includes not
+currently support "capping" axes. I hope to support all of these geoms,
+edge cases, and features in the future.
 }
 \examples{
 # make transformer

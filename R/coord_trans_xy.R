@@ -12,10 +12,11 @@
 #' @details This coordinate system only works with geoms where all points are
 #'   defined with x and y coordinates (e.g., [ggplot2::geom_point()],
 #'   [ggplot2::geom_polygon()]). This does not currently work with geoms where
-#'   point coordinates are extrapolated (e.g., [ggplot2::geom_rect()]). Also,
-#'   for ggplot2 3.5.0 and later, this coordinate system does not currently
-#'   support "capping" axes. I hope to support these geoms and features in the
-#'   future.
+#'   point coordinates are extrapolated (e.g., [ggplot2::geom_rect()]).
+#'   Furthermore, when used with ggplot2 3.5.0 and later, some transformation
+#'   edge cases may cause problems with rendering axis lines. This includes not
+#'   currently support "capping" axes. I hope to support all of these geoms,
+#'   edge cases, and features in the future.
 #'
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto

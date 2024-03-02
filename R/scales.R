@@ -70,5 +70,9 @@ scale_discrete_geo <- function(dat, aesthetics, ...) {
     values
   }
 
-  discrete_scale(aesthetics, palette = pal, breaks = names(values), ...)
+  if (packageVersion("ggplot2") < "3.5.0") {
+    discrete_scale(aesthetics, "geo", pal, breaks = names(values), ...)
+  } else {
+    discrete_scale(aesthetics, palette = pal, breaks = names(values), ...)
+  }
 }
