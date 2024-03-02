@@ -18,7 +18,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.55; stroke: #FFFFFF; fill: #FFFFFF;' />
+<rect x='-0.000000000000064' y='0.00' width='720.00' height='576.00' style='stroke-width: 1.55; stroke: #FFFFFF; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpMTk3Ljg2fDYxOS42N3wzMy4xNHw1MzEuMDc='>
@@ -231,8 +231,10 @@
 <text transform='translate(18.98,282.11) rotate(-90)' text-anchor='middle' style='font-size: 16.00px; font-family: sans;' textLength='171.65px' lengthAdjust='spacingAndGlyphs'>reorder(taxon, bed, min)</text>
 <rect x='635.61' y='245.70' width='76.42' height='72.80' style='stroke-width: 1.55; stroke: none; fill: #FFFFFF;' />
 <text x='643.58' y='266.35' style='font-size: 16.00px; font-family: sans;' textLength='60.48px' lengthAdjust='spacingAndGlyphs'>certainty</text>
+<rect x='643.58' y='275.98' width='17.28' height='17.28' style='stroke-width: 1.55; stroke: none; fill: #FFFFFF;' />
 <line x1='645.31' y1='284.62' x2='659.13' y2='284.62' style='stroke-width: 1.07; stroke-dasharray: 5.69,5.69; stroke-linecap: butt;' />
 <circle cx='652.22' cy='284.62' r='2.49' style='stroke-width: 0.71; fill: #FFFFFF;' />
+<rect x='643.58' y='293.26' width='17.28' height='17.28' style='stroke-width: 1.55; stroke: none; fill: #FFFFFF;' />
 <line x1='645.31' y1='301.90' x2='659.13' y2='301.90' style='stroke-width: 1.07; stroke-linecap: butt;' />
 <circle cx='652.22' cy='301.90' r='2.49' style='stroke-width: 0.71; fill: #000000;' />
 <text x='668.83' y='289.02' style='font-size: 12.80px; font-family: sans;' textLength='7.12px' lengthAdjust='spacingAndGlyphs'>0</text>

@@ -1055,27 +1055,49 @@
 <text transform='translate(13.05,283.95) rotate(-90)' text-anchor='middle' style='font-size: 11.00px; font-family: sans;' textLength='5.50px' lengthAdjust='spacingAndGlyphs'>y</text>
 <rect x='552.27' y='175.76' width='162.25' height='216.37' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <text x='557.75' y='189.95' style='font-size: 11.00px; font-family: sans;' textLength='31.80px' lengthAdjust='spacingAndGlyphs'>Period</text>
+<rect x='557.75' y='196.57' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='205.21' r='1.95' style='stroke-width: 0.71; fill: #F9F97F;' />
+<rect x='557.75' y='213.85' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='222.49' r='1.95' style='stroke-width: 0.71; fill: #FFE619;' />
+<rect x='557.75' y='231.13' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='239.77' r='1.95' style='stroke-width: 0.71; fill: #FD9A52;' />
+<rect x='557.75' y='248.41' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='257.05' r='1.95' style='stroke-width: 0.71; fill: #7FC64E;' />
+<rect x='557.75' y='265.69' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='274.33' r='1.95' style='stroke-width: 0.71; fill: #34B2C9;' />
+<rect x='557.75' y='282.97' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='291.61' r='1.95' style='stroke-width: 0.71; fill: #812B92;' />
+<rect x='557.75' y='300.25' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='308.89' r='1.95' style='stroke-width: 0.71; fill: #F04028;' />
+<rect x='557.75' y='317.53' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='326.17' r='1.95' style='stroke-width: 0.71; fill: #67A599;' />
+<rect x='557.75' y='334.81' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='343.45' r='1.95' style='stroke-width: 0.71; fill: #CB8C37;' />
+<rect x='557.75' y='352.09' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='360.73' r='1.95' style='stroke-width: 0.71; fill: #B3E1B6;' />
+<rect x='557.75' y='369.37' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='566.39' cy='378.01' r='1.95' style='stroke-width: 0.71; fill: #009270;' />
+<rect x='641.27' y='196.57' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='205.21' r='1.95' style='stroke-width: 0.71; fill: #7FA056;' />
+<rect x='641.27' y='213.85' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='222.49' r='1.95' style='stroke-width: 0.71; fill: #FFC3E1;' />
+<rect x='641.27' y='231.13' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='239.77' r='1.95' style='stroke-width: 0.71; fill: #FFAFD7;' />
+<rect x='641.27' y='248.41' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='257.05' r='1.95' style='stroke-width: 0.71; fill: #FFA5D2;' />
+<rect x='641.27' y='265.69' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='274.33' r='1.95' style='stroke-width: 0.71; fill: #FFA5D2;' />
+<rect x='641.27' y='282.97' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='291.61' r='1.95' style='stroke-width: 0.71; fill: #FF98CC;' />
+<rect x='641.27' y='300.25' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='308.89' r='1.95' style='stroke-width: 0.71; fill: #FF8BC5;' />
+<rect x='641.27' y='317.53' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='326.17' r='1.95' style='stroke-width: 0.71; fill: #EE93C1;' />
+<rect x='641.27' y='334.81' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='343.45' r='1.95' style='stroke-width: 0.71; fill: #E874AF;' />
+<rect x='641.27' y='352.09' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='360.73' r='1.95' style='stroke-width: 0.71; fill: #EB84B8;' />
+<rect x='641.27' y='369.37' width='17.28' height='17.28' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
 <circle cx='649.91' cy='378.01' r='1.95' style='stroke-width: 0.71; fill: #E874AF;' />
 <text x='580.51' y='208.24' style='font-size: 8.80px; font-family: sans;' textLength='44.03px' lengthAdjust='spacingAndGlyphs'>Quaternary</text>
 <text x='580.51' y='225.52' style='font-size: 8.80px; font-family: sans;' textLength='35.72px' lengthAdjust='spacingAndGlyphs'>Neogene</text>
