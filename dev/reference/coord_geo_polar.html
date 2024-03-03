@@ -206,17 +206,18 @@ scales (and recycled as necessary).</p>
 <p>If the sum of the <code>prop</code> values is greater than 1, the proportions will be
 scaled such that they sum to 1. However, the <code>prop</code> values may sum to less
 than 1 if the user would like blank space in the background.</p>
-<p>The <code>axis.line.r</code>, <code>axis.text.r</code>, <code>axis.ticks.r</code>, and <code>axis.ticks.length.r</code>
-ggplot2 <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme elements</a> can be modified just like their x
-and y counterparts to change the appearance of the radius axis. The default
-settings work well for a horizontal axis pointing towards the right, but
-these theme settings will need to be modified for other orientations. The
-default value for <code>axis.line.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for
-<code>axis.text.r</code> is <code>element_text(size = 3.5, vjust = -2, hjust = NA)</code>. The
-default value for <code>axis.ticks.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for
-<code>axis.ticks.length.r</code> is <code>unit(1.5, "points")</code>. However, note that the units
-for this element are meaningless and only the numeric value will be used (but
-a <code>unit</code> must still be used).</p>
+<p>The <code>deeptime.axis.line.r</code>, <code>deeptime.axis.text.r</code>, <code>deeptime.axis.ticks.r</code>,
+and <code>deeptime.axis.ticks.length.r</code> ggplot2 <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme elements</a>
+can be modified just like their x and y counterparts to change the appearance
+of the radius axis. The default settings work well for a horizontal axis
+pointing towards the right, but these theme settings will need to be modified
+for other orientations. The default value for <code>deeptime.axis.line.r</code> is
+<code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for <code>deeptime.axis.text.r</code> is
+<code>element_text(size = 3.5, vjust = -2, hjust = NA)</code>. The default value for
+<code>deeptime.axis.ticks.r</code> is <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for
+<code>deeptime.axis.ticks.length.r</code> is <code>unit(1.5, "points")</code>. However, note that
+the units for this element are meaningless and only the numeric value will be
+used (but a <code>unit</code> must still be used).</p>
 <p>Care must be taken when adding labels to plots, as they are very likely to
 overlap with the plot under the default settings. The <code>textpath_args</code>
 argument can be used to adjust the settings for the plotting of the labels.
@@ -243,7 +244,8 @@ distance from the origin. This is why <code>abbrv</code> is set to <code>TRUE</c
 <span class="r-in"><span>    prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">.25</span><span class="op">)</span>, start <span class="op">=</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">4</span>, lty <span class="op">=</span> <span class="st">"dashed"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.02</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.r <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3.5</span>, hjust <span class="op">=</span> <span class="fl">.75</span>, vjust <span class="op">=</span> <span class="fl">.75</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>deeptime.axis.text.r <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3.5</span>, hjust <span class="op">=</span> <span class="fl">.75</span>,</span></span>
+<span class="r-in"><span>                                            vjust <span class="op">=</span> <span class="fl">.75</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span>
 <span class="r-plt img"><img src="coord_geo_polar-2.png" alt="" width="700" height="433"></span>
