@@ -27,6 +27,7 @@
 #' @inheritParams ggplot2::facet_grid
 #' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
 #' @importFrom rlang arg_match0 is_function
+#' @importFrom utils packageVersion
 #' @export
 #'
 #' @examples
@@ -213,6 +214,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
+#' @importFrom utils packageVersion
 #' @export
 #'
 #' @examples
