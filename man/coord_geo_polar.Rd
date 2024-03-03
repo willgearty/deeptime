@@ -112,17 +112,18 @@ If the sum of the \code{prop} values is greater than 1, the proportions will be
 scaled such that they sum to 1. However, the \code{prop} values may sum to less
 than 1 if the user would like blank space in the background.
 
-The \code{axis.line.r}, \code{axis.text.r}, \code{axis.ticks.r}, and \code{axis.ticks.length.r}
-ggplot2 \link[ggplot2:theme]{theme elements} can be modified just like their x
-and y counterparts to change the appearance of the radius axis. The default
-settings work well for a horizontal axis pointing towards the right, but
-these theme settings will need to be modified for other orientations. The
-default value for \code{axis.line.r} is \code{element_line()}. The default value for
-\code{axis.text.r} is \code{element_text(size = 3.5, vjust = -2, hjust = NA)}. The
-default value for \code{axis.ticks.r} is \code{element_line()}. The default value for
-\code{axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that the units
-for this element are meaningless and only the numeric value will be used (but
-a \code{unit} must still be used).
+The \code{deeptime.axis.line.r}, \code{deeptime.axis.text.r}, \code{deeptime.axis.ticks.r},
+and \code{deeptime.axis.ticks.length.r} ggplot2 \link[ggplot2:theme]{theme elements}
+can be modified just like their x and y counterparts to change the appearance
+of the radius axis. The default settings work well for a horizontal axis
+pointing towards the right, but these theme settings will need to be modified
+for other orientations. The default value for \code{deeptime.axis.line.r} is
+\code{element_line()}. The default value for \code{deeptime.axis.text.r} is
+\code{element_text(size = 3.5, vjust = -2, hjust = NA)}. The default value for
+\code{deeptime.axis.ticks.r} is \code{element_line()}. The default value for
+\code{deeptime.axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that
+the units for this element are meaningless and only the numeric value will be
+used (but a \code{unit} must still be used).
 
 Care must be taken when adding labels to plots, as they are very likely to
 overlap with the plot under the default settings. The \code{textpath_args}
@@ -148,7 +149,8 @@ revts(ggtree(tree)) +
     prop = list(0.75, .25), start = pi / 4, lty = "dashed"
   ) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02))) +
-  theme(axis.text.r = element_text(size = 3.5, hjust = .75, vjust = .75))
+  theme(deeptime.axis.text.r = element_text(size = 3.5, hjust = .75,
+                                            vjust = .75))
 \dontshow{\}) # examplesIf}
 \dontshow{if (require(ggtree) && require(paleotree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2)

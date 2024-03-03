@@ -32,17 +32,18 @@
 #' scaled such that they sum to 1. However, the `prop` values may sum to less
 #' than 1 if the user would like blank space in the background.
 #'
-#' The `axis.line.r`, `axis.text.r`, `axis.ticks.r`, and `axis.ticks.length.r`
-#' ggplot2 [theme elements][ggplot2::theme] can be modified just like their x
-#' and y counterparts to change the appearance of the radius axis. The default
-#' settings work well for a horizontal axis pointing towards the right, but
-#' these theme settings will need to be modified for other orientations. The
-#' default value for `axis.line.r` is `element_line()`. The default value for
-#' `axis.text.r` is `element_text(size = 3.5, vjust = -2, hjust = NA)`. The
-#' default value for `axis.ticks.r` is `element_line()`. The default value for
-#' `axis.ticks.length.r` is `unit(1.5, "points")`. However, note that the units
-#' for this element are meaningless and only the numeric value will be used (but
-#' a `unit` must still be used).
+#' The `deeptime.axis.line.r`, `deeptime.axis.text.r`, `deeptime.axis.ticks.r`,
+#' and `deeptime.axis.ticks.length.r` ggplot2 [theme elements][ggplot2::theme]
+#' can be modified just like their x and y counterparts to change the appearance
+#' of the radius axis. The default settings work well for a horizontal axis
+#' pointing towards the right, but these theme settings will need to be modified
+#' for other orientations. The default value for `deeptime.axis.line.r` is
+#' `element_line()`. The default value for `deeptime.axis.text.r` is
+#' `element_text(size = 3.5, vjust = -2, hjust = NA)`. The default value for
+#' `deeptime.axis.ticks.r` is `element_line()`. The default value for
+#' `deeptime.axis.ticks.length.r` is `unit(1.5, "points")`. However, note that
+#' the units for this element are meaningless and only the numeric value will be
+#' used (but a `unit` must still be used).
 #'
 #' Care must be taken when adding labels to plots, as they are very likely to
 #' overlap with the plot under the default settings. The `textpath_args`
@@ -101,7 +102,8 @@
 #'     prop = list(0.75, .25), start = pi / 4, lty = "dashed"
 #'   ) +
 #'   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02))) +
-#'   theme(axis.text.r = element_text(size = 3.5, hjust = .75, vjust = .75))
+#'   theme(deeptime.axis.text.r = element_text(size = 3.5, hjust = .75,
+#'                                             vjust = .75))
 #' @examplesIf require(ggtree) && require(paleotree)
 #' library(ggplot2)
 #' library(paleotree)
@@ -288,10 +290,10 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     }
 
     # add an axis
-    axis_line <- calc_element("axis.line.r", theme)
-    axis_text <- calc_element("axis.text.r", theme)
-    axis_ticks <- calc_element("axis.ticks.r", theme)
-    axis_ticks_length <- calc_element("axis.ticks.length.r", theme)
+    axis_line <- calc_element("deeptime.axis.line.r", theme)
+    axis_text <- calc_element("deeptime.axis.text.r", theme)
+    axis_ticks <- calc_element("deeptime.axis.ticks.r", theme)
+    axis_ticks_length <- calc_element("deeptime.axis.ticks.length.r", theme)
     if (!is(axis_line, "element_blank")) {
       geo_scale <- geo_scale +
         geom_vline(

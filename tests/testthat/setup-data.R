@@ -68,7 +68,7 @@ str_standardise <- function(s, sep = "-") {
 expect_doppelganger_deeptime <- function(title, fig) {
   title_new <- paste(title, "new")
   title_old <- paste(title, "old")
-  if (packageVersion("ggplot2") > "3.3.6") {
+  if (packageVersion("ggplot2") >= "3.5.0") {
     fig_name <- str_standardise(title_old)
     file <- paste0(fig_name, ".svg")
     announce_snapshot_file(name = file)
