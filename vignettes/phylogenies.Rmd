@@ -73,7 +73,7 @@ revts(ggtree(mammal.tree)) +
   ) +
   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02))) +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20))) +
-  theme(axis.text.r = element_text(size = 3.5, hjust = .25, vjust = .5))
+  theme(deeptime.axis.text.r = element_text(size = 3.5, hjust = .25, vjust = .5))
 ```
 
 ### Disclaimer
