@@ -40,9 +40,12 @@ test_that("facet_grid_color works", {
   expect_doppelganger_deeptime("facet_grid_color with function", gg)
   # check warnings
   if (packageVersion("ggplot2") < "3.5.0") {
-    expect_warning(gg_base + facet_grid_color(vars(period), axes = "all"))
-    expect_warning(gg_base + facet_grid_color(vars(period),
-                                              axis.labels = "all"))
+    expect_warning({
+      gg_base + facet_grid_color(vars(period), axes = "all")
+    })
+    expect_warning({
+      gg_base + facet_grid_color(vars(period), axis.labels = "all_x")
+    })
   }
 })
 
@@ -71,8 +74,11 @@ test_that("facet_wrap_color works", {
 
   # check warnings
   if (packageVersion("ggplot2") < "3.5.0") {
-    expect_warning(gg_base + facet_wrap_color(vars(period), axes = "all"))
-    expect_warning(gg_base + facet_wrap_color(vars(period),
-                                              axis.labels = "all"))
+    expect_warning({
+      gg_base + facet_wrap_color(vars(period), axes = "all")
+    })
+    expect_warning({
+      gg_base + facet_wrap_color(vars(period), axis.labels = "all_x")
+    })
   }
 })

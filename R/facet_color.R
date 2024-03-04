@@ -254,6 +254,15 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
       x = free$x || !draw_axes$x || any(axis_labels %in% c("all_x", "all")),
       y = free$y || !draw_axes$y || any(axis_labels %in% c("all_y", "all"))
     )
+  } else {
+    if (axes != "margins") {
+      warning("The `axes` argument is only supported for ggplot2 3.5.0 and
+              later.")
+    }
+    if (axis.labels != "all") {
+      warning("The `axis.labels` argument is only supported for ggplot2 3.5.0
+              and later.")
+    }
   }
 
   # Check for deprecated labellers
