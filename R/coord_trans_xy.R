@@ -222,7 +222,7 @@ if (packageVersion("ggplot2") >= "3.5.0") {
   view_scale_secondary <- function(...) {
     asNamespace("ggplot2")$view_scale_secondary(...)
   }
-} else {
+} else { # nocov start
   scale_flip_position <- function(scale) {
     scale$position <- switch(scale$position,
                              top = "bottom",
@@ -334,5 +334,5 @@ if (packageVersion("ggplot2") >= "3.5.0") {
       self$rescale(b)
     }
   )
-}
+} # nocov end
 
