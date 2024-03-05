@@ -12,7 +12,7 @@ deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces s
 
 Notable changes:
 
-* The names for the theme elements that are used for coord_geo_polar are now prepended with "deeptime." (e.g., `deeptime.axis.line.r`) (#51)
+* The names for the theme elements that are used for coord_geo_polar() are now prepended with "deeptime." (e.g., `deeptime.axis.line.r`) (#51)
 * ggplot2 version 3.5.0 has broken several edge cases of coord_trans_xy(). See the documentation for more details. This will be fixed in a future deeptime release.
 
 # deeptime 1.0.1
