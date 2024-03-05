@@ -149,7 +149,7 @@ distance from the origin. This is why \code{abbrv} is set to \code{TRUE} by defa
 }
 \examples{
 library(ggplot2)
-\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree) && packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggtree)
 set.seed(1)
 tree <- rtree(100)

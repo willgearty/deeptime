@@ -50,7 +50,7 @@
 #' @export
 #' @examples
 #' library(ggplot2)
-#' @examplesIf require(ggtree)
+#' @examplesIf require(ggtree) && packageVersion("ggplot2") >= "3.5.0"
 #' library(ggtree)
 #' set.seed(1)
 #' tree <- rtree(100)
