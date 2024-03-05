@@ -69,7 +69,7 @@
 #'   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02)),
 #'                      guide = "none", breaks = NULL) +
 #'   theme_gray()
-#' @examplesIf require(ggtree) && require(paleotree)
+#' @examplesIf require(ggtree) && require(paleotree) && packageVersion("ggplot2") >= "3.5.0"
 #' library(ggplot2)
 #' library(paleotree)
 #' data(RaiaCopesRule)

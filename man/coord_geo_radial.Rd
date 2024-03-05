@@ -169,7 +169,7 @@ revts(ggtree(tree)) +
                      guide = "none", breaks = NULL) +
   theme_gray()
 \dontshow{\}) # examplesIf}
-\dontshow{if (require(ggtree) && require(paleotree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree) && require(paleotree) && packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2)
 library(paleotree)
 data(RaiaCopesRule)
