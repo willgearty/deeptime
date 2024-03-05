@@ -56,8 +56,8 @@ ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$r
 ```
 
 ## Circular phylogenies
-Phylogenies can be plotted in a circular layout with a timescale background using the `coord_geo_radial()` function. It works just like `coord_geo()` and has many of the same arguments.
-```{r message = FALSE}
+Phylogenies can be plotted in a circular layout with a timescale background using the `coord_geo_radial()` function. It works just like `coord_geo()` and has many of the same arguments. Note that `coord_geo_radial()` only works with ggplot2 version 3.5.0 and higher. For other versions of ggplot2, you can use `coord_geo_polar()`.
+```{r message = FALSE, error = FALSE}
 revts(ggtree(mammal.tree)) +
   coord_geo_radial(dat = "stages") +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20))) +
@@ -67,7 +67,7 @@ revts(ggtree(mammal.tree)) +
 
 ### Circular phylogenies with "stacked" timescales
 Timescales can even be "stacked" like with `coord_geo()`, although the stacking occurs in a circular fashion. In this case, we use `scale_y_continuous()` to add a small expansion to the y-axis (which is now the theta axis) so the numbers don't overlap with the phylogeny. We also use the `prop`, `start`, `end`, and `direction` arguments to specify how the different timescales are oriented and split within the polar space.
-```{r message = FALSE}
+```{r message = FALSE, error = FALSE}
 revts(ggtree(mammal.tree)) +
   coord_geo_radial(
     dat = list("stages", "periods"), alpha = .5, lty = "dashed",
