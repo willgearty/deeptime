@@ -77,6 +77,7 @@ reference:
     that are plotted with [ggtree](https://www.bioconductor.org/packages/ggtree).
   contents:
   - coord_geo
+  - coord_geo_radial
   - coord_geo_polar
   - scale_color_geo
   - get_scale_data

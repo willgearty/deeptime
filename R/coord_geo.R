@@ -134,6 +134,8 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   if (is.character(xtrans)) xtrans <- as.trans(xtrans)
   if (is.character(ytrans)) ytrans <- as.trans(ytrans)
 
+  # TODO: check arguments
+
   pos <- as.list(pos)
   n_scales <- length(pos)
 

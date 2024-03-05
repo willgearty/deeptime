@@ -1,10 +1,13 @@
 #' Polar coordinate system with geological timescale
+#' @description
+#' `r lifecycle::badge('deprecated')`
 #'
 #' `coord_geo_polar` behaves similarly to [ggplot2::coord_polar()] in that it
 #' occurs after statistical transformation and will affect the visual appearance
 #' of geoms. The main difference is that it also adds a geological timescale to
 #' the background of the plot.
 #'
+#' @details
 #' If a custom data.frame is provided (with `dat`), it should consist of at
 #' least 2 columns of data. See `data(periods)` for an example.
 #' \itemize{
@@ -51,6 +54,12 @@
 #' See [geomtextpath::geom_textpath()] for details about the available
 #' arguments. Also note that the curvature of the labels may vary based on the
 #' distance from the origin. This is why `abbrv` is set to `TRUE` by default.
+#'
+#' @section Life cycle: This function is soft-deprecated in favor of
+#'   [coord_geo_radial()] as of **deeptime** version 1.1.0. There is currently
+#'   no plan to remove this function, but users are strongly encouraged to
+#'   migrate to the new function for enhanced polar functionality. Note that
+#'   [coord_geo_radial()] requires ggplot2 version 3.5.0 or later.
 #'
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"), B) a
@@ -119,11 +128,14 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
                             skip = c("Quaternary", "Holocene",
                                      "Late Pleistocene"),
                             neg = TRUE, prop = 1, textpath_args = list()) {
+  lifecycle::deprecate_soft("1.1.0", "coord_geo_polar()", "coord_geo_radial()")
   dat <- make_list(dat)
   n_scales <- length(dat)
 
   theta <- arg_match0(theta, c("x", "y"))
   r <- if (theta == "x") "y" else "x"
+
+  # TODO: check arguments
 
   ggproto(NULL, CoordGeoPolar,
     theta = theta, r = r,
@@ -169,6 +181,46 @@ ggname <- function(prefix, grob) {
   grob
 }
 
+clean_dat <- function(dat, fill, neg, r_lims) {
+  if (is(dat, "data.frame")) {
+    # just use the supplied data
+  } else {
+    dat <- get_scale_data(dat)
+  }
+
+  if (neg) {
+    dat$max_age <- -1 * (dat$max_age)
+    dat$min_age <- -1 * (dat$min_age)
+  }
+
+  if (!is.null(fill)) {
+    dat$color <- rep(fill, length.out = nrow(dat))
+  } else if (!("color" %in% colnames(dat))) {
+    dat$color <- rep(c("grey60", "grey80"), length.out = nrow(dat))
+  }
+
+  if (neg) {
+    dat$max_age[
+      (dat$max_age < min(r_lims) & dat$min_age < min(r_lims)) |
+        (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))
+    ] <- min(r_lims)
+    dat$min_age[
+      (dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
+        (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))
+    ] <- max(r_lims)
+  } else {
+    dat$max_age[
+      (dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
+        (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))
+    ] <- max(r_lims)
+    dat$min_age[
+      (dat$max_age > min(r_lims) & dat$min_age < min(r_lims)) |
+        (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))
+    ] <- min(r_lims)
+  }
+  subset(dat, max_age <= max(r_lims) & min_age >= min(r_lims))
+}
+
 #' @rdname coord_geo_polar
 #' @format NULL
 #' @usage NULL
@@ -187,50 +239,11 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     r_lims <- panel_params$r.range
 
     # convert, subset, and adjust data
-    clean_dat <- function(dat, fill, neg) {
-      if (is(dat, "data.frame")) {
-        # just use the supplied data
-      } else {
-        dat <- get_scale_data(dat)
-      }
-
-      if (neg) {
-        dat$max_age <- -1 * (dat$max_age)
-        dat$min_age <- -1 * (dat$min_age)
-      }
-
-      if (!is.null(fill)) {
-        dat$color <- rep(fill, length.out = nrow(dat))
-      } else if (!("color" %in% colnames(dat))) {
-        dat$color <- rep(c("grey60", "grey80"), length.out = nrow(dat))
-      }
-
-      if (neg) {
-        dat$max_age[
-          (dat$max_age < min(r_lims) & dat$min_age < min(r_lims)) |
-            (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))
-        ] <- min(r_lims)
-        dat$min_age[
-          (dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
-            (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))
-        ] <- max(r_lims)
-      } else {
-        dat$max_age[
-          (dat$max_age > max(r_lims) & dat$min_age < max(r_lims)) |
-            (dat$max_age < max(r_lims) & dat$min_age > max(r_lims))
-        ] <- max(r_lims)
-        dat$min_age[
-          (dat$max_age > min(r_lims) & dat$min_age < min(r_lims)) |
-            (dat$max_age < min(r_lims) & dat$min_age > min(r_lims))
-        ] <- min(r_lims)
-      }
-      subset(dat, max_age <= max(r_lims) & min_age >= min(r_lims))
-    }
-
     dat_list <- mapply(clean_dat,
       dat = self$dat,
       fill = self$fill,
       neg = self$neg,
+      MoreArgs = list(r_lims = r_lims),
       SIMPLIFY = FALSE
     )
 
