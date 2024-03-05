@@ -140,14 +140,19 @@ coord_geo_radial <- function(dat = "periods",
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom ggplot2 ggproto CoordRadial ggproto_parent coord_polar theme_void
+#' @importFrom ggplot2 ggproto ggproto_parent coord_polar theme_void
 #' @importFrom ggplot2 geom_vline geom_rect geom_segment
 #' @importFrom ggplot2 scale_x_continuous scale_fill_manual calc_element
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||% exec
 #' @importFrom geomtextpath geom_textpath
-CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
+CoordGeoRadial <- ggproto("CoordGeoRadial",
+                          if (packageVersion("ggplot2") >= "3.5.0") {
+                            ggplot2::CoordRadial
+                          } else {
+                            ggplot2::Coord
+                          },
   render_bg = function(self, panel_params, theme) {
     panel_params <- rename_data(self, panel_params)
     # do the new coord_geo_radial background stuff
