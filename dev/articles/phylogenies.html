@@ -167,8 +167,10 @@ timescale.</p>
 </h2>
 <p>Phylogenies can be plotted in a circular layout with a timescale
 background using the <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> function. It works
-just like <code><a href="../reference/coord_geo.html">coord_geo()</a></code> and has many of the same
-arguments.</p>
+just like <code><a href="../reference/coord_geo.html">coord_geo()</a></code> and has many of the same arguments.
+Note that <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> only works with ggplot2
+version 3.5.0 and higher. For other versions of ggplot2, you can use
+<code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/revts.html" class="external-link">revts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html" class="external-link">ggtree</a></span><span class="op">(</span><span class="va">mammal.tree</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/coord_geo_radial.html">coord_geo_radial</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="st">"stages"</span><span class="op">)</span> <span class="op">+</span></span>
