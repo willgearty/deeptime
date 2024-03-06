@@ -16,7 +16,7 @@ knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align 
 The main function of __deeptime__ is `coord_geo()`, which functions just like `coord_trans()` from `{ggplot2}`.
 You can use this function to add highly customizable timescales to a wide variety of ggplots. Before we begin, let's load some necessary packages first.
 
-```{r message = FALSE}
+```{r message = FALSE, warning = FALSE}
 # Load deeptime
 library(deeptime)
 # Load other packages
@@ -52,7 +52,7 @@ ggplot(coral_div) +
 
 ### Scales on other axes
 You can add the timescale to whichever axis you'd like by setting the `pos` argument. For example, `pos = "left"` can be used to put the timescale on the left axis. Also, note that we're using the "Geomagnetic Polarity Chron" timescale here. This is one of more than 35 regional and global timescales that are available through __deeptime__ from the [Macrostrat](https://macrostrat.org/api/defs/timescales?all) database (see `get_scale_data()`).
-```{r}
+```{r eval = FALSE}
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
   scale_y_reverse("Time (Ma)") +
@@ -64,9 +64,13 @@ ggplot(lisiecki2005) +
   theme_classic()
 ```
 
+<div class="figure">
+<img src="coord_geo-1.png" alt="plot of oxygen isotope data with a geomagnetic polarity chron timescale on the y-axis" width="100%" />
+</div>
+
 ### Add multiple timescales
 You can also add multiple timescales by providing a list for `pos`. Other arguments can be lists or single values (either of which will be recycled if necessary). In this case we are adding the "Geomagnetic Polarity Chron" timescale to the left axis and the "Planktic foraminiferal Primary Biozones" timescale to the right axis.
-```{r}
+```{r eval = FALSE}
 # uses the oxygen isotope data from above
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
@@ -79,6 +83,10 @@ ggplot(lisiecki2005) +
   ) +
   theme_classic()
 ```
+
+<div class="figure">
+<img src="coord_geo-2.png" alt="plot of oxygen isotope data with a geomagnetic polarity chron timescale on the left y-axis and plantic foraminiferal biozones on the right y-axis" width="100%" />
+</div>
 
 ### Stack multiple scales
 You can even stack multiple timescales on the same side. Scales are added from the inside to the outside. Here we are stacking periods and eras.

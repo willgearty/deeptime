@@ -85,6 +85,7 @@
 #' p <- gggeo_scale_old(p, dat = "epochs", gap = .03, height = .1, rot = 90,
 #'                      size = 2.5, abbrv = FALSE)
 #'
+#' \dontrun{
 #' # intervals on both sides for different timescales (ICS stages vs North
 #' # American Land Mammal Ages)
 #' p <- ggplot() +
@@ -96,6 +97,7 @@
 #'                      size = 2.5, abbrv = FALSE)
 #' gggeo_scale_old(p, dat = "North American Land Mammal Ages", pos = "right",
 #'                 height = .1, size = 2.5, abbrv = FALSE)
+#' }
 #'
 #' # can add scales to a faceted plot
 #' df <- data.frame(x = runif(1000, 0, 541), y = runif(1000, .5, 8),

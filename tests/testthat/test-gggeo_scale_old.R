@@ -22,6 +22,7 @@ test_that("gggeo_scale_old() works", {
   expect_doppelganger_deeptime("gggeo_scale_old()", gg)
 
   skip_if_not_installed("gsloid")
+  skip_if_offline(host = "macrostrat.org")
   p <- ggplot(lisiecki2005) +
     geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
     scale_y_reverse("Time (Ma)") +

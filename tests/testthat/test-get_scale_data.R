@@ -1,4 +1,5 @@
 test_that("get_scale_data works", {
+  skip_if_offline(host = "macrostrat.org")
   expect_named(get_scale_data("stages"),
                c("name", "max_age", "min_age", "abbr", "color"))
   expect_equal(get_scale_data("stages"), deeptime::stages)
