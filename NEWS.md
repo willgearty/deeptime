@@ -3,6 +3,7 @@
 This patch version includes several bug fixes:
 
 * Fixed several cases where vignette and documentation building and/or unit testing would fail when the Macrostrat API was down
+* Fixed coord_geo_polar() and coord_geo_radial() when the r-axis has expansion (#60)
 
 # deeptime 1.1.0
 deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces several new features and bug fixes:

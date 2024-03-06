@@ -110,7 +110,12 @@ of geoms. The main difference is that it also adds a geological timescale to
 the background of the plot. \code{coord_geo_radial} is similar to
 \code{\link[=coord_geo_polar]{coord_geo_polar()}} but has more options related to the polar coordinate
 plotting that are inherited from \code{\link[ggplot2:coord_polar]{ggplot2::coord_radial()}} (e.g., \code{end},
-\code{r_axis_inside}, \code{inner.radius}).
+\code{r_axis_inside}, \code{inner.radius}). Furthermore, unlike \code{coord_geo_polar},
+\code{coord_geo_radial} uses the ggplot2 internals to draw the \code{r} and \code{theta}
+axes, gridlines, etc. This means that users can tweak the
+\link[ggplot2:guides]{guide} and \link[ggplot2:theme]{theme} settings for these
+features (see examples). Note that \code{coord_geo_radial} requires ggplot2 v.
+3.5.0 or later.
 }
 \details{
 If a custom data.frame is provided (with \code{dat}), it should consist of at

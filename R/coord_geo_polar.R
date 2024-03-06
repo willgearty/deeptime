@@ -35,10 +35,12 @@
 #' scaled such that they sum to 1. However, the `prop` values may sum to less
 #' than 1 if the user would like blank space in the background.
 #'
-#' The `deeptime.axis.line.r`, `deeptime.axis.text.r`, `deeptime.axis.ticks.r`,
-#' and `deeptime.axis.ticks.length.r` ggplot2 [theme elements][ggplot2::theme]
-#' can be modified just like their x and y counterparts to change the appearance
-#' of the radius axis. The default settings work well for a horizontal axis
+#' `coord_geo_polar` manually generates the `r` axis, meaning it does not
+#' support changing the guide features of ggplot v. 2.5.0 or later. However, the
+#' `deeptime.axis.line.r`, `deeptime.axis.text.r`, `deeptime.axis.ticks.r`, and
+#' `deeptime.axis.ticks.length.r` ggplot2 [theme elements][ggplot2::theme] can
+#' be modified just like their x and y counterparts to change the appearance of
+#' the radius axis. The default settings work well for a horizontal axis
 #' pointing towards the right, but these theme settings will need to be modified
 #' for other orientations. The default value for `deeptime.axis.line.r` is
 #' `element_line()`. The default value for `deeptime.axis.text.r` is
@@ -349,19 +351,24 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     # should there be an axis label?
 
     colors <- do.call(c, lapply(dat_list, function(dat) dat$color))
+
     geo_scale <- geo_scale +
       coord_polar(start = self$start, direction = self$direction,
                   clip = self$clip) +
       scale_fill_manual(values = setNames(colors, colors)) +
       scale_x_continuous(limits = c(0, 1)) +
+      scale_y_continuous(limits = r_lims) +
       theme_void()
 
     # do the normal coord_polar background stuff
     parent <- ggproto_parent(CoordPolar, self)
     bg <- parent$render_bg(panel_params, theme)
 
+    # if the axis ends at zero, the tick mark is clipped, but that warning would
+    # probably be confusing to users
+    suppressWarnings({geo_scale_grob <- ggplotGrob(geo_scale)})
     # insert the geo_scale into the gTree, then reorder
-    bg <- addGrob(bg, ggname("geo_scale", ggplotGrob(geo_scale)))
+    bg <- addGrob(bg, ggname("geo_scale", geo_scale_grob))
     reorderGrob(bg, order = c(1, length(grid.ls(bg, print = FALSE)$name) - 1))
   }
 )

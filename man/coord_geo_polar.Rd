@@ -114,10 +114,12 @@ If the sum of the \code{prop} values is greater than 1, the proportions will be
 scaled such that they sum to 1. However, the \code{prop} values may sum to less
 than 1 if the user would like blank space in the background.
 
-The \code{deeptime.axis.line.r}, \code{deeptime.axis.text.r}, \code{deeptime.axis.ticks.r},
-and \code{deeptime.axis.ticks.length.r} ggplot2 \link[ggplot2:theme]{theme elements}
-can be modified just like their x and y counterparts to change the appearance
-of the radius axis. The default settings work well for a horizontal axis
+\code{coord_geo_polar} manually generates the \code{r} axis, meaning it does not
+support changing the guide features of ggplot v. 2.5.0 or later. However, the
+\code{deeptime.axis.line.r}, \code{deeptime.axis.text.r}, \code{deeptime.axis.ticks.r}, and
+\code{deeptime.axis.ticks.length.r} ggplot2 \link[ggplot2:theme]{theme elements} can
+be modified just like their x and y counterparts to change the appearance of
+the radius axis. The default settings work well for a horizontal axis
 pointing towards the right, but these theme settings will need to be modified
 for other orientations. The default value for \code{deeptime.axis.line.r} is
 \code{element_line()}. The default value for \code{deeptime.axis.text.r} is
