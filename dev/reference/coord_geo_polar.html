@@ -209,10 +209,12 @@ scales (and recycled as necessary).</p>
 <p>If the sum of the <code>prop</code> values is greater than 1, the proportions will be
 scaled such that they sum to 1. However, the <code>prop</code> values may sum to less
 than 1 if the user would like blank space in the background.</p>
-<p>The <code>deeptime.axis.line.r</code>, <code>deeptime.axis.text.r</code>, <code>deeptime.axis.ticks.r</code>,
-and <code>deeptime.axis.ticks.length.r</code> ggplot2 <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme elements</a>
-can be modified just like their x and y counterparts to change the appearance
-of the radius axis. The default settings work well for a horizontal axis
+<p><code>coord_geo_polar</code> manually generates the <code>r</code> axis, meaning it does not
+support changing the guide features of ggplot v. 2.5.0 or later. However, the
+<code>deeptime.axis.line.r</code>, <code>deeptime.axis.text.r</code>, <code>deeptime.axis.ticks.r</code>, and
+<code>deeptime.axis.ticks.length.r</code> ggplot2 <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme elements</a> can
+be modified just like their x and y counterparts to change the appearance of
+the radius axis. The default settings work well for a horizontal axis
 pointing towards the right, but these theme settings will need to be modified
 for other orientations. The default value for <code>deeptime.axis.line.r</code> is
 <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line()</a></code>. The default value for <code>deeptime.axis.text.r</code> is
