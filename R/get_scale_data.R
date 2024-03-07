@@ -45,7 +45,7 @@ get_scale_data <- function(name) {
   } else {
     # try to get the timescale from macrostrat
     # check that we are online and macrostrat is online
-    tryCatch(
+    tryCatch(# nocov start
       {
         nslookup("macrostrat.org")
       },
@@ -53,7 +53,7 @@ get_scale_data <- function(name) {
         cli::cli_abort("Macrostrat is not available. Either the site is down or
                        you are not connected to the internet.")
       }
-    )
+    )# nocov end
     URL <- url(paste0("https://macrostrat.org/api/v2/defs/intervals",
                       "?format=csv&timescale=", gsub(" ", "%20", name)))
     raw_dat <- tryCatch(

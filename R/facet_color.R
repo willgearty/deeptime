@@ -75,19 +75,20 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
 
     # Omitting labels is special-cased internally, so even when no internal axes
     # are to be drawn, register as labelled.
-    axis_labels <- arg_match0(axis.labels, c("margins", "all_x", "all_y", "all"))
+    axis_labels <- arg_match0(axis.labels, c("margins", "all_x",
+                                             "all_y", "all"))
     axis_labels <- list(
       x = !draw_axes$x || any(axis_labels %in% c("all_x", "all")),
       y = !draw_axes$y || any(axis_labels %in% c("all_y", "all"))
     )
   } else { # nocov start
     if (axes != "margins") {
-      warning("The `axes` argument is only supported for ggplot2 3.5.0 and
-              later.")
+      cli::cli_warn("The `axes` argument is only supported for ggplot2 3.5.0 and
+                    later.")
     }
     if (axis.labels != "all") {
-      warning("The `axis.labels` argument is only supported for ggplot2 3.5.0
-              and later.")
+      cli::cli_warn("The `axis.labels` argument is only supported for ggplot2
+                    3.5.0 and later.")
     }
   } # nocov end
 
@@ -147,12 +148,12 @@ convert_colors <- function(colors) {
           if (x %in% name) color[which(x == name)[1]] else NA
         }
       } else {
-        stop("If using a data.frame for `colors`, the data.frame must have
-              columns named 'name' and 'color'.")
+        cli::cli_abort("If using a data.frame for `colors`, the data.frame must
+                       have columns named 'name' and 'color'.")
       }
     } else {
-      stop("Invalid type for `colors`; only functions, function names, named
-            character vectors, and data.frames are allowed.")
+      cli::cli_abort("Invalid type for `colors`; only functions, function names,
+                     named character vectors, and data.frames are allowed.")
     }
   }
   return(colors)
@@ -256,12 +257,12 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
     )
   } else { # nocov start
     if (axes != "margins") {
-      warning("The `axes` argument is only supported for ggplot2 3.5.0 and
-              later.")
+      cli::cli_warn("The `axes` argument is only supported for ggplot2 3.5.0 and
+                    later.")
     }
     if (axis.labels != "all") {
-      warning("The `axis.labels` argument is only supported for ggplot2 3.5.0
-              and later.")
+      cli::cli_warn("The `axis.labels` argument is only supported for ggplot2
+                    3.5.0 and later.")
     }
   } # nocov end
 

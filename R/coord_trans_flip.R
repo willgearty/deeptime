@@ -18,7 +18,17 @@ coord_trans_flip <- function(x = "identity", y = "identity",
                              clip = "on", expand = TRUE) {
   # resolve transformers
   if (is.character(x)) x <- as.trans(x)
+  if (!is.trans(x)) {
+    cli::cli_abort("`x` must be a transformer function or a string.")
+  }
   if (is.character(y)) y <- as.trans(y)
+  if (!is.trans(y)) {
+    cli::cli_abort("`y` must be a transformer function or a string.")
+  }
+
+  # check arguments
+  clip <- arg_match0(clip, c("off", "on"))
+  check_bool(expand)
 
   ggproto(NULL, CoordTransFlip,
     trans = list(x = x, y = y),

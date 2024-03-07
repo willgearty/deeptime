@@ -94,10 +94,10 @@ coord_geo_radial <- function(dat = "periods",
                                       "Late Pleistocene"),
                              neg = TRUE, prop = 1, textpath_args = list(),
                              clip = "off", rotate_angle = FALSE) {
-  if (packageVersion("ggplot2") < "3.5.0") {
+  if (packageVersion("ggplot2") < "3.5.0") {# nocov start
     cli::cli_abort("coord_geo_radial() requires ggplot2 version 3.5.0 or
                    later.")
-  }
+  }# nocov end
 
   dat <- make_list(dat)
   n_scales <- length(dat)
@@ -203,7 +203,7 @@ CoordGeoRadial <- ggproto("CoordGeoRadial",
       check_number_decimal(self$lwd[[ind]], arg = "lwd")
       check_bool(self$lab[[ind]], arg = "lab")
       check_bool(self$abbrv[[ind]], arg = "abbrv")
-      check_character(self$skip[[ind]], arg = "skip")
+      check_character(self$skip[[ind]], arg = "skip", allow_null = TRUE)
       check_number_decimal(self$prop[[ind]], min = 0, max = 1, arg = "prop")
       if (!is.list(self$textpath_args[[ind]])) {
         cli::cli_abort("`textpath_args` must be a `list` of arguments.")

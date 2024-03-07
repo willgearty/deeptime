@@ -45,6 +45,9 @@ geom_phylomorpho <- function(tree, mapping = NULL, data = NULL,
                              lineend = "butt", linejoin = "round",
                              na.rm = FALSE, show.legend = NA,
                              inherit.aes = TRUE) {
+  if (!is(tree, "phylo")) {
+    cli::cli_abort("`tree` must be a phylo object.")
+  }
   mapping2 <- mapping
   mapping2$label <- NULL
   list(
@@ -91,9 +94,10 @@ StatPhylomorpho <- ggproto("StatPhylomorpho", Stat,
     data
   },
   compute_panel = function(self, data, scales, params, tree) {
-    if (nrow(data) != length(tree$tip.label)) stop("X must contain the same
-                                                   number of rows as species in
-                                                   tree.")
+    if (nrow(data) != length(tree$tip.label)) {
+      cli::cli_abort("`data` must contain the same number of rows as species in
+                     `tree`.")
+    }
     if ("label" %in% colnames(data)) {
       rownames(data) <- data$label
       data$label <- NULL

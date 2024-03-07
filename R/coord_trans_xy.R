@@ -49,6 +49,16 @@
 coord_trans_xy <- function(trans = NULL, xlim = NULL, ylim = NULL,
                            expand = FALSE, default = FALSE, clip = "on") {
   if (is.null(trans)) trans <- linear_trans(translate(0, 0))
+  if (!is(trans, "transform")) {
+    cli::cli_abort("`trans` must be a linear transformation, such as that
+                   produced by `ggforce::linear_trans()`")
+  }
+
+  # check arguments
+  clip <- arg_match0(clip, c("off", "on"))
+  check_bool(expand)
+  check_bool(default)
+
   ggproto(NULL, CoordTransXY,
     trans = trans,
     limits = list(x = xlim, y = ylim),

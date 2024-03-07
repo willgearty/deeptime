@@ -54,11 +54,13 @@ scale_fill_geo <- function(dat, ...) {
 scale_discrete_geo <- function(dat, aesthetics, ...) {
   if (is(dat, "data.frame")) {
     # just use the supplied data
-  } else {
+  } else if (is.character(dat)) {
     dat <- get_scale_data(dat)
+  } else {
+    cli::cli_abort("`dat` must be either a dataframe or a string.")
   }
   if (!all(c("name", "color") %in% colnames(dat))) {
-    stop("Either `name` or `color` is not a named column in `dat`")
+    cli::cli_abort("Either `name` or `color` is not a named column in `dat`")
   }
   values <- setNames(dat$color, dat$name)
 
