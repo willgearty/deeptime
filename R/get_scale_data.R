@@ -22,13 +22,12 @@
 #' @importFrom curl nslookup
 #' @export
 get_scale_data <- function(name) {
+  check_required(name)
   possible_names <- c("periods", "epochs", "stages", "eras", "eons")
   name_match <- charmatch(name, possible_names)
   if (!is.na(name_match)) {
     if (name_match == 0) {
-      stop("'name' matches multiple scales. Please be more specific.",
-        call. = FALSE
-      )
+      cli::cli_abort("'name' matches multiple scales. Please be more specific.")
     } else {
       name <- possible_names[name_match]
       if (name == "periods") {
@@ -51,10 +50,8 @@ get_scale_data <- function(name) {
         nslookup("macrostrat.org")
       },
       error = function(e) {
-        stop("Macrostrat is not available. Either the site is down or you are
-             not connected to the internet.",
-          call. = FALSE
-        )
+        cli::cli_abort("Macrostrat is not available. Either the site is down or
+                       you are not connected to the internet.")
       }
     )
     URL <- url(paste0("https://macrostrat.org/api/v2/defs/intervals",
@@ -64,9 +61,8 @@ get_scale_data <- function(name) {
         read.csv(URL, header = TRUE, stringsAsFactors = FALSE)
       },
       error = function(e) {
-        stop("'name' does not match a built-in or Macrostrat timescale.",
-          call. = FALSE
-        )
+        cli::cli_abort("'name' does not match a built-in or Macrostrat
+                       timescale.")
       }
     )
     clean_dat <- raw_dat[, c("name", "b_age", "t_age", "abbrev", "color")]

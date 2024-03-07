@@ -21,7 +21,6 @@
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto
 #' @importFrom ggforce linear_trans
-#' @importFrom cli cli_abort
 #' @inheritParams ggplot2::coord_cartesian
 #' @export
 #' @examples

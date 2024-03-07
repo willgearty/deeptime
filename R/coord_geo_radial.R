@@ -95,16 +95,27 @@ coord_geo_radial <- function(dat = "periods",
                              neg = TRUE, prop = 1, textpath_args = list(),
                              clip = "off", rotate_angle = FALSE) {
   if (packageVersion("ggplot2") < "3.5.0") {
-    stop("coord_geo_radial() requires ggplot2 version 3.5.0 or later.")
+    cli::cli_abort("coord_geo_radial() requires ggplot2 version 3.5.0 or
+                   later.")
   }
 
   dat <- make_list(dat)
   n_scales <- length(dat)
 
+  # check global (non-list) arguments
   theta <- arg_match0(theta, c("x", "y"))
   r <- if (theta == "x") "y" else "x"
-
-  # TODO: check arguments
+  check_number_decimal(start, allow_infinite = FALSE)
+  check_number_decimal(end, allow_infinite = FALSE, allow_null = TRUE)
+  check_bool(expand)
+  if (!direction %in% c(-1, 1)) {
+    cli::cli_abort(paste0("`direction` must be either -1 or 1, not ",
+                          direction, "."))
+  }
+  check_bool(r_axis_inside, allow_null = TRUE)
+  check_number_decimal(inner.radius, min = 0, max = 1, allow_infinite = FALSE)
+  clip <- arg_match0(clip, c("off", "on"))
+  check_bool(rotate_angle)
 
   end <- end %||% (start + 2 * pi)
   if (start > end) {
@@ -187,6 +198,16 @@ CoordGeoRadial <- ggproto("CoordGeoRadial",
     # assemble the timescale background as a ggplot
     geo_scale <- ggplot()
     for (ind in seq_along(dat_list)) {
+      # check timescale-specific arguments
+      check_number_decimal(self$alpha[[ind]], min = 0, max = 1, arg = "alpha")
+      check_number_decimal(self$lwd[[ind]], arg = "lwd")
+      check_bool(self$lab[[ind]], arg = "lab")
+      check_bool(self$abbrv[[ind]], arg = "abbrv")
+      check_character(self$skip[[ind]], arg = "skip")
+      check_number_decimal(self$prop[[ind]], min = 0, max = 1, arg = "prop")
+      if (!is.list(self$textpath_args[[ind]])) {
+        cli::cli_abort("`textpath_args` must be a `list` of arguments.")
+      }
       dat_ind <- dat_list[[ind]]
       geo_scale <- geo_scale +
         geom_rect(

@@ -134,10 +134,15 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
   dat <- make_list(dat)
   n_scales <- length(dat)
 
+  # check global (non-list) arguments
   theta <- arg_match0(theta, c("x", "y"))
   r <- if (theta == "x") "y" else "x"
-
-  # TODO: check arguments
+  check_number_decimal(start, allow_infinite = FALSE)
+  if (!direction %in% c(-1, 1)) {
+    cli::cli_abort(paste0("`direction` must be either -1 or 1, not ",
+                          direction, "."))
+  }
+  clip <- arg_match0(clip, c("off", "on"))
 
   ggproto(NULL, CoordGeoPolar,
     theta = theta, r = r,
@@ -184,10 +189,14 @@ ggname <- function(prefix, grob) {
 }
 
 clean_dat <- function(dat, fill, neg, r_lims) {
+  # check arguments
+  check_bool(neg)
   if (is(dat, "data.frame")) {
     # just use the supplied data
-  } else {
+  } else if (is.character(dat)) {
     dat <- get_scale_data(dat)
+  } else {
+    cli::cli_abort("`dat` must be either a dataframe or a string.")
   }
 
   if (neg) {
@@ -264,6 +273,16 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
     # assemble the timescale background as a ggplot
     geo_scale <- ggplot()
     for (ind in seq_along(dat_list)) {
+      # check timescale-specific arguments
+      check_number_decimal(self$alpha[[ind]], min = 0, max = 1, arg = "alpha")
+      check_number_decimal(self$lwd[[ind]], arg = "lwd")
+      check_bool(self$lab[[ind]], arg = "lab")
+      check_bool(self$abbrv[[ind]], arg = "abbrv")
+      check_character(self$skip[[ind]], arg = "skip")
+      check_number_decimal(self$prop[[ind]], min = 0, max = 1, arg = "prop")
+      if (!is.list(self$textpath_args[[ind]])) {
+        cli::cli_abort("`textpath_args` must be a `list` of arguments.")
+      }
       dat_ind <- dat_list[[ind]]
       geo_scale <- geo_scale +
         geom_rect(

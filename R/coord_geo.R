@@ -96,7 +96,6 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #'   [ggfittext::geom_fit_text()]. Only used if `size` is set to `"auto"`.
 #' @inheritParams ggplot2::coord_trans
 #' @importFrom ggplot2 ggproto
-#' @import scales
 #' @export
 #' @examples
 #' library(ggplot2)

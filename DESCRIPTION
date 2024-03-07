@@ -30,7 +30,7 @@ Imports:
     methods,
     stats,
     lattice,
-    rlang,
+    rlang (>= 1.1.0),
     scales,
     ggfittext,
     curl,
