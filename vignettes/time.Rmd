@@ -98,7 +98,8 @@ Note that our uncertain lines (0) always overlap with our certain lines (1), so 
 ```{r}
 oldest_certain <- occdf %>%
   filter(accepted_name == "Diictodon", certainty == 1) %>%
-  pull(age) %>% max()
+  pull(age) %>%
+  max()
 
 n_uncertain <- sum(occdf$accepted_name == "Diictodon" & occdf$certainty == 0)
 

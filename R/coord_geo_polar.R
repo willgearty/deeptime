@@ -385,7 +385,9 @@ CoordGeoPolar <- ggproto("CoordGeoPolar", CoordPolar,
 
     # if the axis ends at zero, the tick mark is clipped, but that warning would
     # probably be confusing to users
-    suppressWarnings({geo_scale_grob <- ggplotGrob(geo_scale)})
+    suppressWarnings({
+      geo_scale_grob <- ggplotGrob(geo_scale)
+    })
     # insert the geo_scale into the gTree, then reorder
     bg <- addGrob(bg, ggname("geo_scale", geo_scale_grob))
     reorderGrob(bg, order = c(1, length(grid.ls(bg, print = FALSE)$name) - 1))

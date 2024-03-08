@@ -102,16 +102,16 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
   labeller <- check_labeller(labeller)
 
   if (packageVersion("ggplot2") >= "3.5.0") {
-    params = list(rows = facets_list$rows, cols = facets_list$cols,
-                  margins = margins, free = free, space_free = space_free,
-                  labeller = labeller, colors = colors,
-                  as.table = as.table, switch = switch, drop = drop,
-                  draw_axes = draw_axes, axis_labels = axis_labels)
+    params <- list(rows = facets_list$rows, cols = facets_list$cols,
+                   margins = margins, free = free, space_free = space_free,
+                   labeller = labeller, colors = colors,
+                   as.table = as.table, switch = switch, drop = drop,
+                   draw_axes = draw_axes, axis_labels = axis_labels)
   } else { # nocov start
-    params = list(rows = facets_list$rows, cols = facets_list$cols,
-                  margins = margins, free = free, space_free = space_free,
-                  labeller = labeller, colors = colors,
-                  as.table = as.table, switch = switch, drop = drop)
+    params <- list(rows = facets_list$rows, cols = facets_list$cols,
+                   margins = margins, free = free, space_free = space_free,
+                   labeller = labeller, colors = colors,
+                   as.table = as.table, switch = switch, drop = drop)
   } # nocov end
 
   ggproto(NULL, FacetGridColor,

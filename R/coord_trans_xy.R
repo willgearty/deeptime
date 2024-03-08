@@ -278,7 +278,9 @@ if (packageVersion("ggplot2") >= "3.5.0") {
               # different breaks and labels in a different data space
               aesthetics = scale$aesthetics,
               name = scale$sec_name(),
-              make_title = function(self, title) self$scale$make_sec_title(title),
+              make_title = function(self, title) {
+                self$scale$make_sec_title(title)
+              },
               limits = limits,
               continuous_range = continuous_range,
               dimension = function(self) self$break_info$range,
@@ -290,7 +292,8 @@ if (packageVersion("ggplot2") >= "3.5.0") {
               get_labels = function(self, breaks = self$get_breaks()) {
                 self$break_info$labels
               },
-              rescale = function(x) rescale(x, from = break_info$range, to = c(0, 1))
+              rescale = function(x) rescale(x, from = break_info$range,
+                                            to = c(0, 1))
       )
     }
   }

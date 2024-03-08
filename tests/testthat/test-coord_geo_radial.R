@@ -2,8 +2,10 @@ skip_if_not_installed("ggtree")
 
 test_that("coord_geo_radial fails for old ggplot", {
   skip_if(packageVersion("ggplot2") >= "3.5.0")
-  expect_error({revts(ggtree(tree)) +
-      coord_geo_radial(dat = "stages", expand = FALSE)})
+  expect_error({
+    revts(ggtree(tree)) +
+      coord_geo_radial(dat = "stages", expand = FALSE)
+  })
 })
 
 skip_if(packageVersion("ggplot2") < "3.5.0")
@@ -47,7 +49,8 @@ test_that("ggtree scale works with only fossil taxa", {
   skip_if(R.Version()$os != "mingw32") # only test this on Windows
   gg <- ggtree(ceratopsianTreeRaia,
                position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
-    coord_geo_radial(dat = list("stages", "periods"), lab = list(FALSE, TRUE), abbrv = TRUE) +
+    coord_geo_radial(dat = list("stages", "periods"), lab = list(FALSE, TRUE),
+                     abbrv = TRUE) +
     scale_x_continuous(expand = expansion(add = c(20, 30))) +
     scale_y_continuous(guide = "none", breaks = NULL) +
     theme_gray() +
