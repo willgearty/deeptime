@@ -1,3 +1,5 @@
+This patch version addresses a CRAN check error that Prof Brian Ripley brought to my attention and some other bugs that I discovered upon releasing version 1.1.0.
+
 ## Test environments (with Github Actions)
 
 * Windows 10.0.20348 (x86_64-w64-mingw32): R 4.3.3

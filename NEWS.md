@@ -1,4 +1,4 @@
-# deeptime (development version)
+# deeptime 1.1.1
 deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:
 
 * Fixed several cases where vignette and documentation building and/or unit testing would fail when the Macrostrat API was down
