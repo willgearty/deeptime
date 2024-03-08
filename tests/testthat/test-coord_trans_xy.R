@@ -31,4 +31,22 @@ test_that("coord_trans_xy() works", {
   expect_true(is.ggplot(gg))
   expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$x$limits, c(-2, 2))
   expect_doppelganger_deeptime("coord_trans_xy() with expansion", gg)
+
+  gg <- ggplot(data = points, aes(x = x, y = y, color = color)) +
+    geom_polygon(data = square, fill = NA, color = "black") +
+    geom_point() +
+    scale_x_continuous(sec.axis = sec_axis(~.)) +
+    coord_trans_xy(expand = FALSE) +
+    theme_classic()
+  expect_true(is.ggplot(gg))
+  params <- ggplot_build(gg)$layout$panel_params[[1]]
+  expect_equal(params$x.range, range(points$x))
+  expect_equal(params$y.range, range(points$y))
+  expect_doppelganger_deeptime("coord_trans_xy() with no trans", gg)
+  expect_error({
+    ggplot(data = points, aes(x = x, y = y, color = color)) +
+      geom_polygon(data = square, fill = NA, color = "black") +
+      geom_point() +
+      coord_trans_xy(trans = 5, expand = TRUE)
+  })
 })

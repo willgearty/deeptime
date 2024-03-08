@@ -18,6 +18,34 @@ test_that("coord_geo works", {
   params <- ggplot_build(gg)$layout$panel_params[[1]]
   expect_equal(params$x.range, c(0, 250))
   expect_equal(params$y.range, c(log10(10), log10(1700)))
+  expect_error({
+    ggplot(coral_div) +
+      geom_line(aes(x = stage_age, y = n)) +
+      coord_geo(xlim = c(250, 0), ylim = c(10, 1700), xtrans = 5)
+  })
+  expect_error({
+    ggplot(coral_div) +
+      geom_line(aes(x = stage_age, y = n)) +
+      coord_geo(xlim = c(250, 0), ylim = c(10, 1700),
+                ytrans = list(x = 5, y = 2))
+  })
+  gg <- ggplot(coral_div) +
+    geom_line(aes(x = stage_age, y = n)) +
+    coord_geo(xlim = c(250, 0), ylim = c(10, 1700), height = 5)
+  expect_error(plot(gg))
+  gg <- ggplot(coral_div) +
+    geom_line(aes(x = stage_age, y = n)) +
+    coord_geo(dat = 5, xlim = c(250, 0), ylim = c(10, 1700))
+  expect_error(plot(gg))
+  gg <- ggplot(coral_div) +
+    geom_line(aes(x = stage_age, y = n)) +
+    coord_geo(xlim = c(250, 0), ylim = c(10, 1700), size = "big")
+  expect_error(plot(gg))
+  expect_error({
+    ggplot(coral_div) +
+      geom_line(aes(x = stage_age, y = n)) +
+      coord_geo(pos = "middle", xlim = c(250, 0), ylim = c(10, 1700))
+  })
 })
 
 test_that("stacking scales works", {
@@ -118,6 +146,11 @@ test_that("geom_fit_text() works", {
       abbrv = FALSE, size = "auto", fittext_args = list(size = 20)) +
     theme_classic()
   expect_doppelganger_deeptime("geom_fit_text()", gg)
+  gg <- ggplot(coral_div) +
+    geom_line(aes(x = stage_age, y = n)) +
+    coord_geo(dat = "periods", xlim = c(250, 0), ylim = c(0, 1700),
+              abbrv = FALSE, size = "auto", fittext_args = 20)
+  expect_error(plot(gg))
 })
 
 test_that("ggtree scale works", {

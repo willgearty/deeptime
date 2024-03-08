@@ -143,6 +143,10 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   clip <- arg_match0(clip, c("off", "on"))
   check_bool(expand)
 
+  if (any(!pos %in% c("bottom", "top", "left", "right", "b", "t", "l", "r"))) {
+    cli::cli_abort('`pos` must be a one of "left", "right", "top", or
+                   "bottom" (first letter may also be used).')
+  }
   pos <- as.list(pos)
   n_scales <- length(pos)
 
@@ -226,7 +230,6 @@ render_geo_scale <- function(self, panel_params, theme, position) {
     fill = self$fill[ind],
     color = self$color[ind],
     alpha = self$alpha[ind],
-    pos = self$pos[ind],
     lab = self$lab[ind],
     lab_color = self$lab_color[ind],
     rot = self$rot[ind],
@@ -241,7 +244,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
     center_end_labels = self$center_end_labels[ind],
     dat_is_discrete = self$dat_is_discrete[ind],
     MoreArgs = list(
-      self = self, panel_params = panel_params,
+      self = self, pos = position, panel_params = panel_params,
       theme = theme, fittext_args = self$fittext_args
     ),
     SIMPLIFY = FALSE
@@ -332,14 +335,12 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
   }
 
   # if the axis is discrete, adjust the data accordingly
-  if (pos %in% c("bottom", "top", "b", "t")) {
+  if (pos %in% c("bottom", "top")) {
     discrete <- panel_params$scale_x$is_discrete()
     limits <- panel_params$scale_x$limits
-  } else if (pos %in% c("left", "right", "l", "r")) {
+  } else {
     discrete <- panel_params$scale_y$is_discrete()
     limits <- panel_params$scale_y$limits
-  } else {
-    cli::cli_abort('`pos` must be one of "bottom", "top", "left", or "right"')
   }
 
   if (discrete && !dat_is_discrete) {

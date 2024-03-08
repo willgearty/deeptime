@@ -2,16 +2,16 @@ suppressPackageStartupMessages(library(ggplot2, quietly = TRUE))
 
 if (suppressPackageStartupMessages(require(divDyn, quietly = TRUE))) {
   data(corals)
-  corals__stages_clean <- subset(corals, stage != "")
+  corals_stages_clean <- subset(corals, stage != "")
   coral_div <- aggregate(cbind(n = genus) ~ stage,
-    data = corals__stages_clean,
+    data = corals_stages_clean,
     FUN = function(x) length(x)
   )
   coral_div$stage_age <- (stages$max_age[match(coral_div$stage, stages$name)] +
     stages$min_age[match(coral_div$stage, stages$name)]) / 2
 
   coral_div_diet <- aggregate(cbind(n = genus) ~ stage + diet,
-    data = corals__stages_clean,
+    data = corals_stages_clean,
     FUN = function(x) length(x)
   )
   coral_div_diet$stage_age <-

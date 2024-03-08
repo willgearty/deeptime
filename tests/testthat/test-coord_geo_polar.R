@@ -9,9 +9,34 @@ test_that("coord_geo_polar works", {
   expect_true(is.ggplot(gg))
   expect_true(is(ggplot_build(gg)$layout$coord, "CoordGeoPolar"))
   expect_doppelganger_deeptime("coord_geo_polar", gg)
-  skip_if_not_installed("phytools")
   expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$r.range,
-               c(-max(nodeHeights(tree)), 0))
+               c(-max(node.depth.edgelength(tree)), 0))
+
+  withr::local_options(lifecycle_verbosity = "quiet")
+  gg2 <- revts(ggtree(tree)) +
+    coord_geo_polar(dat = "stages", fill = c("grey60", "grey80")) +
+    scale_x_continuous(limits = c(NA, 0))
+  expect_true(is.ggplot(gg2))
+  expect_true(is(ggplot_build(gg2)$layout$coord, "CoordGeoPolar"))
+  expect_doppelganger_deeptime("coord_geo_polar_grey", gg2)
+
+  # this doesn't make sense, but let's test it anyways
+  gg3 <- ggtree(tree) +
+    coord_geo_polar(dat = "stages", neg = FALSE) +
+    scale_x_continuous(limits = c(0, NA))
+  expect_true(is.ggplot(gg3))
+  expect_true(is(ggplot_build(gg3)$layout$coord, "CoordGeoPolar"))
+  expect_doppelganger_deeptime("coord_geo_polar_pos", gg3)
+  expect_equal(ggplot_build(gg3)$layout$panel_params[[1]]$r.range,
+               c(0, max(node.depth.edgelength(tree))))
+
+  expect_error({
+    ggtree(tree) +
+      coord_geo_polar(direction = "up")
+  })
+  gg4 <- ggtree(tree) +
+    coord_geo_polar(dat = 5)
+  expect_error(plot(gg4))
 })
 
 test_that("stacking scales works", {
