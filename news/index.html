@@ -16,7 +16,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.0" id="deeptime-110">deeptime 1.1.0<a class="anchor" aria-label="anchor" href="#deeptime-110"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.1" id="deeptime-111">deeptime 1.1.1<a class="anchor" aria-label="anchor" href="#deeptime-111"></a></h2>
+<p>deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:</p>
+<ul><li>Fixed several cases where vignette and documentation building and/or unit testing would fail when the Macrostrat API was down</li>
+<li>Fixed coord_geo_polar() and coord_geo_radial() when the r-axis has expansion (<a href="https://github.com/willgearty/deeptime/issues/60" class="external-link">#60</a>)</li>
+<li>Improved argument type checking and error handling across the entire package</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="deeptime-110">deeptime 1.1.0<a class="anchor" aria-label="anchor" href="#deeptime-110"></a></h2><p class="text-muted">CRAN release: 2024-03-05</p>
 <p>deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces several new features and bug fixes:</p>
 <ul><li>Added geom_points_range(), a function designed for visualizing temporal occurrence data</li>
 <li>Added facet_grid_color() and facet_wrap_color() for changing strip background colors (<a href="https://github.com/willgearty/deeptime/issues/50" class="external-link">#50</a>)</li>
