@@ -10,7 +10,7 @@ for (int_type in names(int_types)) {
   # Get ICS data from Macrostrat
   raw_dat <- read.csv(url(paste0("https://macrostrat.org/api/v2/defs/intervals",
                                  "?format=csv&timescale=international%20",
-                                 int_types[int_type])),
+                                 int_types[int_type], "&true_colors=true")),
                       stringsAsFactors = FALSE)
   clean_dat <- raw_dat[, c("name", "b_age", "t_age", "abbrev", "color")]
   colnames(clean_dat) <- c("name", "max_age", "min_age", "abbr", "color")

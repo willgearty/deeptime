@@ -2,14 +2,21 @@
 #'
 #' This function takes a name of a geological timescale and returns data for the
 #' timescale. Valid names include those of built-in `data.frames` ([periods()],
-#' [epochs()], [stages()], [eons()], or [eras()]),
-#' partial matches of those names (e.g., "per" or "stage"),
-#' and exact matches to those hosted by Macrostrat (see full list here:
-#' <https://macrostrat.org/api/defs/timescales?all>).
+#' [epochs()], [stages()], [eons()], or [eras()]), partial matches of those
+#' names (e.g., "per" or "stage"), and exact matches to those hosted by
+#' Macrostrat (see full list here:
+#' <https://macrostrat.org/api/defs/timescales?all>). Note that the colors in
+#' the built-in `data.frames` are according to the Commission for the Geological
+#' Map of the World. If you would like to obtain custom Macrostrat colors that
+#' are better for mapping, you should specify the full name of a timescale
+#' (e.g., "international periods") and set `true_colors` to `FALSE`. Note that
+#' these colors only vary for the Precambrian.
 #'
 #' @param name The name of the desired timescale.
-#' @return A `data.frame` with the following columns:
-#'   \item{name}{the names of the time intervals.}
+#' @param true_colors Return original international time scale colors? (as
+#'   opposed to custom Macrostrat plotting colors)
+#' @return A `data.frame` with the following columns: \item{name}{the names of
+#'   the time intervals.}
 #'   \item{max_age}{the oldest boundaries of the time intervals, in millions of
 #'     years.}
 #'   \item{min_age}{the youngest boundaries of the time intervals, in millions
@@ -21,7 +28,7 @@
 #' @importFrom utils read.csv
 #' @importFrom curl nslookup
 #' @export
-get_scale_data <- function(name) {
+get_scale_data <- function(name, true_colors = TRUE) {
   check_required(name)
   possible_names <- c("periods", "epochs", "stages", "eras", "eons")
   name_match <- charmatch(name, possible_names)
@@ -56,6 +63,9 @@ get_scale_data <- function(name) {
     )# nocov end
     URL <- url(paste0("https://macrostrat.org/api/v2/defs/intervals",
                       "?format=csv&timescale=", gsub(" ", "%20", name)))
+    if (true_colors) {
+      URL <- paste0(URL, "&true_colors=true")
+    }
     raw_dat <- tryCatch(
       {
         read.csv(URL, header = TRUE, stringsAsFactors = FALSE)
