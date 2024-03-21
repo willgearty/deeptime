@@ -1,5 +1,8 @@
 # deeptime (development version)
 
+* Fixed the built-in timescale datasets to have true CGMP colors for the Precambrian
+* Added the `true_colors` option to get_scale_data(), which, when set to `FALSE`, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets
+
 # deeptime 1.1.1
 deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:
 
