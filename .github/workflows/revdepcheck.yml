@@ -46,7 +46,7 @@ name: revdep-check
 
 jobs:
   mem-check:
-    runs-on: macos-latest
+    runs-on: windows-latest
 
     name: revdepcheck, macOS, R release
 
