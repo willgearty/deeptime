@@ -27,7 +27,7 @@
 </defs>
 <g clip-path='url(#cpNDMuMTZ8NzE0LjUyfDUuNDh8NTE1LjYy)'>
 <rect x='43.16' y='5.48' width='671.36' height='510.14' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<polyline points='57.66,484.11 71.35,497.01 91.50,398.89 129.76,271.65 164.14,348.47 176.22,491.01 187.63,500.31 208.18,458.00 232.62,499.71 250.47,491.61 259.20,393.18 266.72,406.09 275.72,452.30 289.82,23.78 306.33,193.33 319.49,251.55 332.11,503.61 348.76,447.20 362.73,455.60 377.76,377.88 399.79,254.85 427.85,414.19 453.49,394.98 467.86,480.51 478.07,495.51 486.39,469.40 505.46,435.20 529.09,307.06 543.19,411.19 552.32,505.71 559.84,469.70 575.15,472.71 595.02,459.20 608.57,412.39 618.37,334.07 631.65,373.98 646.24,297.46 656.15,423.19 665.63,295.06 674.52,450.20 680.35,443.60 689.18,370.98 697.63,334.97 702.53,415.69 706.22,342.17 708.64,503.01 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
+<polyline points='57.66,484.11 71.35,497.01 91.50,398.89 129.76,271.65 164.14,348.47 176.22,491.01 187.63,500.31 208.18,458.00 232.62,499.71 250.47,491.61 259.20,393.18 266.72,406.09 275.72,452.30 289.82,23.78 306.33,193.33 319.49,251.55 332.11,503.61 348.76,447.20 367.60,455.60 382.64,377.88 399.79,254.85 427.85,414.19 453.49,394.98 467.86,480.51 478.07,495.51 486.39,469.40 505.46,435.20 529.09,307.06 543.19,411.19 552.32,505.71 559.84,469.70 575.15,472.71 595.02,459.20 608.57,412.39 618.37,334.07 631.65,373.98 646.24,297.46 656.15,423.19 665.62,295.06 674.51,450.20 680.35,443.60 689.18,370.98 697.63,334.97 702.53,415.69 706.22,342.17 708.64,503.01 ' style='stroke-width: 1.07; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -560,11 +560,11 @@
 <rect x='-477.28' y='515.62' width='66.06' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #B3E1B6;' />
 <rect x='-589.00' y='515.62' width='111.71' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #009270;' />
 <rect x='-732.40' y='515.62' width='143.40' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #7FA056;' />
-<rect x='-990.74' y='515.62' width='258.34' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFC3E1;' />
-<rect x='-1219.01' y='515.62' width='228.26' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFAFD7;' />
-<rect x='-1970.93' y='515.62' width='751.93' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFA5D2;' />
-<rect x='-2508.03' y='515.62' width='537.09' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FFA5D2;' />
-<rect x='-3045.12' y='515.62' width='537.09' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FF98CC;' />
+<rect x='-990.74' y='515.62' width='258.34' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FED96A;' />
+<rect x='-1219.01' y='515.62' width='228.26' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FECC5C;' />
+<rect x='-1970.93' y='515.62' width='751.93' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FEBF4E;' />
+<rect x='-2508.03' y='515.62' width='537.09' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #FED99A;' />
+<rect x='-3045.12' y='515.62' width='537.09' height='28.80' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #F3CC8A;' />
 <line x1='714.52' y1='544.42' x2='714.52' y2='515.62' style='stroke-width: 0.53; stroke-linecap: butt;' />
 <line x1='707.59' y1='544.42' x2='707.59' y2='515.62' style='stroke-width: 0.53; stroke-linecap: butt;' />
 <line x1='652.67' y1='544.42' x2='652.67' y2='515.62' style='stroke-width: 0.53; stroke-linecap: butt;' />

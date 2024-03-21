@@ -62,10 +62,8 @@ get_scale_data <- function(name, true_colors = TRUE) {
       }
     )# nocov end
     URL <- url(paste0("https://macrostrat.org/api/v2/defs/intervals",
-                      "?format=csv&timescale=", gsub(" ", "%20", name)))
-    if (true_colors) {
-      URL <- paste0(URL, "&true_colors=true")
-    }
+                      "?format=csv&timescale=", gsub(" ", "%20", name),
+                      ifelse(true_colors, "&true_colors=true", "")))
     raw_dat <- tryCatch(
       {
         read.csv(URL, header = TRUE, stringsAsFactors = FALSE)
