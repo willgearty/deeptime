@@ -70,15 +70,8 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = c('soft', 'Config/Needs/revdeps')), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
       - name: Cache R packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
@@ -86,22 +79,24 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_github("r-lib/revdepcheck")
-          remotes::install_deps(dependencies = c('soft', 'Config/Needs/revdeps'))
+          install.packages('pak', repos = 'https://r-lib.github.io/p/pak/dev/')
+          pak::local_install_deps()
+          pak::pkg_install('r-lib/revdepcheck')
         shell: Rscript {0}
 
       - name: Check reverse dependencies
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
-          revdepcheck::revdep_check(timeout = as.difftime(60, units = 'mins'), num_workers = 4)
+          revdepcheck::revdep_reset()
+          revdepcheck::revdep_check(num_workers=4)
           problems <- readLines('revdep/problems.md', warn = FALSE)
           if (length(problems) > 1) stop(paste0(problems, collapse= "\n"))
         shell: Rscript {0}
 
       - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: revdep-results
           path: revdep/*.md
