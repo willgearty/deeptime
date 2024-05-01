@@ -1,4 +1,5 @@
 test_that("gggeo_scale() is deprecated", {
+  skip_if_not_installed("divDyn")
   p <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     scale_x_reverse("Age (Ma)") +
