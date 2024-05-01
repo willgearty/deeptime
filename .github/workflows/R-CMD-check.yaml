@@ -11,7 +11,7 @@ on:
 name: R-CMD-check
 
 env:
-  R_BIOC_VERSION: 3.18
+  R_BIOC_VERSION: 3.19
 
 jobs:
   R-CMD-check:
@@ -35,7 +35,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -62,13 +62,3 @@ jobs:
           _R_CHECK_FORCE_SUGGESTS_: 0
         with:
           upload-snapshots: true
-        if: ${{ matrix.ggplot2 != '3.3.6' }}
-      - name: run R CMD Check without vignettes
-        uses: r-lib/actions/check-r-package@v2
-        env:
-          _R_CHECK_FORCE_SUGGESTS_: 0
-        with:
-          args: 'c("--no-manual", "--as-cran", "--no-vignettes", "--ignore-vignettes")'
-          build_args: 'c("--no-manual", "--no-build-vignettes")'
-          upload-snapshots: true
-        if: ${{ matrix.ggplot2 == '3.3.6' }}
