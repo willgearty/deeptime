@@ -161,11 +161,8 @@ are taken directly from the scale.</p></dd>
 <dd><p>1, clockwise; -1, anticlockwise</p></dd>
 
 
-<dt>r_axis_inside</dt>
-<dd><p>If <code>TRUE</code>, places the radius axis inside the
-panel. If <code>FALSE</code>, places the radius axis next to the panel. The default,
-<code>NULL</code>, places the radius axis outside if the <code>start</code> and <code>end</code> arguments
-form a full circle.</p></dd>
+<dt>r_axis_inside, rotate_angle</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 
 <dt>inner.radius</dt>
@@ -233,13 +230,6 @@ Useful arguments include <code>color</code> (font color), <code>family</code> (f
 <dd><p>Should drawing be clipped to the extent of the plot panel? A
 setting of <code>"on"</code> (the default) means yes, and a setting of <code>"off"</code>
 means no. For details, please see <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code>.</p></dd>
-
-
-<dt>rotate_angle</dt>
-<dd><p>If <code>TRUE</code>, transforms the <code>angle</code> aesthetic in data
-in accordance with the computed <code>theta</code> position. If <code>FALSE</code> (default),
-no such transformation is performed. Can be useful to rotate text geoms in
-alignment with the coordinates.</p></dd>
 
 </dl></div>
     <div class="section level2">
