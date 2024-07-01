@@ -60,8 +60,6 @@ stats. The \code{stat} argument accepts the following:
 \item A string naming the stat. To give the stat as a string, strip the
 function name of the \code{stat_} prefix. For example, to use \code{stat_count()},
 give the stat as \code{"count"}.
-\item For more information and other ways to specify the stat, see the
-\link[ggplot2:layer_stats]{layer stat} documentation.
 }}
 
 \item{position}{A position adjustment to use on the data for this layer. This
@@ -73,8 +71,6 @@ This method allows for passing extra arguments to the position.
 \item A string naming the position adjustment. To give the position as a
 string, strip the function name of the \code{position_} prefix. For example,
 to use \code{position_jitter()}, give the position as \code{"jitter"}.
-\item For more information and other ways to specify the position, see the
-\link[ggplot2:layer_positions]{layer position} documentation.
 }}
 
 \item{...}{Arguments passed on to both \code{\link[ggplot2:geom_linerange]{ggplot2::geom_linerange()}} and
@@ -116,8 +112,6 @@ can be used to override the default coupling between stats and geoms. The
 \item A string naming the geom. To give the geom as a string, strip the
 function name of the \code{geom_} prefix. For example, to use \code{geom_point()},
 give the geom as \code{"point"}.
-\item For more information and other ways to specify the geom, see the
-\link[ggplot2:layer_geoms]{layer geom} documentation.
 }}
 }
 \description{

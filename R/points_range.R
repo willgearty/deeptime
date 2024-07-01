@@ -30,6 +30,22 @@
 #'   points don't overlap but you want a continuous line connecting all points
 #'   for a given `x` or `y` category. If NULL (the default), no line segments
 #'   will be plotted.
+#' @param position A position adjustment to use on the data for this layer. This
+#'   can be used in various ways, including to prevent overplotting and
+#'   improving the display. The `position` argument accepts the following:
+#'   * The result of calling a position function, such as `position_jitter()`.
+#'     This method allows for passing extra arguments to the position.
+#'   * A string naming the position adjustment. To give the position as a
+#'     string, strip the function name of the `position_` prefix. For example,
+#'     to use `position_jitter()`, give the position as `"jitter"`.
+#' @param stat The statistical transformation to use on the data for this layer.
+#'   When using a `geom_*()` function to construct a layer, the `stat`
+#'   argument can be used the override the default coupling between geoms and
+#'   stats. The `stat` argument accepts the following:
+#'   * A `Stat` ggproto subclass, for example `StatCount`.
+#'   * A string naming the stat. To give the stat as a string, strip the
+#'     function name of the `stat_` prefix. For example, to use `stat_count()`,
+#'     give the stat as `"count"`.
 #' @param ... Arguments passed on to both [ggplot2::geom_linerange()] and
 #'   [ggplot2::geom_point()].
 #' @importFrom ggplot2 layer
@@ -76,6 +92,14 @@ geom_points_range <- function(mapping = NULL, data = NULL,
 #'     \item \code{after_stat(ymax)} \emph{or} \code{after_stat(xmax)}\cr
 #'       the maximum extent of the point range
 #'   }
+#' @param geom The geometric object to use to display the data for this layer.
+#'   When using a `stat_*()` function to construct a layer, the `geom` argument
+#'   can be used to override the default coupling between stats and geoms. The
+#'   `geom` argument accepts the following:
+#'   * A `Geom` ggproto subclass, for example `GeomPoint`.
+#'   * A string naming the geom. To give the geom as a string, strip the
+#'     function name of the `geom_` prefix. For example, to use `geom_point()`,
+#'     give the geom as `"point"`.
 #' @importFrom ggplot2 layer
 #' @inheritParams ggplot2::stat_identity
 #' @export
