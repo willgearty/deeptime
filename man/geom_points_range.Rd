@@ -51,15 +51,31 @@ the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
-\item{stat}{The statistical transformation to use on the data for this
-layer, either as a \code{ggproto} \code{Geom} subclass or as a string naming the
-stat stripped of the \code{stat_} prefix (e.g. \code{"count"} rather than
-\code{"stat_count"})}
+\item{stat}{The statistical transformation to use on the data for this layer.
+When using a \verb{geom_*()} function to construct a layer, the \code{stat}
+argument can be used the override the default coupling between geoms and
+stats. The \code{stat} argument accepts the following:
+\itemize{
+\item A \code{Stat} ggproto subclass, for example \code{StatCount}.
+\item A string naming the stat. To give the stat as a string, strip the
+function name of the \code{stat_} prefix. For example, to use \code{stat_count()},
+give the stat as \code{"count"}.
+\item For more information and other ways to specify the stat, see the
+\link[ggplot2:layer_stats]{layer stat} documentation.
+}}
 
-\item{position}{Position adjustment, either as a string naming the adjustment
-(e.g. \code{"jitter"} to use \code{position_jitter}), or the result of a call to a
-position adjustment function. Use the latter if you need to change the
-settings of the adjustment.}
+\item{position}{A position adjustment to use on the data for this layer. This
+can be used in various ways, including to prevent overplotting and
+improving the display. The \code{position} argument accepts the following:
+\itemize{
+\item The result of calling a position function, such as \code{position_jitter()}.
+This method allows for passing extra arguments to the position.
+\item A string naming the position adjustment. To give the position as a
+string, strip the function name of the \code{position_} prefix. For example,
+to use \code{position_jitter()}, give the position as \code{"jitter"}.
+\item For more information and other ways to specify the position, see the
+\link[ggplot2:layer_positions]{layer position} documentation.
+}}
 
 \item{...}{Arguments passed on to both \code{\link[ggplot2:geom_linerange]{ggplot2::geom_linerange()}} and
 \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.}
@@ -91,9 +107,18 @@ rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
-\item{geom}{The geometric object to use to display the data, either as a
-\code{ggproto} \code{Geom} subclass or as a string naming the geom stripped of the
-\code{geom_} prefix (e.g. \code{"point"} rather than \code{"geom_point"})}
+\item{geom}{The geometric object to use to display the data for this layer.
+When using a \verb{stat_*()} function to construct a layer, the \code{geom} argument
+can be used to override the default coupling between stats and geoms. The
+\code{geom} argument accepts the following:
+\itemize{
+\item A \code{Geom} ggproto subclass, for example \code{GeomPoint}.
+\item A string naming the geom. To give the geom as a string, strip the
+function name of the \code{geom_} prefix. For example, to use \code{geom_point()},
+give the geom as \code{"point"}.
+\item For more information and other ways to specify the geom, see the
+\link[ggplot2:layer_geoms]{layer geom} documentation.
+}}
 }
 \description{
 This geom is like \code{\link[ggplot2:geom_linerange]{ggplot2::geom_pointrange()}} in that it draws points and

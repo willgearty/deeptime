@@ -52,10 +52,7 @@ are taken directly from the scale.}
 
 \item{direction}{1, clockwise; -1, anticlockwise}
 
-\item{r_axis_inside}{If \code{TRUE}, places the radius axis inside the
-panel. If \code{FALSE}, places the radius axis next to the panel. The default,
-\code{NULL}, places the radius axis outside if the \code{start} and \code{end} arguments
-form a full circle.}
+\item{r_axis_inside, rotate_angle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{inner.radius}{A \code{numeric} between 0 and 1 setting the size of a inner.radius hole.}
 
@@ -97,11 +94,6 @@ Useful arguments include \code{color} (font color), \code{family} (font family),
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
 means no. For details, please see \code{\link[ggplot2:coord_cartesian]{coord_cartesian()}}.}
-
-\item{rotate_angle}{If \code{TRUE}, transforms the \code{angle} aesthetic in data
-in accordance with the computed \code{theta} position. If \code{FALSE} (default),
-no such transformation is performed. Can be useful to rotate text geoms in
-alignment with the coordinates.}
 }
 \description{
 \code{coord_geo_radial} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_radial()}} in that it
