@@ -22,7 +22,7 @@
 #'   [GitHub](https://github.com/davenquinn/geologic-patterns/).
 #'
 #' @return A [GridPattern][grid::patterns] object.
-#' @importFrom grid editGrob rectGrob gList gTree pattern gpar
+#' @importFrom grid editGrob rectGrob gList gTree gPath pattern gpar
 #' @export
 #'
 #' @examples
@@ -73,8 +73,10 @@ geo_pattern <- function(code, scale = 2,
 #' Geologic pattern fill scale
 #'
 #' Fill scale using the [FGDC Digital Cartographic Standard for Geologic Map
-#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php). See
-#' [geo_pattern()] for more details.
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php). Fill
+#' values should correspond to the "pattern numbers" in the [full pattern
+#' chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf).
+#' See [geo_pattern()] for more details.
 #'
 #' @inheritParams ggplot2::scale_fill_manual
 #' @section Warning: Pattern fills are not supported on all graphics devices.

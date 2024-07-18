@@ -48,8 +48,9 @@ notation.
   }}
 }
 \description{
-Fill scale using the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization}. See
-\code{\link[=geo_pattern]{geo_pattern()}} for more details.
+Fill scale using the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization}. Fill
+values should correspond to the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}.
+See \code{\link[=geo_pattern]{geo_pattern()}} for more details.
 }
 \section{Warning}{
  Pattern fills are not supported on all graphics devices.
