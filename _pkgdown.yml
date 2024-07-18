@@ -108,6 +108,13 @@ reference:
   - facet_grid_color
   - facet_wrap_color
 
+- title: Plotting geologic data
+  desc: >
+    These functions can be used for visualizing geologic/stratigraphic data.
+  contents:
+  - geo_pattern
+  - scale_fill_geopattern
+
 - title: Combining and arranging plots
   desc: >
     These functions can be used to combine and arrange plots into
