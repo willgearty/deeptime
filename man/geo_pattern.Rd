@@ -38,7 +38,7 @@ instance of the desired pattern. \code{geo_pattern()} returns a
 desired pattern.
 }
 \description{
-Retrieve a single geologic pattern as defined by the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by
+Retrieve a single geologic pattern as defined in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by
 the \href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)} of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}.
 }
 \details{
@@ -59,3 +59,9 @@ grid.draw(rectGrob(gp = gpar(fill = pattern1)))
 grid.newpage()
 grid.draw(rectGrob(gp = gpar(fill = pattern2)))
 }
+\seealso{
+FGDC patterns:
+\code{\link{grid.pattern_geo}()},
+\code{\link{scale_fill_geopattern}()}
+}
+\concept{patterns}

@@ -18,5 +18,5 @@
     )
   )
 
-  options(ggpattern_geometry_funcs = list(geo = geo_ggpattern))
+  options(ggpattern_geometry_funcs = list(geo = grid.pattern_geo))
 }

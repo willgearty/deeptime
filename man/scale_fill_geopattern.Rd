@@ -63,9 +63,17 @@ menu to display patterns.
 }
 
 \examples{
+\dontshow{if (packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2)
 vals <- c("101", "313", "603", "733")
 ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
   geom_bar() +
   scale_fill_geopattern(name = NULL)
+\dontshow{\}) # examplesIf}
 }
+\seealso{
+FGDC patterns:
+\code{\link{geo_pattern}()},
+\code{\link{grid.pattern_geo}()}
+}
+\concept{patterns}
