@@ -37,7 +37,8 @@ Imports:
     cli,
     phytools,
     lifecycle,
-    geomtextpath
+    geomtextpath,
+    grImport2
 Suggests: 
     dplyr,
     divDyn,
@@ -53,7 +54,7 @@ Suggests:
     rmarkdown,
     withr,
     rsvg,
-    grImport2
+    ggpattern
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/revdeps: revdepcheck

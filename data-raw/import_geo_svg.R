@@ -7,17 +7,17 @@ old_wd <- getwd()
 
 setwd("data-raw/")
 
-svgs <- list.files("usgs_svg/")
+svgs <- list.files("geo_svg/")
 
-fgdc_grobs <- list()
+geo_grobs <- list()
 for (svg in svgs) {
   filename <- file.path(tempdir(), "temp.svg")
-  rsvg_svg(paste0(getwd(), "/usgs_svg/", svg), filename)
+  rsvg_svg(paste0(getwd(), "/geo_svg/", svg), filename)
   code <- gsub("(-.*)?.svg", "", svg)
-  fgdc_grobs[[code]] <- pictureGrob(readPicture(filename, warn = FALSE),
+  geo_grobs[[code]] <- pictureGrob(readPicture(filename, warn = FALSE),
                                    expansion = 0)
 }
 
-usethis::use_data(fgdc_grobs, internal = TRUE, compress = "xz", overwrite = TRUE)
+usethis::use_data(geo_grobs, internal = TRUE, compress = "xz", overwrite = TRUE)
 
 setwd(old_wd)

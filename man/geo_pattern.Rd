@@ -2,6 +2,7 @@
 % Please edit documentation in R/patterns.R
 \name{geo_pattern}
 \alias{geo_pattern}
+\alias{geo_grob}
 \title{Get a FGDC geologic plotting pattern}
 \usage{
 geo_pattern(
@@ -12,6 +13,8 @@ geo_pattern(
   alpha = NULL,
   bg = "white"
 )
+
+geo_grob(code, col = NULL, fill = NULL, alpha = NULL, bg = "white")
 }
 \arguments{
 \item{code}{The number corresponding to the pattern to return. Strings and
@@ -29,7 +32,10 @@ for valid \code{code} values.}
 \item{bg}{The background color to use for the pattern.}
 }
 \value{
-A \link[grid:patterns]{GridPattern} object.
+\code{geo_grob()} returns a \link[grid:grid-defunct]{grob} object with a single
+instance of the desired pattern. \code{geo_pattern()} returns a
+\link[grid:patterns]{GridPattern} object with a repeated instance of the
+desired pattern.
 }
 \description{
 Retrieve a single geologic pattern as defined by the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by

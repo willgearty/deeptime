@@ -21,8 +21,11 @@
 #'   Quinn and are hosted on
 #'   [GitHub](https://github.com/davenquinn/geologic-patterns/).
 #'
-#' @return A [GridPattern][grid::patterns] object.
-#' @importFrom grid editGrob rectGrob gList gTree gPath pattern gpar
+#' @return `geo_grob()` returns a [grob][grid::grid.grob] object with a single
+#'   instance of the desired pattern. `geo_pattern()` returns a
+#'   [GridPattern][grid::patterns] object with a repeated instance of the
+#'   desired pattern.
+#' @importFrom grid viewport pattern unit
 #' @export
 #'
 #' @examples
@@ -38,36 +41,45 @@
 #' grid.newpage()
 #' grid.draw(rectGrob(gp = gpar(fill = pattern2)))
 geo_pattern <- function(code, scale = 2,
-                        col = NULL, fill = NULL, alpha = NULL,
-                        bg = "white") {
-  code <- as.character(code)
-  # get the grob for the given code
-  code <- gsub("(-.*)?", "", code)
-  if (code %in% names(fgdc_grobs)) {
-    img_grob <- fgdc_grobs[[code]]
-  } else {
-    cli::cli_abort("`code` does not match a USGS code.")
-  }
-  # recolor the grob (this modifies all children)
-  gp <- list()
-  if (!is.null(col)) gp$col <- col
-  if (!is.null(fill)) gp$fill <- fill
-  if (!is.null(alpha)) gp$alpha <- alpha
-  img_grob <- editGrob(img_grob,
-                       gp = do.call(gpar, gp),
-                       gPath("*"), grep = TRUE, global = TRUE)
+                        col = NULL, fill = NULL, alpha = NULL, bg = "white") {
+  img_grob <- geo_grob(code, col = col, fill = fill, alpha = alpha, bg = bg)
 
-  # now add the background
-  img_grob <- gList(rectGrob(gp = gpar(fill = bg, col = "transparent")),
-                    img_grob)
-
-  # needed to make it work for ggplot stuff
-  img_grob <- gTree(children = img_grob)
+  if (!is.null(scale) && !is.na(scale)) scale <- 2
 
   # convert to pattern
   img_grob$vp <- viewport(width = unit(scale, 'cm'), height = unit(scale, 'cm'))
   pattern(img_grob, width = unit(scale, 'cm'), height = unit(scale, 'cm'),
           extend = "repeat")
+}
+
+#' @export
+#' @rdname geo_pattern
+#' @importFrom grid editGrob rectGrob gList gTree gPath gpar
+geo_grob <- function(code,
+                     col = NULL, fill = NULL, alpha = NULL, bg = "white") {
+  code <- as.character(code)
+  # get the grob for the given code
+  code <- gsub("(-.*)?", "", code)
+  if (code %in% names(geo_grobs)) {
+    img_grob <- geo_grobs[[code]]
+  } else {
+    cli::cli_abort("`code` does not match a USGS code.")
+  }
+
+  # recolor the grob (this modifies all children)
+  gp <- list()
+  if (!is.null(col) && !is.na(col)) gp$col <- col
+  if (!is.null(fill) && !is.na(fill)) gp$fill <- fill
+  if (!is.null(alpha) && !is.na(alpha)) gp$alpha <- alpha
+  img_grob <- editGrob(img_grob, gp = do.call(gpar, gp),
+                       gPath("*"), grep = TRUE, global = TRUE)
+
+  # now add the background with a transparent outline
+  img_grob <- gList(rectGrob(gp = gpar(fill = bg, col = "transparent")),
+                    img_grob)
+
+  # needed to make it work for ggplot stuff
+  gTree(children = img_grob)
 }
 
 #' Geologic pattern fill scale
@@ -88,6 +100,7 @@ geo_pattern <- function(code, scale = 2,
 #'   menu to display patterns.
 #' @export
 #' @importFrom ggplot2 scale_fill_manual
+#' @import grImport2
 #' @examples
 #' library(ggplot2)
 #' vals <- c("101", "313", "603", "733")
@@ -95,7 +108,24 @@ geo_pattern <- function(code, scale = 2,
 #'   geom_bar() +
 #'   scale_fill_geopattern(name = NULL)
 scale_fill_geopattern <- function(...) {
-  # TODO: support colors and scaling?
-  vals <- sapply(names(fgdc_grobs), geo_pattern, simplify = FALSE)
+  vals <- sapply(names(geo_grobs), geo_pattern, simplify = FALSE)
   scale_fill_manual(values = vals, ...)
+}
+# TODO: support colors and scaling?
+# should probably use discrete_scale or even make a custom scale
+
+#' @importFrom grid viewport pattern unit grid.polygon
+#' @import grImport2
+geo_ggpattern <- function(params, boundary_df, aspect_ratio, legend = FALSE) {
+  grob <- geo_grob(params$pattern_type,
+                   col = params$pattern_colour, fill = params$pattern_fill,
+                   alpha = params$pattern_alpha, bg = params$fill)
+  grob$vp <- viewport(width = unit(params$pattern_scale, 'cm'),
+                      height = unit(params$pattern_scale, 'cm'))
+  patt <- pattern(grob,
+                  width = unit(params$pattern_scale, 'cm'),
+                  height = unit(params$pattern_scale, 'cm'),
+                  extend = "repeat")
+  grid.polygon(x = boundary_df$x, y = boundary_df$y, id = boundary_df$id,
+               gp = gpar(fill = patt))
 }

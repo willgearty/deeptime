@@ -17,4 +17,6 @@
                                                      "axis.ticks.length")
     )
   )
+
+  options(ggpattern_geometry_funcs = list(geo = geo_ggpattern))
 }
