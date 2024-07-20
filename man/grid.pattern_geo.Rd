@@ -50,6 +50,7 @@ grid.pattern_geo(params = list(pattern_type = "633", pattern_scale = 4),
                  boundary_df = data.frame(x, y, id = 1))
 \dontshow{if (require(ggpattern)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # use the function via ggpattern by specifying `pattern = 'geo'`
+library(ggplot2)
 library(ggpattern)
 df <- data.frame(trt = c("a", "b", "c"), outcome = c(2.3, 1.9, 3.2))
 ggplot(df, aes(trt, outcome)) +

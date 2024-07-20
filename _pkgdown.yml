@@ -34,7 +34,6 @@ articles:
   - coord
   - traits
   - time
-  - geo
   - ggarrange2
 
 reference:
@@ -114,6 +113,7 @@ reference:
   desc: >
     These functions can be used for visualizing geologic/stratigraphic data.
   contents:
+  - grid.pattern_geo
   - geo_pattern
   - scale_fill_geopattern
 

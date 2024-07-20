@@ -161,6 +161,7 @@ scale_fill_geopattern <- function(...) {
 #'                  boundary_df = data.frame(x, y, id = 1))
 #' @examplesIf require(ggpattern)
 #' # use the function via ggpattern by specifying `pattern = 'geo'`
+#' library(ggplot2)
 #' library(ggpattern)
 #' df <- data.frame(trt = c("a", "b", "c"), outcome = c(2.3, 1.9, 3.2))
 #' ggplot(df, aes(trt, outcome)) +
