@@ -100,7 +100,6 @@ geo_grob <- function(code,
 #'   menu to display patterns.
 #' @export
 #' @importFrom ggplot2 scale_fill_manual
-#' @import grImport2
 #' @examples
 #' library(ggplot2)
 #' vals <- c("101", "313", "603", "733")
@@ -115,7 +114,6 @@ scale_fill_geopattern <- function(...) {
 # should probably use discrete_scale or even make a custom scale
 
 #' @importFrom grid viewport pattern unit grid.polygon
-#' @import grImport2
 geo_ggpattern <- function(params, boundary_df, aspect_ratio, legend = FALSE) {
   grob <- geo_grob(params$pattern_type,
                    col = params$pattern_colour, fill = params$pattern_fill,
