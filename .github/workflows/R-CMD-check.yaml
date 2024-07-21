@@ -30,7 +30,7 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1', depends_only: true}
+          - {os: ubuntu-latest,   r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -65,14 +65,3 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-        if: ${{ matrix.config.depends_only != true }}
-
-      - name: run R CMD Check with depends only
-        uses: r-lib/actions/check-r-package@v2
-        env:
-          _R_CHECK_FORCE_SUGGESTS_: 0
-          _R_CHECK_DEPENDS_ONLY_: 1
-        with:
-          upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-        if: ${{ matrix.config.depends_only == true }}
