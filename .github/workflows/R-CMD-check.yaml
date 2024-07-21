@@ -51,19 +51,6 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
-        if: ${{ matrix.suggests_only != true }}
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          dependencies: '"hard"'
-          cache: false
-          extra-packages: |
-            any::rcmdcheck
-            any::testthat
-            any::knitr
-            any::rmarkdown
-          needs: check
-        if: ${{ matrix.suggests_only == true }}
 
       - name: Install ggplot2 ${{ matrix.ggplot2 }}
         run: |
@@ -78,3 +65,14 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+        if: ${{ matrix.suggests_only != true }}
+
+      - name: run default R CMD Check
+        uses: r-lib/actions/check-r-package@v2
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: 0
+          _R_CHECK_SUGGESTS_ONLY_: 1
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+        if: ${{ matrix.suggests_only == true }}
