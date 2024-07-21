@@ -10,6 +10,8 @@ on:
 
 name: R-CMD-check
 
+permissions: read-all
+
 env:
   R_BIOC_VERSION: 3.19
 
@@ -28,7 +30,7 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: ubuntu-latest,   r: 'oldrel-1', suggests_only: TRUE}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -49,6 +51,19 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+        if: ${{ matrix.suggests_only != TRUE }}
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          dependencies: '"hard"'
+          cache: false
+          extra-packages: |
+            any::rcmdcheck
+            any::testthat
+            any::knitr
+            any::rmarkdown
+          needs: check
+        if: ${{ matrix.suggests_only == TRUE }}
 
       - name: Install ggplot2 ${{ matrix.ggplot2 }}
         run: |
@@ -62,3 +77,4 @@ jobs:
           _R_CHECK_FORCE_SUGGESTS_: 0
         with:
           upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
