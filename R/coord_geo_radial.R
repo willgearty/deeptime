@@ -162,7 +162,6 @@ coord_geo_radial <- function(dat = "periods",
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||% exec
-#' @importFrom geomtextpath geom_textpath
 CoordGeoRadial <- ggproto("CoordGeoRadial",
                           if (packageVersion("ggplot2") >= "3.5.0") {
                             ggplot2::CoordRadial
@@ -236,12 +235,15 @@ CoordGeoRadial <- ggproto("CoordGeoRadial",
       }
       # add labels if requested
       if (self$lab[[ind]]) { # nocov start
+        rlang::check_installed("geomtextpath",
+                               reason = paste0("to add labels with ",
+                                               "`coord_geo_radial()`"))
         if (self$abbrv[[ind]] && "abbr" %in% colnames(dat_ind)) {
           dat_ind$name <- dat_ind$abbr
         }
         dat_temp <- dat_ind[rep(seq_len(nrow(dat_ind)), each = 2), ]
         geo_scale <- geo_scale +
-          exec(geom_textpath, data = dat_temp,
+          exec(geomtextpath::geom_textpath, data = dat_temp,
                aes(y = (min_age + max_age) / 2, label = name),
                x = rep(c(xmins[ind], xmins[ind + 1]), nrow(dat_ind)),
                text_only = TRUE, !!!self$textpath_args[[ind]])

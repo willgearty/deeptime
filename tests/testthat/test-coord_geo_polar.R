@@ -56,6 +56,7 @@ test_that("stacking scales works", {
 test_that("ggtree scale works with only fossil taxa", {
   withr::local_options(lifecycle_verbosity = "quiet")
   skip_if_not_installed("paleotree")
+  skip_if_not_installed("geomtextpath")
   gg <- ggtree(ceratopsianTreeRaia,
                position = position_nudge(
                  x = -ceratopsianTreeRaia$root.time

@@ -58,7 +58,7 @@ lines.}
 
 \item{lty}{Line type for lines between intervals.}
 
-\item{lab}{Whether to include labels.}
+\item{lab}{Whether to include labels. Requires the \code{geomtextpath} package.}
 
 \item{abbrv}{If including labels, whether to use abbreviations instead of
 full interval names.}

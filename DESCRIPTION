@@ -37,9 +37,9 @@ Imports:
     cli,
     phytools,
     lifecycle,
-    geomtextpath,
     grImport2
 Suggests: 
+    geomtextpath,
     dplyr,
     divDyn,
     gsloid,
