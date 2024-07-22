@@ -4,7 +4,6 @@ template:
   bootswatch: flatly
   bslib:
     navbar-padding-y: 8px
-  light-switch: true
   includes:
     in_header: |
        <!-- Google tag (gtag.js) -->
