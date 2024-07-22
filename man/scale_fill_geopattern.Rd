@@ -58,7 +58,7 @@ Where they are not supported, closed shapes will be rendered with a
 transparent fill. For example, on Windows machines, the default device in
 RStudio and in the knitr package is \code{\link[=png]{png()}}, which does not support
 patterns. In RStudio, you can go to ‘Tools > Global Options > General >
-Graphics’ and choose the ‘ragg’ or ‘Cairo PNG’ device from the dropdown
+Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
 menu to display patterns.
 }
 

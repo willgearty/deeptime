@@ -53,7 +53,9 @@ Suggests:
     rmarkdown,
     withr,
     rsvg,
-    ggpattern
+    ggpattern,
+    ggrepel,
+    rmacrostrat
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/revdeps: revdepcheck

@@ -205,8 +205,10 @@ ggplot(coral_div_dis) +
 Looking to learn about more advanced features of __deeptime__? Look no further:
 
 - [Plotting phylogenies with timescales](phylogenies.html)
-- [Plotting trait data](traits.html)
-- [Combining and arranging plots](ggarrange2.html)
 - [Additional ggplot coordinate systems](coord.html)
+- [Plotting trait data](traits.html)
+- [Plotting temporal data](time.html)
+- [Plotting geological/stratigraphical patterns](time.html)
+- [Combining and arranging plots](ggarrange2.html)
 
 </div>

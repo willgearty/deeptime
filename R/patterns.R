@@ -2,10 +2,9 @@
 #'
 #' Retrieve a single geologic pattern as defined in the [FGDC Digital
 #' Cartographic Standard for Geologic Map
-#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php) by
-#' the [Geologic Data Subcommittee
-#' (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic
-#' Data Committee (FGDC)](https://www.fgdc.gov/).
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the
+#' [Geologic Data Subcommittee (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php)
+#' of the [Federal Geographic Data Committee (FGDC)](https://www.fgdc.gov/).
 #'
 #' @param code The number corresponding to the pattern to return. Strings and
 #'   numbers are permitted. See the "pattern numbers" in the [full pattern
@@ -97,7 +96,7 @@ geo_grob <- function(code,
 #'   transparent fill. For example, on Windows machines, the default device in
 #'   RStudio and in the knitr package is [png()], which does not support
 #'   patterns. In RStudio, you can go to ‘Tools > Global Options > General >
-#'   Graphics’ and choose the ‘ragg’ or ‘Cairo PNG’ device from the dropdown
+#'   Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
 #'   menu to display patterns.
 #' @export
 #' @importFrom ggplot2 scale_fill_manual
@@ -110,7 +109,7 @@ geo_grob <- function(code,
 #' @family patterns
 scale_fill_geopattern <- function(...) {
   vals <- sapply(names(geo_grobs), geo_pattern, simplify = FALSE)
-  scale_fill_manual(values = vals, ...)
+  scale_fill_manual(values = vals, na.value = vals[[1]], ...)
 }
 # TODO: support colors and scaling?
 # should probably use discrete_scale or even make a custom scale
@@ -119,20 +118,20 @@ scale_fill_geopattern <- function(...) {
 #'
 #' This function can be used to plot a single geologic pattern as defined in the
 #' [FGDC Digital Cartographic Standard for Geologic Map
-#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php) by
-#' the [Geologic Data Subcommittee
-#' (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic
-#' Data Committee (FGDC)](https://www.fgdc.gov/). The pattern is plotted on the
-#' existing canvas (i.e., use [grid::grid.newpage()] to make a new canvas).
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the
+#' [Geologic Data Subcommittee (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php)
+#' of the [Federal Geographic Data Committee (FGDC)](https://www.fgdc.gov/). The
+#' pattern is plotted on the existing canvas (i.e., use [grid::grid.newpage()]
+#' to make a new canvas).
 #'
 #' @details The following `params` are accepted:
 #'   \describe{
 #'     \item{\strong{`pattern_alpha`}}{ Alpha transparency for pattern. default: 1}
-#'     \item{\strong{`pattern_colour`}}{ Colour used for strokes and points in
+#'     \item{\strong{`pattern_colour`}}{ Color used for strokes and points in
 #'       the pattern. default: 'black'}
 #'     \item{\strong{`pattern_fill`}}{ Color used to fill various closed shapes
 #'       (e.g., circles) in the pattern. default: `NA`}
-#'     \item{\strong{`pattern_scale`}}{ Scale. default: 1}
+#'     \item{\strong{`pattern_scale`}}{ Scale. default: 2}
 #'     \item{\strong{`pattern_type`}}{ Code for the FGDC pattern to use. See the
 #'       "pattern numbers" in the [full pattern
 #'       chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf)
@@ -147,6 +146,13 @@ scale_fill_geopattern <- function(...) {
 #'   pattern.
 #' @param aspect_ratio Unused.
 #' @param legend Unused.
+#' @section Warning: Pattern fills are not supported on all graphics devices.
+#'   Where they are not supported, closed shapes will be rendered with a
+#'   transparent fill. For example, on Windows machines, the default device in
+#'   RStudio and in the knitr package is [png()], which does not support
+#'   patterns. In RStudio, you can go to ‘Tools > Global Options > General >
+#'   Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
+#'   menu to display patterns.
 #'
 #' @importFrom grid viewport pattern unit grid.polygon
 #' @family patterns

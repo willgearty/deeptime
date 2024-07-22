@@ -38,8 +38,9 @@ instance of the desired pattern. \code{geo_pattern()} returns a
 desired pattern.
 }
 \description{
-Retrieve a single geologic pattern as defined in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by
-the \href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)} of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}.
+Retrieve a single geologic pattern as defined in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by the
+\href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)}
+of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}.
 }
 \details{
 These patterns were originally processed and optimized by Daven

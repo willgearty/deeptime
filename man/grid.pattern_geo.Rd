@@ -21,25 +21,37 @@ pattern.}
 }
 \description{
 This function can be used to plot a single geologic pattern as defined in the
-\href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by
-the \href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)} of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}. The pattern is plotted on the
-existing canvas (i.e., use \code{\link[grid:grid.newpage]{grid::grid.newpage()}} to make a new canvas).
+\href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by the
+\href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)}
+of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}. The
+pattern is plotted on the existing canvas (i.e., use \code{\link[grid:grid.newpage]{grid::grid.newpage()}}
+to make a new canvas).
 }
 \details{
 The following \code{params} are accepted:
 \describe{
 \item{\strong{\code{pattern_alpha}}}{ Alpha transparency for pattern. default: 1}
-\item{\strong{\code{pattern_colour}}}{ Colour used for strokes and points in
+\item{\strong{\code{pattern_colour}}}{ Color used for strokes and points in
 the pattern. default: 'black'}
 \item{\strong{\code{pattern_fill}}}{ Color used to fill various closed shapes
 (e.g., circles) in the pattern. default: \code{NA}}
-\item{\strong{\code{pattern_scale}}}{ Scale. default: 1}
+\item{\strong{\code{pattern_scale}}}{ Scale. default: 2}
 \item{\strong{\code{pattern_type}}}{ Code for the FGDC pattern to use. See the
 "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
 for valid values. default: "101" }
 \item{\strong{\code{fill}}}{ Color used for the background. default: "white" }
 }
 }
+\section{Warning}{
+ Pattern fills are not supported on all graphics devices.
+Where they are not supported, closed shapes will be rendered with a
+transparent fill. For example, on Windows machines, the default device in
+RStudio and in the knitr package is \code{\link[=png]{png()}}, which does not support
+patterns. In RStudio, you can go to ‘Tools > Global Options > General >
+Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
+menu to display patterns.
+}
+
 \examples{
 # use the function directly to make a hexagon with the pattern
 library(grid)
