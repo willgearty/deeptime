@@ -1,5 +1,6 @@
 test_that("geom_phylomorpho works", {
   skip_if_not_installed("ape")
+  skip_if_not_installed("phytools")
   library(ape)
   set.seed(1234)
   tr <- rtree(10)

@@ -51,18 +51,16 @@ improving the display. The \code{position} argument accepts the following:
 \item The result of calling a position function, such as \code{position_jitter()}.
 This method allows for passing extra arguments to the position.
 \item A string naming the position adjustment. To give the position as a
-string, strip the function name of the \code{position_} prefix. For example,
-to use \code{position_jitter()}, give the position as \code{"jitter"}.
+string, strip the function name of the \code{position_} prefix. For example, to
+use \code{position_jitter()}, give the position as \code{"jitter"}.
 }}
 
-\item{...}{Other arguments passed on to both
-\code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}} and \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.}
-
-\item{seg_args}{A list of arguments passed only to
-\code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.}
-
-\item{point_args}{A list of arguments passed only to
+\item{...}{Other arguments passed on to both \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}} and
 \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.}
+
+\item{seg_args}{A list of arguments passed only to \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.}
+
+\item{point_args}{A list of arguments passed only to \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.}
 
 \item{arrow}{specification for arrow heads, as created by \code{\link[grid:arrow]{grid::arrow()}}.}
 
@@ -88,21 +86,22 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 }
 \description{
-This behaves similar to \code{\link[phytools:phylomorphospace]{phytools::phylomorphospace()}}, but is
-for plotting a 2-D phylomorphospace with \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}.
-This function works like any other \code{ggplot2} geom; it can be
-combined with other geoms (see the example below), and the output can be
-modified using scales, themes, etc.
+This behaves similar to \code{\link[phytools:phylomorphospace]{phytools::phylomorphospace()}}, but is for plotting a
+2-D phylomorphospace with \code{\link[ggplot2:ggplot]{ggplot2::ggplot()}}. This function works like any
+other \code{ggplot2} geom; it can be combined with other geoms (see the example
+below), and the output can be modified using scales, themes, etc.
 }
 \details{
-The ancestral states are estimated using \code{\link[phytools:fastAnc]{phytools::fastAnc()}}.
-The nodes are connected using \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}},
-while the tips are indicated using \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
+The ancestral states are estimated using \code{\link[phytools:fastAnc]{phytools::fastAnc()}}. Note that
+\code{phytools} is not necessarily installed with \code{deeptime}, but it is required
+to use this function. Following the estimation of the ancestral states, the
+nodes are connected using \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}, while the tips are
+indicated using \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
 
 The default expectation is that the order of the data is the same order as
-the tip labels of the tree (\code{tree$tip.label}). However, if this is not
-the case, you can map the optional \code{label} aesthetic to a column in the
-data that contains the tip names (see example below).
+the tip labels of the tree (\code{tree$tip.label}). However, if this is not the
+case, you can map the optional \code{label} aesthetic to a column in the data that
+contains the tip names (see example below).
 }
 \examples{
 library(ggplot2)

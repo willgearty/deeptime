@@ -35,11 +35,11 @@ Imports:
     ggfittext,
     curl,
     cli,
-    phytools,
     lifecycle,
     grImport2
 Suggests: 
     geomtextpath,
+    phytools,
     dplyr,
     divDyn,
     gsloid,
