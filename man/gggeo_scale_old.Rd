@@ -89,8 +89,8 @@ can be obtained with \code{rgb()}) for each time interval.
 }
 \section{Life cycle}{
 
-This function is soft-deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime}
-version 1.0.0. It may be removed in the future.
+This function is fully deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of
+\strong{deeptime} version 1.2.0.
 }
 
 \examples{

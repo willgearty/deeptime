@@ -5,6 +5,9 @@
 * Updated built-in timescales to 2023/06 version of GTS
 * Added FGDC geologic patterns to internal data
 * Added functions to retrieve patterns and to use them for ggplot2 fills
+* The `phytools` package is no longer required to install `deeptime` but is required to use the `geom_phylomorphospace()` function
+* The `geomtextpath` package is no longer required to install `deeptime` but is required to add labels with the `coord_geo_polar()` or `coord_geo_radial()` functions
+* The `gggeo_scale_old()` has been fully deprecated
 
 # deeptime 1.1.1
 deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:

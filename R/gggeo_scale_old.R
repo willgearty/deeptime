@@ -21,8 +21,8 @@
 #'     can be obtained with `rgb()`) for each time interval.
 #' }
 #' @section Life cycle:
-#' This function is soft-deprecated in favor of [coord_geo()] as of **deeptime**
-#' version 1.0.0. It may be removed in the future.
+#'   This function is fully deprecated in favor of [coord_geo()] as of
+#'   **deeptime** version 1.2.0.
 #' @param gg The ggplot object.
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
@@ -53,10 +53,6 @@
 #' @return A ggplot object.
 #' @keywords internal
 #' @export
-#' @importFrom ggplot2 ggplot geom_rect geom_text aes scale_fill_manual
-#' @importFrom ggplot2 ggplot_build
-#' @importFrom ggnewscale new_scale_fill
-#' @importFrom stats setNames
 #' @examples
 #' library(ggplot2)
 #' # bottom scale by default
@@ -128,78 +124,5 @@ gggeo_scale_old <-
            height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0,
            abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
            size = 5, neg = FALSE) {
-  lifecycle::deprecate_soft("1.0.0", "gggeo_scale_old()", "coord_geo()")
-  if (is(dat, "data.frame")) {
-    # just use the supplied data
-  } else {
-    dat <- get_scale_data(dat)
-  }
-  if (neg) {
-    dat$max_age <- -1 * (dat$max_age)
-    dat$min_age <- -1 * (dat$min_age)
-  }
-  dat$mid_age <- (dat$max_age + dat$min_age) / 2
-  if (!is.null(fill)) {
-    dat$color <- rep(fill, length.out = nrow(dat))
-  } else if (!("color" %in% colnames(dat))) {
-    dat$color <- rep(c("grey60", "grey80"), length.out = nrow(dat))
-  }
-  lims <- ggplot_build(gg)$layout$panel_params[[1]]
-  if (abbrv && "abbr" %in% colnames(dat)) {
-    dat$label <- dat$abbr
-  } else {
-    dat$label <- dat$name
-  }
-  dat$label[dat$name %in% skip] <- ""
-  gg <- gg + new_scale_fill()
-  if (pos %in% c("bottom", "top", "b", "t")) {
-    y_range <- max(lims$y.range) - min(lims$y.range)
-    if (pos %in% c("top", "t")) {
-      ymax <- max(lims$y.range) - gap * y_range
-      ymin <- max(lims$y.range) - (height + gap) * y_range
-    } else {
-      ymin <- min(lims$y.range) + gap * y_range
-      ymax <- min(lims$y.range) + (height + gap) * y_range
-    }
-    gg <- gg +
-      geom_rect(
-        data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
-        ymin = ymin, ymax = ymax, color = color, alpha = alpha,
-        show.legend = FALSE, inherit.aes = FALSE
-      ) +
-      scale_fill_manual(values = setNames(dat$color, dat$color))
-    if (lab) {
-      gg <- gg +
-        geom_text(
-          data = dat, aes(x = mid_age, label = label), y = (ymin + ymax) / 2,
-          vjust = "middle", hjust = "middle", size = size, angle = rot,
-          inherit.aes = FALSE
-        )
-    }
-  } else if (pos %in% c("left", "right", "l", "r")) {
-    x_range <- max(lims$x.range) - min(lims$x.range)
-    if (pos %in% c("right", "r")) {
-      xmax <- max(lims$x.range) - gap * x_range
-      xmin <- max(lims$x.range) - (height + gap) * x_range
-    } else {
-      xmin <- min(lims$x.range) + gap * x_range
-      xmax <- min(lims$x.range) + (height + gap) * x_range
-    }
-    gg <- gg +
-      geom_rect(
-        data = dat, aes(ymin = min_age, ymax = max_age, fill = color),
-        xmin = xmin, xmax = xmax, color = color, alpha = alpha,
-        show.legend = FALSE, inherit.aes = FALSE
-      ) +
-      scale_fill_manual(values = setNames(dat$color, dat$color))
-    if (lab) {
-      gg <- gg +
-        geom_text(
-          data = dat, aes(y = mid_age, label = label), x = (xmin + xmax) / 2,
-          vjust = "middle", hjust = "middle", size = size, angle = rot,
-          inherit.aes = FALSE
-        )
-    }
-  }
-  gg
+  lifecycle::deprecate_stop("1.2.0", "gggeo_scale_old()", "coord_geo()")
 }

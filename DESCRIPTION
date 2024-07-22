@@ -21,7 +21,6 @@ LazyData: true
 biocViews:
 Imports:
     ggplot2 (>= 3.4.0),
-    ggnewscale,
     utils,
     ggforce,
     grid,
