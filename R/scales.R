@@ -51,6 +51,7 @@ scale_fill_geo <- function(dat, ...) {
 #' @export
 #' @rdname scale_geo
 #' @importFrom utils packageVersion
+#' @importFrom stats setNames
 scale_discrete_geo <- function(dat, aesthetics, ...) {
   if (is(dat, "data.frame")) {
     # just use the supplied data
