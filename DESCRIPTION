@@ -56,6 +56,7 @@ Suggests:
     ggpattern,
     ggrepel,
     rmacrostrat
+Remotes: palaeoverse/rmacrostrat
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/revdeps: revdepcheck
