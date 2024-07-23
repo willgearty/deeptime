@@ -1,5 +1,4 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>https://williamgearty.com/deeptime/dev/LICENSE.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/articles/coord.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/articles/coord_geo.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/articles/geo.html</loc></url>
@@ -10,6 +9,7 @@
 <url><loc>https://williamgearty.com/deeptime/dev/articles/traits.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/authors.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/index.html</loc></url>
+<url><loc>https://williamgearty.com/deeptime/dev/LICENSE.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/news/index.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/coord_geo.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/coord_geo_polar.html</loc></url>
@@ -23,9 +23,9 @@
 <url><loc>https://williamgearty.com/deeptime/dev/reference/eras.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/facet_grid_color.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/facet_wrap_color.html</loc></url>
-<url><loc>https://williamgearty.com/deeptime/dev/reference/geo_pattern.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/geom_phylomorpho.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/geom_points_range.html</loc></url>
+<url><loc>https://williamgearty.com/deeptime/dev/reference/geo_pattern.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/getScaleData.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/get_scale_data.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/dev/reference/ggarrange2.html</loc></url>
