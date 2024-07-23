@@ -9,7 +9,9 @@
 #' @param code The number corresponding to the pattern to return. Strings and
 #'   numbers are permitted. See the "pattern numbers" in the [full pattern
 #'   chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf)
-#'   for valid `code` values.
+#'   for valid `code` values. Note that codes associated with color variants are
+#'   supported but will result in the default color variant instead (usually
+#'   black and white).
 #' @param scale The visual scale of the pattern.
 #' @param col The color to use for the lines of the pattern.
 #' @param fill The color with which to fill the pattern.
@@ -90,7 +92,10 @@ geo_grob <- function(code,
 #' chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf).
 #' See [geo_pattern()] for more details.
 #'
-#' @inheritParams ggplot2::scale_fill_manual
+#' @inheritDotParams ggplot2::discrete_scale -palette -aesthetics -super -position -expand
+#' @param na.value The aesthetic value to use for missing (NA) values. May be
+#'   either a color or a [GridPattern][grid::patterns] object (such as that
+#'   returned by [geo_pattern()]).
 #' @section Warning: Pattern fills are not supported on all graphics devices.
 #'   Where they are not supported, closed shapes will be rendered with a
 #'   transparent fill. For example, on Windows machines, the default device in
@@ -99,7 +104,8 @@ geo_grob <- function(code,
 #'   Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
 #'   menu to display patterns.
 #' @export
-#' @importFrom ggplot2 scale_fill_manual
+#' @importFrom ggplot2 discrete_scale
+#' @importFrom methods is
 #' @examplesIf packageVersion("ggplot2") >= "3.5.0"
 #' library(ggplot2)
 #' vals <- c("101", "313", "603", "733")
@@ -107,12 +113,45 @@ geo_grob <- function(code,
 #'   geom_bar() +
 #'   scale_fill_geopattern(name = NULL)
 #' @family patterns
-scale_fill_geopattern <- function(...) {
-  vals <- sapply(names(geo_grobs), geo_pattern, simplify = FALSE)
-  scale_fill_manual(values = vals, na.value = vals[[1]], ...)
+scale_fill_geopattern <- function(na.value = "grey50", ...) {
+  discrete_scale(
+    "fill", palette = NULL, ..., na.value = na.value,
+    super = ScaleDiscreteGeoPattern
+  )
 }
-# TODO: support colors and scaling?
-# should probably use discrete_scale or even make a custom scale
+# TODO: is there a way to support colors and scaling?
+
+#' @importFrom ggplot2 ggproto ScaleDiscrete
+#' @keywords internal
+ScaleDiscreteGeoPattern <- ggproto("ScaleDiscreteGeoPattern", ScaleDiscrete,
+  map = function(self, x, limits = self$get_limits()) {
+    na_value <- if (self$na.translate) self$na.value else NA
+    # clean limits
+    limits <- limits[!is.na(limits)]
+    # if no limits, just return a bunch of NA values
+    if (length(limits) < 1) {
+      return(rep(list(na_value), length(x)))
+    }
+
+    # convert to character
+    if (is.factor(x)) {
+      x <- as.character(x)
+    }
+
+    # filter to limits
+    x[is.na(match(x, limits))] <- NA
+
+    # get patterns
+    sapply(x, function(code) {
+      if (is.na(code)) {
+        na_value
+      } else {
+        geo_pattern(code)
+      }
+    },
+    simplify = FALSE)
+  }
+)
 
 #' Plot an individual FGDC pattern using grid
 #'
@@ -132,10 +171,8 @@ scale_fill_geopattern <- function(...) {
 #'     \item{\strong{`pattern_fill`}}{ Color used to fill various closed shapes
 #'       (e.g., circles) in the pattern. default: `NA`}
 #'     \item{\strong{`pattern_scale`}}{ Scale. default: 2}
-#'     \item{\strong{`pattern_type`}}{ Code for the FGDC pattern to use. See the
-#'       "pattern numbers" in the [full pattern
-#'       chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf)
-#'       for valid values. default: "101" }
+#'     \item{\strong{`pattern_type`}}{ Code for the FGDC pattern to use. See
+#'       [geo_pattern()] for more details. default: "101" }
 #'     \item{\strong{`fill`}}{ Color used for the background. default: "white" }
 #'   }
 #' @param params A list of pattern parameters to customize the plotted pattern
@@ -146,13 +183,7 @@ scale_fill_geopattern <- function(...) {
 #'   pattern.
 #' @param aspect_ratio Unused.
 #' @param legend Unused.
-#' @section Warning: Pattern fills are not supported on all graphics devices.
-#'   Where they are not supported, closed shapes will be rendered with a
-#'   transparent fill. For example, on Windows machines, the default device in
-#'   RStudio and in the knitr package is [png()], which does not support
-#'   patterns. In RStudio, you can go to ‘Tools > Global Options > General >
-#'   Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
-#'   menu to display patterns.
+#' @inheritSection scale_fill_geopattern Warning
 #'
 #' @importFrom grid viewport pattern unit grid.polygon
 #' @family patterns

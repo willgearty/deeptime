@@ -36,9 +36,8 @@ the pattern. default: 'black'}
 \item{\strong{\code{pattern_fill}}}{ Color used to fill various closed shapes
 (e.g., circles) in the pattern. default: \code{NA}}
 \item{\strong{\code{pattern_scale}}}{ Scale. default: 2}
-\item{\strong{\code{pattern_type}}}{ Code for the FGDC pattern to use. See the
-"pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
-for valid values. default: "101" }
+\item{\strong{\code{pattern_type}}}{ Code for the FGDC pattern to use. See
+\code{\link[=geo_pattern]{geo_pattern()}} for more details. default: "101" }
 \item{\strong{\code{fill}}}{ Color used for the background. default: "white" }
 }
 }

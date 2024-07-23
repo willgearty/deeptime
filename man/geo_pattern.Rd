@@ -19,7 +19,9 @@ geo_grob(code, col = NULL, fill = NULL, alpha = NULL, bg = "white")
 \arguments{
 \item{code}{The number corresponding to the pattern to return. Strings and
 numbers are permitted. See the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
-for valid \code{code} values.}
+for valid \code{code} values. Note that codes associated with color variants are
+supported but will result in the default color variant instead (usually
+black and white).}
 
 \item{scale}{The visual scale of the pattern.}
 
