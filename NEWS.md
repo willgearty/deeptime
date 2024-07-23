@@ -4,10 +4,11 @@
 * Added the `true_colors` option to get_scale_data(), which, when set to `FALSE`, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets
 * Updated built-in timescales to 2023/06 version of GTS
 * Added FGDC geologic patterns to internal data
-* Added functions to retrieve patterns and to use them for ggplot2 fills
+* Added functions to retrieve FGDC patterns
+* Added functions to use FGDC patterns as ggplot2 fills or with the `ggpattern` package (see new vignette)
 * The `phytools` package is no longer required to install `deeptime` but is required to use the `geom_phylomorphospace()` function
 * The `geomtextpath` package is no longer required to install `deeptime` but is required to add labels with the `coord_geo_polar()` or `coord_geo_radial()` functions
-* The `gggeo_scale_old()` has been fully deprecated
+* The `gggeo_scale_old()` function has been fully deprecated
 
 # deeptime 1.1.1
 deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:
