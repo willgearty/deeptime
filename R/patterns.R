@@ -212,7 +212,8 @@ ScaleDiscreteGeoPattern <- ggproto("ScaleDiscreteGeoPattern", ScaleDiscrete,
 #'   geom_col_pattern(aes(color = trt, pattern_type = trt), pattern = 'geo',
 #'   pattern_color = "black", fill = "white", pattern_fill = "white") +
 #'   scale_pattern_type_manual(values = c("101", "313", "634")) +
-#'   scale_color_viridis_d() + theme(legend.key.size = unit(1.5, 'cm'))
+#'   scale_color_viridis_d() +
+#'   theme(legend.key.size = unit(1.5, 'cm'))
 grid.pattern_geo <- function(params, boundary_df, aspect_ratio,
                              legend = FALSE) {
   grob <- geo_grob(params$pattern_type %||% "101",

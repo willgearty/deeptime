@@ -56,6 +56,8 @@ if (suppressPackageStartupMessages(require(palaeoverse, quietly = TRUE))) {
 suppressPackageStartupMessages(require(gsloid, quietly = TRUE))
 suppressPackageStartupMessages(require(ggtree, quietly = TRUE))
 suppressPackageStartupMessages(require(dispRity, quietly = TRUE))
+suppressPackageStartupMessages(require(grid, quietly = TRUE))
+suppressPackageStartupMessages(require(ggpattern, quietly = TRUE))
 
 # copied from vdiffr
 str_standardise <- function(s, sep = "-") {
@@ -65,7 +67,15 @@ str_standardise <- function(s, sep = "-") {
   s
 }
 
-expect_doppelganger_deeptime <- function(title, fig) {
+# copied from https://github.com/r-lib/vdiffr/issues/132#issuecomment-1477006436
+write_svg_bleeding_edge <- function(plot, file, title = "") {
+  svglite::svglite(file)
+  on.exit(grDevices::dev.off())
+  # warning: `print_plot()` is not exported by {vdiffr}
+  vdiffr:::print_plot(plot, title)
+}
+
+expect_doppelganger_deeptime <- function(title, fig, patterns = FALSE) {
   title_new <- paste(title, "new")
   title_old <- paste(title, "old")
   if (packageVersion("ggplot2") >= "3.5.0") {
@@ -73,12 +83,20 @@ expect_doppelganger_deeptime <- function(title, fig) {
     file <- paste0(fig_name, ".svg")
     announce_snapshot_file(name = file)
 
-    expect_doppelganger(title_new, fig)
+    if (patterns) {
+      expect_doppelganger(title_new, fig, writer = write_svg_bleeding_edge)
+    } else {
+      expect_doppelganger(title_new, fig)
+    }
   } else {
     fig_name <- str_standardise(title_new)
     file <- paste0(fig_name, ".svg")
     announce_snapshot_file(name = file)
 
-    expect_doppelganger(title_old, fig)
+    if (patterns) {
+      expect_doppelganger(title_old, fig, writer = write_svg_bleeding_edge)
+    } else {
+      expect_doppelganger(title_old, fig)
+    }
   }
 }
