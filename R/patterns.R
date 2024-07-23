@@ -114,10 +114,17 @@ geo_grob <- function(code,
 #'   scale_fill_geopattern(name = NULL)
 #' @family patterns
 scale_fill_geopattern <- function(na.value = "grey50", ...) {
-  discrete_scale(
-    "fill", palette = NULL, ..., na.value = na.value,
-    super = ScaleDiscreteGeoPattern
-  )
+  if (packageVersion("ggplot2") < "3.5.0") {
+    discrete_scale(
+      "fill", scale_name = "geopattern", palette = NULL, ..., na.value = na.value,
+      super = ScaleDiscreteGeoPattern
+    )
+  } else {
+    discrete_scale(
+      "fill", palette = NULL, ..., na.value = na.value,
+      super = ScaleDiscreteGeoPattern
+    )
+  }
 }
 # TODO: is there a way to support colors and scaling?
 
