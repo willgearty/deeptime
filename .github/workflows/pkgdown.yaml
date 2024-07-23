@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: site
-          path: build
+          path: docs
 
   deploy:
     concurrency: ci-${{ github.ref }}
