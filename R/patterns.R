@@ -90,7 +90,8 @@ geo_grob <- function(code,
 #' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php). Fill
 #' values should correspond to the "pattern numbers" in the [full pattern
 #' chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf).
-#' See [geo_pattern()] for more details.
+#' See [geo_pattern()] for more details. Note that `ggplot2` >= 3.5.0 is
+#' required to use this function.
 #'
 #' @inheritDotParams ggplot2::discrete_scale -palette -aesthetics -super -position -expand
 #' @param na.value The aesthetic value to use for missing (NA) values. May be
@@ -114,17 +115,12 @@ geo_grob <- function(code,
 #'   scale_fill_geopattern(name = NULL)
 #' @family patterns
 scale_fill_geopattern <- function(na.value = "grey50", ...) {
-  if (packageVersion("ggplot2") < "3.5.0") { # nocov start
-    discrete_scale(
-      "fill", scale_name = "geopattern", palette = NULL, ..., na.value = na.value,
-      super = ScaleDiscreteGeoPattern
-    ) # nocov end
-  } else {
-    discrete_scale(
-      "fill", palette = NULL, ..., na.value = na.value,
-      super = ScaleDiscreteGeoPattern
-    )
-  }
+  rlang::check_installed("ggplot2", version = "3.5.0",
+                         reason = "to use `scale_fill_geopattern()`")
+  discrete_scale(
+    "fill", palette = NULL, ..., na.value = na.value,
+    super = ScaleDiscreteGeoPattern
+  )
 }
 # TODO: is there a way to support colors and scaling?
 

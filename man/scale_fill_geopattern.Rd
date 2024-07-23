@@ -64,7 +64,8 @@ every level in a legend, the layer should use \code{show.legend = TRUE}.}
 \description{
 Fill scale using the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization}. Fill
 values should correspond to the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}.
-See \code{\link[=geo_pattern]{geo_pattern()}} for more details.
+See \code{\link[=geo_pattern]{geo_pattern()}} for more details. Note that \code{ggplot2} >= 3.5.0 is
+required to use this function.
 }
 \section{Warning}{
  Pattern fills are not supported on all graphics devices.
