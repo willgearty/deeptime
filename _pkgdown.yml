@@ -17,9 +17,7 @@ template:
        </script>
 
 figures:
-  dev.args:
-    png:
-      type: "cairo-png"
+  dev: grDevices::png
 
 development:
   mode: auto
