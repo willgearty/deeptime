@@ -1,8 +1,8 @@
-#' Eon data from the International Commission on Stratigraphy (v2022/10)
+#' Eon data from the International Commission on Stratigraphy (v2023/06)
 #'
 #' A dataset containing the boundary ages, abbreviations, and colors for the
 #' eons of the Geologic Time Scale. Based on The ICS International
-#' Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+#' Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 3 rows and 5 variables:
 #' \describe{
@@ -17,11 +17,11 @@
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eons>
 "eons"
 
-#' Era data from the International Commission on Stratigraphy (v2022/10)
+#' Era data from the International Commission on Stratigraphy (v2023/06)
 #'
 #' A dataset containing the boundary ages, abbreviations, and colors for the
 #' eras of the Geologic Time Scale. Based on The ICS International
-#' Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+#' Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 10 rows and 5 variables:
 #' \describe{
@@ -36,11 +36,11 @@
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eras>
 "eras"
 
-#' Period data from the International Commission on Stratigraphy (v2022/10)
+#' Period data from the International Commission on Stratigraphy (v2023/06)
 #'
 #' A dataset containing the boundary ages, abbreviations, and colors for the
 #' periods of the Geologic Time Scale. Based on The ICS International
-#' Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+#' Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 22 rows and 5 variables:
 #' \describe{
@@ -55,11 +55,11 @@
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20periods>
 "periods"
 
-#' Epoch data from the International Commission on Stratigraphy (v2022/10)
+#' Epoch data from the International Commission on Stratigraphy (v2023/06)
 #'
 #' A dataset containing the boundary ages, abbreviations, and colors for the
 #' epochs of the Geologic Time Scale. Based on The ICS International
-#' Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+#' Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 34 rows and 5 variables:
 #' \describe{
@@ -74,11 +74,11 @@
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20epochs>
 "epochs"
 
-#' Stage data from the International Commission on Stratigraphy (v2022/10)
+#' Stage data from the International Commission on Stratigraphy (v2023/06)
 #'
 #' A dataset containing the boundary ages, abbreviations, and colors for the
 #' stages of the Geologic Time Scale. Based on The ICS International
-#' Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+#' Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 #'
 #' @format A data frame with 102 rows and 5 variables:
 #' \describe{

@@ -3,7 +3,7 @@
 \docType{data}
 \name{eras}
 \alias{eras}
-\title{Era data from the International Commission on Stratigraphy (v2022/10)}
+\title{Era data from the International Commission on Stratigraphy (v2023/06)}
 \format{
 A data frame with 10 rows and 5 variables:
 \describe{
@@ -24,7 +24,7 @@ eras
 \description{
 A dataset containing the boundary ages, abbreviations, and colors for the
 eras of the Geologic Time Scale. Based on The ICS International
-Chronostratigraphic Chart (v2022/10), by Cohen, Finney, Gibbard, and Fan.
+Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 }
 \seealso{
 Other timescales: 
