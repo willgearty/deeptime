@@ -114,11 +114,11 @@ geo_grob <- function(code,
 #'   scale_fill_geopattern(name = NULL)
 #' @family patterns
 scale_fill_geopattern <- function(na.value = "grey50", ...) {
-  if (packageVersion("ggplot2") < "3.5.0") {
+  if (packageVersion("ggplot2") < "3.5.0") { # nocov start
     discrete_scale(
       "fill", scale_name = "geopattern", palette = NULL, ..., na.value = na.value,
       super = ScaleDiscreteGeoPattern
-    )
+    ) # nocov end
   } else {
     discrete_scale(
       "fill", palette = NULL, ..., na.value = na.value,
