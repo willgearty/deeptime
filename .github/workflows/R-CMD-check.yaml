@@ -78,6 +78,6 @@ jobs:
           _R_CHECK_FORCE_SUGGESTS_: 0
         with:
           upload-snapshots: true
-          args: 'c("--no-manual", "--as-cran", "--no-build-vignettes")'
+          args: 'c("--no-manual", "--as-cran", "--ignore-vignettes")'
           build_args: 'c("--no-manual", "--no-build-vignettes")'
         if: ${{ matrix.config.no-vignettes == true }}
