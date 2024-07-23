@@ -12,8 +12,8 @@ on:
 name: pkgdown
 
 jobs:
-  build:
-    runs-on: windows-latest
+  pkgdown:
+    runs-on: ubuntu-latest
     # Only restrict concurrency for non-PR jobs
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
@@ -37,29 +37,10 @@ jobs:
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: site
-          path: docs
-
-  deploy:
-    concurrency: ci-${{ github.ref }}
-    needs: [build] # The second job must depend on the first one to complete before running and uses ubuntu-latest instead of windows.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download Artifacts # The built project is downloaded into the 'site' folder.
-        uses: actions/download-artifact@v4
-        with:
-          name: site
-
-      - name: Deploy to GitHub pages
+      - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           clean: false
           branch: gh-pages
-          folder: 'site' # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
+          folder: docs

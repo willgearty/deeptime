@@ -16,6 +16,10 @@ template:
          gtag('config', 'G-B48C68KGQJ');
        </script>
 
+figures:
+  dev.args:
+    png:
+      type: "cairo-png"
 
 development:
   mode: auto
