@@ -8,7 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, out.width = "100%", dev.args = list(png = list(type = "cairo-png")),
+knitr::opts_chunk$set(collapse = TRUE, out.width = "100%",
                       fig.width = 7, fig.height = 6, fig.align = "center")
 ```
 
@@ -119,7 +119,7 @@ table(san_juan_units$pattern, exclude = NULL)
 
 Excellent, we now have a pattern code for each unit! Now we can go ahead and use these instead of the colors for the fills of the units. In order to convert the codes to visual patterns, we'll need to move the `fill` argument to a call to `aes()` and we'll need to add a call to `scale_fill_geopattern()`:
 
-```{r fig.height = 8}
+```{r eval = FALSE}
 # Plot with pattern fills
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
@@ -144,6 +144,10 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
   coord_geo(pos = "left", dat = list("stages"), rot = 90)
 ```
 
+<div class="figure">
+<img src="geo-1.png" alt="plot of stratigraphic section with patterns using scale_fill_geopattern()" width="100%" />
+</div>
+
 ### Further customization
 If you use `scale_fill_geopattern()`, the patterns are used with the default parameters (e.g., line color, background color, and scale). However, if you'd like to customize how the patterns look, you can use the `geom_` functions from the [**ggpattern**](https://trevorldavis.com/R/ggpattern/) package (e.g., `geom_rect_pattern()`) and use the "geo" `pattern`. Once you have implemented this, any of the following ggplot2 aesthetics can be used to tweak the patterns. _Note that the defaults for these two methods are often different:_
 
@@ -160,7 +164,7 @@ For the pattern code (i.e., `pattern\_type`), see the "pattern numbers" in the [
 
 Let's try increasing the scale of the patterns in our stratigraphic column. We'll need to switch to using `geom_rect_pattern()`. Since we are specifying the patterns within an `aes()` call, we can use `scale_pattern_type_identity()` to use those raw pattern codes:
 
-```{r fig.height = 8}
+```{r eval = FALSE}
 # Plot using ggpattern
 library(ggpattern)
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
@@ -187,9 +191,13 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
   coord_geo(pos = "left", dat = list("stages"), rot = 90)
 ```
 
+<div class="figure">
+<img src="geo-2.png" alt="plot of stratigraphic section with patterns using ggpattern with defaults" width="100%" />
+</div>
+
 Oh no! This is a good example of how the defaults change between the two methods. We can easily fix this by specifying our own defaults:
 
-```{r fig.height = 8}
+```{r eval = FALSE}
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type
@@ -215,9 +223,13 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
   coord_geo(pos = "left", dat = list("stages"), rot = 90)
 ```
 
+<div class="figure">
+<img src="geo-3.png" alt="plot of stratigraphic section with patterns using ggpattern without defaults" width="100%" />
+</div>
+
 There we go, now the patterns are more zoomed in! Hmm...now it looks a little boring. Let's go ahead and bring back those colors from before. We'll make both the background color (`fill`) and the pattern fill color (`pattern_fill`) based on the "color" column:
 
-```{r fig.height = 8}
+```{r eval = FALSE}
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type
@@ -245,6 +257,10 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
   # Add geological time scale
   coord_geo(pos = "left", dat = list("stages"), rot = 90)
 ```
+
+<div class="figure">
+<img src="geo-4.png" alt="plot of stratigraphic section with patterns using ggpattern and colors" width="100%" />
+</div>
 
 Well isn't that a nice looking visualization of the stratigraphic column!
 

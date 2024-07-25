@@ -16,9 +16,6 @@ template:
          gtag('config', 'G-B48C68KGQJ');
        </script>
 
-figures:
-  dev: grDevices::png
-
 development:
   mode: auto
 
