@@ -277,7 +277,9 @@ need to add a call to <code><a href="../reference/scale_fill_geopattern.html">sc
 <span>        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Add geological time scale</span></span>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="st">"left"</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span><span class="op">)</span>, rot <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
-<p><img src="geo_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="figure">
+<p><img src="geo-1.png" alt="plot of stratigraphic section with patterns using scale_fill_geopattern()" width="100%"></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="further-customization">Further customization<a class="anchor" aria-label="anchor" href="#further-customization"></a>
@@ -379,7 +381,9 @@ pattern codes:</p>
 <span>        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Add geological time scale</span></span>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="st">"left"</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span><span class="op">)</span>, rot <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
-<p><img src="geo_files/figure-html/unnamed-chunk-11-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="figure">
+<p><img src="geo-2.png" alt="plot of stratigraphic section with patterns using ggpattern with defaults" width="100%"></p>
+</div>
 <p>Oh no! This is a good example of how the defaults change between the
 two methods. We can easily fix this by specifying our own defaults:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -406,7 +410,9 @@ two methods. We can easily fix this by specifying our own defaults:</p>
 <span>        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Add geological time scale</span></span>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="st">"left"</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span><span class="op">)</span>, rot <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
-<p><img src="geo_files/figure-html/unnamed-chunk-12-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="figure">
+<p><img src="geo-3.png" alt="plot of stratigraphic section with patterns using ggpattern without defaults" width="100%"></p>
+</div>
 <p>There we go, now the patterns are more zoomed in! Hmm…now it looks a
 little boring. Let’s go ahead and bring back those colors from before.
 We’ll make both the background color (<code>fill</code>) and the pattern
@@ -438,7 +444,9 @@ fill color (<code>pattern_fill</code>) based on the “color” column:</p>
 <span>        axis.ticks.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Add geological time scale</span></span>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="st">"left"</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span><span class="op">)</span>, rot <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
-<p><img src="geo_files/figure-html/unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;"></p>
+<div class="figure">
+<p><img src="geo-4.png" alt="plot of stratigraphic section with patterns using ggpattern and colors" width="100%"></p>
+</div>
 <p>Well isn’t that a nice looking visualization of the stratigraphic
 column!</p>
 </div>
