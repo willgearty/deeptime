@@ -1,4 +1,4 @@
-# deeptime
+# deeptime <img src="man/figures/logo.png" align="right" alt="" width="120">
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/willgearty/deeptime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/willgearty/deeptime/actions/workflows/R-CMD-check.yaml)
@@ -9,10 +9,10 @@
 <!-- badges: end -->
 
 ## Overview
-__deeptime__ extends the functionality of other plotting packages like
-`{ggplot2}` and `{lattice}` to help facilitate the plotting of data over long time
-intervals, including, but not limited to, geological, evolutionary, and ecological
-data. The primary goal of __deeptime__ is to enable users to add highly customizable
+__deeptime__ extends the functionality of other plotting packages (notably
+`{ggplot2}`) to help facilitate the plotting of data over long time intervals,
+including, but not limited to, geological, evolutionary, and ecological data.
+The primary goal of __deeptime__ is to enable users to add highly customizable
 timescales to their visualizations. Other functions are also included to assist
 with other areas of deep time visualization.
 
@@ -31,10 +31,11 @@ devtools::install_github("willgearty/deeptime")
 ### Load packages
 ```r
 library(deeptime)
+library(ggplot2)
 library(dplyr)
 ```
 
-### Add timescales to plots
+### Add one or more timescales to virtually any ggplot2 plot!
 
 The main function of __deeptime__ is `coord_geo()`, which functions just like `coord_trans()` from `{ggplot2}`.
 You can use this function to add highly customizable timescales to a wide variety of ggplots.
@@ -42,6 +43,7 @@ You can use this function to add highly customizable timescales to a wide variet
 ```r
 library(divDyn)
 data(corals)
+
 # this is not a proper diversity curve but it gets the point across
 coral_div <- corals %>% filter(stage != "") %>%
   group_by(stage) %>%
@@ -53,90 +55,139 @@ ggplot(coral_div) +
   scale_x_reverse("Age (Ma)") +
   ylab("Coral Genera") +
   coord_geo(xlim = c(250, 0), ylim = c(0, 1700)) +
-  theme_classic()
+  theme_classic(base_size = 16)
 ```
 
 <img src="man/figures/example_bottom.png">
 
-### Combine plots with timescales and plots without timescales
+#### Lots of timescales available!
+
 ```r
-library(paleotree)
-data(RaiaCopesRule)
-p1 <- ggplot(ammoniteTraitsRaia) +
-  geom_point(aes(x = Log_D, y = FD)) +
-  labs(x = "Body size", y = "Suture complexity") +
-  theme_classic()
+# Load packages
+library(gsloid)
 
-p2 <- ggplot(ammoniteTraitsRaia) +
-  geom_point(aes(x = Log_D, y = log_dur)) +
-  labs(x = "Body size", y = "Stratigraphic duration (myr)") +
-  theme_classic()
-
-p3 <- ggtree(ammoniteTreeRaia, position = position_nudge(x = -ammoniteTreeRaia$root.time)) +
-  coord_geo(xlim = c(-415,-66), ylim = c(-2,Ntip(ammoniteTreeRaia)), pos = "bottom",
-            size = 4, abbrv = FALSE, neg = TRUE) +
-  scale_x_continuous(breaks = seq(-425, -50, 25), labels = -seq(-425, -50, 25)) +
-  theme_tree2() +
-  theme(plot.margin = margin(7,11,7,11))
-
-ggarrange2(
-  ggarrange2(p1, p2, widths = c(2,1), draw = FALSE),
-  p3, nrow = 2, heights = c(1,2)
-)
+# Plot two different timescales
+ggplot(lisiecki2005) +
+  geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
+  scale_y_reverse("Time (Ma)") +
+  scale_x_reverse("\u03B418O") +
+  coord_geo(
+    dat = list("Geomagnetic Polarity Chron",
+               "Planktic foraminiferal Primary Biozones"),
+    xlim = c(6, 2), ylim = c(5.5, 0), pos = list("l", "r"),
+    rot = 90, skip = "PL4", size = list(5, 4)
+  ) +
+  theme_classic(base_size = 16)
 ```
 
-<img src="man/figures/ggarrange2.png">
+<img src="man/figures/example_left_right.png">
 
-### Plot disparity through time
+### Super flexible, supports multiple layouts, and works great with other packages!
 ```r
-#make transformer
-library(ggforce)
-trans <- linear_trans(shear(.5, 0))
+# Load packages
+library(ggtree)
+library(rphylopic)
 
-library(dispRity)
-data(demo_data)
-# prepare data to be plotted
-crinoids <- as.data.frame(demo_data$wright$matrix[[1]][, 1:2])
-crinoids$time <- "before extinction"
-crinoids$time[demo_data$wright$subsets$after$elements] <- "after extinction"
+# Get vertebrate phylogeny
+library(phytools)
+data(vertebrate.tree)
 
-square <- data.frame(V1 = c(-.6, -.6, .6, .6), V2 = c(-.4, .4, .4, -.4))
+vertebrate.tree$tip.label[vertebrate.tree$tip.label ==
+                            "Myotis_lucifugus"] <- "Vespertilioninae"
+vertebrate_data <- data.frame(species = vertebrate.tree$tip.label,
+                              name = vertebrate.tree$tip.label)
 
-# plot data normally
-ggplot() +
-  geom_segment(data = data.frame(x = -.6, y = seq(-.4, .4,.2),
-                                 xend = .6, yend = seq(-0.4, .4, .2)),
-               aes(x = x, y = y, xend = xend, yend=yend),
-               linetype = "dashed", color = "grey") +
-  geom_segment(data = data.frame(x = seq(-.6, .6, .2), y = -.4,
-                                 xend = seq(-.6, .6, .2), yend = .4),
-               aes(x = x, y = y, xend = xend, yend=yend),
-               linetype = "dashed", color = "grey") +
-  geom_polygon(data = square, aes(x = V1, y = V2), fill = NA, color = "black") +
-  geom_point(data = crinoids, aes(x = V1, y = V2), color = 'black') +
-  coord_cartesian(expand = FALSE) +
-  labs(x = "PCO1", y = "PCO2") +
-  theme_classic() +
-  facet_wrap(~time, ncol = 1, strip.position = "right") +
-  theme(panel.spacing = unit(1, "lines"), panel.background = element_blank())
-
-# plot data with transformation
-ggplot() +
-  geom_segment(data = data.frame(x = -.6, y = seq(-.4, .4,.2),
-                                 xend = .6, yend = seq(-0.4, .4, .2)),
-               aes(x = x, y = y, xend = xend, yend=yend),
-               linetype = "dashed", color = "grey") +
-  geom_segment(data = data.frame(x = seq(-.6, .6, .2), y = -.4,
-                                 xend = seq(-.6, .6, .2), yend = .4),
-               aes(x = x, y = y, xend = xend, yend=yend),
-               linetype = "dashed", color = "grey") +
-  geom_polygon(data = square, aes(x = V1, y = V2), fill = NA, color = "black") +
-  geom_point(data = crinoids, aes(x = V1, y = V2), color = 'black') +
-  coord_trans_xy(trans = trans, expand = FALSE) +
-  labs(x = "PCO1", y = "PCO2") +
-  theme_classic() +
-  facet_wrap(~time, ncol = 1, strip.position = "right") +
-  theme(panel.spacing = unit(1, "lines"), panel.background = element_blank())
+# Plot the phylogeny with a timescale
+revts(ggtree(vertebrate.tree, size = 1)) %<+%
+  vertebrate_data +
+  geom_phylopic(aes(name = name), size = 25) +
+  scale_x_continuous("Time (Ma)", breaks = seq(-500, 0, 100),
+                     labels = seq(500, 0, -100), limits = c(-500, 0),
+                     expand = expansion(mult = 0)) +
+  scale_y_continuous(guide = NULL) +
+  coord_geo_radial(dat = "periods", end = 0.5 * pi) +
+  theme_classic(base_size = 16)
 ```
 
-<img src="man/figures/disparity_ggplot.png">
+<img src="man/figures/example_phylogeny.png">
+
+### Does lots of other things too!
+
+#### Plot fossil occurence ranges
+```r
+library(palaeoverse)
+
+# Filter occurrences
+occdf <- subset(tetrapods, accepted_rank == "genus")
+occdf <- subset(occdf, accepted_name %in%
+                  c("Eryops", "Dimetrodon", "Diadectes", "Diictodon",
+                    "Ophiacodon", "Diplocaulus", "Benthosuchus"))
+
+# Plot occurrences
+ggplot(data = occdf) +
+  geom_points_range(aes(x = (max_ma + min_ma)/2, y = accepted_name)) +
+  scale_x_reverse(name = "Time (Ma)") +
+  ylab(NULL) +
+  coord_geo(pos = list("bottom", "bottom"), dat = list("stages", "periods"),
+            abbrv = list(TRUE, FALSE), expand = TRUE, size = "auto") +
+  theme_classic(base_size = 16)
+```
+
+<img src="man/figures/example_points_range.png">
+
+#### Use standardized geological patterns
+
+```r
+# Load packages
+library(rmacrostrat)
+library(ggrepel)
+
+# Retrieve the Macrostrat units in the San Juan Basin column
+san_juan_units <- get_units(column_id = 489, interval_name = "Cretaceous")
+
+# Specify x_min and x_max in dataframe
+san_juan_units$x_min <- 0
+san_juan_units$x_max <- 1
+# Tweak values for overlapping units
+san_juan_units$x_max[10] <- 0.5
+san_juan_units$x_min[11] <- 0.5
+
+# Add midpoint age for plotting
+san_juan_units$m_age <- (san_juan_units$b_age + san_juan_units$t_age) / 2
+
+# Get lithology definitions
+liths <- def_lithologies()
+
+# Get the primary lithology for each unit
+san_juan_units$lith_prim <- sapply(san_juan_units$lith, function(df) {
+  df$name[which.max(df$prop)]
+})
+
+# Get the pattern codes for those lithologies
+san_juan_units$pattern <- factor(liths$fill[match(san_juan_units$lith_prim, liths$name)])
+
+# Plot with pattern fills
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect(aes(fill = pattern), color = "black") +
+  scale_fill_geopattern() +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Theming
+  theme_classic(base_size = 16) +
+  theme(legend.position = "none",
+        axis.line.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+```
+
+<img src="man/figures/example_patterns.png">
