@@ -3,16 +3,12 @@
 library(rsvg)
 library(grImport2)
 
-old_wd <- getwd()
-
-setwd("data-raw/")
-
-svgs <- list.files("geo_svg/")
+svgs <- list.files("data-raw/geo_svg/", pattern = ".svg")
 
 geo_grobs <- list()
 for (svg in svgs) {
   filename <- file.path(tempdir(), "temp.svg")
-  rsvg_svg(paste0(getwd(), "/geo_svg/", svg), filename)
+  rsvg_svg(paste0(getwd(), "data-raw/geo_svg/", svg), filename)
   code <- gsub("(-.*)?.svg", "", svg)
   geo_grobs[[code]] <- pictureGrob(readPicture(filename, warn = FALSE),
                                    expansion = 0)
