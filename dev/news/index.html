@@ -49,12 +49,12 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="deeptime-development-version">deeptime (development version)<a class="anchor" aria-label="anchor" href="#deeptime-development-version"></a></h2>
-<ul><li>Fixed the built-in timescale datasets to have true CGMP colors for the Precambrian</li>
-<li>Added the <code>true_colors</code> option to get_scale_data(), which, when set to <code>FALSE</code>, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets</li>
+<ul><li>Fixed the built-in timescale datasets to have true CGMP colors for the Precambrian (<a href="https://github.com/willgearty/deeptime/issues/62" class="external-link">#62</a>)</li>
+<li>Added the <code>true_colors</code> option to get_scale_data(), which, when set to <code>FALSE</code>, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets (<a href="https://github.com/willgearty/deeptime/issues/62" class="external-link">#62</a>)</li>
 <li>Updated built-in timescales to 2023/06 version of GTS</li>
-<li>Added FGDC geologic patterns to internal data</li>
-<li>Added functions to retrieve FGDC patterns</li>
-<li>Added functions to use FGDC patterns as ggplot2 fills or with the <code>ggpattern</code> package (see new vignette)</li>
+<li>Added FGDC/USGS geologic patterns to internal data</li>
+<li>Added functions to retrieve and plot FGDC/USGS patterns</li>
+<li>Added functions to use FGDC/USGS patterns as ggplot2 fills or with the <code>ggpattern</code> package (see new vignette)</li>
 <li>The <code>phytools</code> package is no longer required to install <code>deeptime</code> but is required to use the <code>geom_phylomorphospace()</code> function</li>
 <li>The <code>geomtextpath</code> package is no longer required to install <code>deeptime</code> but is required to add labels with the <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> or <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> functions</li>
 <li>The <code><a href="../reference/gggeo_scale_old.html">gggeo_scale_old()</a></code> function has been fully deprecated</li>
