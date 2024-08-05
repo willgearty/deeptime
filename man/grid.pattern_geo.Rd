@@ -21,11 +21,8 @@ pattern.}
 }
 \description{
 This function can be used to plot a single geologic pattern as defined in the
-\href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by the
-\href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)}
-of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}. The
-pattern is plotted on the existing canvas (i.e., use \code{\link[grid:grid.newpage]{grid::grid.newpage()}}
-to make a new canvas).
+\href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by the \href{https://www.usgs.gov/}{U.S. Geological Survey} and the \href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)} of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}. The pattern is plotted on the
+existing canvas (i.e., use \code{\link[grid:grid.newpage]{grid::grid.newpage()}} to make a new canvas).
 }
 \details{
 The following \code{params} are accepted:

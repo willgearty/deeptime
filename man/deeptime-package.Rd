@@ -13,8 +13,8 @@ Extends the functionality of other plotting packages (notably 'ggplot2') to help
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/willgearty/deeptime}
   \item \url{https://williamgearty.com/deeptime/}
+  \item \url{https://github.com/willgearty/deeptime}
   \item Report bugs at \url{https://github.com/willgearty/deeptime/issues}
 }
 

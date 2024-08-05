@@ -13,8 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, out.width = "100%", dev.args = list(png =
 ```
 
 <div style="text-align: justify">
-In 2006, the [Geologic Data Subcommittee](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic Data Committee](https://www.fgdc.gov/) established the [Digital Cartographic Standard for Geologic Map
-Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php). This is the National Standard for the digital cartographic representation of geologic map features, including line symbols, point symbols, colors, and patterns. The standard patterns that are put forth in this document are included in **deeptime** ([thanks to the work that Daven Quinn put in to extracting them as SVGs](https://github.com/davenquinn/geologic-patterns/)). Let's explore the functionality that **deeptime** has to retrieve and utilize these patterns.
+In 2006, the [U.S. Geological Survey](https://www.usgs.gov/) and the [Geologic Data Subcommittee](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic Data Committee](https://www.fgdc.gov/) established the [Digital Cartographic Standard for Geologic Map Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php). This is the National Standard for the digital cartographic representation of geologic map features, including line symbols, point symbols, colors, and patterns. The standard patterns that are put forth in this document are included in **deeptime** ([thanks to the work that Daven Quinn put in to extracting them as SVGs](https://github.com/davenquinn/geologic-patterns/)). Let's explore the functionality that **deeptime** has to retrieve and utilize these patterns.
 
 Let's first load the packages we'll need:
 

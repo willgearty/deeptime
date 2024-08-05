@@ -187,11 +187,11 @@ ScaleDiscreteGeoPattern <- ggproto("ScaleDiscreteGeoPattern", ScaleDiscrete,
 #'
 #' This function can be used to plot a single geologic pattern as defined in the
 #' [FGDC Digital Cartographic Standard for Geologic Map
-#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the
-#' [Geologic Data Subcommittee (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php)
-#' of the [Federal Geographic Data Committee (FGDC)](https://www.fgdc.gov/). The
-#' pattern is plotted on the existing canvas (i.e., use [grid::grid.newpage()]
-#' to make a new canvas).
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the [U.S.
+#' Geological Survey](https://www.usgs.gov/) and the [Geologic Data Subcommittee
+#' (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic
+#' Data Committee (FGDC)](https://www.fgdc.gov/). The pattern is plotted on the
+#' existing canvas (i.e., use [grid::grid.newpage()] to make a new canvas).
 #'
 #' @details The following `params` are accepted:
 #'   \describe{
