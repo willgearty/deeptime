@@ -18,13 +18,17 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
-<rect x='0.00' y='0.00' width='720.00' height='576.00' style='stroke-width: 0.75; stroke: none; fill: #FFFFFF;' />
 </g>
 <defs>
   <clipPath id='cpNzIuMDB8NjQ4LjAwfDAuMDB8NTc2LjAw'>
     <rect x='72.00' y='0.00' width='576.00' height='576.00' />
   </clipPath>
 </defs>
+<g clip-path='url(#cpNzIuMDB8NjQ4LjAwfDAuMDB8NTc2LjAw)'>
+<rect x='72.00' y='0.00' width='576.00' height='576.00' style='stroke-width: 0.75; stroke: none; fill: #FFFFFF;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
+</g>
 <g clip-path='url(#cpNzIuMDB8NjQ4LjAwfDAuMDB8NTc2LjAw)'>
 <polygon points='637.50,506.68 637.50,506.68 637.12,508.91 635.96,511.00 634.14,512.73 631.94,513.82 629.61,514.18 629.61,514.18 627.26,513.82 625.05,512.73 623.24,511.00 622.09,508.91 621.71,506.68 621.71,506.68 622.09,504.46 623.24,502.37 625.05,500.64 627.26,499.55 629.61,499.18 629.61,499.18 631.94,499.55 634.14,500.64 635.96,502.37 637.12,504.46 637.50,506.68 ' style='stroke-width: 4.00; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4.00; fill: none;' />
 <polyline points='637.50,506.68 637.50,506.68 637.12,508.91 635.96,511.00 634.14,512.73 631.94,513.82 629.61,514.18 629.61,514.18 627.26,513.82 625.05,512.73 623.24,511.00 622.09,508.91 621.71,506.68 621.71,506.68 622.09,504.46 623.24,502.37 625.05,500.64 627.26,499.55 629.61,499.18 629.61,499.18 631.94,499.55 634.14,500.64 635.96,502.37 637.12,504.46 637.50,506.68 637.50,506.68 ' style='stroke-width: 4.00; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4.00;' />
