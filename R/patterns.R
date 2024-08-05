@@ -63,9 +63,9 @@ geo_pattern <- function(code, scale = 2,
   if (!is.null(scale) && !is.na(scale)) scale <- 2
 
   # convert to pattern
-  img_grob$vp <- viewport(width = unit(ar * scale, 'cm'),
-                          height = unit(scale, 'cm'))
-  pattern(img_grob, width = unit(ar * scale, 'cm'), height = unit(scale, 'cm'),
+  img_grob$vp <- viewport(width = unit(ar * scale, "cm"),
+                          height = unit(scale, "cm"))
+  pattern(img_grob, width = unit(ar * scale, "cm"), height = unit(scale, "cm"),
           extend = "repeat")
 }
 
@@ -239,15 +239,22 @@ ScaleDiscreteGeoPattern <- ggproto("ScaleDiscreteGeoPattern", ScaleDiscrete,
 #'   theme(legend.key.size = unit(1.5, 'cm'))
 grid.pattern_geo <- function(params, boundary_df, aspect_ratio,
                              legend = FALSE) {
+  # not sure why (probably viewport-related), but we can't just use geo_pattern
   grob <- geo_grob(params$pattern_type %||% "101",
                    col = params$pattern_colour %||% "black",
                    fill = params$pattern_fill %||% NA,
                    alpha = params$pattern_alpha %||% 1,
                    bg = params$fill %||% "white")
+
+  # need to account for grobs that aren't square
+  scale_vp <- grob$children[[1]]$vp[[2]]
+  ar <- abs(diff(scale_vp$xscale)) / abs(diff(scale_vp$yscale))
+
   scale <- params$pattern_scale %||% 2
-  grob$vp <- viewport(width = unit(scale, 'cm'), height = unit(scale, 'cm'))
+  grob$vp <- viewport(width = unit(ar * scale, "cm"),
+                      height = unit(scale, "cm"))
   patt <- pattern(grob, extend = "repeat",
-                  width = unit(scale, 'cm'), height = unit(scale, 'cm'))
+                  width = unit(ar * scale, "cm"), height = unit(scale, "cm"))
   grid.polygon(x = boundary_df$x, y = boundary_df$y, id = boundary_df$id,
                gp = gpar(fill = patt))
 }
