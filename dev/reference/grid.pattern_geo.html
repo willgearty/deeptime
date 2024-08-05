@@ -124,12 +124,24 @@ the pattern. default: 'black'</p></dd>
     <div class="section level2">
     <h2 id="warning">Warning<a class="anchor" aria-label="anchor" href="#warning"></a></h2>
     <p>Pattern fills are not supported on all graphics devices.
-Where they are not supported, closed shapes will be rendered with a
-transparent fill. For example, on Windows machines, the default device in
-RStudio and in the knitr package is <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>, which does not support
-patterns. In RStudio, you can go to ‘Tools &gt; Global Options &gt; General &gt;
-Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
-menu to display patterns.</p>
+Not all devices are under active development, and such devices are unlikely
+to add support for new features (such as pattern fills). The new features
+have only been implemented on a subset of graphics devices so far:
+<code><a href="https://rdrr.io/r/grDevices/cairo.html" class="external-link">cairo_pdf()</a></code>, <code><a href="https://rdrr.io/r/grDevices/cairo.html" class="external-link">cairo_ps()</a></code>, <code><a href="https://rdrr.io/r/grDevices/x11.html" class="external-link">x11(type="cairo")</a></code>,
+<code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png(type="cairo")</a></code>,
+<code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">jpeg(type="cairo")</a></code>,
+<code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">tiff(type="cairo")</a></code>, <code><a href="https://rdrr.io/r/grDevices/cairo.html" class="external-link">svg()</a></code>, and <code><a href="https://rdrr.io/r/grDevices/pdf.html" class="external-link">pdf()</a></code>. Although
+there is no support yet for <code><a href="https://rdrr.io/r/grDevices/quartz.html" class="external-link">quartz()</a></code> or <code><a href="https://rdrr.io/r/grDevices/windows.html" class="external-link">windows()</a></code>, almost all of the
+graphics devices above will work on all major platforms. Further, the
+<a href="https://ragg.r-lib.org/" class="external-link">ragg</a> and
+<a href="https://svglite.r-lib.org/index.html" class="external-link">svglite</a> packages contain graphics
+devices that support patterns. When using a graphics device where patterns
+are not supported, closed shapes will be rendered with a transparent fill.
+Note that, at least on Windows machines, the default device in RStudio and
+in the knitr package is <code><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png()</a></code>, which does not support patterns. In
+RStudio, you can go to ‘Tools &gt; Global Options &gt; General &gt; Graphics’ and
+choose the ‘Cairo PNG’ device from the dropdown menu to display patterns.
+Similar issues may arise when using RStudio on other operating systems.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

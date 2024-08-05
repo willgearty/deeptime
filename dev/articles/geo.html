@@ -346,9 +346,15 @@ pattern</td>
 </table>
 <p>For the pattern code (i.e., <code>pattern\_type</code>), see the
 “pattern numbers” in the <a href="https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf" class="external-link">full
-pattern chart</a> for the full list of options. Note that codes
-associated with color variants are supported but will result in the
-default color variant instead (usually black and white).</p>
+pattern chart</a> for the full list of options. Daven Quinn has also
+assembled more accessible documentation of the <a href="https://davenquinn.com/projects/geologic-patterns/#pattern-reference" class="external-link">map
+patterns/codes</a> and <a href="https://davenquinn.com/projects/geologic-patterns/#series-600" class="external-link">lithology
+patterns/codes</a>. <code><a href="https://rmacrostrat.palaeoverse.org/reference/def_lithologies.html" class="external-link">def_lithologies()</a></code> can also be used to
+look up pattern codes for various lithologies (see the “fill” column).
+Note that codes associated with color variants (e.g., “101-M”) are
+supported but will result in the default color variant instead (usually
+black and white). Most, if not all, color variants can be recreated by
+adjusting the color, fill, and background of the pattern.</p>
 <p>Let’s try increasing the scale of the patterns in our stratigraphic
 column. We’ll need to switch to using <code><a href="https://trevorldavis.com/R/ggpattern/reference/geom-docs.html" class="external-link">geom_rect_pattern()</a></code>.
 Since we are specifying the patterns within an <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code> call,
