@@ -18,16 +18,15 @@ geo_grob(code, col = NULL, fill = NULL, alpha = NULL, bg = "white")
 }
 \arguments{
 \item{code}{The number corresponding to the pattern to return. Strings and
-numbers are permitted. See the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
-for valid \code{code} values. Note that codes associated with color variants are
-supported but will result in the default color variant instead (usually
-black and white).}
+numbers are permitted.}
 
-\item{scale}{The visual scale of the pattern.}
+\item{scale}{The visual scale of the pattern (higher values mean the pattern
+is more zoomed in).}
 
 \item{col}{The color to use for the lines of the pattern.}
 
-\item{fill}{The color with which to fill the pattern.}
+\item{fill}{The color used to fill various closed shapes (e.g., circles) in
+the pattern.}
 
 \item{alpha}{The transparency to use for the fill of the pattern.}
 
@@ -40,14 +39,20 @@ instance of the desired pattern. \code{geo_pattern()} returns a
 desired pattern.
 }
 \description{
-Retrieve a single geologic pattern as defined in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by the
-\href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)}
-of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}.
+Retrieve a single geologic pattern as defined in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization} by the \href{https://www.usgs.gov/}{U.S. Geological Survey} and the \href{https://ngmdb.usgs.gov/fgdc_gds/index.php}{Geologic Data Subcommittee (GDS)} of the \href{https://www.fgdc.gov/}{Federal Geographic Data Committee (FGDC)}.
 }
 \details{
-These patterns were originally processed and optimized by Daven
-Quinn and are hosted on
-\href{https://github.com/davenquinn/geologic-patterns/}{GitHub}.
+For specific codes, see the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
+for valid \code{code} values. Daven Quinn has also assembled more accessible
+documentation of the \href{https://davenquinn.com/projects/geologic-patterns/#pattern-reference}{map patterns/codes}
+and \href{https://davenquinn.com/projects/geologic-patterns/#series-600}{lithology patterns/codes}.
+\code{\link[rmacrostrat:def_lithologies]{rmacrostrat::def_lithologies()}} can also be used to look up pattern codes
+for various lithologies (see the "fill" column). Note that codes associated
+with color variants (e.g., "101-M") are supported but will result in the
+default color variant instead (usually black and white, e.g., "101-K").
+
+These patterns were originally processed and optimized by Daven Quinn and
+are hosted on \href{https://github.com/davenquinn/geologic-patterns/}{GitHub}.
 }
 \examples{
 library(grid)

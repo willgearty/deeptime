@@ -2,25 +2,35 @@
 #'
 #' Retrieve a single geologic pattern as defined in the [FGDC Digital
 #' Cartographic Standard for Geologic Map
-#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the
-#' [Geologic Data Subcommittee (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php)
-#' of the [Federal Geographic Data Committee (FGDC)](https://www.fgdc.gov/).
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the [U.S.
+#' Geological Survey](https://www.usgs.gov/) and the [Geologic Data Subcommittee
+#' (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic
+#' Data Committee (FGDC)](https://www.fgdc.gov/).
+#'
+#' @details For specific codes, see the "pattern numbers" in the [full pattern
+#'   chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf)
+#'   for valid `code` values. Daven Quinn has also assembled more accessible
+#'   documentation of the [map
+#'   patterns/codes](https://davenquinn.com/projects/geologic-patterns/#pattern-reference)
+#'   and [lithology
+#'   patterns/codes](https://davenquinn.com/projects/geologic-patterns/#series-600).
+#'   [rmacrostrat::def_lithologies()] can also be used to look up pattern codes
+#'   for various lithologies (see the "fill" column). Note that codes associated
+#'   with color variants (e.g., "101-M") are supported but will result in the
+#'   default color variant instead (usually black and white, e.g., "101-K").
+#'
+#'   These patterns were originally processed and optimized by Daven Quinn and
+#'   are hosted on [GitHub](https://github.com/davenquinn/geologic-patterns/).
 #'
 #' @param code The number corresponding to the pattern to return. Strings and
-#'   numbers are permitted. See the "pattern numbers" in the [full pattern
-#'   chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf)
-#'   for valid `code` values. Note that codes associated with color variants are
-#'   supported but will result in the default color variant instead (usually
-#'   black and white).
-#' @param scale The visual scale of the pattern.
+#'   numbers are permitted.
+#' @param scale The visual scale of the pattern (higher values mean the pattern
+#'   is more zoomed in).
 #' @param col The color to use for the lines of the pattern.
-#' @param fill The color with which to fill the pattern.
+#' @param fill The color used to fill various closed shapes (e.g., circles) in
+#'   the pattern.
 #' @param alpha The transparency to use for the fill of the pattern.
 #' @param bg The background color to use for the pattern.
-#'
-#' @details These patterns were originally processed and optimized by Daven
-#'   Quinn and are hosted on
-#'   [GitHub](https://github.com/davenquinn/geologic-patterns/).
 #'
 #' @return `geo_grob()` returns a [grob][grid::grid.grob] object with a single
 #'   instance of the desired pattern. `geo_pattern()` returns a
@@ -46,11 +56,16 @@ geo_pattern <- function(code, scale = 2,
                         col = NULL, fill = NULL, alpha = NULL, bg = "white") {
   img_grob <- geo_grob(code, col = col, fill = fill, alpha = alpha, bg = bg)
 
+  # need to account for grobs that aren't square
+  scale_vp <- img_grob$children[[1]]$vp[[2]]
+  ar <- abs(diff(scale_vp$xscale)) / abs(diff(scale_vp$yscale))
+
   if (!is.null(scale) && !is.na(scale)) scale <- 2
 
   # convert to pattern
-  img_grob$vp <- viewport(width = unit(scale, 'cm'), height = unit(scale, 'cm'))
-  pattern(img_grob, width = unit(scale, 'cm'), height = unit(scale, 'cm'),
+  img_grob$vp <- viewport(width = unit(ar * scale, 'cm'),
+                          height = unit(scale, 'cm'))
+  pattern(img_grob, width = unit(ar * scale, 'cm'), height = unit(scale, 'cm'),
           extend = "repeat")
 }
 
@@ -77,8 +92,9 @@ geo_grob <- function(code,
                        gPath("*"), grep = TRUE, global = TRUE)
 
   # now add the background with a transparent outline
-  img_grob <- gList(rectGrob(gp = gpar(fill = bg, col = "transparent")),
-                    img_grob)
+  rect_grob <- rectGrob(gp = gpar(fill = bg, col = "transparent"))
+  rect_grob$vp <- img_grob$vp
+  img_grob <- gList(rect_grob, img_grob)
 
   # needed to make it work for ggplot stuff
   gTree(children = img_grob)
@@ -87,23 +103,34 @@ geo_grob <- function(code,
 #' Geologic pattern fill scale
 #'
 #' Fill scale using the [FGDC Digital Cartographic Standard for Geologic Map
-#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php). Fill
-#' values should correspond to the "pattern numbers" in the [full pattern
-#' chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf).
-#' See [geo_pattern()] for more details. Note that `ggplot2` >= 3.5.0 is
-#' required to use this function.
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php). Fill values
+#' should correspond to specific pattern codes (see "Details"). Note that
+#' `ggplot2` >= 3.5.0 is required to use this function.
 #'
+#' @inherit geo_pattern details
 #' @inheritDotParams ggplot2::discrete_scale -palette -aesthetics -super -position -expand
 #' @param na.value The aesthetic value to use for missing (NA) values. May be
 #'   either a color or a [GridPattern][grid::patterns] object (such as that
 #'   returned by [geo_pattern()]).
 #' @section Warning: Pattern fills are not supported on all graphics devices.
-#'   Where they are not supported, closed shapes will be rendered with a
-#'   transparent fill. For example, on Windows machines, the default device in
-#'   RStudio and in the knitr package is [png()], which does not support
-#'   patterns. In RStudio, you can go to ‘Tools > Global Options > General >
-#'   Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
-#'   menu to display patterns.
+#'   Not all devices are under active development, and such devices are unlikely
+#'   to add support for new features (such as pattern fills). The new features
+#'   have only been implemented on a subset of graphics devices so far:
+#'   [cairo_pdf()], [cairo_ps()], \code{\link[=x11]{x11(type="cairo")}},
+#'   \code{\link[=png]{png(type="cairo")}},
+#'   \code{\link[=jpeg]{jpeg(type="cairo")}},
+#'   \code{\link[=tiff]{tiff(type="cairo")}}, [svg()], and [pdf()]. Although
+#'   there is no support yet for [quartz()] or [windows()], almost all of the
+#'   graphics devices above will work on all major platforms. Further, the
+#'   [ragg](https://ragg.r-lib.org/) and
+#'   [svglite](https://svglite.r-lib.org/index.html) packages contain graphics
+#'   devices that support patterns. When using a graphics device where patterns
+#'   are not supported, closed shapes will be rendered with a transparent fill.
+#'   Note that, at least on Windows machines, the default device in RStudio and
+#'   in the knitr package is [png()], which does not support patterns. In
+#'   RStudio, you can go to ‘Tools > Global Options > General > Graphics’ and
+#'   choose the ‘Cairo PNG’ device from the dropdown menu to display patterns.
+#'   Similar issues may arise when using RStudio on other operating systems.
 #' @export
 #' @importFrom ggplot2 discrete_scale
 #' @importFrom methods is

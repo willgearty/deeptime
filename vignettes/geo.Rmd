@@ -156,7 +156,7 @@ If you use `scale_fill_geopattern()`, the patterns are used with the default par
 | pattern\_scale           | Scale of the pattern (higher values zoom in on pattern) | 2 | 1 |
 | fill                     | Background color                              | "white"   | "white" |
 
-For the pattern code (i.e., `pattern\_type`), see the "pattern numbers" in the [full pattern chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf) for the full list of options. Note that codes associated with color variants are supported but will result in the default color variant instead (usually black and white).
+For the pattern code (i.e., `pattern\_type`), see the "pattern numbers" in the [full pattern chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf) for the full list of options. Daven Quinn has also assembled more accessible documentation of the [map patterns/codes](https://davenquinn.com/projects/geologic-patterns/#pattern-reference) and [lithology patterns/codes](https://davenquinn.com/projects/geologic-patterns/#series-600). `def_lithologies()` can also be used to look up pattern codes for various lithologies (see the "fill" column). Note that codes associated with color variants (e.g., "101-M") are supported but will result in the default color variant instead (usually black and white). Most, if not all, color variants can be recreated by adjusting the color, fill, and background of the pattern.
 
 Let's try increasing the scale of the patterns in our stratigraphic column. We'll need to switch to using `geom_rect_pattern()`. Since we are specifying the patterns within an `aes()` call, we can use `scale_pattern_type_identity()` to use those raw pattern codes:
 

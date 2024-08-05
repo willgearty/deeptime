@@ -62,19 +62,43 @@ every level in a legend, the layer should use \code{show.legend = TRUE}.}
   }}
 }
 \description{
-Fill scale using the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/download.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization}. Fill
-values should correspond to the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}.
-See \code{\link[=geo_pattern]{geo_pattern()}} for more details. Note that \code{ggplot2} >= 3.5.0 is
-required to use this function.
+Fill scale using the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization}. Fill values
+should correspond to specific pattern codes (see "Details"). Note that
+\code{ggplot2} >= 3.5.0 is required to use this function.
+}
+\details{
+For specific codes, see the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
+for valid \code{code} values. Daven Quinn has also assembled more accessible
+documentation of the \href{https://davenquinn.com/projects/geologic-patterns/#pattern-reference}{map patterns/codes}
+and \href{https://davenquinn.com/projects/geologic-patterns/#series-600}{lithology patterns/codes}.
+\code{\link[rmacrostrat:def_lithologies]{rmacrostrat::def_lithologies()}} can also be used to look up pattern codes
+for various lithologies (see the "fill" column). Note that codes associated
+with color variants (e.g., "101-M") are supported but will result in the
+default color variant instead (usually black and white, e.g., "101-K").
+
+These patterns were originally processed and optimized by Daven Quinn and
+are hosted on \href{https://github.com/davenquinn/geologic-patterns/}{GitHub}.
 }
 \section{Warning}{
  Pattern fills are not supported on all graphics devices.
-Where they are not supported, closed shapes will be rendered with a
-transparent fill. For example, on Windows machines, the default device in
-RStudio and in the knitr package is \code{\link[=png]{png()}}, which does not support
-patterns. In RStudio, you can go to ‘Tools > Global Options > General >
-Graphics’ and choose the ‘Cairo PNG’ device from the dropdown
-menu to display patterns.
+Not all devices are under active development, and such devices are unlikely
+to add support for new features (such as pattern fills). The new features
+have only been implemented on a subset of graphics devices so far:
+\code{\link[=cairo_pdf]{cairo_pdf()}}, \code{\link[=cairo_ps]{cairo_ps()}}, \code{\link[=x11]{x11(type="cairo")}},
+\code{\link[=png]{png(type="cairo")}},
+\code{\link[=jpeg]{jpeg(type="cairo")}},
+\code{\link[=tiff]{tiff(type="cairo")}}, \code{\link[=svg]{svg()}}, and \code{\link[=pdf]{pdf()}}. Although
+there is no support yet for \code{\link[=quartz]{quartz()}} or \code{\link[=windows]{windows()}}, almost all of the
+graphics devices above will work on all major platforms. Further, the
+\href{https://ragg.r-lib.org/}{ragg} and
+\href{https://svglite.r-lib.org/index.html}{svglite} packages contain graphics
+devices that support patterns. When using a graphics device where patterns
+are not supported, closed shapes will be rendered with a transparent fill.
+Note that, at least on Windows machines, the default device in RStudio and
+in the knitr package is \code{\link[=png]{png()}}, which does not support patterns. In
+RStudio, you can go to ‘Tools > Global Options > General > Graphics’ and
+choose the ‘Cairo PNG’ device from the dropdown menu to display patterns.
+Similar issues may arise when using RStudio on other operating systems.
 }
 
 \examples{
