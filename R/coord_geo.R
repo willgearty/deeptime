@@ -72,8 +72,15 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #'   `lab_color` column) and will be recycled if/as necessary.
 #' @param rot The amount of counter-clockwise rotation to add to the labels
 #'   (in degrees).
-#' @param abbrv If including labels, whether to use abbreviations instead of
-#'   full interval names.
+#' @param abbrv If including labels, should the labels be abbreviated? If
+#'   `TRUE`, the `abbrev` column will be used for the labels. If `FALSE`, the
+#'   `name` column will be used for the labels. If `"auto"`, the [abbreviate()]
+#'   function will be used to abbreviate the values in the `name` column. Note
+#'   that the built-in data and data retrieved via [get_scale_data()] already
+#'   have built-in abbreviations. However, using the `"auto"` option here will
+#'   create new unique abbreviations based on only the intervals that are being
+#'   plotted. In many cases, this may result in abbreviations that are shorter
+#'   in length because there are fewer similar interval names to abbreviate.
 #' @param skip A vector of interval names indicating which intervals should not
 #'   be labeled. If `abbrv` is `TRUE`, this can also include interval
 #'   abbreviations.
@@ -85,7 +92,7 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #' @param fontface The font face to use for the labels. The standard options are
 #'   "plain" (default), "bold", "italic", and "bold.italic".
 #' @param lwd Line width.
-#' @param neg Set this to true if your x-axis is using negative values.
+#' @param neg Set this to `TRUE` if your x-axis is using negative values.
 #' @param bord A vector specifying on which sides of the scale to add borders
 #'   (same options as `pos`).
 #' @param center_end_labels Should labels be centered within the visible range
@@ -318,7 +325,9 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
   check_number_decimal(alpha, min = 0, max = 1)
   check_bool(lab)
   check_number_decimal(rot)
-  check_bool(abbrv)
+  if (!is.logical(abbrv) && abbrv != "auto") {
+    cli::cli_abort('`abbrv` must be either a boolean or "auto".')
+  }
   check_string(family)
   check_string(fontface)
   check_character(skip, allow_null = TRUE)
@@ -359,18 +368,6 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
   } else if (!("color" %in% colnames(dat))) {
     dat$color <- rep(c("grey60", "grey80"), length.out = nrow(dat))
   }
-  if (!is.null(lab_color)) {
-    dat$lab_color <- rep(lab_color, length.out = nrow(dat))
-  } else if (!("lab_color" %in% colnames(dat))) {
-    dat$lab_color <- "black"
-  }
-  if (abbrv && "abbr" %in% colnames(dat)) {
-    dat$label <- dat$abbr
-    dat$label[dat$abbr %in% skip] <- ""
-  } else {
-    dat$label <- dat$name
-  }
-  dat$label[dat$name %in% skip] <- ""
 
   # do this so ggsave gets the whole plot
   old_plot <- last_plot()
@@ -420,8 +417,23 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
                        expand = FALSE, clip = self$clip)
   }
 
+  # Filter data to only those that are within the plot limits
+  if (neg) {
+    dat <- subset(dat, min_age < max(lims) & min_age > min(lims) |
+                       max_age < max(lims) & max_age > min(lims))
+  } else {
+    dat <- subset(dat, min_age > min(lims) & min_age < max(lims) |
+                       max_age > min(lims) & max_age < max(lims))
+  }
+
   # Add labels
   if (lab) {
+    if (!is.null(lab_color)) {
+      dat$lab_color <- rep(lab_color, length.out = nrow(dat))
+    } else if (!("lab_color" %in% colnames(dat))) {
+      dat$lab_color <- "black"
+    }
+
     if (center_end_labels) {
       # center the labels for the time periods at the ends of the axis
       # find which intervals overlap with the ends of the axis
@@ -437,6 +449,18 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       # recalculate the mid ages
       dat$mid_age <- (dat$max_age + dat$min_age) / 2
     }
+    if (abbrv == "auto") {
+      dat$label <- abbreviate(dat$name, minlength = 1,
+                              use.classes = TRUE, named = FALSE)
+    } else if (abbrv && "abbr" %in% colnames(dat)) {
+      dat$label <- dat$abbr
+      dat$label[dat$abbr %in% skip] <- ""
+    } else {
+      dat$label <- dat$name
+    }
+
+    dat$label[dat$name %in% skip] <- ""
+
     if (size == "auto") {
       gg_scale <- gg_scale +
         exec(geom_fit_text,

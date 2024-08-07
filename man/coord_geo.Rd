@@ -106,10 +106,17 @@ fonts that are guaranteed to work everywhere: “sans” (the default),
 be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval
 abbreviations.}
 
-\item{abbrv}{If including labels, whether to use abbreviations instead of
-full interval names.}
+\item{abbrv}{If including labels, should the labels be abbreviated? If
+\code{TRUE}, the \code{abbrev} column will be used for the labels. If \code{FALSE}, the
+\code{name} column will be used for the labels. If \code{"auto"}, the \code{\link[=abbreviate]{abbreviate()}}
+function will be used to abbreviate the values in the \code{name} column. Note
+that the built-in data and data retrieved via \code{\link[=get_scale_data]{get_scale_data()}} already
+have built-in abbreviations. However, using the \code{"auto"} option here will
+create new unique abbreviations based on only the intervals that are being
+plotted. In many cases, this may result in abbreviations that are shorter
+in length because there are fewer similar interval names to abbreviate.}
 
-\item{neg}{Set this to true if your x-axis is using negative values.}
+\item{neg}{Set this to \code{TRUE} if your x-axis is using negative values.}
 
 \item{center_end_labels}{Should labels be centered within the visible range
 of intervals at the ends of the axis?}

@@ -78,7 +78,7 @@ get_scale_data <- function(name, true_colors = TRUE) {
     no_abbr <- (is.na(clean_dat$abbr) | clean_dat$abbr == "")
     clean_dat$abbr[no_abbr] <-
       abbreviate(clean_dat$name, minlength = 1,
-                 use.classes = FALSE, named = FALSE)[no_abbr]
+                 use.classes = TRUE, named = FALSE)[no_abbr]
     dat <- clean_dat
   }
   dat
