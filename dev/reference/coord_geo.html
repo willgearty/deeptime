@@ -206,12 +206,19 @@ abbreviations.</p></dd>
 
 
 <dt id="arg-abbrv">abbrv<a class="anchor" aria-label="anchor" href="#arg-abbrv"></a></dt>
-<dd><p>If including labels, whether to use abbreviations instead of
-full interval names.</p></dd>
+<dd><p>If including labels, should the labels be abbreviated? If
+<code>TRUE</code>, the <code>abbrev</code> column will be used for the labels. If <code>FALSE</code>, the
+<code>name</code> column will be used for the labels. If <code>"auto"</code>, the <code><a href="https://rdrr.io/r/base/abbreviate.html" class="external-link">abbreviate()</a></code>
+function will be used to abbreviate the values in the <code>name</code> column. Note
+that the built-in data and data retrieved via <code><a href="get_scale_data.html">get_scale_data()</a></code> already
+have built-in abbreviations. However, using the <code>"auto"</code> option here will
+create new unique abbreviations based on only the intervals that are being
+plotted. In many cases, this may result in abbreviations that are shorter
+in length because there are fewer similar interval names to abbreviate.</p></dd>
 
 
 <dt id="arg-neg">neg<a class="anchor" aria-label="anchor" href="#arg-neg"></a></dt>
-<dd><p>Set this to true if your x-axis is using negative values.</p></dd>
+<dd><p>Set this to <code>TRUE</code> if your x-axis is using negative values.</p></dd>
 
 
 <dt id="arg-center-end-labels">center_end_labels<a class="anchor" aria-label="anchor" href="#arg-center-end-labels"></a></dt>
