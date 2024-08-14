@@ -65,14 +65,11 @@ reference:
   desc: >
     The following functions represent the first and second iterations of what is
     now `coord_geo()`. These functions still work but are considered
-    "deprecated". There is no plan to remove them in the immediate future (for
-    those who used them or still use them in their code), but there is no
-    guarantee they will be supported ad infinitum. Users are strongly encouraged
-    to use `coord_geo()` instead, which has more features and is still under
-    active development.
+    "deprecated". There is no guarantee they will be supported ad infinitum.
+    Users are strongly encouraged to use `coord_geo()` instead, which has more
+    features and is still under active development.
   contents:
   - gggeo_scale
-  - gggeo_scale_old
 
 - title: Adding geological timescales to phylogenies
   desc: >
