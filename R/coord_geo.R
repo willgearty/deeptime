@@ -304,7 +304,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 }
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes
-#' @importFrom ggplot2 scale_fill_manual scale_color_manual theme_void
+#' @importFrom ggplot2 scale_fill_identity scale_color_identity theme_void
 #' @importFrom ggplot2 scale_x_reverse coord_trans
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom ggfittext geom_fit_text
@@ -379,7 +379,8 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       data = dat, aes(xmin = min_age, xmax = max_age, fill = color),
       ymin = 0, ymax = 1, color = NA, alpha = alpha,
       show.legend = FALSE, inherit.aes = FALSE
-    )
+    ) +
+    scale_fill_identity()
   gg_scale <- gg_scale +
     geom_segment(
       data = dat, aes(x = min_age, xend = min_age), y = 0, yend = 1,
@@ -389,7 +390,6 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
       color = color, linewidth = lwd
     ) +
-    scale_fill_manual(values = setNames(dat$color, dat$color)) +
     theme_void()
 
   rev_axis <- FALSE
@@ -483,7 +483,7 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
         )
     }
     gg_scale <- gg_scale +
-      scale_color_manual(values = setNames(dat$lab_color, dat$lab_color))
+      scale_color_identity()
   }
 
   # Add border
