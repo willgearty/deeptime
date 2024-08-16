@@ -107,7 +107,7 @@ be labeled. If \code{abbrv} is \code{TRUE}, this can also include interval
 abbreviations.}
 
 \item{abbrv}{If including labels, should the labels be abbreviated? If
-\code{TRUE}, the \code{abbrev} column will be used for the labels. If \code{FALSE}, the
+\code{TRUE}, the \code{abbr} column will be used for the labels. If \code{FALSE}, the
 \code{name} column will be used for the labels. If \code{"auto"}, the \code{\link[=abbreviate]{abbreviate()}}
 function will be used to abbreviate the values in the \code{name} column. Note
 that the built-in data and data retrieved via \code{\link[=get_scale_data]{get_scale_data()}} already

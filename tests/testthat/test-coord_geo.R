@@ -160,13 +160,13 @@ test_that("geom_fit_text() works", {
 test_that("ggtree scale works", {
   skip_if_not_installed("ggtree")
   skip_if_not_installed("phytools")
-  gg <- ggtree(mammal.tree) +
+  gg <- revts(ggtree(mammal.tree)) +
     coord_geo(xlim = c(-75, 0), ylim = c(-2, Ntip(mammal.tree)),
               neg = TRUE, abbrv = FALSE) +
     scale_x_continuous(breaks = seq(-80, 0, 20),
                        labels = abs(seq(-80, 0, 20))) +
     theme_tree2()
-  expect_doppelganger_deeptime("scale on ggtree", revts(gg))
+  expect_doppelganger_deeptime("scale on ggtree", gg)
 })
 
 test_that("ggtree scale works with only fossil taxa", {

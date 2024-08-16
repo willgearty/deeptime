@@ -73,7 +73,7 @@ utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
 #' @param rot The amount of counter-clockwise rotation to add to the labels
 #'   (in degrees).
 #' @param abbrv If including labels, should the labels be abbreviated? If
-#'   `TRUE`, the `abbrev` column will be used for the labels. If `FALSE`, the
+#'   `TRUE`, the `abbr` column will be used for the labels. If `FALSE`, the
 #'   `name` column will be used for the labels. If `"auto"`, the [abbreviate()]
 #'   function will be used to abbreviate the values in the `name` column. Note
 #'   that the built-in data and data retrieved via [get_scale_data()] already
