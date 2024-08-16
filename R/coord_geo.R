@@ -488,7 +488,8 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
 
   # Add border
   if (discrete) {
-    bord_lims <- c(min(dat$min_age), max(dat$max_age))
+    bord_lims <- c(min(dat[, c("min_age", "max_age")]),
+                   max(dat[, c("min_age", "max_age")]))
   } else {
     bord_lims <- lims
     bord_lims[(if (neg) bord_lims > 0 else bord_lims < 0)] <- 0
