@@ -48,6 +48,7 @@ reference:
   - coord_geo
   - scale_color_geo
   - get_scale_data
+  - guide_geo
 
 - subtitle: Built-in interval data
   desc: >
@@ -81,6 +82,7 @@ reference:
   - coord_geo_polar
   - scale_color_geo
   - get_scale_data
+  - guide_geo
 
 - title: Transforming coordinate systems
   desc: >

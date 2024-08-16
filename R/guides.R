@@ -135,7 +135,7 @@ guide_geo <- function(dat = "periods",
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom ggplot2 ggproto GuideAxis ggproto_parent zeroGrob last_plot
+#' @importFrom ggplot2 ggproto ggproto_parent zeroGrob last_plot
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity ggplotGrob
 #' @importFrom ggplot2 annotate aes theme_void geom_rect geom_segment geom_text
 #' @importFrom ggplot2 coord_trans xlim
@@ -143,7 +143,12 @@ guide_geo <- function(dat = "periods",
 #' @importFrom gtable gtable gtable_add_grob gtable_width gtable_height
 #' @importFrom rlang := exec
 #' @importFrom scales transform_identity
-GuideGeo <- ggproto("GuideGeo", GuideAxis,
+GuideGeo <- ggproto("GuideGeo",
+                    if (packageVersion("ggplot2") >= "3.5.0") {
+                      ggplot2::GuideAxis
+                    } else {
+                      NULL
+                    },
   params = c(GuideAxis$params,
              list(dat = "periods",
                   fill = NULL, alpha = 1, height = unit(2, "line"),
