@@ -8,7 +8,8 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align = "center")
+knitr::opts_chunk$set(collapse = TRUE, fig.width = 7, fig.height = 5, fig.align = "center",
+                      out.width = "100%")
 ```
 
 <div style="text-align: justify">
@@ -34,7 +35,8 @@ data(RaiaCopesRule)
 Now, let's plot some phylogenies with timescales! Note that by default the time axis increases toward the tips for trees plotted with `ggtree()`, so you must use the `revts()` function from [ggtree](https://www.bioconductor.org/packages/ggtree) to change the x-axis values to increasing negative values. Note that once you've done this, you will need to set `neg = TRUE` in `coord_geo()`. Furthermore, any time axis limits that you set will need to be negative. Here we also use the `scale_x_continuous()` function to relabel the negative x-axis values with positive labels.
 ```{r}
 p <- ggtree(mammal.tree) +
-  coord_geo(xlim = c(-75, 0), ylim = c(-2, Ntip(mammal.tree)), neg = TRUE, abbrv = FALSE) +
+  coord_geo(xlim = c(-75, 0), ylim = c(-2, Ntip(mammal.tree)),
+            neg = TRUE, abbrv = FALSE) +
   scale_x_continuous(breaks = seq(-80, 0, 20), labels = abs(seq(-80, 0, 20))) +
   theme_tree2()
 revts(p)
@@ -43,14 +45,16 @@ revts(p)
 ### Phylogenies with only fossil taxa
 Many phylogenies only have fossil taxa in them (i.e., non-ultrametric). These can be handled by `coord_geo()` by using `position_nudge()` function. In most cases, you will want to nudge the time axis values (in this case, the x-axis) by the `root.time` of your phylogeny. Also, note that we have modified `plot.margin` here to accommodate the stacked timescale.
 ```{r}
-ggtree(ceratopsianTreeRaia, position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
+ggtree(ceratopsianTreeRaia,
+       position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
   coord_geo(
     xlim = c(-163.5, -66), ylim = c(-2, Ntip(ceratopsianTreeRaia)),
     pos = list("bottom", "bottom"), skip = c("Paleocene", "Middle Jurassic"),
     dat = list("epochs", "periods"), abbrv = FALSE,
     size = list(4, 5), neg = TRUE, center_end_labels = TRUE
   ) +
-  scale_x_continuous(breaks = -rev(epochs$max_age), labels = rev(epochs$max_age)) +
+  scale_x_continuous(breaks = -rev(epochs$max_age),
+                     labels = rev(epochs$max_age)) +
   theme_tree2() +
   theme(plot.margin = margin(7, 11, 7, 11))
 ```
@@ -89,4 +93,67 @@ revts(ggtree(mammal.tree)) +
 
 ### Disclaimer
 Note that `coord_geo_radial()` has been tested with the plotting of ultrametric and non-ultrametric phylogenies with `ggtree::ggtree()`, but it may have unexpected behavior when combined with other functions from [ggtree](https://www.bioconductor.org/packages/ggtree). Furthermore, `coord_geo_radial()` may be useful (albeit perhaps abstract) for plotting other types of data, but this has not been investigated.
+
+### Axis timescales on radial phylogenies
+`coord_geo_radial()` is quite different from `coord_geo()`. Instead of adding a timescale to an axis, it adds the timescale to the entire (or part of the) background of the radial plot. In many cases, this may be useful. However, if you're annotating your plot with other text or shapes, these background colors may be distracting. Perhaps you'd rather just have the look of `coord_geo()` instead along the radial axis? Look no further than `guide_geo()`. By default, ggplot uses `guide_axis()` to style the radial axis of radial plots. However, we can replace this with time intervals using the `guide_geo()` function. Here's a brief example using the same mammal phylogeny from above:
+
+```{r eval = FALSE}
+revts(ggtree(mammal.tree)) +
+  coord_radial(theta = "y", start = -0.5 * pi, end = 1.25 * pi) +
+  scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
+                     expand = expansion(mult = c(0.05, 0)),
+                     guide = guide_geo("epochs", neg = TRUE, rot = -90,
+                                       size = "auto",
+                                       height = unit(1, "line"))) +
+  scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.01))) +
+  theme_classic()
+```
+
+<div class="figure">
+<img src="phylogenies-3.png" alt="plot of phylogeny with guide_geo" width="100%" />
+</div>
+
+You'll notice that the tick marks and labels are now missing. This is because `guide_geo()` only adds the intervals, not the rest of the axis stuff. Don't worry, we can add those in too using `guide_axis_stack()` and `guide_axis()`. In most cases you probably want to set the `spacing` to 0 (i.e., `unit(0, "line")`) so the different guides are glued together.
+
+```{r eval = FALSE}
+revts(ggtree(mammal.tree)) +
+  coord_radial(theta = "y", start = -0.5 * pi, end = 1.25 * pi) +
+  scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
+                     expand = expansion(mult = c(0.05, 0)),
+                     guide = guide_axis_stack(guide_geo("epochs", neg = TRUE,
+                                                        rot = -90, size = "auto",
+                                                        height = unit(1, "line")),
+                                              guide_axis(),
+                                              spacing = unit(0, "line"))) +
+  scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.01))) +
+  theme_classic()
+```
+
+<div class="figure">
+<img src="phylogenies-4.png" alt="plot of phylogeny with stacked guides" width="100%" />
+</div>
+
+There they are! Hmm...after looking at all of these phylogenies with background colors, this one looks quite bare. Fortunately, we can use _both_ `coord_geo_radial()` and `guide_geo()` to make a phylogeny that really pops! However, since we're trying to avoid a distracting background, we'll set the fill colors to a light gray scale. We'll also adjust the `end` value for `coord_geo_radial()` to remove the empty space. Note that if the `start` and `end` values result in the same polar locations, the axis will be bumped to the margin, so we use an `end` value that is _just_ slightly smaller than the `start` value. This leaves a very small gap, but it's covered by the `guide_geo()` boxes. Finally, note that you can use `guide_geo()` within `scale_` functions and also within the `guides()` function.
+
+```{r eval = FALSE}
+revts(ggtree(mammal.tree)) +
+  coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.49 * pi) +
+  scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
+                     expand = expansion(mult = c(0.05, 0))) +
+  scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.05))) +
+  theme_classic() +
+  guides(r = guide_axis_stack(guide_geo("epochs", neg = TRUE,
+                                        rot = -90, size = "auto",
+                                        height = unit(1, "line")),
+                              guide_axis(),
+                              spacing = unit(0, "line"))) +
+  theme(axis.text.y = element_text(color = "black"))
+```
+
+<div class="figure">
+<img src="phylogenies-5.png" alt="plot of phylogeny with stacked guides and coord_geo_radial" width="100%" />
+</div>
+
+Very cool! Note that `guide_geo()` can actually be used for any plot, but it basically does the same thing as `coord_geo()` for non-radial plots and generally requires more lines of code. Also, as with `coord_geo_radial()`, `guide_geo()` only works with ggplot2 version 3.5.0 and higher.
+
 </div>
