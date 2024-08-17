@@ -70,7 +70,7 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-        if: ${{ matrix.ggplot2 == "> 3.5.0" }}
+        if: matrix.ggplot2 == '> 3.5.0'
 
       - name: run R CMD Check without vignettes
         uses: r-lib/actions/check-r-package@v2
@@ -80,4 +80,4 @@ jobs:
           upload-snapshots: true
           args: 'c("--no-manual", "--as-cran", "--ignore-vignettes")'
           build_args: 'c("--no-manual", "--no-build-vignettes")'
-        if: ${{ matrix.ggplot2 == "3.5.0" }}
+        if: matrix.ggplot2 == '3.5.0'
