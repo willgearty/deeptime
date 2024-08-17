@@ -51,10 +51,8 @@ improving the display. The \code{position} argument accepts the following:
 \item The result of calling a position function, such as \code{position_jitter()}.
 This method allows for passing extra arguments to the position.
 \item A string naming the position adjustment. To give the position as a
-string, strip the function name of the \code{position_} prefix. For example,
-to use \code{position_jitter()}, give the position as \code{"jitter"}.
-\item For more information and other ways to specify the position, see the
-\link[ggplot2:layer_positions]{layer position} documentation.
+string, strip the function name of the \code{position_} prefix. For example, to
+use \code{position_jitter()}, give the position as \code{"jitter"}.
 }}
 
 \item{...}{Other arguments passed on to both \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}} and
