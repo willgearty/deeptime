@@ -46,7 +46,7 @@
 #'   axis limits. "keep" plots the labels in the midpoint of the full interval.
 #' @inheritParams ggplot2::guide_axis
 #' @inheritParams coord_geo
-#' @importFrom ggplot2 new_guide waiver
+#' @importFrom ggplot2 waiver
 #' @export
 #' @examples
 #' library(ggplot2)
@@ -116,7 +116,7 @@ guide_geo <- function(dat = "periods",
   if (!is.list(fittext_args)) {
     cli::cli_abort("`fittext_args` must be a `list` of arguments.")
   }
-  new_guide(
+  ggplot2::new_guide(
     # Arguments passed on to the GuideGeo$params field
     dat = dat, fill = fill, alpha = alpha, height = height,
     bord = bord, lwd = lwd, color = color, lab = lab, lab_color = lab_color,
@@ -149,11 +149,7 @@ GuideGeo <- ggproto("GuideGeo",
                     } else {
                       NULL
                     },
-  params = c(if (packageVersion("ggplot2") >= "3.5.0") {
-               ggplot2::GuideAxis$params
-             } else {
-               NULL
-             },
+  params = c(ggplot2::GuideAxis$params,
              list(dat = "periods",
                   fill = NULL, alpha = 1, height = unit(2, "line"),
                   bord = c("left", "right", "top", "bottom"),
@@ -166,7 +162,8 @@ GuideGeo <- ggproto("GuideGeo",
                   fittext_args = list())),
   transform = function(self, params, coord, panel_params) {
     self$panel_params <- panel_params
-    ggproto_parent(GuideAxis, self)$transform(params, coord, panel_params)
+    ggproto_parent(ggplot2::GuideAxis,
+                   self)$transform(params, coord, panel_params)
   },
 
   # The decor in the axis guide is the axis line
