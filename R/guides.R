@@ -149,7 +149,11 @@ GuideGeo <- ggproto("GuideGeo",
                     } else {
                       NULL
                     },
-  params = c(ggplot2::GuideAxis$params,
+  params = c(if (packageVersion("ggplot2") >= "3.5.0") {
+               ggplot2::GuideAxis$params
+             } else {
+               NULL
+             },
              list(dat = "periods",
                   fill = NULL, alpha = 1, height = unit(2, "line"),
                   bord = c("left", "right", "top", "bottom"),
