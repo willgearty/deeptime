@@ -106,8 +106,7 @@ plotting that are inherited from \code{\link[ggplot2:coord_polar]{ggplot2::coord
 \code{coord_geo_radial} uses the ggplot2 internals to draw the \code{r} and \code{theta}
 axes, gridlines, etc. This means that users can tweak the
 \link[ggplot2:guides]{guide} and \link[ggplot2:theme]{theme} settings for these
-features (see examples). Note that \code{coord_geo_radial} requires ggplot2 v.
-3.5.0 or later.
+features (see examples).
 }
 \details{
 If a custom data.frame is provided (with \code{dat}), it should consist of at
@@ -146,7 +145,7 @@ distance from the origin. This is why \code{abbrv} is set to \code{TRUE} by defa
 }
 \examples{
 library(ggplot2)
-\dontshow{if (require(ggtree) && packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggtree)
 set.seed(1)
 tree <- rtree(100)
@@ -166,7 +165,7 @@ revts(ggtree(tree)) +
                      guide = "none", breaks = NULL) +
   theme_gray()
 \dontshow{\}) # examplesIf}
-\dontshow{if (require(ggtree) && require(paleotree) && packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree) && require(paleotree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2)
 library(paleotree)
 data(RaiaCopesRule)

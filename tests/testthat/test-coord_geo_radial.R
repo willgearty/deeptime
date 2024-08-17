@@ -1,15 +1,5 @@
 skip_if_not_installed("ggtree")
 
-test_that("coord_geo_radial fails for old ggplot", {
-  skip_if(packageVersion("ggplot2") >= "3.5.0")
-  expect_error({
-    revts(ggtree(tree)) +
-      coord_geo_radial(dat = "stages", expand = FALSE)
-  })
-})
-
-skip_if(packageVersion("ggplot2") < "3.5.0")
-
 test_that("coord_geo_radial works", {
   skip_if_not_installed("ape")
   gg <- revts(ggtree(tree)) +

@@ -24,13 +24,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ggplot2: ["3.4.0", "> 3.4.0"] # to make sure it still works with the oldest supported version
+        ggplot2: ["3.5.0", "> 3.5.0"] # to make sure it still works with the oldest supported version
         config:
           - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,  r: 'release'}
-          - {os: ubuntu-latest,  r: 'oldrel-1', no-vignettes: true}
+          - {os: ubuntu-latest,  r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -70,14 +70,3 @@ jobs:
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-        if: ${{ matrix.config.no-vignettes != true }}
-
-      - name: run R CMD Check without vignettes
-        uses: r-lib/actions/check-r-package@v2
-        env:
-          _R_CHECK_FORCE_SUGGESTS_: 0
-        with:
-          upload-snapshots: true
-          args: 'c("--no-manual", "--as-cran", "--ignore-vignettes")'
-          build_args: 'c("--no-manual", "--no-build-vignettes")'
-        if: ${{ matrix.config.no-vignettes == true }}

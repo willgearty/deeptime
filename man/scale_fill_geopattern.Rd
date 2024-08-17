@@ -63,8 +63,7 @@ every level in a legend, the layer should use \code{show.legend = TRUE}.}
 }
 \description{
 Fill scale using the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php}{FGDC Digital Cartographic Standard for Geologic Map Symbolization}. Fill values
-should correspond to specific pattern codes (see "Details"). Note that
-\code{ggplot2} >= 3.5.0 is required to use this function.
+should correspond to specific pattern codes (see "Details").
 }
 \details{
 For specific codes, see the "pattern numbers" in the \href{https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf}{full pattern chart}
@@ -102,13 +101,11 @@ Similar issues may arise when using RStudio on other operating systems.
 }
 
 \examples{
-\dontshow{if (packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ggplot2)
 vals <- c("101", "313", "603", "733")
 ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
   geom_bar() +
   scale_fill_geopattern(name = NULL)
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 FGDC patterns:

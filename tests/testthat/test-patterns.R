@@ -1,5 +1,4 @@
 test_that("scale_fill_geopattern works", {
-  skip_if(packageVersion("ggplot2") < "3.5.0")
   vals <- c("101", "313", "603", "733")
   gg <- ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
     geom_bar() +

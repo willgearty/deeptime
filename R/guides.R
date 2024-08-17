@@ -2,8 +2,7 @@
 #'
 #' `guide_geo` behaves similarly to [ggplot2::guide_axis()] in that it modifies
 #' the visual appearance of the axis. The main difference is that it adds a
-#' geological timescale instead of an axis. Note that `guide_geo` requires
-#' ggplot2 v. 3.5.0 or later.
+#' geological timescale instead of an axis.
 #'
 #' If a custom data.frame is provided (with `dat`), it should consist of at
 #' least 3 columns of data. See `data(periods)` for an example.
@@ -46,11 +45,10 @@
 #'   axis limits. "keep" plots the labels in the midpoint of the full interval.
 #' @inheritParams ggplot2::guide_axis
 #' @inheritParams coord_geo
-#' @importFrom ggplot2 waiver
+#' @importFrom ggplot2 waiver new_guide
 #' @export
 #' @examples
 #' library(ggplot2)
-#' @examplesIf packageVersion("ggplot2") >= "3.5.0"
 #' # reproduce the coord_geo() appearance
 #' ggplot() +
 #'   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
@@ -58,7 +56,7 @@
 #'                   spacing = unit(0, "npc"))) +
 #'   coord_cartesian(xlim = c(1000, 0), ylim = c(0, 8)) +
 #'   theme_classic()
-#' @examplesIf require(ggtree) && packageVersion("ggplot2") >= "3.5.0"
+#' @examplesIf require(ggtree)
 #' # the coord_geo() look on a radial phylogeny
 #' library(ggtree)
 #' library(paleotree)
@@ -88,10 +86,6 @@ guide_geo <- function(dat = "periods",
                       theme = NULL, title = waiver(), order = 0,
                       position = waiver()
 ) {
-  if (packageVersion("ggplot2") < "3.5.0") {# nocov start
-    cli::cli_abort("guide_geo() requires ggplot2 version 3.5.0 or later.")
-  }# nocov end
-
   # check timescale-specific arguments
   check_number_decimal(alpha, min = 0, max = 1)
   check_bool(lab)
@@ -116,7 +110,7 @@ guide_geo <- function(dat = "periods",
   if (!is.list(fittext_args)) {
     cli::cli_abort("`fittext_args` must be a `list` of arguments.")
   }
-  ggplot2::new_guide(
+  new_guide(
     # Arguments passed on to the GuideGeo$params field
     dat = dat, fill = fill, alpha = alpha, height = height,
     bord = bord, lwd = lwd, color = color, lab = lab, lab_color = lab_color,
@@ -135,7 +129,7 @@ guide_geo <- function(dat = "periods",
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom ggplot2 ggproto ggproto_parent zeroGrob last_plot
+#' @importFrom ggplot2 GuideAxis ggproto ggproto_parent zeroGrob last_plot
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity ggplotGrob
 #' @importFrom ggplot2 annotate aes theme_void geom_rect geom_segment geom_text
 #' @importFrom ggplot2 coord_trans xlim
@@ -143,17 +137,8 @@ guide_geo <- function(dat = "periods",
 #' @importFrom gtable gtable gtable_add_grob gtable_width gtable_height
 #' @importFrom rlang := exec
 #' @importFrom scales transform_identity
-GuideGeo <- ggproto("GuideGeo",
-                    if (packageVersion("ggplot2") >= "3.5.0") {
-                      ggplot2::GuideAxis
-                    } else {
-                      NULL
-                    },
-  params = c(if (packageVersion("ggplot2") >= "3.5.0") {
-               ggplot2::GuideAxis$params
-             } else {
-               NULL
-             },
+GuideGeo <- ggproto("GuideGeo", GuideAxis,
+  params = c(GuideAxis$params,
              list(dat = "periods",
                   fill = NULL, alpha = 1, height = unit(2, "line"),
                   bord = c("left", "right", "top", "bottom"),
@@ -166,8 +151,7 @@ GuideGeo <- ggproto("GuideGeo",
                   fittext_args = list())),
   transform = function(self, params, coord, panel_params) {
     self$panel_params <- panel_params
-    ggproto_parent(ggplot2::GuideAxis,
-                   self)$transform(params, coord, panel_params)
+    ggproto_parent(GuideAxis, self)$transform(params, coord, panel_params)
   },
 
   # The decor in the axis guide is the axis line

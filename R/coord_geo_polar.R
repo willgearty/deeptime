@@ -60,8 +60,7 @@
 #' @section Life cycle: This function is soft-deprecated in favor of
 #'   [coord_geo_radial()] as of **deeptime** version 1.1.0. There is currently
 #'   no plan to remove this function, but users are strongly encouraged to
-#'   migrate to the new function for enhanced polar functionality. Note that
-#'   [coord_geo_radial()] requires ggplot2 version 3.5.0 or later.
+#'   migrate to the new function for enhanced polar functionality.
 #'
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"), B) a

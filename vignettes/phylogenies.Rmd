@@ -60,7 +60,7 @@ ggtree(ceratopsianTreeRaia,
 ```
 
 ## Circular phylogenies
-Phylogenies can be plotted in a circular layout with a timescale background using the `coord_geo_radial()` function. It works just like `coord_geo()` and has many of the same arguments. You can use the `expand` argument in `scale_x_continuous()` to add space at either end of the timescale. You can use the `expand` argument in `scale_y_continuous()` to add space to either side of the phylogeny to prevent the tips from overlapping with the `pie` edges. Note that `coord_geo_radial()` only works with ggplot2 version 3.5.0 and higher. For other versions of ggplot2, you can use `coord_geo_polar()`.
+Phylogenies can be plotted in a circular layout with a timescale background using the `coord_geo_radial()` function. It works just like `coord_geo()` and has many of the same arguments. You can use the `expand` argument in `scale_x_continuous()` to add space at either end of the timescale. You can use the `expand` argument in `scale_y_continuous()` to add space to either side of the phylogeny to prevent the tips from overlapping with the `pie` edges.
 ```{r eval = FALSE}
 revts(ggtree(mammal.tree)) +
   coord_geo_radial(dat = "stages") +
@@ -154,6 +154,6 @@ revts(ggtree(mammal.tree)) +
 <img src="phylogenies-5.png" alt="plot of phylogeny with stacked guides and coord_geo_radial" width="100%" />
 </div>
 
-Very cool! Note that `guide_geo()` can actually be used for any plot, but it basically does the same thing as `coord_geo()` for non-radial plots and generally requires more lines of code. Also, as with `coord_geo_radial()`, `guide_geo()` only works with ggplot2 version 3.5.0 and higher.
+Very cool! Note that `guide_geo()` can actually be used for any plot, but it basically does the same thing as `coord_geo()` for non-radial plots and generally requires more lines of code.
 
 </div>

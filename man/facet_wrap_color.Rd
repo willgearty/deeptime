@@ -76,18 +76,17 @@ the plot. Using \code{strip.position} it is possible to place the labels on
 either of the four sides by setting \code{strip.position = c("top",
   "bottom", "left", "right")}}
 
-\item{axes}{Determines which axes will be drawn in case of fixed scales. When
-\code{"margins"} (default), axes will be drawn at the exterior margins.
+\item{axes}{Determines which axes will be drawn in case of fixed scales.
+When \code{"margins"} (default), axes will be drawn at the exterior margins.
 \code{"all_x"} and \code{"all_y"} will draw the respective axes at the interior
-panels too, whereas \code{"all"} will draw all axes at all panels. Only works
-for ggplot2 version 3.5.0 and later.}
+panels too, whereas \code{"all"} will draw all axes at all panels.}
 
 \item{axis.labels}{Determines whether to draw labels for interior axes when
-the scale is fixed and the \code{axis} argument is not \code{"margins"}. When \code{"all"}
-(default), all interior axes get labels. When \code{"margins"}, only the
-exterior axes get labels, and the interior axes get none. When \code{"all_x"} or
-\code{"all_y"}, only draws the labels at the interior axes in the x- or
-y-direction respectively. Only works for ggplot2 version 3.5.0 and later.}
+the scale is fixed and the \code{axis} argument is not \code{"margins"}. When
+\code{"all"} (default), all interior axes get labels. When \code{"margins"}, only
+the exterior axes get labels, and the interior axes get none. When
+\code{"all_x"} or \code{"all_y"}, only draws the labels at the interior axes in the
+x- or y-direction respectively.}
 }
 \description{
 \code{facet_wrap_color} behaves similarly to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}} in that it

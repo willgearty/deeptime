@@ -104,8 +104,7 @@ geo_grob <- function(code,
 #'
 #' Fill scale using the [FGDC Digital Cartographic Standard for Geologic Map
 #' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php). Fill values
-#' should correspond to specific pattern codes (see "Details"). Note that
-#' `ggplot2` >= 3.5.0 is required to use this function.
+#' should correspond to specific pattern codes (see "Details").
 #'
 #' @inherit geo_pattern details
 #' @inheritDotParams ggplot2::discrete_scale -palette -aesthetics -super -position -expand
@@ -134,7 +133,7 @@ geo_grob <- function(code,
 #' @export
 #' @importFrom ggplot2 discrete_scale
 #' @importFrom methods is
-#' @examplesIf packageVersion("ggplot2") >= "3.5.0"
+#' @examples
 #' library(ggplot2)
 #' vals <- c("101", "313", "603", "733")
 #' ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
@@ -142,8 +141,6 @@ geo_grob <- function(code,
 #'   scale_fill_geopattern(name = NULL)
 #' @family patterns
 scale_fill_geopattern <- function(na.value = "grey50", ...) {
-  rlang::check_installed("ggplot2", version = "3.5.0",
-                         reason = "to use `scale_fill_geopattern()`")
   discrete_scale(
     "fill", palette = NULL, ..., na.value = na.value,
     super = ScaleDiscreteGeoPattern

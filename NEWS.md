@@ -1,15 +1,24 @@
 # deeptime (development version)
+__deeptime now requires ggplot2 version 3.5.0 or higher__.\
+This new major version of deeptime includes several new features:
 
-* Fixed the built-in timescale datasets to have true CGMP colors for the Precambrian (#62)
+* Added FGDC/USGS geologic patterns to internal data (#52)
+* Added functions to retrieve and plot FGDC/USGS geologic patterns (#52)
+* Added functions to use FGDC/USGS patterns as ggplot2 fills or with the `ggpattern` package (see new vignette) (#52)
 * Added the `true_colors` option to get_scale_data(), which, when set to `FALSE`, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets (#62)
 * Updated built-in timescales to 2023/06 version of GTS
-* Added FGDC/USGS geologic patterns to internal data (#52)
-* Added functions to retrieve and plot FGDC/USGS patterns (#52)
-* Added functions to use FGDC/USGS patterns as ggplot2 fills or with the `ggpattern` package (see new vignette) (#52)
+* Added option to `coord_geo()` to abbreviate interval labels based on only the intervals that are being plotted (#64)
+* Added `guide_geo()` as an alternative to `coord_geo()`, mostly for use with radial plots (#53)
+
+Bug fixes:
+
+* Fixed the built-in timescale datasets to have true CGMP colors for the Precambrian (#62)
+
+Notable changes:
+
 * The `phytools` package is no longer required to install `deeptime` but is required to use the `geom_phylomorphospace()` function
 * The `geomtextpath` package is no longer required to install `deeptime` but is required to add labels with the `coord_geo_polar()` or `coord_geo_radial()` functions
 * The `gggeo_scale_old()` function has been fully deprecated
-* Added option to `coord_geo()` to abbreviate interval labels based on only the intervals that are being plotted (#64)
 
 # deeptime 1.1.1
 deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:

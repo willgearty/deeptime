@@ -10,8 +10,7 @@
 #' `coord_geo_radial` uses the ggplot2 internals to draw the `r` and `theta`
 #' axes, gridlines, etc. This means that users can tweak the
 #' [guide][ggplot2::guides] and [theme][ggplot2::theme] settings for these
-#' features (see examples). Note that `coord_geo_radial` requires ggplot2 v.
-#' 3.5.0 or later.
+#' features (see examples).
 #'
 #' If a custom data.frame is provided (with `dat`), it should consist of at
 #' least 2 columns of data. See `data(periods)` for an example.
@@ -51,11 +50,10 @@
 #' @inheritParams coord_geo_polar
 #' @importFrom ggplot2 ggproto
 #' @importFrom rlang arg_match0 %||%
-#' @importFrom utils packageVersion
 #' @export
 #' @examples
 #' library(ggplot2)
-#' @examplesIf require(ggtree) && packageVersion("ggplot2") >= "3.5.0"
+#' @examplesIf require(ggtree)
 #' library(ggtree)
 #' set.seed(1)
 #' tree <- rtree(100)
@@ -74,7 +72,7 @@
 #'   scale_y_continuous(expand = expansion(mult = c(0.02, 0.02)),
 #'                      guide = "none", breaks = NULL) +
 #'   theme_gray()
-#' @examplesIf require(ggtree) && require(paleotree) && packageVersion("ggplot2") >= "3.5.0"
+#' @examplesIf require(ggtree) && require(paleotree)
 #' library(ggplot2)
 #' library(paleotree)
 #' data(RaiaCopesRule)
@@ -94,11 +92,6 @@ coord_geo_radial <- function(dat = "periods",
                                       "Late Pleistocene"),
                              neg = TRUE, prop = 1, textpath_args = list(),
                              clip = "off", rotate_angle = FALSE) {
-  if (packageVersion("ggplot2") < "3.5.0") {# nocov start
-    cli::cli_abort("coord_geo_radial() requires ggplot2 version 3.5.0 or
-                   later.")
-  }# nocov end
-
   dat <- make_list(dat)
   n_scales <- length(dat)
 
@@ -157,17 +150,12 @@ coord_geo_radial <- function(dat = "periods",
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 ggproto ggproto_parent coord_polar theme_void
-#' @importFrom ggplot2 geom_vline geom_rect geom_segment
+#' @importFrom ggplot2 geom_vline geom_rect geom_segment CoordRadial
 #' @importFrom ggplot2 scale_x_continuous scale_fill_manual calc_element
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||% exec
-CoordGeoRadial <- ggproto("CoordGeoRadial",
-                          if (packageVersion("ggplot2") >= "3.5.0") {
-                            ggplot2::CoordRadial
-                          } else {
-                            ggplot2::Coord
-                          },
+CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
   render_bg = function(self, panel_params, theme) {
     panel_params <- rename_data(self, panel_params)
     # do the new coord_geo_radial background stuff

@@ -125,8 +125,7 @@ left, or right.}
 \description{
 \code{guide_geo} behaves similarly to \code{\link[ggplot2:guide_axis]{ggplot2::guide_axis()}} in that it modifies
 the visual appearance of the axis. The main difference is that it adds a
-geological timescale instead of an axis. Note that \code{guide_geo} requires
-ggplot2 v. 3.5.0 or later.
+geological timescale instead of an axis.
 }
 \details{
 If a custom data.frame is provided (with \code{dat}), it should consist of at
@@ -166,7 +165,6 @@ achieve the look of \code{\link[=coord_geo]{coord_geo()}} on a radial/fan phylog
 }
 \examples{
 library(ggplot2)
-\dontshow{if (packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # reproduce the coord_geo() appearance
 ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
@@ -174,8 +172,7 @@ ggplot() +
                   spacing = unit(0, "npc"))) +
   coord_cartesian(xlim = c(1000, 0), ylim = c(0, 8)) +
   theme_classic()
-\dontshow{\}) # examplesIf}
-\dontshow{if (require(ggtree) && packageVersion("ggplot2") >= "3.5.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # the coord_geo() look on a radial phylogeny
 library(ggtree)
 library(paleotree)

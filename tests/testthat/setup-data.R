@@ -77,26 +77,13 @@ write_svg_bleeding_edge <- function(plot, file, title = "") {
 
 expect_doppelganger_deeptime <- function(title, fig, patterns = FALSE) {
   title_new <- paste(title, "new")
-  title_old <- paste(title, "old")
-  if (packageVersion("ggplot2") >= "3.5.0") {
-    fig_name <- str_standardise(title_old)
-    file <- paste0(fig_name, ".svg")
-    announce_snapshot_file(name = file)
+  fig_name <- str_standardise(title_new)
+  file <- paste0(fig_name, ".svg")
+  announce_snapshot_file(name = file)
 
-    if (patterns) {
-      expect_doppelganger(title_new, fig, writer = write_svg_bleeding_edge)
-    } else {
-      expect_doppelganger(title_new, fig)
-    }
+  if (patterns) {
+    expect_doppelganger(title_new, fig, writer = write_svg_bleeding_edge)
   } else {
-    fig_name <- str_standardise(title_new)
-    file <- paste0(fig_name, ".svg")
-    announce_snapshot_file(name = file)
-
-    if (patterns) {
-      expect_doppelganger(title_old, fig, writer = write_svg_bleeding_edge)
-    } else {
-      expect_doppelganger(title_old, fig)
-    }
+    expect_doppelganger(title_new, fig)
   }
 }

@@ -55,12 +55,7 @@ flip_axis_labels <- function(x) {
 #' @usage NULL
 #' @importFrom ggplot2 ggproto CoordTrans CoordFlip ggproto_parent
 #' @export
-CoordTransFlip <- ggproto("CoordTransFlip",
-                          if (packageVersion("ggplot2") >= "3.5.0") {
-                            CoordFlip
-                          } else {
-                            CoordTrans
-                          },
+CoordTransFlip <- ggproto("CoordTransFlip", CoordFlip,
   transform = function(self, data, panel_params) {
     # Need the panel params to be unflipped to correctly transform the data
     panel_params <- flip_axis_labels(panel_params)

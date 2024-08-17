@@ -17,14 +17,6 @@
 #' contains the tip names (see example below).
 #'
 #' @param tree An object of class "phylo".
-#' @param position A position adjustment to use on the data for this layer. This
-#'   can be used in various ways, including to prevent overplotting and
-#'   improving the display. The `position` argument accepts the following:
-#'   * The result of calling a position function, such as `position_jitter()`.
-#'   This method allows for passing extra arguments to the position.
-#'   * A string naming the position adjustment. To give the position as a
-#'   string, strip the function name of the `position_` prefix. For example, to
-#'   use `position_jitter()`, give the position as `"jitter"`.
 #' @param seg_args A list of arguments passed only to [ggplot2::geom_segment()].
 #' @param point_args A list of arguments passed only to [ggplot2::geom_point()].
 #' @param ... Other arguments passed on to both [ggplot2::geom_segment()] and

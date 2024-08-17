@@ -13,21 +13,9 @@
 #'   colors, or D) a data.frame representing a lookup table with columns named
 #'   "name" (matching strip labels) and "color" (indicating desired colors). If
 #'   the function returns
-#' @param axes Determines which axes will be drawn. When `"margins"` (default),
-#'   axes will be drawn at the exterior margins. `"all_x"` and `"all_y"` will
-#'   draw the respective axes at the interior panels too, whereas `"all"` will
-#'   draw all axes at all panels. Only works for ggplot2 version 3.5.0 and
-#'   later.
-#' @param axis.labels Determines whether to draw labels for interior axes when
-#'   the `axes` argument is not `"margins"`. When `"all"` (default), all
-#'   interior axes get labels. When `"margins"`, only the exterior axes get
-#'   labels and the interior axes get none. When `"all_x"` or `"all_y"`, only
-#'   draws the labels at the interior axes in the x- or y-direction
-#'   respectively. Only works for ggplot2 version 3.5.0 and later.
 #' @inheritParams ggplot2::facet_grid
 #' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
 #' @importFrom rlang arg_match0 is_function
-#' @importFrom utils packageVersion
 #' @export
 #'
 #' @examples
@@ -44,7 +32,7 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
                              axes = "margins", axis.labels = "all") {
   colors <- convert_colors(colors)
 
-  # function and arguments copied from ggplot 3.4.4 and 3.5.0
+  # function and arguments copied from ggplot 3.5.0
 
   # Should become a warning in a future release
   if (is.logical(cols)) {
@@ -66,31 +54,20 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
     y = any(space %in% c("free_y", "free"))
   )
 
-  if (packageVersion("ggplot2") >= "3.5.0") {
-    draw_axes <- arg_match0(axes, c("margins", "all_x", "all_y", "all"))
-    draw_axes <- list(
-      x = any(draw_axes %in% c("all_x", "all")),
-      y = any(draw_axes %in% c("all_y", "all"))
-    )
+  draw_axes <- arg_match0(axes, c("margins", "all_x", "all_y", "all"))
+  draw_axes <- list(
+    x = any(draw_axes %in% c("all_x", "all")),
+    y = any(draw_axes %in% c("all_y", "all"))
+  )
 
-    # Omitting labels is special-cased internally, so even when no internal axes
-    # are to be drawn, register as labelled.
-    axis_labels <- arg_match0(axis.labels, c("margins", "all_x",
-                                             "all_y", "all"))
-    axis_labels <- list(
-      x = !draw_axes$x || any(axis_labels %in% c("all_x", "all")),
-      y = !draw_axes$y || any(axis_labels %in% c("all_y", "all"))
-    )
-  } else { # nocov start
-    if (axes != "margins") {
-      cli::cli_warn("The `axes` argument is only supported for ggplot2 3.5.0 and
-                    later.")
-    }
-    if (axis.labels != "all") {
-      cli::cli_warn("The `axis.labels` argument is only supported for ggplot2
-                    3.5.0 and later.")
-    }
-  } # nocov end
+  # Omitting labels is special-cased internally, so even when no internal axes
+  # are to be drawn, register as labelled.
+  axis_labels <- arg_match0(axis.labels, c("margins", "all_x",
+                                           "all_y", "all"))
+  axis_labels <- list(
+    x = !draw_axes$x || any(axis_labels %in% c("all_x", "all")),
+    y = !draw_axes$y || any(axis_labels %in% c("all_y", "all"))
+  )
 
   if (!is.null(switch)) {
     arg_match0(switch, c("both", "x", "y"))
@@ -101,18 +78,11 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
   # Check for deprecated labellers
   labeller <- check_labeller(labeller)
 
-  if (packageVersion("ggplot2") >= "3.5.0") {
-    params <- list(rows = facets_list$rows, cols = facets_list$cols,
-                   margins = margins, free = free, space_free = space_free,
-                   labeller = labeller, colors = colors,
-                   as.table = as.table, switch = switch, drop = drop,
-                   draw_axes = draw_axes, axis_labels = axis_labels)
-  } else { # nocov start
-    params <- list(rows = facets_list$rows, cols = facets_list$cols,
-                   margins = margins, free = free, space_free = space_free,
-                   labeller = labeller, colors = colors,
-                   as.table = as.table, switch = switch, drop = drop)
-  } # nocov end
+  params <- list(rows = facets_list$rows, cols = facets_list$cols,
+                 margins = margins, free = free, space_free = space_free,
+                 labeller = labeller, colors = colors,
+                 as.table = as.table, switch = switch, drop = drop,
+                 draw_axes = draw_axes, axis_labels = axis_labels)
 
   ggproto(NULL, FacetGridColor,
           shrink = shrink,
@@ -201,21 +171,9 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #'   colors, or D) a data.frame representing a lookup table with columns named
 #'   "name" (matching strip labels) and "color" (indicating desired colors). If
 #'   the function returns
-#' @param axes Determines which axes will be drawn in case of fixed scales. When
-#'   `"margins"` (default), axes will be drawn at the exterior margins.
-#'   `"all_x"` and `"all_y"` will draw the respective axes at the interior
-#'   panels too, whereas `"all"` will draw all axes at all panels. Only works
-#'   for ggplot2 version 3.5.0 and later.
-#' @param axis.labels Determines whether to draw labels for interior axes when
-#'   the scale is fixed and the `axis` argument is not `"margins"`. When `"all"`
-#'   (default), all interior axes get labels. When `"margins"`, only the
-#'   exterior axes get labels, and the interior axes get none. When `"all_x"` or
-#'   `"all_y"`, only draws the labels at the interior axes in the x- or
-#'   y-direction respectively. Only works for ggplot2 version 3.5.0 and later.
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
-#' @importFrom utils packageVersion
 #' @export
 #'
 #' @examples
@@ -231,7 +189,7 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
                              axes = "margins", axis.labels = "all") {
   colors <- convert_colors(colors)
 
-  # function and arguments copied from ggplot 3.4.4 and 3.5.0
+  # function and arguments copied from ggplot 3.5.0
   scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x",
                                               "free_y", "free"))
   dir <- arg_match0(dir, c("h", "v"))
@@ -240,31 +198,20 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
     y = any(scales %in% c("free_y", "free"))
   )
 
-  if (packageVersion("ggplot2") >= "3.5.0") {
-    # If scales are free, always draw the axes
-    draw_axes <- arg_match0(axes, c("margins", "all_x", "all_y", "all"))
-    draw_axes <- list(
-      x = free$x || any(draw_axes %in% c("all_x", "all")),
-      y = free$y || any(draw_axes %in% c("all_y", "all"))
-    )
+  # If scales are free, always draw the axes
+  draw_axes <- arg_match0(axes, c("margins", "all_x", "all_y", "all"))
+  draw_axes <- list(
+    x = free$x || any(draw_axes %in% c("all_x", "all")),
+    y = free$y || any(draw_axes %in% c("all_y", "all"))
+  )
 
-    # Omitting labels is special-cased internally, so only omit labels if
-    # scales are not free and the axis is to be drawn
-    axis_labels <- arg_match0(axis.labels, c("margins", "all_x", "all_y", "all"))
-    axis_labels <- list(
-      x = free$x || !draw_axes$x || any(axis_labels %in% c("all_x", "all")),
-      y = free$y || !draw_axes$y || any(axis_labels %in% c("all_y", "all"))
-    )
-  } else { # nocov start
-    if (axes != "margins") {
-      cli::cli_warn("The `axes` argument is only supported for ggplot2 3.5.0 and
-                    later.")
-    }
-    if (axis.labels != "all") {
-      cli::cli_warn("The `axis.labels` argument is only supported for ggplot2
-                    3.5.0 and later.")
-    }
-  } # nocov end
+  # Omitting labels is special-cased internally, so only omit labels if
+  # scales are not free and the axis is to be drawn
+  axis_labels <- arg_match0(axis.labels, c("margins", "all_x", "all_y", "all"))
+  axis_labels <- list(
+    x = free$x || !draw_axes$x || any(axis_labels %in% c("all_x", "all")),
+    y = free$y || !draw_axes$y || any(axis_labels %in% c("all_y", "all"))
+  )
 
   # Check for deprecated labellers
   labeller <- check_labeller(labeller)
@@ -285,35 +232,20 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
     nrow <- tmp
   }
 
-  if (packageVersion("ggplot2") >= "3.5.0") {
-    params <- list(
-      facets = facets,
-      free = free,
-      as.table = as.table,
-      strip.position = strip.position,
-      drop = drop,
-      ncol = ncol,
-      nrow = nrow,
-      labeller = labeller,
-      colors = colors,
-      dir = dir,
-      draw_axes = draw_axes,
-      axis_labels = axis_labels
-    )
-  } else { # nocov start
-    params <- list(
-      facets = facets,
-      free = free,
-      as.table = as.table,
-      strip.position = strip.position,
-      drop = drop,
-      ncol = ncol,
-      nrow = nrow,
-      labeller = labeller,
-      colors = colors,
-      dir = dir
-    )
-  } # nocov end
+  params <- list(
+    facets = facets,
+    free = free,
+    as.table = as.table,
+    strip.position = strip.position,
+    drop = drop,
+    ncol = ncol,
+    nrow = nrow,
+    labeller = labeller,
+    colors = colors,
+    dir = dir,
+    draw_axes = draw_axes,
+    axis_labels = axis_labels
+  )
 
   ggproto(NULL, FacetWrapColor,
           shrink = shrink,

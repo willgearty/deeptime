@@ -140,8 +140,7 @@ distance from the origin. This is why \code{abbrv} is set to \code{TRUE} by defa
  This function is soft-deprecated in favor of
 \code{\link[=coord_geo_radial]{coord_geo_radial()}} as of \strong{deeptime} version 1.1.0. There is currently
 no plan to remove this function, but users are strongly encouraged to
-migrate to the new function for enhanced polar functionality. Note that
-\code{\link[=coord_geo_radial]{coord_geo_radial()}} requires ggplot2 version 3.5.0 or later.
+migrate to the new function for enhanced polar functionality.
 }
 
 \examples{

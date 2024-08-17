@@ -20,7 +20,7 @@ RoxygenNote: 7.3.2
 LazyData: true
 biocViews:
 Imports:
-    ggplot2 (>= 3.4.0),
+    ggplot2 (>= 3.5.0),
     utils,
     ggforce,
     grid,

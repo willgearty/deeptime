@@ -1,13 +1,3 @@
-test_that("guide_geo fails for old ggplot", {
-  skip_if(packageVersion("ggplot2") >= "3.5.0")
-  skip_if_not_installed("divDyn")
-  ggplot(coral_div) +
-    geom_line(aes(x = stage_age, y = n)) +
-    scale_x_reverse(guide = guide_geo())
-})
-
-skip_if(packageVersion("ggplot2") < "3.5.0")
-
 test_that("guide_geo works", {
   skip_if_not_installed("divDyn")
   gg <- ggplot(coral_div) +
