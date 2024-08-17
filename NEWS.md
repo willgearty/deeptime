@@ -1,4 +1,4 @@
-# deeptime (development version)
+# deeptime 2.0.0
 __deeptime now requires ggplot2 version 3.5.0 or higher__.\
 This new major version of deeptime includes several new features:
 
