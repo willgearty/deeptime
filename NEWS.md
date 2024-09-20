@@ -1,5 +1,7 @@
 # deeptime (development version)
 
+* Fixed importing some functions from ggplot2 for coord_geo_radial and coord_geo_polar
+
 # deeptime 2.0.0
 __deeptime now requires ggplot2 version 3.5.0 or higher__.\
 This new major version of deeptime includes several new features:

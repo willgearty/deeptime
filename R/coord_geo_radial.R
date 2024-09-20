@@ -149,10 +149,10 @@ coord_geo_radial <- function(dat = "periods",
 #' @format NULL
 #' @usage NULL
 #' @export
-#' @importFrom ggplot2 ggproto ggproto_parent coord_polar theme_void
+#' @importFrom ggplot2 ggproto ggproto_parent coord_radial theme_void
 #' @importFrom ggplot2 geom_vline geom_rect geom_segment CoordRadial
-#' @importFrom ggplot2 scale_x_continuous scale_fill_manual calc_element
-#' @importFrom ggplot2 last_plot set_last_plot
+#' @importFrom ggplot2 scale_x_continuous scale_y_continuous scale_fill_manual
+#' @importFrom ggplot2 last_plot set_last_plot calc_element
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||% exec
 CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
