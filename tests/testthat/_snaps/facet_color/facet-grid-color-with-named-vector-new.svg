@@ -195,7 +195,7 @@
 </defs>
 <g clip-path='url(#cpNDIuNTh8MTMwLjU3fDIyLjc4fDM5LjQz)'>
 <rect x='42.58' y='22.78' width='87.99' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #812B92;' />
-<text x='86.58' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='30.32px' lengthAdjust='spacingAndGlyphs'>Triassic</text>
+<text x='86.58' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #FFFFFF; font-family: sans;' textLength='30.32px' lengthAdjust='spacingAndGlyphs'>Triassic</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -206,7 +206,7 @@
 </defs>
 <g clip-path='url(#cpMTM2LjA1fDIyNC4wNHwyMi43OHwzOS40Mw==)'>
 <rect x='136.05' y='22.78' width='87.99' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #34B2C9;' />
-<text x='180.05' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='32.29px' lengthAdjust='spacingAndGlyphs'>Jurassic</text>
+<text x='180.05' y='34.14' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='32.29px' lengthAdjust='spacingAndGlyphs'>Jurassic</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -217,7 +217,7 @@
 </defs>
 <g clip-path='url(#cpMjI5LjUyfDMxNy41MXwyMi43OHwzOS40Mw==)'>
 <rect x='229.52' y='22.78' width='87.99' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #7FC64E;' />
-<text x='273.51' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='45.01px' lengthAdjust='spacingAndGlyphs'>Cretaceous</text>
+<text x='273.51' y='34.14' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='45.01px' lengthAdjust='spacingAndGlyphs'>Cretaceous</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -228,7 +228,7 @@
 </defs>
 <g clip-path='url(#cpMzIyLjk5fDQxMC45OHwyMi43OHwzOS40Mw==)'>
 <rect x='322.99' y='22.78' width='87.99' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #FD9A52;' />
-<text x='366.98' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='42.09px' lengthAdjust='spacingAndGlyphs'>Paleogene</text>
+<text x='366.98' y='34.14' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='42.09px' lengthAdjust='spacingAndGlyphs'>Paleogene</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -239,7 +239,7 @@
 </defs>
 <g clip-path='url(#cpNDE2LjQ2fDUwNC40NXwyMi43OHwzOS40Mw==)'>
 <rect x='416.46' y='22.78' width='87.99' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #FFE619;' />
-<text x='460.45' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='35.72px' lengthAdjust='spacingAndGlyphs'>Neogene</text>
+<text x='460.45' y='34.14' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='35.72px' lengthAdjust='spacingAndGlyphs'>Neogene</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 </g>
@@ -250,7 +250,7 @@
 </defs>
 <g clip-path='url(#cpNTA5LjkyfDU5Ny45MXwyMi43OHwzOS40Mw==)'>
 <rect x='509.92' y='22.78' width='87.99' height='16.65' style='stroke-width: 1.07; stroke: none; fill: #F9F97F;' />
-<text x='553.92' y='34.14' text-anchor='middle' style='font-size: 8.80px; fill: #1A1A1A; font-family: sans;' textLength='44.03px' lengthAdjust='spacingAndGlyphs'>Quaternary</text>
+<text x='553.92' y='34.14' text-anchor='middle' style='font-size: 8.80px; font-family: sans;' textLength='44.03px' lengthAdjust='spacingAndGlyphs'>Quaternary</text>
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <polyline points='59.08,557.93 59.08,557.93 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
