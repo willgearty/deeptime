@@ -4,7 +4,9 @@
 #' forms a matrix of panels defined by row and column faceting variables. The
 #' main difference is that it also allows the user to specify the background
 #' colors of the individual facet strips using the `colors` argument. If you
-#' have only one variable with many levels, try [facet_wrap_color()].
+#' have only one variable with many levels, try [facet_wrap_color()]. Strip
+#' labels will be set to black or white, whichever has better contrast with the
+#' background color, based on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en).
 #'
 #' @param colors Specifies which colors to use to replace the strip backgrounds.
 #'   Either A) a function that returns a color for a given strip label, B) the
@@ -12,7 +14,7 @@
 #'   vector with names matching strip labels and values indicating the desired
 #'   colors, or D) a data.frame representing a lookup table with columns named
 #'   "name" (matching strip labels) and "color" (indicating desired colors). If
-#'   the function returns
+#'   the function returns `NA`, the default background color will be used.
 #' @inheritParams ggplot2::facet_grid
 #' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
 #' @importFrom rlang arg_match0 is_function
@@ -149,6 +151,8 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
       fill <- tryCatch(params$colors(label), error = function(e) NA)
       if (!is.na(fill)) {
         panel_table$grobs[[i]]$grobs[[1]]$children[[1]]$gp$fill <- fill
+        panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$gp$col <-
+          white_or_black(fill)
       }
     }
     panel_table
@@ -162,7 +166,8 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' allows the user to specify the background colors of the individual facet
 #' strips using the `colors` argument. This is generally a better use of screen
 #' space than [facet_grid_color()] because most displays are roughly
-#' rectangular.
+#' rectangular. Strip labels will be set to black or white, whichever has better
+#' contrast with the background color, based on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en).
 #'
 #' @param colors Specifies which colors to use to replace the strip backgrounds.
 #'   Either A) a function that returns a color for a given strip label, B) the
@@ -170,7 +175,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #'   vector with names matching strip labels and values indicating the desired
 #'   colors, or D) a data.frame representing a lookup table with columns named
 #'   "name" (matching strip labels) and "color" (indicating desired colors). If
-#'   the function returns
+#'   the function returns `NA`, the default background color will be used.
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
@@ -281,6 +286,8 @@ FacetWrapColor <- ggproto("FacetWrapColor", FacetWrap,
       fill <- tryCatch(params$colors(label), error = function(e) NA)
       if (!is.na(fill)) {
         panel_table$grobs[[i]]$grobs[[1]]$children[[1]]$gp$fill <- fill
+        panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$gp$col <-
+          white_or_black(fill)
       }
     }
     panel_table

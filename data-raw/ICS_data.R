@@ -25,11 +25,7 @@ for (int_type in names(int_types)) {
   # Add label colors based on luminance as per
   # https://stackoverflow.com/a/1855903/4660582
   # values are from https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en
-  rgbs <- grDevices::col2rgb(clean_dat$color)
-  luminance <- apply(rgbs, 2, function(x) {
-    (0.299 * x[1] + 0.587 * x[2] + 0.114 * x[3]) / 255
-  })
-  clean_dat$lab_color <- ifelse(luminance > .5, "black", "white")
+  clean_dat$lab_color <- white_or_black(clean_dat$color)
 
   assign(int_type, clean_dat)
 

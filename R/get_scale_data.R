@@ -30,7 +30,6 @@
 #'     on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' @importFrom utils read.csv
 #' @importFrom curl nslookup
-#' @importFrom grDevices col2rgb
 #' @export
 get_scale_data <- function(name, true_colors = TRUE) {
   check_required(name)
@@ -84,18 +83,23 @@ get_scale_data <- function(name, true_colors = TRUE) {
       abbreviate(clean_dat$name, minlength = 1,
                  use.classes = TRUE, named = FALSE)[no_abbr]
     dat <- clean_dat
-
-    # Add label colors based on luminance as per
-    # https://stackoverflow.com/a/1855903/4660582
-    # values are from https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en
-    rgbs <- col2rgb(dat$color)
-    luminance <- apply(rgbs, 2, function(x) {
-      (0.299 * x[1] + 0.587 * x[2] + 0.114 * x[3]) / 255
-    })
-    dat$lab_color <- ifelse(luminance > .5, "black", "white")
+    dat$lab_color <- white_or_black(dat$color)
   }
   dat
 }
+
+# Determine best label colors based on luminance as per
+# https://stackoverflow.com/a/1855903/4660582
+# values are from https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en
+#' @importFrom grDevices col2rgb
+white_or_black <- function(colors) {
+  rgbs <- col2rgb(colors)
+  luminance <- apply(rgbs, 2, function(x) {
+    (0.299 * x[1] + 0.587 * x[2] + 0.114 * x[3]) / 255
+  })
+  ifelse(luminance > .5, "black", "white")
+}
+
 
 
 #' Get geological timescale data

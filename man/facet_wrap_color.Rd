@@ -58,7 +58,7 @@ character name of a function that does the same, C) a named character
 vector with names matching strip labels and values indicating the desired
 colors, or D) a data.frame representing a lookup table with columns named
 "name" (matching strip labels) and "color" (indicating desired colors). If
-the function returns}
+the function returns \code{NA}, the default background color will be used.}
 
 \item{as.table}{If \code{TRUE}, the default, the facets are laid out like
 a table with highest values at the bottom-right. If \code{FALSE}, the
@@ -94,7 +94,8 @@ wraps a 1d sequence of panels into 2d. The main difference is that it also
 allows the user to specify the background colors of the individual facet
 strips using the \code{colors} argument. This is generally a better use of screen
 space than \code{\link[=facet_grid_color]{facet_grid_color()}} because most displays are roughly
-rectangular.
+rectangular. Strip labels will be set to black or white, whichever has better
+contrast with the background color, based on \href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}.
 }
 \examples{
 library(ggplot2)
