@@ -3,15 +3,11 @@
 forms a matrix of panels defined by row and column faceting variables. The
 main difference is that it also allows the user to specify the background
 colors of the individual facet strips using the colors argument. If you
-have only one variable with many levels, try facet_wrap_color(). Strip
-labels will be set to black or white, whichever has better contrast with the
-background color, based on recommendations by the International Telecommunication Union."><meta property="og:description" content="facet_grid_color behaves similarly to ggplot2::facet_grid() in that it
+have only one variable with many levels, try facet_wrap_color()."><meta property="og:description" content="facet_grid_color behaves similarly to ggplot2::facet_grid() in that it
 forms a matrix of panels defined by row and column faceting variables. The
 main difference is that it also allows the user to specify the background
 colors of the individual facet strips using the colors argument. If you
-have only one variable with many levels, try facet_wrap_color(). Strip
-labels will be set to black or white, whichever has better contrast with the
-background color, based on recommendations by the International Telecommunication Union."><meta property="og:image" content="https://williamgearty.com/deeptime/logo.png"><meta name="robots" content="noindex"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-B48C68KGQJ"></script><script>
+have only one variable with many levels, try facet_wrap_color()."><meta property="og:image" content="https://williamgearty.com/deeptime/logo.png"><meta name="robots" content="noindex"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-B48C68KGQJ"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -65,9 +61,7 @@ background color, based on recommendations by the International Telecommunicatio
 forms a matrix of panels defined by row and column faceting variables. The
 main difference is that it also allows the user to specify the background
 colors of the individual facet strips using the <code>colors</code> argument. If you
-have only one variable with many levels, try <code><a href="facet_wrap_color.html">facet_wrap_color()</a></code>. Strip
-labels will be set to black or white, whichever has better contrast with the
-background color, based on <a href="https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en" class="external-link">recommendations by the International Telecommunication Union</a>.</p>
+have only one variable with many levels, try <code><a href="facet_wrap_color.html">facet_wrap_color()</a></code>.</p>
     </div>
 
     <div class="section level2">
@@ -80,6 +74,7 @@ background color, based on <a href="https://www.itu.int/rec/R-REC-BT.601-7-20110
 <span>  shrink <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  labeller <span class="op">=</span> <span class="st">"label_value"</span>,</span>
 <span>  colors <span class="op">=</span> <span class="va">stages</span>,</span>
+<span>  lab_colors <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  as.table <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  switch <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -146,6 +141,19 @@ vector with names matching strip labels and values indicating the desired
 colors, or D) a data.frame representing a lookup table with columns named
 "name" (matching strip labels) and "color" (indicating desired colors). If
 the function returns <code>NA</code>, the default background color will be used.</p></dd>
+
+
+<dt id="arg-lab-colors">lab_colors<a class="anchor" aria-label="anchor" href="#arg-lab-colors"></a></dt>
+<dd><p>Specifies which colors to use for the strip labels. Either
+A) a function that returns a color for a given strip label, B) the
+character name of a function that does the same, C) a named character
+vector with names matching strip labels and values indicating the desired
+colors, D) a data.frame representing a lookup table with columns named
+"name" (matching strip labels) and "lab_color" (indicating desired colors),
+or E) "auto" (the default), which set the labels to black or white,
+whichever has better contrast with the background color, based on
+<a href="https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en" class="external-link">recommendations by the International Telecommunication Union</a>.
+If the function returns <code>NA</code>, the default label color will be used.</p></dd>
 
 
 <dt id="arg-as-table">as.table<a class="anchor" aria-label="anchor" href="#arg-as-table"></a></dt>
