@@ -14,6 +14,7 @@ facet_grid_color(
   shrink = TRUE,
   labeller = "label_value",
   colors = stages,
+  lab_colors = "auto",
   as.table = TRUE,
   switch = NULL,
   drop = TRUE,
@@ -67,6 +68,17 @@ colors, or D) a data.frame representing a lookup table with columns named
 "name" (matching strip labels) and "color" (indicating desired colors). If
 the function returns \code{NA}, the default background color will be used.}
 
+\item{lab_colors}{Specifies which colors to use for the strip labels. Either
+A) a function that returns a color for a given strip label, B) the
+character name of a function that does the same, C) a named character
+vector with names matching strip labels and values indicating the desired
+colors, D) a data.frame representing a lookup table with columns named
+"name" (matching strip labels) and "lab_color" (indicating desired colors),
+or E) "auto" (the default), which set the labels to black or white,
+whichever has better contrast with the background color, based on
+\href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}.
+If the function returns \code{NA}, the default label color will be used.}
+
 \item{as.table}{If \code{TRUE}, the default, the facets are laid out like
 a table with highest values at the bottom-right. If \code{FALSE}, the
 facets are laid out like a plot with the highest value at the top-right.}
@@ -106,9 +118,7 @@ respectively.}
 forms a matrix of panels defined by row and column faceting variables. The
 main difference is that it also allows the user to specify the background
 colors of the individual facet strips using the \code{colors} argument. If you
-have only one variable with many levels, try \code{\link[=facet_wrap_color]{facet_wrap_color()}}. Strip
-labels will be set to black or white, whichever has better contrast with the
-background color, based on \href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}.
+have only one variable with many levels, try \code{\link[=facet_wrap_color]{facet_wrap_color()}}.
 }
 \examples{
 library(ggplot2)

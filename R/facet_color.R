@@ -4,9 +4,7 @@
 #' forms a matrix of panels defined by row and column faceting variables. The
 #' main difference is that it also allows the user to specify the background
 #' colors of the individual facet strips using the `colors` argument. If you
-#' have only one variable with many levels, try [facet_wrap_color()]. Strip
-#' labels will be set to black or white, whichever has better contrast with the
-#' background color, based on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en).
+#' have only one variable with many levels, try [facet_wrap_color()].
 #'
 #' @param colors Specifies which colors to use to replace the strip backgrounds.
 #'   Either A) a function that returns a color for a given strip label, B) the
@@ -15,6 +13,16 @@
 #'   colors, or D) a data.frame representing a lookup table with columns named
 #'   "name" (matching strip labels) and "color" (indicating desired colors). If
 #'   the function returns `NA`, the default background color will be used.
+#' @param lab_colors Specifies which colors to use for the strip labels. Either
+#'   A) a function that returns a color for a given strip label, B) the
+#'   character name of a function that does the same, C) a named character
+#'   vector with names matching strip labels and values indicating the desired
+#'   colors, D) a data.frame representing a lookup table with columns named
+#'   "name" (matching strip labels) and "lab_color" (indicating desired colors),
+#'   or E) "auto" (the default), which set the labels to black or white,
+#'   whichever has better contrast with the background color, based on
+#'   [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en).
+#'   If the function returns `NA`, the default label color will be used.
 #' @inheritParams ggplot2::facet_grid
 #' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
 #' @importFrom rlang arg_match0 is_function
@@ -28,11 +36,13 @@
 #'   facet_grid_color(cols = vars(period), colors = periods)
 facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
                              space = "fixed", shrink = TRUE,
-                             labeller = "label_value", colors = stages,
+                             labeller = "label_value",
+                             colors = stages, lab_colors = "auto",
                              as.table = TRUE, switch = NULL,
                              drop = TRUE, margins = FALSE,
                              axes = "margins", axis.labels = "all") {
   colors <- convert_colors(colors)
+  lab_colors <- convert_lab_colors(lab_colors)
 
   # function and arguments copied from ggplot 3.5.0
 
@@ -82,7 +92,7 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
 
   params <- list(rows = facets_list$rows, cols = facets_list$cols,
                  margins = margins, free = free, space_free = space_free,
-                 labeller = labeller, colors = colors,
+                 labeller = labeller, colors = colors, lab_colors = lab_colors,
                  as.table = as.table, switch = switch, drop = drop,
                  draw_axes = draw_axes, axis_labels = axis_labels)
 
@@ -131,6 +141,40 @@ convert_colors <- function(colors) {
   return(colors)
 }
 
+#' @importFrom rlang is_function
+convert_lab_colors <- function(lab_colors) {
+  # convert colors to a function
+  if (!is_function(lab_colors)) {
+    if (is.character(lab_colors) && lab_colors == "auto") {
+        return(lab_colors)
+    } else if (is.character(lab_colors) && !is.null(names(lab_colors))) {
+      name <- names(lab_colors)
+      color <- unname(lab_colors)
+      lab_colors <- function(x) {
+        if (x %in% name) color[which(x == name)[1]] else NA
+      }
+    } else if (is.character(lab_colors) && length(lab_colors) == 1) {
+      lab_colors <- match.fun(lab_colors)
+    } else if (is.data.frame(lab_colors)) {
+      if (all(c("name", "lab_color") %in% names(lab_colors))) {
+        name <- lab_colors$name
+        color <- lab_colors$lab_color
+        lab_colors <- function(x) {
+          if (x %in% name) color[which(x == name)[1]] else NA
+        }
+      } else {
+        cli::cli_abort("If using a data.frame for `lab_colors`, the data.frame
+                       must have columns named 'name' and 'lab_color'.")
+      }
+    } else {
+      cli::cli_abort("Invalid type for `lab_colors`; only functions, function
+                     names, named character vectors, data.frames, and \"auto\"
+                     are allowed.")
+    }
+  }
+  return(lab_colors)
+}
+
 #' @rdname facet_grid_color
 #' @format NULL
 #' @usage NULL
@@ -151,8 +195,17 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
       fill <- tryCatch(params$colors(label), error = function(e) NA)
       if (!is.na(fill)) {
         panel_table$grobs[[i]]$grobs[[1]]$children[[1]]$gp$fill <- fill
-        panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$gp$col <-
-          white_or_black(fill)
+        if (!is_function(params$lab_colors) && params$lab_colors == "auto") {
+          panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$
+            gp$col <- white_or_black(fill)
+        }
+      }
+      if (is_function(params$lab_colors)) {
+        color <- tryCatch(params$lab_colors(label), error = function(e) NA)
+        if (!is.na(color)) {
+          panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$
+            gp$col <- color
+        }
       }
     }
     panel_table
@@ -166,8 +219,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' allows the user to specify the background colors of the individual facet
 #' strips using the `colors` argument. This is generally a better use of screen
 #' space than [facet_grid_color()] because most displays are roughly
-#' rectangular. Strip labels will be set to black or white, whichever has better
-#' contrast with the background color, based on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en).
+#' rectangular.
 #'
 #' @param colors Specifies which colors to use to replace the strip backgrounds.
 #'   Either A) a function that returns a color for a given strip label, B) the
@@ -176,6 +228,16 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #'   colors, or D) a data.frame representing a lookup table with columns named
 #'   "name" (matching strip labels) and "color" (indicating desired colors). If
 #'   the function returns `NA`, the default background color will be used.
+#' @param lab_colors Specifies which colors to use for the strip labels. Either
+#'   A) a function that returns a color for a given strip label, B) the
+#'   character name of a function that does the same, C) a named character
+#'   vector with names matching strip labels and values indicating the desired
+#'   colors, D) a data.frame representing a lookup table with columns named
+#'   "name" (matching strip labels) and "lab_color" (indicating desired colors),
+#'   or E) "auto" (the default), which set the labels to black or white,
+#'   whichever has better contrast with the background color, based on
+#'   [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en).
+#'   If the function returns `NA`, the default label color will be used.
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
@@ -189,10 +251,12 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #'   facet_wrap_color(vars(period), colors = periods)
 facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
                              shrink = TRUE, labeller = "label_value",
-                             colors = stages, as.table = TRUE, drop = TRUE,
+                             colors = stages, lab_colors = "auto",
+                             as.table = TRUE, drop = TRUE,
                              dir = "h", strip.position = "top",
                              axes = "margins", axis.labels = "all") {
   colors <- convert_colors(colors)
+  lab_colors <- convert_lab_colors(lab_colors)
 
   # function and arguments copied from ggplot 3.5.0
   scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x",
@@ -247,6 +311,7 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
     nrow = nrow,
     labeller = labeller,
     colors = colors,
+    lab_colors = lab_colors,
     dir = dir,
     draw_axes = draw_axes,
     axis_labels = axis_labels
@@ -271,6 +336,7 @@ wrap_as_facets_list <- function(...) {
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
+#' @importFrom rlang is_function
 FacetWrapColor <- ggproto("FacetWrapColor", FacetWrap,
   shrink = TRUE,
   draw_panels = function(panels, layout, x_scales, y_scales, ranges, coord,
@@ -286,8 +352,17 @@ FacetWrapColor <- ggproto("FacetWrapColor", FacetWrap,
       fill <- tryCatch(params$colors(label), error = function(e) NA)
       if (!is.na(fill)) {
         panel_table$grobs[[i]]$grobs[[1]]$children[[1]]$gp$fill <- fill
-        panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$gp$col <-
-          white_or_black(fill)
+        if (!is_function(params$lab_colors) && params$lab_colors == "auto") {
+          panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$
+            gp$col <- white_or_black(fill)
+        }
+      }
+      if (is_function(params$lab_colors)) {
+        color <- tryCatch(params$lab_colors(label), error = function(e) NA)
+        if (!is.na(color)) {
+          panel_table$grobs[[i]]$grobs[[1]]$children[[2]]$children[[1]]$
+            gp$col <- color
+        }
       }
     }
     panel_table

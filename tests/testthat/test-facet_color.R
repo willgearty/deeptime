@@ -18,6 +18,12 @@ test_that("facet_grid_color works", {
                        periods$name)
                ]
   )
+  expect_equal(first_strip$grobs[[1]]$children[[2]]$children[[1]]$gp$col,
+               periods$lab_color[
+                 match(first_strip$grobs[[1]]$children[[2]]$children[[1]]$label,
+                       periods$name)
+               ]
+  )
   expect_doppelganger_deeptime("facet_grid_color", gg)
   expect_error(gg_base +
                  facet_grid_color(cols = vars(period), colors = "blue"))
@@ -38,6 +44,22 @@ test_that("facet_grid_color works", {
     facet_grid_color(cols = vars(period), colors = period_color)
   expect_no_error(gg)
   expect_doppelganger_deeptime("facet_grid_color with function", gg)
+
+  gg <- gg_base + facet_grid_color(cols = vars(period), colors = periods,
+                                   lab_colors = function(label) "blue")
+  expect_doppelganger_deeptime("facet_grid_color-blue labels", gg)
+  expect_error(gg_base +
+                 facet_grid_color(cols = vars(period), colors = periods,
+                                  lab_colors = "blue"))
+  expect_error(gg_base +
+                 facet_grid_color(cols = vars(period), colors = periods,
+                                  lab_colors = 5))
+  expect_error(gg_base +
+                 facet_grid_color(cols = vars(period),
+                                  colors = periods,
+                                  lab_colors =
+                                    data.frame(colors = c("blue", "red"))
+                 ))
 })
 
 test_that("facet_wrap_color works", {
@@ -62,4 +84,19 @@ test_that("facet_wrap_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_wrap_color", gg)
+
+  gg <- gg_base + facet_wrap_color(vars(period), colors = periods,
+                                   lab_colors = function(label) "blue")
+  expect_doppelganger_deeptime("facet_wrap_color-blue labels", gg)
+  expect_error(gg_base +
+                 facet_wrap_color(vars(period), colors = periods,
+                                  lab_colors = "blue"))
+  expect_error(gg_base +
+                 facet_wrap_color(vars(period), colors = periods,
+                                  lab_colors = 5))
+  expect_error(gg_base +
+                 facet_wrap_color(vars(period), colors = periods,
+                                  lab_colors =
+                                    data.frame(colors = c("blue", "red"))
+                 ))
 })
