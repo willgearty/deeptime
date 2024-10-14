@@ -20,7 +20,7 @@ This new major version of deeptime includes several new features:
 * Added FGDC/USGS geologic patterns to internal data (#52)
 * Added functions to retrieve and plot FGDC/USGS geologic patterns (#52)
 * Added functions to use FGDC/USGS patterns as ggplot2 fills or with the `ggpattern` package (see new vignette) (#52)
-* Added the `true_colors` option to get_scale_data(), which, when set to `FALSE`, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets (#62)
+* Added the `true_colors` option to `get_scale_data()`, which, when set to `FALSE`, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets (#62)
 * Updated built-in timescales to 2023/06 version of GTS
 * Added option to `coord_geo()` to abbreviate interval labels based on only the intervals that are being plotted (#64)
 * Added `guide_geo()` as an alternative to `coord_geo()`, mostly for use with radial plots (#53)
@@ -31,7 +31,7 @@ Bug fixes:
 
 Notable changes:
 
-* The `phytools` package is no longer required to install `deeptime` but is required to use the `geom_phylomorphospace()` function
+* The `phytools` package is no longer required to install `deeptime` but is required to use the `geom_phylomorpho()` function
 * The `geomtextpath` package is no longer required to install `deeptime` but is required to add labels with the `coord_geo_polar()` or `coord_geo_radial()` functions
 * The `gggeo_scale_old()` function has been fully deprecated
 
@@ -39,25 +39,25 @@ Notable changes:
 deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:
 
 * Fixed several cases where vignette and documentation building and/or unit testing would fail when the Macrostrat API was down
-* Fixed coord_geo_polar() and coord_geo_radial() when the r-axis has expansion (#60)
+* Fixed `coord_geo_polar()` and `coord_geo_radial()` when the r-axis has expansion (#60)
 * Improved argument type checking and error handling across the entire package
 
 # deeptime 1.1.0
 deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces several new features and bug fixes:
 
-* Added geom_points_range(), a function designed for visualizing temporal occurrence data
-* Added facet_grid_color() and facet_wrap_color() for changing strip background colors (#50)
-* Added coord_geo_radial(), an enhanced version of coord_geo_polar() (only works with ggplot2 version 3.5.0 and higher) (#56)
-* Added `family` and `fontface` arguments to coord_geo()
-* Added the ability to include interval labels with coord_geo_polar() (#48)
-* Fixed the interaction between coord_geo() and ggsave() (#49)
-* Fixed `size = "auto"` when `center_end_labels = TRUE` in coord_geo()
+* Added `geom_points_range()`, a function designed for visualizing temporal occurrence data
+* Added `facet_grid_color()` and `facet_wrap_color()` for changing strip background colors (#50)
+* Added `coord_geo_radial()`, an enhanced version of `coord_geo_polar()` (only works with ggplot2 version 3.5.0 and higher) (#56)
+* Added `family` and `fontface` arguments to `coord_geo()`
+* Added the ability to include interval labels with `coord_geo_polar()` (#48)
+* Fixed the interaction between `coord_geo()` and `ggsave()` (#49)
+* Fixed `size = "auto"` when `center_end_labels = TRUE` in `coord_geo()`
 * Updated several functions to work with ggplot2 version 3.5.0
 
 Notable changes:
 
-* The names for the theme elements that are used for coord_geo_polar() are now prepended with "deeptime." (e.g., `deeptime.axis.line.r`) (#51)
-* ggplot2 version 3.5.0 has broken several edge cases of coord_trans_xy(). See the documentation for more details. This will be fixed in a future deeptime release.
+* The names for the theme elements that are used for `coord_geo_polar()` are now prepended with "deeptime." (e.g., `deeptime.axis.line.r`) (#51)
+* ggplot2 version 3.5.0 has broken several edge cases of `coord_trans_xy()`. See the documentation for more details. This will be fixed in a future deeptime release.
 
 # deeptime 1.0.1
 
@@ -68,25 +68,25 @@ Notable changes:
 # deeptime 1.0.0
 
 * Updated built-in timescales to 2022/10 version of GTS
-* Added a geom for making phylomorphospaces
+* Added a geom for making phylomorphospaces (`geom_phylomorpho()`)
 * Added vignettes
-* Renamed getScaleData() to get_scale_data()
-* Soft deprecated gggeo_scale() and gggeo_scale_old()
+* Renamed `getScaleData()` to `get_scale_data()`
+* Soft deprecated `gggeo_scale()` and `gggeo_scale_old()`
 
 # deeptime 0.3.0
 deeptime now requires ggplot2 version 3.3.0 or higher. Several new features and fixed compatibility with various ggplot2 versions.
 
-* Added coord_geo_polar(), for adding timescales to polar plots (#33)
+* Added `coord_geo_polar()`, for adding timescales to polar plots (#33)
 * Added color and fill discrete scales that use the GTS colors (#43)
-* Fixed coord_geo_polar() and coord_trans_xy() for ggplot2 version 3.4.0 (#44)
-* Fixed coord_geo() for ggplot2 version 3.4.0
+* Fixed `coord_geo_polar()` and `coord_trans_xy()` for ggplot2 version 3.4.0 (#44)
+* Fixed `coord_geo()` for ggplot2 version 3.4.0
 * Added tests for both ggplot2 version 3.3.6 and 3.4.0
-* Removed uses of getFromNamespace (#45)
+* Removed uses of `getFromNamespace()` (#45)
 
 # deeptime 0.2.3
 
 * Updated built-in timescales to 2022/02 version of GTS
-* Better name handling and documentation for getScaleData() (#42)
+* Better name handling and documentation for `getScaleData()` (#42)
 
 # deeptime 0.2.2
 
@@ -105,8 +105,8 @@ Several new features and bug fixes.
 * coord_geo() now works with discrete axes (#32 and #35)
 * Fixed a bug that prevented the use of custom interval data
 * Added option to use ggfittext to automatically resize labels (#19)
-* Added coord_trans_flip() (#20)
-* Fixed axis labels for coord_trans_xy() (#36)
+* Added `coord_trans_flip()` (#20)
+* Fixed axis labels for `coord_trans_xy()` (#36)
 * Added tests with testthat (#34)
 
 # deeptime 0.1.0
