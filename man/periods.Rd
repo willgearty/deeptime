@@ -13,6 +13,9 @@ A data frame with 22 rows and 5 variables:
 \item{abbr}{period name abbreviations}
 \item{color}{the colors for each period, according to the Commission for
 the Geological Map of the World}
+\item{lab_color}{the label colors for each period, either white or black,
+whichever has better contrast with the background color, based on
+\href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}}
 }
 }
 \source{

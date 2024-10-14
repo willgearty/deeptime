@@ -1,6 +1,16 @@
 # deeptime (development version)
 
-* Fixed importing some functions from ggplot2 for coord_geo_radial and coord_geo_polar
+This new minor version of deeptime introduces several new features and bug fixes.
+
+New features:
+
+* Added default label color values to all built-in data as a new `lab_color` column
+  * The label colors are either white or black, whichever has better contrast with the background color based on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)
+* `get_scale_data()` now returns label colors (as above) for Macrostrat timescales
+
+Bug fixes:
+
+* Fixed importing some functions from `ggplot2` for `coord_geo_radial()` and `coord_geo_polar()`
 
 # deeptime 2.0.0
 __deeptime now requires ggplot2 version 3.5.0 or higher__.\

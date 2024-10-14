@@ -13,6 +13,9 @@ A data frame with 102 rows and 5 variables:
 \item{abbr}{stage name abbreviations}
 \item{color}{the colors for each stage, according to the Commission for the
 Geological Map of the World}
+\item{lab_color}{the label colors for each stage, either white or black,
+whichever has better contrast with the background color, based on
+\href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}}
 }
 }
 \source{

@@ -12,6 +12,9 @@
 #'   \item{abbr}{eon name abbreviations}
 #'   \item{color}{the colors for each eon, according to the Commission for the
 #'     Geological Map of the World}
+#'   \item{lab_color}{the label colors for each eon, either white or black,
+#'     whichever has better contrast with the background color, based on
+#'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
 #' @family timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eons>
@@ -31,6 +34,9 @@
 #'   \item{abbr}{era name abbreviations}
 #'   \item{color}{the colors for each era, according to the Commission for the
 #'     Geological Map of the World}
+#'   \item{lab_color}{the label colors for each era, either white or black,
+#'     whichever has better contrast with the background color, based on
+#'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
 #' @family timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eras>
@@ -50,6 +56,9 @@
 #'   \item{abbr}{period name abbreviations}
 #'   \item{color}{the colors for each period, according to the Commission for
 #'     the Geological Map of the World}
+#'   \item{lab_color}{the label colors for each period, either white or black,
+#'     whichever has better contrast with the background color, based on
+#'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
 #' @family timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20periods>
@@ -69,6 +78,9 @@
 #'   \item{abbr}{epoch name abbreviations}
 #'   \item{color}{the colors for each epoch, according to the Commission for the
 #'     Geological Map of the World}
+#'   \item{lab_color}{the label colors for each epoch, either white or black,
+#'     whichever has better contrast with the background color, based on
+#'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
 #' @family timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20epochs>
@@ -88,6 +100,9 @@
 #'   \item{abbr}{stage name abbreviations}
 #'   \item{color}{the colors for each stage, according to the Commission for the
 #'     Geological Map of the World}
+#'   \item{lab_color}{the label colors for each stage, either white or black,
+#'     whichever has better contrast with the background color, based on
+#'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
 #' @family timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20ages>

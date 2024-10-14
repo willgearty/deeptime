@@ -13,16 +13,19 @@ get_scale_data(name, true_colors = TRUE)
 opposed to custom Macrostrat plotting colors)}
 }
 \value{
-A \code{data.frame} with the following columns: \item{name}{the names of
-the time intervals.}
+A \code{data.frame} with the following columns:
+\item{name}{the names of the time intervals}
 \item{max_age}{the oldest boundaries of the time intervals, in millions of
-years.}
+years}
 \item{min_age}{the youngest boundaries of the time intervals, in millions
-of years.}
+of years}
 \item{abbr}{either traditional abbreviations of the names of the time
-intervals (if they exist) or custom abbreviations created with R.}
+intervals (if they exist) or custom abbreviations created with R}
 \item{color}{hex color codes associated with the time intervals (if
-applicable).}
+applicable)}
+\item{lab_color}{default label colors for the time interals, either white
+or black, whichever has better contrast with the background color, based
+on \href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}}
 }
 \description{
 This function takes a name of a geological timescale and returns data for the

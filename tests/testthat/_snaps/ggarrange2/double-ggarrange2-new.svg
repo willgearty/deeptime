@@ -2361,8 +2361,8 @@
 <polyline points='-2495.42,532.99 -2495.42,504.19 ' style='stroke-width: 0.53; stroke-linecap: butt;' />
 <text x='709.30' y='522.51' text-anchor='middle' style='font-size: 11.38px; font-family: sans;' textLength='58.21px' lengthAdjust='spacingAndGlyphs'>Cretaceous</text>
 <text x='541.70' y='522.51' text-anchor='middle' style='font-size: 11.38px; font-family: sans;' textLength='41.76px' lengthAdjust='spacingAndGlyphs'>Jurassic</text>
-<text x='409.37' y='522.51' text-anchor='middle' style='font-size: 11.38px; font-family: sans;' textLength='39.21px' lengthAdjust='spacingAndGlyphs'>Triassic</text>
-<text x='288.68' y='522.51' text-anchor='middle' style='font-size: 11.38px; font-family: sans;' textLength='42.39px' lengthAdjust='spacingAndGlyphs'>Permian</text>
+<text x='409.37' y='522.51' text-anchor='middle' style='font-size: 11.38px; fill: #FFFFFF; font-family: sans;' textLength='39.21px' lengthAdjust='spacingAndGlyphs'>Triassic</text>
+<text x='288.68' y='522.51' text-anchor='middle' style='font-size: 11.38px; fill: #FFFFFF; font-family: sans;' textLength='42.39px' lengthAdjust='spacingAndGlyphs'>Permian</text>
 <text x='156.24' y='522.51' text-anchor='middle' style='font-size: 11.38px; font-family: sans;' textLength='71.50px' lengthAdjust='spacingAndGlyphs'>Carboniferous</text>
 <text x='7.33' y='522.51' text-anchor='middle' style='font-size: 11.38px; font-family: sans;' textLength='48.09px' lengthAdjust='spacingAndGlyphs'>Devonian</text>
 <polyline points='-56.91,532.99 -56.91,504.19 ' style='stroke-width: 1.07; stroke-linecap: butt;' />

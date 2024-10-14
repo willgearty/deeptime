@@ -21,6 +21,16 @@ for (int_type in names(int_types)) {
     abbreviate(clean_dat$name, minlength = 1,
                use.classes = TRUE, named = FALSE)[no_abbr]
   clean_dat$abbr[clean_dat$name == "Stage 10"] <- "S10" # fix abbreviation
+
+  # Add label colors based on luminance as per
+  # https://stackoverflow.com/a/1855903/4660582
+  # values are from https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en
+  rgbs <- grDevices::col2rgb(clean_dat$color)
+  luminance <- apply(rgbs, 2, function(x) {
+    (0.299 * x[1] + 0.587 * x[2] + 0.114 * x[3]) / 255
+  })
+  clean_dat$lab_color <- ifelse(luminance > .5, "black", "white")
+
   assign(int_type, clean_dat)
 
   if (!identical(old_dat, clean_dat)) {

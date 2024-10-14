@@ -15,18 +15,22 @@
 #' @param name The name of the desired timescale.
 #' @param true_colors Return original international time scale colors? (as
 #'   opposed to custom Macrostrat plotting colors)
-#' @return A `data.frame` with the following columns: \item{name}{the names of
-#'   the time intervals.}
+#' @return A `data.frame` with the following columns:
+#'   \item{name}{the names of the time intervals}
 #'   \item{max_age}{the oldest boundaries of the time intervals, in millions of
-#'     years.}
+#'     years}
 #'   \item{min_age}{the youngest boundaries of the time intervals, in millions
-#'     of years.}
+#'     of years}
 #'   \item{abbr}{either traditional abbreviations of the names of the time
-#'     intervals (if they exist) or custom abbreviations created with R.}
+#'     intervals (if they exist) or custom abbreviations created with R}
 #'   \item{color}{hex color codes associated with the time intervals (if
-#'     applicable).}
+#'     applicable)}
+#'   \item{lab_color}{default label colors for the time interals, either white
+#'     or black, whichever has better contrast with the background color, based
+#'     on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' @importFrom utils read.csv
 #' @importFrom curl nslookup
+#' @importFrom grDevices col2rgb
 #' @export
 get_scale_data <- function(name, true_colors = TRUE) {
   check_required(name)
@@ -80,6 +84,15 @@ get_scale_data <- function(name, true_colors = TRUE) {
       abbreviate(clean_dat$name, minlength = 1,
                  use.classes = TRUE, named = FALSE)[no_abbr]
     dat <- clean_dat
+
+    # Add label colors based on luminance as per
+    # https://stackoverflow.com/a/1855903/4660582
+    # values are from https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en
+    rgbs <- col2rgb(dat$color)
+    luminance <- apply(rgbs, 2, function(x) {
+      (0.299 * x[1] + 0.587 * x[2] + 0.114 * x[3]) / 255
+    })
+    dat$lab_color <- ifelse(luminance > .5, "black", "white")
   }
   dat
 }
