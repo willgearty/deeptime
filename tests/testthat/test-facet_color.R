@@ -109,3 +109,87 @@ test_that("facet_wrap_color works", {
                                     data.frame(colors = c("blue", "red"))
                  ))
 })
+
+test_that("facet_nested_color works", {
+  skip_if_not_installed("divDyn")
+  coral_div_dis$era <- factor("Mesozoic", levels = c("Mesozoic", "Cenozoic"))
+  coral_div_dis$era[coral_div_dis$period %in%
+                      c("Paleogene", "Neogene", "Quaternary")] <- "Cenozoic"
+  gg_base <- ggplot(coral_div_dis) +
+    geom_col(aes(x = diet, y = n, fill = diet)) +
+    scale_x_discrete("Diet", labels = NULL) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_fill_viridis_d() +
+    ylab("Coral Genera") +
+    theme(axis.ticks.length.x = unit(0, "lines"))
+  gg <- gg_base +
+    facet_nested_color(~era + period, colors = rbind(periods, eras))
+  expect_true(is(ggplot_build(gg)$layout$facet, "FacetNestedColor"))
+  expect_true(is(ggplot_build(gg)$layout$facet, "FacetNested"))
+  gg_gtable <- ggplot_gtable(ggplot_build(gg))
+  first_strip <- gg_gtable$grobs[[grep("strip", gg_gtable$layout$name)[1]]]
+  expect_equal(first_strip$grobs[[1]]$children[[1]]$gp$fill,
+               eras$color[
+                 match(first_strip$grobs[[1]]$children[[2]]$children[[1]]$label,
+                       eras$name)
+               ]
+  )
+  expect_doppelganger_deeptime("facet_nested_color", gg)
+
+  expect_error(gg_base +
+                 facet_nested_color(~era + period,
+                                    colors = rbind(periods, eras),
+                                    lab_colors = "blue"))
+  expect_error(gg_base +
+                 facet_nested_color(~era + period,
+                                    colors = rbind(periods, eras),
+                                    lab_colors = 5))
+  expect_error(gg_base +
+                 facet_nested_color(~era + period,
+                                    colors = rbind(periods, eras),
+                                    lab_colors =
+                                      data.frame(colors = c("blue", "red"))
+                 ))
+})
+
+test_that("facet_nested_wrap_color works", {
+  skip_if_not_installed("divDyn")
+  coral_div_dis$era <- factor("Mesozoic", levels = c("Mesozoic", "Cenozoic"))
+  coral_div_dis$era[coral_div_dis$period %in%
+                      c("Paleogene", "Neogene", "Quaternary")] <- "Cenozoic"
+  gg_base <- ggplot(coral_div_dis) +
+    geom_col(aes(x = diet, y = n, fill = diet)) +
+    scale_x_discrete("Diet", labels = NULL) +
+    scale_y_continuous(expand = c(0, 0)) +
+    scale_fill_viridis_d() +
+    ylab("Coral Genera") +
+    theme(axis.ticks.length.x = unit(0, "lines"))
+  gg <- gg_base +
+    facet_nested_wrap_color(~era + period, colors = rbind(periods, eras))
+  expect_true(is(ggplot_build(gg)$layout$facet, "FacetNestedWrapColor"))
+  expect_true(is(ggplot_build(gg)$layout$facet, "FacetNestedWrap"))
+  gg_gtable <- ggplot_gtable(ggplot_build(gg))
+  first_strip <- gg_gtable$grobs[[grep("strip", gg_gtable$layout$name)[1]]]
+  expect_equal(first_strip$grobs[[1]]$children[[1]]$gp$fill,
+               eras$color[
+                 match(first_strip$grobs[[1]]$children[[2]]$children[[1]]$label,
+                       eras$name)
+               ]
+  )
+  expect_doppelganger_deeptime("facet_nested_wrap_color", gg)
+
+  expect_error(gg_base +
+                 facet_nested_wrap_color(~era + period,
+                                         colors = rbind(periods, eras),
+                                         lab_colors = "blue"))
+  expect_error(gg_base +
+                 facet_nested_wrap_color(~era + period,
+                                         colors = rbind(periods, eras),
+                                         lab_colors = 5))
+  expect_error(gg_base +
+                 facet_nested_wrap_color(~era + period,
+                                         colors = rbind(periods, eras),
+                                         lab_colors =
+                                           data.frame(colors = c("blue", "red"))
+                 ))
+})

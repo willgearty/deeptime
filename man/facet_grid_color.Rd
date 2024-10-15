@@ -116,9 +116,10 @@ respectively.}
 \description{
 \code{facet_grid_color} behaves similarly to \code{\link[ggplot2:facet_grid]{ggplot2::facet_grid()}} in that it
 forms a matrix of panels defined by row and column faceting variables. The
-main difference is that it also allows the user to specify the background
-colors of the individual facet strips using the \code{colors} argument. If you
-have only one variable with many levels, try \code{\link[=facet_wrap_color]{facet_wrap_color()}}.
+main difference is that it also allows the user to specify the background and
+label colors of the individual facet strips using the \code{colors} and
+\code{lab_colors} arguments. If you have only one variable with many levels, try
+\code{\link[=facet_wrap_color]{facet_wrap_color()}}.
 }
 \examples{
 library(ggplot2)
@@ -127,4 +128,11 @@ ggplot(df) +
   geom_point(aes(x, y)) +
   facet_grid_color(cols = vars(period), colors = periods)
 }
+\seealso{
+Other facetting functions: 
+\code{\link{facet_nested_color}()},
+\code{\link{facet_nested_wrap_color}()},
+\code{\link{facet_wrap_color}()}
+}
+\concept{facetting functions}
 \keyword{datasets}

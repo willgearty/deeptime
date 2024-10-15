@@ -103,10 +103,10 @@ x- or y-direction respectively.}
 \description{
 \code{facet_wrap_color} behaves similarly to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}} in that it
 wraps a 1d sequence of panels into 2d. The main difference is that it also
-allows the user to specify the background colors of the individual facet
-strips using the \code{colors} argument. This is generally a better use of screen
-space than \code{\link[=facet_grid_color]{facet_grid_color()}} because most displays are roughly
-rectangular.
+allows the user to specify the background and label colors of the individual
+facet strips using the \code{colors} and \code{lab_colors} arguments. This is generally
+a better use of screen space than \code{\link[=facet_grid_color]{facet_grid_color()}} because most displays
+are roughly rectangular.
 }
 \examples{
 library(ggplot2)
@@ -115,4 +115,11 @@ ggplot(df) +
   geom_point(aes(x, y)) +
   facet_wrap_color(vars(period), colors = periods)
 }
+\seealso{
+Other facetting functions: 
+\code{\link{facet_grid_color}()},
+\code{\link{facet_nested_color}()},
+\code{\link{facet_nested_wrap_color}()}
+}
+\concept{facetting functions}
 \keyword{datasets}

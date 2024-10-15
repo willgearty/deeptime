@@ -9,6 +9,7 @@ New features:
 * `get_scale_data()` now returns label colors (as above) for Macrostrat timescales
 * Varying strip label colors can now be set with the `lab_colors` argument in `facet_wrap_color()` and `facet_grid_color()` (#68)
   * By default, the strip label colors are set to white or black (as above)
+* Added `facet_nested_color()` and `facet_nested_wrap_color()` to plot nested facetted plots with colored strips (#55)
 * `get_scale_data()` documentation now lists the available Macrostrat timescales (#69)
 * `get_scale_data()` now supports partial matching to Macrostrat timescales (e.g., `get_scale_data("mammal")` will retrieve the "North American land mammal ages" timescale)
 
