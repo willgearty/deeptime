@@ -46,8 +46,17 @@ test_that("facet_grid_color works", {
   expect_doppelganger_deeptime("facet_grid_color with function", gg)
 
   gg <- gg_base + facet_grid_color(cols = vars(period), colors = periods,
+                                   lab_colors = periods)
+  expect_doppelganger_deeptime("facet_grid_color-lab_colors", gg)
+
+  gg <- gg_base + facet_grid_color(cols = vars(period), colors = periods,
                                    lab_colors = function(label) "blue")
   expect_doppelganger_deeptime("facet_grid_color-blue labels", gg)
+
+  gg <- gg_base + facet_grid_color(cols = vars(period), colors = periods,
+                                   lab_colors = c("Triassic" = "blue"))
+  expect_doppelganger_deeptime("facet_grid_color-Triassic blue", gg)
+
   expect_error(gg_base +
                  facet_grid_color(cols = vars(period), colors = periods,
                                   lab_colors = "blue"))
