@@ -98,10 +98,10 @@ get_scale_data <- function(name, true_colors = TRUE) {
       {
         read.csv(URL, header = TRUE, stringsAsFactors = FALSE)
       },
-      error = function(e) {
+      error = function(e) {# nocov start
         cli::cli_abort("Macrostrat is not available. Either the site is down
                        or you are not connected to the internet.")
-      }
+      }# nocov end
     )
     clean_dat <- raw_dat[, c("name", "b_age", "t_age", "abbrev", "color")]
     colnames(clean_dat) <- c("name", "max_age", "min_age", "abbr", "color")
@@ -128,12 +128,12 @@ white_or_black <- function(colors) {
 }
 
 # generate docs for available Macrostrat timescales
-macrostrat_timescales <- function() {
+macrostrat_timescales <- function() {# nocov start
   scales <- read.csv(url(paste0("https://macrostrat.org/api/v2/defs/timescales",
                                 "?all&format=csv")),
                      stringsAsFactors = FALSE)
   return(paste0("\\item ", scales$timescale, collapse = "\n"))
-}
+}# nocov end
 
 #' Get geological timescale data
 #'
