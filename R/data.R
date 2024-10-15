@@ -16,7 +16,7 @@
 #'     whichever has better contrast with the background color, based on
 #'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
-#' @family timescales
+#' @family built-in timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eons>
 "eons"
 
@@ -38,7 +38,7 @@
 #'     whichever has better contrast with the background color, based on
 #'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
-#' @family timescales
+#' @family built-in timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20eras>
 "eras"
 
@@ -60,7 +60,7 @@
 #'     whichever has better contrast with the background color, based on
 #'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
-#' @family timescales
+#' @family built-in timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20periods>
 "periods"
 
@@ -82,7 +82,7 @@
 #'     whichever has better contrast with the background color, based on
 #'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
-#' @family timescales
+#' @family built-in timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20epochs>
 "epochs"
 
@@ -104,6 +104,6 @@
 #'     whichever has better contrast with the background color, based on
 #'     [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)}
 #' }
-#' @family timescales
+#' @family built-in timescales
 #' @source <https://stratigraphy.org> via <https://macrostrat.org/api/v2/defs/intervals?timescale=international%20ages>
 "stages"

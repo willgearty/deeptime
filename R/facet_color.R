@@ -395,6 +395,7 @@ assert_strip <- function(...) {
 #' @family facetting functions
 #' @export
 #' @examples
+#' library(ggplot2)
 #' df <- data.frame(x = 1:10, y = 1:10,
 #'                  period = factor(c("Permian", "Triassic", "Jurassic",
 #'                                    "Cretaceous", "Paleogene"),
@@ -519,6 +520,7 @@ new_wrap_facets <- function(...) {
 #' @family facetting functions
 #' @export
 #' @examples
+#' library(ggplot2)
 #' df <- data.frame(x = 1:10, y = 1:10,
 #'                  period = factor(c("Permian", "Triassic", "Jurassic",
 #'                                    "Cretaceous", "Paleogene"),

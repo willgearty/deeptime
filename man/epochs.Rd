@@ -30,11 +30,11 @@ epochs of the Geologic Time Scale. Based on The ICS International
 Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
 }
 \seealso{
-Other timescales: 
+Other built-in timescales: 
 \code{\link{eons}},
 \code{\link{eras}},
 \code{\link{periods}},
 \code{\link{stages}}
 }
-\concept{timescales}
+\concept{built-in timescales}
 \keyword{datasets}

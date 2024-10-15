@@ -109,6 +109,8 @@ reference:
   - stat_points_range
   - facet_grid_color
   - facet_wrap_color
+  - facet_nested_color
+  - facet_nested_wrap_color
 
 - title: Plotting geologic data
   desc: >

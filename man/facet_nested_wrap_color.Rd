@@ -166,6 +166,7 @@ about the nesting of strips, please visit the documentation of
 \code{\link[ggh4x:strip_nested]{strip_nested()}}.
 }
 \examples{
+library(ggplot2)
 df <- data.frame(x = 1:10, y = 1:10,
                  period = factor(c("Permian", "Triassic", "Jurassic",
                                    "Cretaceous", "Paleogene"),
