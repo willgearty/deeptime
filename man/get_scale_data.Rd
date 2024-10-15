@@ -31,12 +31,56 @@ on \href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by 
 This function takes a name of a geological timescale and returns data for the
 timescale. Valid names include those of built-in \code{data.frames} (\code{\link[=periods]{periods()}},
 \code{\link[=epochs]{epochs()}}, \code{\link[=stages]{stages()}}, \code{\link[=eons]{eons()}}, or \code{\link[=eras]{eras()}}), partial matches of those
-names (e.g., "per" or "stage"), and exact matches to those hosted by
-Macrostrat (see full list here:
-\url{https://macrostrat.org/api/defs/timescales?all}). Note that the colors in
-the built-in \code{data.frames} are according to the Commission for the Geological
-Map of the World. If you would like to obtain custom Macrostrat colors that
-are better for mapping, you should specify the full name of a timescale
-(e.g., "international periods") and set \code{true_colors} to \code{FALSE}. Note that
-these colors only vary for the Precambrian.
+names (e.g., "per" or "age"), and partial or exact matches to those hosted
+by Macrostrat (see Details below). Note that the colors in the built-in
+\code{data.frames} are according to the Commission for the Geological Map of the
+World. If you would like to obtain custom Macrostrat colors that are better
+for mapping, you should specify the full name of a timescale (e.g.,
+"international periods") and set \code{true_colors} to \code{FALSE}. Note that these
+colors only vary for the Precambrian.
+}
+\details{
+The following timescales are available from the Macrostrat API as of
+2024-10-15:
+\itemize{
+\item international ages
+\item international epochs
+\item international periods
+\item calcareous nannoplankton zones
+\item New Zealand ages
+\item custom COSUNA
+\item North American land mammal ages
+\item international intervals
+\item COSUNA
+\item international eras
+\item international eons
+\item Trilobite Zonation - Laurentia
+\item Conodont Zonation
+\item North American Regional
+\item Ammonite Zonation - Boreal
+\item Ammonite Zonation - Western Interior
+\item international intervals covering all time
+\item Scotese Reconstruction
+\item Geomagnetic Polarity Chron
+\item Geomagnetic Polarity Subchron
+\item Planktic foraminiferal Primary Biozones
+\item Planktic foraminiferal Secondary Biozones
+\item Planktic foraminiferal datums
+\item Martian Periods
+\item Martian Epochs
+\item Cretaceous Planktic foraminifer zonations
+\item Low latitude radiolarian zonation
+\item Neogene North Pacific Diatom Biochronology
+\item Neogene North Pacific Diatom Biochronology Subzones
+\item Siberian Regional
+\item Australian Regional
+\item Western Europe Regional
+\item Russian Platform Regional Stages
+\item Russian Precambrian Eras
+\item Russian Precambrian Eons
+\item Russian Epochs
+\item Russian Stages
+}
+
+The most up-to-date list can be found via the Macrostrat API \href{https://macrostrat.org/api/defs/timescales?all}{here}.
 }

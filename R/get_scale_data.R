@@ -3,14 +3,21 @@
 #' This function takes a name of a geological timescale and returns data for the
 #' timescale. Valid names include those of built-in `data.frames` ([periods()],
 #' [epochs()], [stages()], [eons()], or [eras()]), partial matches of those
-#' names (e.g., "per" or "stage"), and exact matches to those hosted by
-#' Macrostrat (see full list here:
-#' <https://macrostrat.org/api/defs/timescales?all>). Note that the colors in
-#' the built-in `data.frames` are according to the Commission for the Geological
-#' Map of the World. If you would like to obtain custom Macrostrat colors that
-#' are better for mapping, you should specify the full name of a timescale
-#' (e.g., "international periods") and set `true_colors` to `FALSE`. Note that
-#' these colors only vary for the Precambrian.
+#' names (e.g., "per" or "age"), and partial or exact matches to those hosted
+#' by Macrostrat (see Details below). Note that the colors in the built-in
+#' `data.frames` are according to the Commission for the Geological Map of the
+#' World. If you would like to obtain custom Macrostrat colors that are better
+#' for mapping, you should specify the full name of a timescale (e.g.,
+#' "international periods") and set `true_colors` to `FALSE`. Note that these
+#' colors only vary for the Precambrian.
+#'
+#' @details The following timescales are available from the Macrostrat API as of
+#'   `r Sys.Date()`:
+#'   \itemize{
+#'     `r macrostrat_timescales()`
+#'   }
+#'
+#'   The most up-to-date list can be found via the Macrostrat API [here](https://macrostrat.org/api/defs/timescales?all).
 #'
 #' @param name The name of the desired timescale.
 #' @param true_colors Return original international time scale colors? (as
@@ -33,11 +40,13 @@
 #' @export
 get_scale_data <- function(name, true_colors = TRUE) {
   check_required(name)
+  check_bool(true_colors)
   possible_names <- c("periods", "epochs", "stages", "eras", "eons")
-  name_match <- charmatch(name, possible_names)
-  if (!is.na(name_match)) {
-    if (name_match == 0) {
-      cli::cli_abort("'name' matches multiple scales. Please be more specific.")
+  name_match <- grep(name, possible_names, ignore.case = TRUE)
+  if (length(name_match) > 0) {
+    if (length(name_match) > 1) {
+      cli::cli_abort("`name` matches multiple built-in timescales. Please be
+                     more specific.")
     } else {
       name <- possible_names[name_match]
       if (name == "periods") {
@@ -64,6 +73,24 @@ get_scale_data <- function(name, true_colors = TRUE) {
                        you are not connected to the internet.")
       }
     )# nocov end
+    avail_scales <- read.csv(url(paste0("https://macrostrat.org/api/v2/defs/",
+                                        "timescales?all&format=csv")),
+                             stringsAsFactors = FALSE)
+    # check exact matches
+    name_match <- match(tolower(name), tolower(avail_scales$timescale))
+    if (is.na(name_match)) {
+      # check partial matches
+      name_match <- grep(name, avail_scales$timescale, ignore.case = TRUE)
+      if (length(name_match) == 0) {
+        cli::cli_abort("`name` does not match a built-in or Macrostrat
+                     timescale.")
+      } else if (length(name_match) > 1) {
+        cli::cli_abort("`name` matches multiple Macrostrat timescales. Please be
+                     more specific.")
+      }
+    }
+    # get full timescale name and retrieve data from Macrostrat
+    name <- avail_scales$timescale[name_match]
     URL <- url(paste0("https://macrostrat.org/api/v2/defs/intervals",
                       "?format=csv&timescale=", gsub(" ", "%20", name),
                       ifelse(true_colors, "&true_colors=true", "")))
@@ -72,8 +99,8 @@ get_scale_data <- function(name, true_colors = TRUE) {
         read.csv(URL, header = TRUE, stringsAsFactors = FALSE)
       },
       error = function(e) {
-        cli::cli_abort("'name' does not match a built-in or Macrostrat
-                       timescale.")
+        cli::cli_abort("Macrostrat is not available. Either the site is down
+                       or you are not connected to the internet.")
       }
     )
     clean_dat <- raw_dat[, c("name", "b_age", "t_age", "abbrev", "color")]
@@ -100,7 +127,13 @@ white_or_black <- function(colors) {
   ifelse(luminance > .5, "black", "white")
 }
 
-
+# generate docs for available Macrostrat timescales
+macrostrat_timescales <- function() {
+  scales <- read.csv(url(paste0("https://macrostrat.org/api/v2/defs/timescales",
+                                "?all&format=csv")),
+                     stringsAsFactors = FALSE)
+  return(paste0("\\item ", scales$timescale, collapse = "\n"))
+}
 
 #' Get geological timescale data
 #'

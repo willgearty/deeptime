@@ -8,9 +8,14 @@ test_that("get_scale_data works", {
   expect_equal(get_scale_data("eras"), deeptime::eras)
   expect_equal(get_scale_data("eons"), deeptime::eons)
   expect_equal(nrow(get_scale_data("eons")), 3)
-  expect_equal(get_scale_data("stages"), get_scale_data("s"))
+  expect_equal(get_scale_data("stages"), get_scale_data("ages"))
+  expect_equal(get_scale_data("periods"),
+               get_scale_data("international periods"))
+  expect_equal(get_scale_data("mammal"),
+               get_scale_data("North American land mammal ages"))
 
   expect_error(get_scale_data("e"))
+  expect_error(get_scale_data("North America"))
   expect_error(get_scale_data("international house of pancakes"))
   expect_named(
     get_scale_data("North American Land Mammal Ages"),

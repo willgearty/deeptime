@@ -7,8 +7,10 @@ New features:
 * Added default label color values to all built-in data as a new `lab_color` column
   * The label colors are either white or black, whichever has better contrast with the background color based on [recommendations by the International Telecommunication Union](https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en)
 * `get_scale_data()` now returns label colors (as above) for Macrostrat timescales
-* Varying strip label colors can now be set with the `lab_colors` argument in `facet_wrap_color()` and `facet_grid_color()`
+* Varying strip label colors can now be set with the `lab_colors` argument in `facet_wrap_color()` and `facet_grid_color()` (#68)
   * By default, the strip label colors are set to white or black (as above)
+* `get_scale_data()` documentation now lists the available Macrostrat timescales (#69)
+* `get_scale_data()` now supports partial matching to Macrostrat timescales (e.g., `get_scale_data("mammal")` will retrieve the "North American land mammal ages" timescale)
 
 Bug fixes:
 
