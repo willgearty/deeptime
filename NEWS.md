@@ -1,4 +1,4 @@
-# deeptime (development version)
+# deeptime 2.1.0
 
 This new minor version of deeptime introduces several new features and bug fixes.
 
