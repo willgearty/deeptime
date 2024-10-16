@@ -116,10 +116,10 @@ ggplot(df) +
   facet_wrap_color(vars(period), colors = periods)
 }
 \seealso{
-Other facetting functions: 
+Other faceting functions: 
 \code{\link{facet_grid_color}()},
 \code{\link{facet_nested_color}()},
 \code{\link{facet_nested_wrap_color}()}
 }
-\concept{facetting functions}
+\concept{faceting functions}
 \keyword{datasets}

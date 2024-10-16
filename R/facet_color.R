@@ -27,7 +27,7 @@
 #' @inheritParams ggplot2::facet_grid
 #' @importFrom ggplot2 ggproto FacetGrid ggproto_parent
 #' @importFrom rlang arg_match0 is_function
-#' @family facetting functions
+#' @family faceting functions
 #' @export
 #'
 #' @examples
@@ -242,7 +242,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
-#' @family facetting functions
+#' @family faceting functions
 #' @export
 #'
 #' @examples
@@ -392,7 +392,7 @@ assert_strip <- function(...) {
 #' @importFrom ggplot2 element_line element_blank
 #' @importFrom ggh4x strip_nested
 #' @importFrom grid unit
-#' @family facetting functions
+#' @family faceting functions
 #' @export
 #' @examples
 #' library(ggplot2)
@@ -517,7 +517,7 @@ new_wrap_facets <- function(...) {
 #' @importFrom ggplot2 element_line element_blank
 #' @importFrom ggh4x strip_nested
 #' @importFrom grid unit
-#' @family facetting functions
+#' @family faceting functions
 #' @export
 #' @examples
 #' library(ggplot2)

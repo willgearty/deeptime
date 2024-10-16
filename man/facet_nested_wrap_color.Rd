@@ -182,10 +182,10 @@ ggplot(df, aes(x, y)) +
   facet_nested_wrap_color(~ era + period, colors = rbind(periods, eras))
 }
 \seealso{
-Other facetting functions: 
+Other faceting functions: 
 \code{\link{facet_grid_color}()},
 \code{\link{facet_nested_color}()},
 \code{\link{facet_wrap_color}()}
 }
-\concept{facetting functions}
+\concept{faceting functions}
 \keyword{datasets}
