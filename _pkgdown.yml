@@ -64,10 +64,10 @@ reference:
 
 - subtitle: Deprecated functions
   desc: >
-    The following functions represent the first and second iterations of what is
-    now `coord_geo()`. These functions still work but are considered
-    "deprecated". There is no guarantee they will be supported ad infinitum.
-    Users are strongly encouraged to use `coord_geo()` instead, which has more
+    The following function(s) represent early iterations of what is
+    now `coord_geo()`. These function(s) still work but are considered
+    "deprecated". They will be removed in a future version of deeptime, and
+    users are strongly encouraged to use `coord_geo()` instead, which has more
     features and is still under active development.
   contents:
   - gggeo_scale

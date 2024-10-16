@@ -3,7 +3,7 @@
 #' @param obj An object of class `ggplot`, `gtable`, or `geo_scale` (as produced
 #'   by this function).
 gggeo_scale <- function(obj, ...) {
-  lifecycle::deprecate_soft("1.0.0", "gggeo_scale()", "coord_geo()")
+  lifecycle::deprecate_warn("1.0.0", "gggeo_scale()", "coord_geo()")
   UseMethod("gggeo_scale")
 }
 
@@ -29,8 +29,8 @@ gggeo_scale <- function(obj, ...) {
 #'     (which can be obtained with `rgb()`) for each time interval.
 #' }
 #' @section Life cycle:
-#' This function is soft-deprecated in favor of [coord_geo()] as of **deeptime**
-#' version 1.0.0. It may be removed in the future.
+#' This function is deprecated in favor of [coord_geo()] as of **deeptime**
+#' version 1.0.0. It will be removed in a future release.
 #' @param lims The limits of the axis of the desired side of the plot. Only
 #'   required if using a gtable object not created by this function.
 #' @param dat Either A) a string indicating a built-in dataframe with interval

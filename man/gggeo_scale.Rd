@@ -160,8 +160,8 @@ used as labels.
 }
 \section{Life cycle}{
 
-This function is soft-deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime}
-version 1.0.0. It may be removed in the future.
+This function is deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime}
+version 1.0.0. It will be removed in a future release.
 }
 
 \examples{

@@ -22,7 +22,7 @@
 #' }
 #' @section Life cycle:
 #'   This function is fully deprecated in favor of [coord_geo()] as of
-#'   **deeptime** version 1.2.0.
+#'   **deeptime** version 1.2.0. It will be removed in a future version.
 #' @param gg The ggplot object.
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
