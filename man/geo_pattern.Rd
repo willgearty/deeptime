@@ -33,7 +33,7 @@ the pattern.}
 \item{bg}{The background color to use for the pattern.}
 }
 \value{
-\code{geo_grob()} returns a \link[grid:grid-defunct]{grob} object with a single
+\code{geo_grob()} returns a \link[grid:gTree]{grob} object with a single
 instance of the desired pattern. \code{geo_pattern()} returns a
 \link[grid:patterns]{GridPattern} object with a repeated instance of the
 desired pattern.

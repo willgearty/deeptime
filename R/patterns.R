@@ -32,7 +32,7 @@
 #' @param alpha The transparency to use for the fill of the pattern.
 #' @param bg The background color to use for the pattern.
 #'
-#' @return `geo_grob()` returns a [grob][grid::grid.grob] object with a single
+#' @return `geo_grob()` returns a \link[grid:gTree]{grob} object with a single
 #'   instance of the desired pattern. `geo_pattern()` returns a
 #'   [GridPattern][grid::patterns] object with a repeated instance of the
 #'   desired pattern.
@@ -74,6 +74,7 @@ geo_pattern <- function(code, scale = 2,
 #' @importFrom grid editGrob rectGrob gList gTree gPath gpar
 geo_grob <- function(code,
                      col = NULL, fill = NULL, alpha = NULL, bg = "white") {
+  geo_grobs <- getExportedValue("deeptimedata", "geo_grobs")
   code <- as.character(code)
   # get the grob for the given code
   code <- gsub("(-.*)?", "", code)
