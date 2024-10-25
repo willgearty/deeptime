@@ -1,0 +1,14 @@
+citHeader("To cite deeptime in publications, use the following citation:")
+
+bibentry(
+  bibtype  = "Article",
+  title    = "deeptime: an R package that facilitates highly customizable visualizations of data over geological time intervals",
+  author   = as.person("William Gearty"),
+  journal  = "EarthArXiv",
+  year     = "2024",
+  doi      = "10.31223/X5841N",
+  textVersion = paste("Gearty, W. 2024.",
+         "deeptime: an R package that facilitates highly customizable visualizations of data over geological time intervals.",
+         "EarthArXiv.",
+         "doi: 10.31223/X5841N")
+)

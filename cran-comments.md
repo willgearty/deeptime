@@ -1,4 +1,4 @@
-This minor version adds several new features.
+This minor version adds several new features. I have also moved the data that was added in v. 2.0.0 to a new data R package called `deeptimedata`, which is now on CRAN.
 
 ## Test environments (with Github Actions)
 

@@ -13,6 +13,10 @@ New features:
 * `get_scale_data()` documentation now lists the available Macrostrat timescales (#69)
 * `get_scale_data()` now supports partial matching to Macrostrat timescales (e.g., `get_scale_data("mammal")` will retrieve the "North American land mammal ages" timescale)
 
+Notable changes:
+
+* The FGDC pattern data added in deeptime 2.0.0 has been moved to a new data R package called `deeptimedata` to reduce the size of the deeptime package and the footprint of future deeptime updates
+
 Bug fixes:
 
 * Fixed importing some functions from `ggplot2` for `coord_geo_radial()` and `coord_geo_polar()`
