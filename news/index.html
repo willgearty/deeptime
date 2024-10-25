@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,20 +48,44 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.1.0" id="deeptime-210">deeptime 2.1.0<a class="anchor" aria-label="anchor" href="#deeptime-210"></a></h2>
+<p>This new minor version of deeptime introduces several new features and bug fixes.</p>
+<p>New features:</p>
+<ul><li>Added default label color values to all built-in data as a new <code>lab_color</code> column
+<ul><li>The label colors are either white or black, whichever has better contrast with the background color based on <a href="https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en" class="external-link">recommendations by the International Telecommunication Union</a>
+</li>
+</ul></li>
+<li>
+<code><a href="../reference/get_scale_data.html">get_scale_data()</a></code> now returns label colors (as above) for Macrostrat timescales</li>
+<li>Varying strip label colors can now be set with the <code>lab_colors</code> argument in <code><a href="../reference/facet_wrap_color.html">facet_wrap_color()</a></code> and <code><a href="../reference/facet_grid_color.html">facet_grid_color()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/68" class="external-link">#68</a>)
+<ul><li>By default, the strip label colors are set to white or black (as above)</li>
+</ul></li>
+<li>Added <code><a href="../reference/facet_nested_color.html">facet_nested_color()</a></code> and <code><a href="../reference/facet_nested_wrap_color.html">facet_nested_wrap_color()</a></code> to plot nested faceted plots with colored strips (<a href="https://github.com/willgearty/deeptime/issues/55" class="external-link">#55</a>)</li>
+<li>
+<code><a href="../reference/get_scale_data.html">get_scale_data()</a></code> documentation now lists the available Macrostrat timescales (<a href="https://github.com/willgearty/deeptime/issues/69" class="external-link">#69</a>)</li>
+<li>
+<code><a href="../reference/get_scale_data.html">get_scale_data()</a></code> now supports partial matching to Macrostrat timescales (e.g., <code>get_scale_data("mammal")</code> will retrieve the “North American land mammal ages” timescale)</li>
+</ul><p>Notable changes:</p>
+<ul><li>The FGDC pattern data added in deeptime 2.0.0 has been moved to a new data R package called <code>deeptimedata</code> to reduce the size of the deeptime package and the footprint of future deeptime updates</li>
+</ul><p>Bug fixes:</p>
+<ul><li>Fixed importing some functions from <code>ggplot2</code> for <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> and <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code>
+</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0" id="deeptime-200">deeptime 2.0.0<a class="anchor" aria-label="anchor" href="#deeptime-200"></a></h2><p class="text-muted">CRAN release: 2024-08-19</p>
 <p><strong>deeptime now requires ggplot2 version 3.5.0 or higher</strong>.<br>
 This new major version of deeptime includes several new features:</p>
 <ul><li>Added FGDC/USGS geologic patterns to internal data (<a href="https://github.com/willgearty/deeptime/issues/52" class="external-link">#52</a>)</li>
 <li>Added functions to retrieve and plot FGDC/USGS geologic patterns (<a href="https://github.com/willgearty/deeptime/issues/52" class="external-link">#52</a>)</li>
 <li>Added functions to use FGDC/USGS patterns as ggplot2 fills or with the <code>ggpattern</code> package (see new vignette) (<a href="https://github.com/willgearty/deeptime/issues/52" class="external-link">#52</a>)</li>
-<li>Added the <code>true_colors</code> option to get_scale_data(), which, when set to <code>FALSE</code>, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets (<a href="https://github.com/willgearty/deeptime/issues/62" class="external-link">#62</a>)</li>
+<li>Added the <code>true_colors</code> option to <code><a href="../reference/get_scale_data.html">get_scale_data()</a></code>, which, when set to <code>FALSE</code>, can be used to retrieve the custom Macrostrat colors that were previously in the built-in datasets (<a href="https://github.com/willgearty/deeptime/issues/62" class="external-link">#62</a>)</li>
 <li>Updated built-in timescales to 2023/06 version of GTS</li>
 <li>Added option to <code><a href="../reference/coord_geo.html">coord_geo()</a></code> to abbreviate interval labels based on only the intervals that are being plotted (<a href="https://github.com/willgearty/deeptime/issues/64" class="external-link">#64</a>)</li>
 <li>Added <code><a href="../reference/guide_geo.html">guide_geo()</a></code> as an alternative to <code><a href="../reference/coord_geo.html">coord_geo()</a></code>, mostly for use with radial plots (<a href="https://github.com/willgearty/deeptime/issues/53" class="external-link">#53</a>)</li>
 </ul><p>Bug fixes:</p>
 <ul><li>Fixed the built-in timescale datasets to have true CGMP colors for the Precambrian (<a href="https://github.com/willgearty/deeptime/issues/62" class="external-link">#62</a>)</li>
 </ul><p>Notable changes:</p>
-<ul><li>The <code>phytools</code> package is no longer required to install <code>deeptime</code> but is required to use the <code>geom_phylomorphospace()</code> function</li>
+<ul><li>The <code>phytools</code> package is no longer required to install <code>deeptime</code> but is required to use the <code><a href="../reference/geom_phylomorpho.html">geom_phylomorpho()</a></code> function</li>
 <li>The <code>geomtextpath</code> package is no longer required to install <code>deeptime</code> but is required to add labels with the <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> or <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> functions</li>
 <li>The <code><a href="../reference/gggeo_scale_old.html">gggeo_scale_old()</a></code> function has been fully deprecated</li>
 </ul></div>
@@ -69,23 +93,25 @@ This new major version of deeptime includes several new features:</p>
 <h2 class="pkg-version" data-toc-text="1.1.1" id="deeptime-111">deeptime 1.1.1<a class="anchor" aria-label="anchor" href="#deeptime-111"></a></h2><p class="text-muted">CRAN release: 2024-03-08</p>
 <p>deeptime now requires rlang version 1.1.0 or higher. This patch version includes several bug fixes:</p>
 <ul><li>Fixed several cases where vignette and documentation building and/or unit testing would fail when the Macrostrat API was down</li>
-<li>Fixed coord_geo_polar() and coord_geo_radial() when the r-axis has expansion (<a href="https://github.com/willgearty/deeptime/issues/60" class="external-link">#60</a>)</li>
+<li>Fixed <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> and <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> when the r-axis has expansion (<a href="https://github.com/willgearty/deeptime/issues/60" class="external-link">#60</a>)</li>
 <li>Improved argument type checking and error handling across the entire package</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="deeptime-110">deeptime 1.1.0<a class="anchor" aria-label="anchor" href="#deeptime-110"></a></h2><p class="text-muted">CRAN release: 2024-03-05</p>
 <p>deeptime now requires ggplot2 version 3.4.0 or higher. This version introduces several new features and bug fixes:</p>
-<ul><li>Added geom_points_range(), a function designed for visualizing temporal occurrence data</li>
-<li>Added facet_grid_color() and facet_wrap_color() for changing strip background colors (<a href="https://github.com/willgearty/deeptime/issues/50" class="external-link">#50</a>)</li>
-<li>Added coord_geo_radial(), an enhanced version of coord_geo_polar() (only works with ggplot2 version 3.5.0 and higher) (<a href="https://github.com/willgearty/deeptime/issues/56" class="external-link">#56</a>)</li>
-<li>Added <code>family</code> and <code>fontface</code> arguments to coord_geo()</li>
-<li>Added the ability to include interval labels with coord_geo_polar() (<a href="https://github.com/willgearty/deeptime/issues/48" class="external-link">#48</a>)</li>
-<li>Fixed the interaction between coord_geo() and ggsave() (<a href="https://github.com/willgearty/deeptime/issues/49" class="external-link">#49</a>)</li>
-<li>Fixed <code>size = "auto"</code> when <code>center_end_labels = TRUE</code> in coord_geo()</li>
+<ul><li>Added <code><a href="../reference/geom_points_range.html">geom_points_range()</a></code>, a function designed for visualizing temporal occurrence data</li>
+<li>Added <code><a href="../reference/facet_grid_color.html">facet_grid_color()</a></code> and <code><a href="../reference/facet_wrap_color.html">facet_wrap_color()</a></code> for changing strip background colors (<a href="https://github.com/willgearty/deeptime/issues/50" class="external-link">#50</a>)</li>
+<li>Added <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code>, an enhanced version of <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> (only works with ggplot2 version 3.5.0 and higher) (<a href="https://github.com/willgearty/deeptime/issues/56" class="external-link">#56</a>)</li>
+<li>Added <code>family</code> and <code>fontface</code> arguments to <code><a href="../reference/coord_geo.html">coord_geo()</a></code>
+</li>
+<li>Added the ability to include interval labels with <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/48" class="external-link">#48</a>)</li>
+<li>Fixed the interaction between <code><a href="../reference/coord_geo.html">coord_geo()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/49" class="external-link">#49</a>)</li>
+<li>Fixed <code>size = "auto"</code> when <code>center_end_labels = TRUE</code> in <code><a href="../reference/coord_geo.html">coord_geo()</a></code>
+</li>
 <li>Updated several functions to work with ggplot2 version 3.5.0</li>
 </ul><p>Notable changes:</p>
-<ul><li>The names for the theme elements that are used for coord_geo_polar() are now prepended with “deeptime.” (e.g., <code>deeptime.axis.line.r</code>) (<a href="https://github.com/willgearty/deeptime/issues/51" class="external-link">#51</a>)</li>
-<li>ggplot2 version 3.5.0 has broken several edge cases of coord_trans_xy(). See the documentation for more details. This will be fixed in a future deeptime release.</li>
+<ul><li>The names for the theme elements that are used for <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> are now prepended with “deeptime.” (e.g., <code>deeptime.axis.line.r</code>) (<a href="https://github.com/willgearty/deeptime/issues/51" class="external-link">#51</a>)</li>
+<li>ggplot2 version 3.5.0 has broken several edge cases of <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code>. See the documentation for more details. This will be fixed in a future deeptime release.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="deeptime-101">deeptime 1.0.1<a class="anchor" aria-label="anchor" href="#deeptime-101"></a></h2><p class="text-muted">CRAN release: 2023-02-16</p>
@@ -96,25 +122,27 @@ This new major version of deeptime includes several new features:</p>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="deeptime-100">deeptime 1.0.0<a class="anchor" aria-label="anchor" href="#deeptime-100"></a></h2><p class="text-muted">CRAN release: 2023-01-20</p>
 <ul><li>Updated built-in timescales to 2022/10 version of GTS</li>
-<li>Added a geom for making phylomorphospaces</li>
+<li>Added a geom for making phylomorphospaces (<code><a href="../reference/geom_phylomorpho.html">geom_phylomorpho()</a></code>)</li>
 <li>Added vignettes</li>
-<li>Renamed getScaleData() to get_scale_data()</li>
-<li>Soft deprecated gggeo_scale() and gggeo_scale_old()</li>
+<li>Renamed <code><a href="../reference/getScaleData.html">getScaleData()</a></code> to <code><a href="../reference/get_scale_data.html">get_scale_data()</a></code>
+</li>
+<li>Soft deprecated <code><a href="../reference/gggeo_scale.html">gggeo_scale()</a></code> and <code><a href="../reference/gggeo_scale_old.html">gggeo_scale_old()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="deeptime-030">deeptime 0.3.0<a class="anchor" aria-label="anchor" href="#deeptime-030"></a></h2><p class="text-muted">CRAN release: 2022-11-09</p>
 <p>deeptime now requires ggplot2 version 3.3.0 or higher. Several new features and fixed compatibility with various ggplot2 versions.</p>
-<ul><li>Added coord_geo_polar(), for adding timescales to polar plots (<a href="https://github.com/willgearty/deeptime/issues/33" class="external-link">#33</a>)</li>
+<ul><li>Added <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code>, for adding timescales to polar plots (<a href="https://github.com/willgearty/deeptime/issues/33" class="external-link">#33</a>)</li>
 <li>Added color and fill discrete scales that use the GTS colors (<a href="https://github.com/willgearty/deeptime/issues/43" class="external-link">#43</a>)</li>
-<li>Fixed coord_geo_polar() and coord_trans_xy() for ggplot2 version 3.4.0 (<a href="https://github.com/willgearty/deeptime/issues/44" class="external-link">#44</a>)</li>
-<li>Fixed coord_geo() for ggplot2 version 3.4.0</li>
+<li>Fixed <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code> and <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code> for ggplot2 version 3.4.0 (<a href="https://github.com/willgearty/deeptime/issues/44" class="external-link">#44</a>)</li>
+<li>Fixed <code><a href="../reference/coord_geo.html">coord_geo()</a></code> for ggplot2 version 3.4.0</li>
 <li>Added tests for both ggplot2 version 3.3.6 and 3.4.0</li>
-<li>Removed uses of getFromNamespace (<a href="https://github.com/willgearty/deeptime/issues/45" class="external-link">#45</a>)</li>
+<li>Removed uses of <code><a href="https://rdrr.io/r/utils/getFromNamespace.html" class="external-link">getFromNamespace()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/45" class="external-link">#45</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.3" id="deeptime-023">deeptime 0.2.3<a class="anchor" aria-label="anchor" href="#deeptime-023"></a></h2><p class="text-muted">CRAN release: 2022-09-20</p>
 <ul><li>Updated built-in timescales to 2022/02 version of GTS</li>
-<li>Better name handling and documentation for getScaleData() (<a href="https://github.com/willgearty/deeptime/issues/42" class="external-link">#42</a>)</li>
+<li>Better name handling and documentation for <code><a href="../reference/getScaleData.html">getScaleData()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/42" class="external-link">#42</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="deeptime-022">deeptime 0.2.2<a class="anchor" aria-label="anchor" href="#deeptime-022"></a></h2><p class="text-muted">CRAN release: 2022-05-18</p>
@@ -133,8 +161,8 @@ This new major version of deeptime includes several new features:</p>
 <ul><li>coord_geo() now works with discrete axes (<a href="https://github.com/willgearty/deeptime/issues/32" class="external-link">#32</a> and <a href="https://github.com/willgearty/deeptime/issues/35" class="external-link">#35</a>)</li>
 <li>Fixed a bug that prevented the use of custom interval data</li>
 <li>Added option to use ggfittext to automatically resize labels (<a href="https://github.com/willgearty/deeptime/issues/19" class="external-link">#19</a>)</li>
-<li>Added coord_trans_flip() (<a href="https://github.com/willgearty/deeptime/issues/20" class="external-link">#20</a>)</li>
-<li>Fixed axis labels for coord_trans_xy() (<a href="https://github.com/willgearty/deeptime/issues/36" class="external-link">#36</a>)</li>
+<li>Added <code><a href="../reference/coord_trans_flip.html">coord_trans_flip()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/20" class="external-link">#20</a>)</li>
+<li>Fixed axis labels for <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/36" class="external-link">#36</a>)</li>
 <li>Added tests with testthat (<a href="https://github.com/willgearty/deeptime/issues/34" class="external-link">#34</a>)</li>
 </ul></div>
     <div class="section level2">
@@ -205,7 +233,7 @@ This new major version of deeptime includes several new features:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
