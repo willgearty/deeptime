@@ -1,5 +1,12 @@
 test_that("scale_fill_geopattern works", {
-  skip_if(R.Version()$os != "mingw32") # only test this on Windows
+  # invalid code
+  vals <- c("101", "313", "603", "999")
+  gg <- ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
+    geom_bar() +
+    scale_fill_geopattern()
+  expect_error(print(gg))
+
+  skip_if(R.Version()$os != "mingw32") # only test the rest on Windows
   vals <- c("101", "313", "603", "733")
   gg <- ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
     geom_bar() +
@@ -30,13 +37,6 @@ test_that("scale_fill_geopattern works", {
     geom_bar() +
     scale_fill_geopattern(na.value = geo_pattern("701"))
   expect_doppelganger_deeptime("scale_fill_geopattern_NA2", gg, patterns = TRUE)
-
-  # invalid code
-  vals <- c("101", "313", "603", "999")
-  gg <- ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
-    geom_bar() +
-    scale_fill_geopattern()
-  expect_error(print(gg))
 })
 
 test_that("geo_grob works", {
@@ -85,18 +85,8 @@ test_that("grid.pattern_geo works", {
 })
 
 test_that("ggpattern works", {
-  skip_if(R.Version()$os != "mingw32") # only test this on Windows
   skip_if_not_installed("ggpattern")
   df <- data.frame(trt = c("a", "b", "c"), outcome = c(2.3, 1.9, 3.2))
-  gg <- ggplot(df, aes(trt, outcome)) +
-    geom_col_pattern(aes(color = trt, pattern_type = trt), pattern = 'geo',
-                     pattern_color = "black", fill = "white",
-                     pattern_fill = "white") +
-    scale_pattern_type_manual(values = c("101", "313", "634")) +
-    scale_color_viridis_d() +
-    theme(legend.key.size = unit(1.5, 'cm'))
-  expect_doppelganger_deeptime("ggpattern", gg, patterns = TRUE)
-
   gg <- ggplot(df, aes(trt, outcome)) +
     geom_col_pattern(aes(color = trt, pattern_type = trt), pattern = 'geo',
                      pattern_color = "black", fill = "white",
@@ -105,4 +95,14 @@ test_that("ggpattern works", {
     scale_color_viridis_d() +
     theme(legend.key.size = unit(1.5, 'cm'))
   expect_error(print(gg))
+
+  skip_if(R.Version()$os != "mingw32") # only test the rest on Windows
+  gg <- ggplot(df, aes(trt, outcome)) +
+    geom_col_pattern(aes(color = trt, pattern_type = trt), pattern = 'geo',
+                     pattern_color = "black", fill = "white",
+                     pattern_fill = "white") +
+    scale_pattern_type_manual(values = c("101", "313", "634")) +
+    scale_color_viridis_d() +
+    theme(legend.key.size = unit(1.5, 'cm'))
+  expect_doppelganger_deeptime("ggpattern", gg, patterns = TRUE)
 })
