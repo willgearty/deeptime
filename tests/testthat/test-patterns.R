@@ -1,4 +1,5 @@
 test_that("scale_fill_geopattern works", {
+  skip_if(R.Version()$os != "mingw32") # only test this on Windows
   vals <- c("101", "313", "603", "733")
   gg <- ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
     geom_bar() +
@@ -84,6 +85,7 @@ test_that("grid.pattern_geo works", {
 })
 
 test_that("ggpattern works", {
+  skip_if(R.Version()$os != "mingw32") # only test this on Windows
   skip_if_not_installed("ggpattern")
   df <- data.frame(trt = c("a", "b", "c"), outcome = c(2.3, 1.9, 3.2))
   gg <- ggplot(df, aes(trt, outcome)) +
