@@ -1,5 +1,7 @@
 # deeptime (development version)
 
+* Added `geom_text_phylo()` for adding node/tip labels to phylogenies when using `coord_geo_radial()`
+
 # deeptime 2.1.0
 
 This new minor version of deeptime introduces several new features and bug fixes.

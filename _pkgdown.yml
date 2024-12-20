@@ -84,6 +84,13 @@ reference:
   - get_scale_data
   - guide_geo
 
+- subtitle: Adding text labels to phylogenies
+  desc: >
+    When using deeptime coordinate systems, this geom may work better than geoms
+    from ggtree.
+  contents:
+  - geom_text_phylo
+
 - title: Transforming coordinate systems
   desc: >
     These functions can be used to modify the way that your data is plotted
