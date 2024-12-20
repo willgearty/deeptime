@@ -39,6 +39,22 @@ utils::globalVariables(c("isTip", "node"))
 #' - vjust
 #'
 #' @inheritSection ggplot2::geom_text Alignment
+#' @param position A position adjustment to use on the data for this layer. This
+#'   can be used in various ways, including to prevent overplotting and
+#'   improving the display. The `position` argument accepts the following:
+#'   * The result of calling a position function, such as `position_jitter()`.
+#'     This method allows for passing extra arguments to the position.
+#'   * A string naming the position adjustment. To give the position as a
+#'     string, strip the function name of the `position_` prefix. For example,
+#'     to use `position_jitter()`, give the position as `"jitter"`.
+#' @param stat The statistical transformation to use on the data for this layer.
+#'   When using a `geom_*()` function to construct a layer, the `stat`
+#'   argument can be used the override the default coupling between geoms and
+#'   stats. The `stat` argument accepts the following:
+#'   * A `Stat` ggproto subclass, for example `StatCount`.
+#'   * A string naming the stat. To give the stat as a string, strip the
+#'     function name of the `stat_` prefix. For example, to use `stat_count()`,
+#'     give the stat as `"count"`.
 #' @param node_type Determines the subset of nodes to label. Valid options are
 #'   "tip" for tip nodes, "internal" for non-tip nodes, and "all" for all nodes.
 #' @param auto_adjust Should upside-down text labels automatically be rotated
@@ -53,10 +69,11 @@ utils::globalVariables(c("isTip", "node"))
 #' library(ggplot2)
 #' @examplesIf require(ggtree)
 #' library(ape)
+#' library(ggtree)
 #' tr <- rtree(10)
-#' ggtree(tr) +
+#' revts(ggtree(tr)) +
 #'   geom_text_phylo() +
-#'   coord_geo_radial()
+#'   coord_geo_radial("epochs")
 geom_text_phylo <- function(mapping = NULL, data = NULL,
                             stat = "identity", position = "identity", ...,
                             parse = FALSE, nudge_x = 0, nudge_y = 0,

@@ -5,7 +5,7 @@ test_that("geom_text_phylo works", {
   library(ggtree)
   set.seed(1234)
   tr <- rtree(10)
-  gg <- ggtree(tr) +
+  gg <- revts(ggtree(tr)) +
     geom_text_phylo() +
     coord_geo_radial("epochs")
   expect_true(is.ggplot(gg))

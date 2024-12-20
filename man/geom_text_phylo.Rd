@@ -53,21 +53,17 @@ stats. The \code{stat} argument accepts the following:
 \item A string naming the stat. To give the stat as a string, strip the
 function name of the \code{stat_} prefix. For example, to use \code{stat_count()},
 give the stat as \code{"count"}.
-\item For more information and other ways to specify the stat, see the
-\link[ggplot2:layer_stats]{layer stat} documentation.
 }}
 
-\item{position}{A position adjustment to use on the data for this layer.
-Cannot be jointy specified with \code{nudge_x} or \code{nudge_y}. This
+\item{position}{A position adjustment to use on the data for this layer. This
 can be used in various ways, including to prevent overplotting and
 improving the display. The \code{position} argument accepts the following:
 \itemize{
 \item The result of calling a position function, such as \code{position_jitter()}.
-\item A string nameing the position adjustment. To give the position as a
+This method allows for passing extra arguments to the position.
+\item A string naming the position adjustment. To give the position as a
 string, strip the function name of the \code{position_} prefix. For example,
 to use \code{position_jitter()}, give the position as \code{"jitter"}.
-\item For more information and other ways to specify the position, see the
-\link[ggplot2:layer_positions]{layer position} documentation.
 }}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}'s \code{params} argument. These
@@ -190,9 +186,10 @@ aligns it away from the center.
 library(ggplot2)
 \dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(ape)
+library(ggtree)
 tr <- rtree(10)
-ggtree(tr) +
+revts(ggtree(tr)) +
   geom_text_phylo() +
-  coord_geo_radial()
+  coord_geo_radial("epochs")
 \dontshow{\}) # examplesIf}
 }
