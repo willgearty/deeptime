@@ -25,7 +25,7 @@ for (int_type in names(int_types)) {
   # Add label colors based on luminance as per
   # https://stackoverflow.com/a/1855903/4660582
   # values are from https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en
-  clean_dat$lab_color <- white_or_black(clean_dat$color)
+  clean_dat$lab_color <- deeptime:::white_or_black(clean_dat$color)
 
   assign(int_type, clean_dat)
 

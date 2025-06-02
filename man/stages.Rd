@@ -3,7 +3,7 @@
 \docType{data}
 \name{stages}
 \alias{stages}
-\title{Stage data from the International Commission on Stratigraphy (v2023/06)}
+\title{Stage data from the International Commission on Stratigraphy (v2024/12)}
 \format{
 A data frame with 102 rows and 5 variables:
 \describe{
@@ -27,7 +27,7 @@ stages
 \description{
 A dataset containing the boundary ages, abbreviations, and colors for the
 stages of the Geologic Time Scale. Based on The ICS International
-Chronostratigraphic Chart (v2023/06), by Cohen, Finney, Gibbard, and Fan.
+Chronostratigraphic Chart (v2024/12), by Cohen, Finney, Gibbard, and Fan.
 }
 \seealso{
 Other built-in timescales: 

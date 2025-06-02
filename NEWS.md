@@ -1,6 +1,7 @@
 # deeptime (development version)
 
 * Added `geom_text_phylo()` for adding node/tip labels to phylogenies when using `coord_geo_radial()`
+* Updated built-in timescales to 2024/12 version of GTS
 
 # deeptime 2.1.0
 
