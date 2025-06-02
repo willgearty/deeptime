@@ -50,7 +50,7 @@ Suggests:
     dispRity,
     ggtree (>= 3.6.1),
     testthat (>= 3.0.0),
-    vdiffr (>= 1.0.0),
+    vdiffr (>= 1.0.8),
     knitr,
     rmarkdown,
     withr,
