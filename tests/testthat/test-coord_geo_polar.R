@@ -6,7 +6,7 @@ test_that("coord_geo_polar works", {
       coord_geo_polar(dat = "stages") +
       scale_x_continuous(limits = c(NA, 0))
   })
-  expect_true(is_ggplot(gg))
+  expect_true(is_ggplot_deeptime(gg))
   expect_true(is(ggplot_build(gg)$layout$coord, "CoordGeoPolar"))
   expect_doppelganger_deeptime("coord_geo_polar", gg)
   expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$r.range,
@@ -16,7 +16,7 @@ test_that("coord_geo_polar works", {
   gg2 <- revts(ggtree(tree)) +
     coord_geo_polar(dat = "stages", fill = c("grey60", "grey80")) +
     scale_x_continuous(limits = c(NA, 0))
-  expect_true(is_ggplot(gg2))
+  expect_true(is_ggplot_deeptime(gg2))
   expect_true(is(ggplot_build(gg2)$layout$coord, "CoordGeoPolar"))
   expect_doppelganger_deeptime("coord_geo_polar_grey", gg2)
 
@@ -24,7 +24,7 @@ test_that("coord_geo_polar works", {
   gg3 <- ggtree(tree) +
     coord_geo_polar(dat = "stages", neg = FALSE) +
     scale_x_continuous(limits = c(0, NA))
-  expect_true(is_ggplot(gg3))
+  expect_true(is_ggplot_deeptime(gg3))
   expect_true(is(ggplot_build(gg3)$layout$coord, "CoordGeoPolar"))
   expect_doppelganger_deeptime("coord_geo_polar_pos", gg3)
   expect_equal(ggplot_build(gg3)$layout$panel_params[[1]]$r.range,

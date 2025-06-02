@@ -6,7 +6,7 @@ test_that("coord_geo_radial works", {
     coord_geo_radial(dat = "stages", expand = FALSE) +
     scale_y_continuous(guide = "none", breaks = NULL) +
     theme_gray()
-  expect_true(is_ggplot(gg))
+  expect_true(is_ggplot_deeptime(gg))
   expect_true(is(ggplot_build(gg)$layout$coord, "CoordGeoRadial"))
   expect_doppelganger_deeptime("coord_geo_radial", gg)
   skip_if_not_installed("phytools")

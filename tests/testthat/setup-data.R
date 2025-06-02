@@ -87,3 +87,11 @@ expect_doppelganger_deeptime <- function(title, fig, patterns = FALSE) {
     expect_doppelganger(title_new, fig)
   }
 }
+
+is_ggplot_deeptime <- function(x) {
+  if (utils::packageVersion("ggplot2") < "3.5.2") {
+    is.ggplot(x)
+  } else {
+    is_ggplot(x)
+  }
+}

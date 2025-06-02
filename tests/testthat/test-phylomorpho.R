@@ -14,7 +14,7 @@ test_that("geom_phylomorpho works", {
     ) +
     geom_label(aes(x = x, y = y, label = label), size = 5) +
     theme_classic(base_size = 16)
-  expect_true(is_ggplot(gg))
+  expect_true(is_ggplot_deeptime(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomSegment"))
   expect_true(is(gg$layers[[1]]$stat, "StatPhylomorpho"))
   expect_true(is(gg$layers[[2]]$geom, "GeomPoint"))
