@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ggplot2: ["3.5.0", "> 3.5.0"] # to make sure it still works with the oldest supported version
+        ggplot2: [">= 3.5.2"]
         config:
           - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
