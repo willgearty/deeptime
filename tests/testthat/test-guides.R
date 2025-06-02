@@ -11,7 +11,7 @@ test_that("guide_geo works", {
   # test class inheritance
   expect_true(is(ggplot_build(gg)$layout$panel_params[[1]]$guides$guides[[1]],
                  "GuideAxis"))
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
 
   # check using guides()
   gg <- ggplot(coral_div) +
@@ -23,7 +23,7 @@ test_that("guide_geo works", {
     guides(x = guide_geo())
   expect_true(is(ggplot_build(gg)$layout$panel_params[[1]]$guides$guides[[1]],
                  "GuideGeo"))
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
 
   # with guide_axis_stack()
   gg <- ggplot(coral_div) +

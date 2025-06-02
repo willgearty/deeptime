@@ -14,7 +14,7 @@ test_that("coord_geo works", {
     ylab("Coral Genera") +
     coord_geo(xlim = c(250, 0), ylim = c(10, 1700), ytrans = "log10") +
     theme_classic()
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   params <- ggplot_build(gg)$layout$panel_params[[1]]
   expect_equal(params$x.range, c(0, 250))
   expect_equal(params$y.range, c(log10(10), log10(1700)))

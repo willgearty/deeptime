@@ -8,7 +8,7 @@ test_that("geom_points_range works", {
   gg <- ggplot(occdf, aes(x = reorder(taxon, bed, min), y = bed)) +
     geom_points_range(size = 1) +
     theme_classic(base_size = 16)
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPointsRange"))
   expect_true(is(gg$layers[[1]]$stat, "StatPointsRange"))
   expect_doppelganger_deeptime("geom_points_range_v", gg)
@@ -17,7 +17,7 @@ test_that("geom_points_range works", {
   gg <- ggplot(occdf, aes(y = reorder(taxon, bed, min), x = bed)) +
     geom_points_range(size = .5) +
     theme_classic(base_size = 16)
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPointsRange"))
   expect_true(is(gg$layers[[1]]$stat, "StatPointsRange"))
   expect_doppelganger_deeptime("geom_points_range_h", gg)
@@ -32,7 +32,7 @@ test_that("geom_points_range works", {
     scale_fill_manual(values = c("white", "black")) +
     scale_linetype_manual(values = c("dashed", "solid")) +
     theme_classic(base_size = 16)
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPointsRange"))
   expect_true(is(gg$layers[[1]]$stat, "StatPointsRange"))
   expect_doppelganger_deeptime("geom_points_range_aes", gg)
@@ -45,7 +45,7 @@ test_that("geom_points_range works", {
     scale_fill_manual(values = c("white", "black")) +
     scale_linetype_manual(values = c("dashed", "solid")) +
     theme_classic(base_size = 16)
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPointsRange"))
   expect_true(is(gg$layers[[1]]$stat, "StatPointsRange"))
   expect_doppelganger_deeptime("geom_points_range_bg", gg)

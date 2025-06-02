@@ -12,7 +12,7 @@ test_that("coord_trans_xy() works", {
     scale_x_continuous(sec.axis = sec_axis(~.)) +
     coord_trans_xy(trans = trans, expand = FALSE) +
     theme_classic()
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   params <- ggplot_build(gg)$layout$panel_params[[1]]
   points_trans <- trans$transform(points$x, points$y)
   expect_equal(params$x.range, range(points_trans$x))
@@ -28,7 +28,7 @@ test_that("coord_trans_xy() works", {
     scale_y_continuous(sec.axis = sec_axis(~.)) +
     coord_trans_xy(trans = trans, expand = TRUE) +
     theme_classic()
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$x$limits, c(-2, 2))
   expect_doppelganger_deeptime("coord_trans_xy() with expansion", gg)
 
@@ -38,7 +38,7 @@ test_that("coord_trans_xy() works", {
     scale_x_continuous(sec.axis = sec_axis(~.)) +
     coord_trans_xy(expand = FALSE) +
     theme_classic()
-  expect_true(is_ggplot_deeptime(gg))
+  expect_true(is_ggplot(gg))
   params <- ggplot_build(gg)$layout$panel_params[[1]]
   expect_equal(params$x.range, range(points$x))
   expect_equal(params$y.range, range(points$y))
