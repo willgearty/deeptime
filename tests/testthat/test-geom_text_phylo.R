@@ -8,7 +8,7 @@ test_that("geom_text_phylo works", {
   gg <- revts(ggtree(tr)) +
     geom_text_phylo() +
     coord_geo_radial("epochs")
-  expect_true(is.ggplot(gg))
+  expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[3]]$geom, "GeomTextPhylo"))
   expect_true(is(gg$layers[[3]]$stat, "StatIdentity"))
   expect_doppelganger_deeptime("geom_text_phylo", gg)
