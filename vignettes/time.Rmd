@@ -159,4 +159,40 @@ ggplot(coral_div_dis, aes(x = n, y = diet, fill = period)) +
   ylab("Diet") +
   theme_classic()
 ```
+
+## Facetting with the geological timescale
+Another way to split data by categories is by [faceting](https://ggplot2-book.org/facet.html). __deeptime__ has a suite of facetting functions that allow you to facet by geological intervals (`facet_grid_geo()`, `facet_wrap_geo()`, `facet_nested_geo()`, and `facet_nested_wrap_geo()`). Here, we'll use the same coral diversity data as above, but facet wrap it by period. Note that we need to convert the `period` column to an ordered factor so the facets appear in chronological order.
+
+```{r}
+coral_div_dis <- coral_div_dis %>%
+  mutate(period = factor(period, levels = rev(periods$name)))
+
+
+ggplot(coral_div_dis, aes(x = n, y = diet)) +
+  geom_col() +
+  scale_fill_geo(periods) +
+  xlab("Coral Genera") +
+  ylab("Diet") +
+  theme_classic() +
+  facet_wrap_geo(~period, colors = periods)
+```
+
+Just like with adding timescales to plots, you may want to show hierarchical timescale information. For example, we may want to show which of these periods are in the Mesozoic and which are in the Cenozoic. We can do this by adding a new column to our data that indicates the era of each period, then using both the period and era columns to make a nested facet:
+
+```{r}
+coral_div_dis <- coral_div_dis %>%
+  mutate(era = ifelse(period %in% c("Paleogene", "Neogene", "Quaternary"),
+                      "Cenozoic", "Mesozoic")) %>%
+  mutate(era = factor(era, levels = c("Cenozoic", "Mesozoic")))
+
+ggplot(coral_div_dis, aes(x = n, y = diet)) +
+  geom_col() +
+  scale_fill_geo(periods) +
+  xlab("Coral Genera") +
+  ylab("Diet") +
+  theme_classic() +
+  facet_nested_wrap_geo(~era + period, colors = rbind(periods, eras), nrow = 2)
+```
+
+
 </div>
