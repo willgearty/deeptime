@@ -135,12 +135,12 @@ disparity_through_time <-
              )
            ),
            lattice.options = list(axis.padding = list(factor = 0)), ...) {
-  eval(substitute(wireframe(
+  eval(substitute(lattice::wireframe(
     x = x, data = data, groups = groups, pch = pch, col.point = col.point,
     scales = scales, colorkey = colorkey, screen = screen,
-    panel = panel.disparity, aspect = aspect, drape = drape,
+    panel = deeptime::panel.disparity, aspect = aspect, drape = drape,
     col.regions = col.regions, alpha.regions = alpha.regions,
     perspective = perspective, R.mat = R.mat,
     par.settings = par.settings, lattice.options = lattice.options, ...
-  )))
+  )), envir = parent.frame())
 }
