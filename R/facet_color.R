@@ -7,6 +7,9 @@
 #' `lab_colors` arguments. If you have only one variable with many levels, try
 #' [facet_wrap_color()].
 #'
+#' `facet_grid_geo(...)` is an alias of `facet_grid_color()` with the default of
+#' `colors` set to `stages`.
+#'
 #' @param colors Specifies which colors to use to replace the strip backgrounds.
 #'   Either A) a function that returns a color for a given strip label, B) the
 #'   character name of a function that does the same, C) a named character
@@ -36,10 +39,9 @@
 #' ggplot(df) +
 #'   geom_point(aes(x, y)) +
 #'   facet_grid_color(cols = vars(period), colors = periods)
-facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
-                             space = "fixed", shrink = TRUE,
-                             labeller = "label_value",
-                             colors = stages, lab_colors = "auto",
+facet_grid_color <- function(colors, rows = NULL, cols = NULL,
+                             scales = "fixed", space = "fixed", shrink = TRUE,
+                             labeller = "label_value", lab_colors = "auto",
                              as.table = TRUE, switch = NULL,
                              drop = TRUE, margins = FALSE,
                              axes = "margins", axis.labels = "all") {
@@ -102,6 +104,22 @@ facet_grid_color <- function(rows = NULL, cols = NULL, scales = "fixed",
           shrink = shrink,
           params = params
   )
+}
+
+#' @export
+#' @rdname facet_grid_color
+facet_grid_geo <- function(colors = stages, rows = NULL, cols = NULL,
+                           scales = "fixed", space = "fixed", shrink = TRUE,
+                           labeller = "label_value", lab_colors = "auto",
+                           as.table = TRUE, switch = NULL,
+                           drop = TRUE, margins = FALSE,
+                           axes = "margins", axis.labels = "all") {
+  facet_grid_color(colors = colors, rows = rows, cols = cols,
+                   scales = scales, space = space, shrink = shrink,
+                   labeller = labeller, lab_colors = lab_colors,
+                   as.table = as.table, switch = switch,
+                   drop = drop, margins = margins,
+                   axes = axes, axis.labels = axis.labels)
 }
 
 grid_as_facets_list <- function(...) {
@@ -222,6 +240,9 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' a better use of screen space than [facet_grid_color()] because most displays
 #' are roughly rectangular.
 #'
+#' `facet_wrap_geo(...)` is an alias of `facet_wrap_color()` with the default of
+#' `colors` set to `stages`.
+#'
 #' @param colors Specifies which colors to use to replace the strip backgrounds.
 #'   Either A) a function that returns a color for a given strip label, B) the
 #'   character name of a function that does the same, C) a named character
@@ -251,9 +272,9 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' ggplot(df) +
 #'   geom_point(aes(x, y)) +
 #'   facet_wrap_color(vars(period), colors = periods)
-facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
-                             shrink = TRUE, labeller = "label_value",
-                             colors = stages, lab_colors = "auto",
+facet_wrap_color <- function(facets, colors, nrow = NULL, ncol = NULL,
+                             scales = "fixed", shrink = TRUE,
+                             labeller = "label_value", lab_colors = "auto",
                              as.table = TRUE, drop = TRUE,
                              dir = "h", strip.position = "top",
                              axes = "margins", axis.labels = "all") {
@@ -325,6 +346,22 @@ facet_wrap_color <- function(facets, nrow = NULL, ncol = NULL, scales = "fixed",
   )
 }
 
+#' @export
+#' @rdname facet_wrap_color
+facet_wrap_geo <- function(facets, colors = stages, nrow = NULL, ncol = NULL,
+                           scales = "fixed", shrink = TRUE,
+                           labeller = "label_value", lab_colors = "auto",
+                           as.table = TRUE, drop = TRUE,
+                           dir = "h", strip.position = "top",
+                           axes = "margins", axis.labels = "all") {
+  facet_wrap_color(facets = facets, colors = colors, nrow = nrow,
+                   ncol = ncol, scales = scales, shrink = shrink,
+                   labeller = labeller, lab_colors = lab_colors,
+                   as.table = as.table, drop = drop,
+                   dir = dir, strip.position = strip.position,
+                   axes = axes, axis.labels = axis.labels)
+}
+
 check_number_whole <- function(...) {
   asNamespace("rlang")$check_number_whole(...)
 }
@@ -386,6 +423,9 @@ assert_strip <- function(...) {
 #' specify the background and label colors of the individual facet strips using
 #' the `colors` and `lab_colors` arguments.
 #'
+#' `facet_nested_geo(...)` is an alias of `facet_nested_color()` with the
+#' default of `colors` set to `rbind(periods, stages)`.
+#'
 #' @inheritParams ggh4x::facet_nested
 #' @inheritParams facet_grid_color
 #' @inherit ggh4x::facet_nested details
@@ -409,11 +449,11 @@ assert_strip <- function(...) {
 #' ggplot(df, aes(x, y)) +
 #'   geom_point() +
 #'   facet_nested_color(~ era + period, colors = rbind(periods, eras))
-facet_nested_color <- function(rows = NULL, cols = NULL, scales = "fixed",
-                               space = "fixed", axes = "margins",
-                               remove_labels = "none", independent = "none",
-                               shrink = TRUE, labeller = "label_value",
-                               colors = stages, lab_colors = "auto",
+facet_nested_color <- function(colors, rows = NULL, cols = NULL,
+                               scales = "fixed", space = "fixed",
+                               axes = "margins", remove_labels = "none",
+                               independent = "none", shrink = TRUE,
+                               labeller = "label_value", lab_colors = "auto",
                                as.table = TRUE, switch = NULL, drop = TRUE,
                                margins = FALSE,
                                nest_line = element_line(inherit.blank = TRUE),
@@ -459,6 +499,32 @@ facet_nested_color <- function(rows = NULL, cols = NULL, scales = "fixed",
     params = params,
     super = FacetNestedColor
   )
+}
+
+#' @export
+#' @rdname facet_nested_color
+facet_nested_geo <- function(colors = rbind(periods, stages),
+                             rows = NULL, cols = NULL,
+                             scales = "fixed", space = "fixed",
+                             axes = "margins", remove_labels = "none",
+                             independent = "none", shrink = TRUE,
+                             labeller = "label_value", lab_colors = "auto",
+                             as.table = TRUE, switch = NULL, drop = TRUE,
+                             margins = FALSE,
+                             nest_line = element_line(inherit.blank = TRUE),
+                             solo_line = FALSE, resect = unit(0, "mm"),
+                             render_empty = TRUE,
+                             strip = strip_nested(), bleed = NULL) {
+  facet_nested_color(colors = colors, rows = rows, cols = cols,
+                     scales = scales, space = space, axes = axes,
+                     remove_labels = remove_labels,
+                     independent = independent, shrink = shrink,
+                     labeller = labeller, lab_colors = lab_colors,
+                     as.table = as.table, switch = switch, drop = drop,
+                     margins = margins, nest_line = nest_line,
+                     solo_line = solo_line, resect = resect,
+                     render_empty = render_empty, strip = strip,
+                     bleed = bleed)
 }
 
 #' @rdname facet_nested_color
@@ -511,6 +577,9 @@ new_wrap_facets <- function(...) {
 #' allows the user to specify the background and label colors of the individual
 #' facet strips using the `colors` and `lab_colors` arguments.
 #'
+#' `facet_nested_wrap_geo(...)` is an alias of `facet_nested_wrap_color()` with the
+#' default of `colors` set to `rbind(periods, stages)`.
+#'
 #' @inheritParams ggh4x::facet_nested_wrap
 #' @inheritParams facet_wrap_color
 #' @inherit ggh4x::facet_nested_wrap details
@@ -535,11 +604,10 @@ new_wrap_facets <- function(...) {
 #'   geom_point() +
 #'   facet_nested_wrap_color(~ era + period, colors = rbind(periods, eras))
 facet_nested_wrap_color <- function(
-    facets, nrow = NULL, ncol = NULL,
+    facets, colors, nrow = NULL, ncol = NULL,
     scales = "fixed", axes = "margins",
     remove_labels = "none",
-    shrink = TRUE, labeller = "label_value",
-    colors = stages, lab_colors = "auto",
+    shrink = TRUE, labeller = "label_value", lab_colors = "auto",
     as.table = TRUE, drop = TRUE,
     dir = "h", strip.position = "top",
     nest_line = element_line(inherit.blank = TRUE),
@@ -587,6 +655,33 @@ facet_nested_wrap_color <- function(
     trim_blank, params,
     super = FacetNestedWrapColor
   )
+}
+
+#' @export
+#' @rdname facet_nested_wrap_color
+facet_nested_wrap_geo <- function(
+    facets, colors = rbind(periods, stages), nrow = NULL, ncol = NULL,
+    scales = "fixed", axes = "margins",
+    remove_labels = "none",
+    shrink = TRUE, labeller = "label_value", lab_colors = "auto",
+    as.table = TRUE, drop = TRUE,
+    dir = "h", strip.position = "top",
+    nest_line = element_line(inherit.blank = TRUE),
+    solo_line = FALSE,
+    resect = unit(0, "mm"),
+    trim_blank = TRUE,
+    strip = strip_nested(),
+    bleed = NULL
+) {
+  facet_nested_wrap_color(facets = facets, colors = colors, nrow = nrow,
+                          ncol = ncol, scales = scales, axes = axes,
+                          remove_labels = remove_labels, shrink = shrink,
+                          labeller = labeller, lab_colors = lab_colors,
+                          as.table = as.table, drop = drop,
+                          dir = dir, strip.position = strip.position,
+                          nest_line = nest_line, solo_line = solo_line,
+                          resect = resect, trim_blank = trim_blank,
+                          strip = strip, bleed = bleed)
 }
 
 #' @rdname facet_nested_wrap_color

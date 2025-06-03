@@ -3,11 +3,13 @@
 \docType{data}
 \name{facet_nested_wrap_color}
 \alias{facet_nested_wrap_color}
+\alias{facet_nested_wrap_geo}
 \alias{FacetNestedWrapColor}
 \title{Ribbon of panels with nested colored strips}
 \usage{
 facet_nested_wrap_color(
   facets,
+  colors,
   nrow = NULL,
   ncol = NULL,
   scales = "fixed",
@@ -15,7 +17,29 @@ facet_nested_wrap_color(
   remove_labels = "none",
   shrink = TRUE,
   labeller = "label_value",
-  colors = stages,
+  lab_colors = "auto",
+  as.table = TRUE,
+  drop = TRUE,
+  dir = "h",
+  strip.position = "top",
+  nest_line = element_line(inherit.blank = TRUE),
+  solo_line = FALSE,
+  resect = unit(0, "mm"),
+  trim_blank = TRUE,
+  strip = strip_nested(),
+  bleed = NULL
+)
+
+facet_nested_wrap_geo(
+  facets,
+  colors = rbind(periods, stages),
+  nrow = NULL,
+  ncol = NULL,
+  scales = "fixed",
+  axes = "margins",
+  remove_labels = "none",
+  shrink = TRUE,
+  labeller = "label_value",
   lab_colors = "auto",
   as.table = TRUE,
   drop = TRUE,
@@ -37,6 +61,14 @@ The variables can be named (the names are passed to \code{labeller}).
 For compatibility with the classic interface, can also be a
 formula or character vector. Use either a one sided formula, \code{~a + b},
 or a character vector, \code{c("a", "b")}.}
+
+\item{colors}{Specifies which colors to use to replace the strip backgrounds.
+Either A) a function that returns a color for a given strip label, B) the
+character name of a function that does the same, C) a named character
+vector with names matching strip labels and values indicating the desired
+colors, or D) a data.frame representing a lookup table with columns named
+"name" (matching strip labels) and "color" (indicating desired colors). If
+the function returns \code{NA}, the default background color will be used.}
 
 \item{nrow, ncol}{Number of rows and columns.}
 
@@ -83,14 +115,6 @@ for compatibility with \code{\link[ggplot2:labeller]{labeller()}}. You can use d
 functions for different kind of labels, for example use \code{\link[ggplot2:label_parsed]{label_parsed()}} for
 formatting facet labels. \code{\link[ggplot2:label_value]{label_value()}} is used by default,
 check it for more details and pointers to other options.}
-
-\item{colors}{Specifies which colors to use to replace the strip backgrounds.
-Either A) a function that returns a color for a given strip label, B) the
-character name of a function that does the same, C) a named character
-vector with names matching strip labels and values indicating the desired
-colors, or D) a data.frame representing a lookup table with columns named
-"name" (matching strip labels) and "color" (indicating desired colors). If
-the function returns \code{NA}, the default background color will be used.}
 
 \item{lab_colors}{Specifies which colors to use for the strip labels. Either
 A) a function that returns a color for a given strip label, B) the
@@ -151,19 +175,8 @@ allows the user to specify the background and label colors of the individual
 facet strips using the \code{colors} and \code{lab_colors} arguments.
 }
 \details{
-This function inherits the capabilities of
-\code{\link[ggh4x:facet_wrap2]{facet_wrap2()}}.
-
-This function only merges strips in the same row or column as they appear
-through regular \code{facet_wrap()} layout behaviour.
-
-Hierarchies are inferred from the order of variables supplied to
-\code{facets}. The first variable is interpreted to be the outermost
-variable, while the last variable is interpreted to be the innermost
-variable. They display order is always such that the outermost
-variable is placed the furthest away from the panels. For more information
-about the nesting of strips, please visit the documentation of
-\code{\link[ggh4x:strip_nested]{strip_nested()}}.
+\code{facet_nested_wrap_geo(...)} is an alias of \code{facet_nested_wrap_color()} with the
+default of \code{colors} set to \code{rbind(periods, stages)}.
 }
 \examples{
 library(ggplot2)

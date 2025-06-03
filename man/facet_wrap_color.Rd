@@ -3,17 +3,35 @@
 \docType{data}
 \name{facet_wrap_color}
 \alias{facet_wrap_color}
+\alias{facet_wrap_geo}
 \alias{FacetWrapColor}
 \title{Wrap a 1d ribbon of panels into 2d with colored strips}
 \usage{
 facet_wrap_color(
   facets,
+  colors,
   nrow = NULL,
   ncol = NULL,
   scales = "fixed",
   shrink = TRUE,
   labeller = "label_value",
+  lab_colors = "auto",
+  as.table = TRUE,
+  drop = TRUE,
+  dir = "h",
+  strip.position = "top",
+  axes = "margins",
+  axis.labels = "all"
+)
+
+facet_wrap_geo(
+  facets,
   colors = stages,
+  nrow = NULL,
+  ncol = NULL,
+  scales = "fixed",
+  shrink = TRUE,
+  labeller = "label_value",
   lab_colors = "auto",
   as.table = TRUE,
   drop = TRUE,
@@ -31,6 +49,14 @@ The variables can be named (the names are passed to \code{labeller}).
 For compatibility with the classic interface, can also be a
 formula or character vector. Use either a one sided formula, \code{~a + b},
 or a character vector, \code{c("a", "b")}.}
+
+\item{colors}{Specifies which colors to use to replace the strip backgrounds.
+Either A) a function that returns a color for a given strip label, B) the
+character name of a function that does the same, C) a named character
+vector with names matching strip labels and values indicating the desired
+colors, or D) a data.frame representing a lookup table with columns named
+"name" (matching strip labels) and "color" (indicating desired colors). If
+the function returns \code{NA}, the default background color will be used.}
 
 \item{nrow, ncol}{Number of rows and columns.}
 
@@ -52,14 +78,6 @@ for compatibility with \code{\link[ggplot2:labeller]{labeller()}}. You can use d
 functions for different kind of labels, for example use \code{\link[ggplot2:label_parsed]{label_parsed()}} for
 formatting facet labels. \code{\link[ggplot2:label_value]{label_value()}} is used by default,
 check it for more details and pointers to other options.}
-
-\item{colors}{Specifies which colors to use to replace the strip backgrounds.
-Either A) a function that returns a color for a given strip label, B) the
-character name of a function that does the same, C) a named character
-vector with names matching strip labels and values indicating the desired
-colors, or D) a data.frame representing a lookup table with columns named
-"name" (matching strip labels) and "color" (indicating desired colors). If
-the function returns \code{NA}, the default background color will be used.}
 
 \item{lab_colors}{Specifies which colors to use for the strip labels. Either
 A) a function that returns a color for a given strip label, B) the
@@ -107,6 +125,10 @@ allows the user to specify the background and label colors of the individual
 facet strips using the \code{colors} and \code{lab_colors} arguments. This is generally
 a better use of screen space than \code{\link[=facet_grid_color]{facet_grid_color()}} because most displays
 are roughly rectangular.
+}
+\details{
+\code{facet_wrap_geo(...)} is an alias of \code{facet_wrap_color()} with the default of
+\code{colors} set to \code{stages}.
 }
 \examples{
 library(ggplot2)

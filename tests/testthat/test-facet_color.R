@@ -25,6 +25,10 @@ test_that("facet_grid_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_grid_color", gg)
+  expect_equal(
+    gg_base + facet_grid_color(cols = vars(period), colors = periods),
+    gg_base + facet_grid_geo(cols = vars(period), colors = periods)
+  )
   expect_error(gg_base +
                  facet_grid_color(cols = vars(period), colors = "blue"))
   expect_error(gg_base +
@@ -93,6 +97,10 @@ test_that("facet_wrap_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_wrap_color", gg)
+  expect_equal(
+    gg_base + facet_wrap_color(vars(period), colors = periods),
+    gg_base + facet_wrap_geo(vars(period), colors = periods)
+  )
 
   gg <- gg_base + facet_wrap_color(vars(period), colors = periods,
                                    lab_colors = function(label) "blue")
@@ -135,6 +143,10 @@ test_that("facet_nested_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_nested_color", gg)
+  expect_equal(
+    gg_base + facet_nested_color(~era + period, colors = rbind(periods, eras)),
+    gg_base + facet_nested_geo(~era + period, colors = rbind(periods, eras))
+  )
 
   expect_error(gg_base +
                  facet_nested_color(~era + period,
@@ -177,6 +189,12 @@ test_that("facet_nested_wrap_color works", {
                ]
   )
   expect_doppelganger_deeptime("facet_nested_wrap_color", gg)
+  expect_equal(
+    gg_base +
+      facet_nested_wrap_color(~era + period, colors = rbind(periods, eras)),
+    gg_base +
+      facet_nested_wrap_geo(~era + period, colors = rbind(periods, eras))
+  )
 
   expect_error(gg_base +
                  facet_nested_wrap_color(~era + period,

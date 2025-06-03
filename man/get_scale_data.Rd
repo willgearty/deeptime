@@ -41,7 +41,7 @@ colors only vary for the Precambrian.
 }
 \details{
 The following timescales are available from the Macrostrat API as of
-2025-06-02:
+2025-06-03:
 \itemize{
 \item international ages
 \item international epochs

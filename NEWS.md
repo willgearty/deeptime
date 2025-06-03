@@ -2,6 +2,8 @@
 
 * Added `geom_text_phylo()` for adding node/tip labels to phylogenies when using `coord_geo_radial()`
 * Updated built-in timescales to 2024/12 version of GTS
+* Removed the defaults for the `colors` argument in `facet_grid_color()`, `facet_wrap_color()`, `facet_nested_color()`, and `facet_nested_wrap_color()`
+  * Added `facet_grid_geo()`, `facet_wrap_geo()`, `facet_nested_geo()`, and `facet_nested_wrap_geo()` which now serve as aliases for these functions with their original defaults (#81)
 
 # deeptime 2.1.0
 
