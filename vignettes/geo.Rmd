@@ -67,17 +67,16 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                   size = 3.5, hjust = 0, force = 2,
                   min.segment.length = 0, direction = "y",
                   nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
   # Reverse direction of y-axis
   scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
-  # Theming
-  theme_classic() +
-  theme(legend.position = "none",
-        axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +
-  # Add geological time scale
-  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(axis.text.y = element_text(color = "black"))
 ```
 
 ### Use stratigraphic patterns
@@ -130,17 +129,44 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                   size = 3.5, hjust = 0, force = 2,
                   min.segment.length = 0, direction = "y",
                   nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
   # Reverse direction of y-axis
   scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
-  # Theming
-  theme_classic() +
-  theme(legend.position = "none",
-        axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(axis.text.y = element_text(color = "black"))
+```
+
+Well look at that! Oh, but that legend isn't very helpful at the moment, is it? Let's go ahead and customize it to define what lithologies the different patterns actually represent. We'll use the codes and names in `liths` to set the breaks and labels for the legend, and we'll move it to the bottom so it doesn't mess up our labels:
+
+```{r fig.height = 9}
+# Plot with pattern fills
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect(aes(fill = pattern), color = "black") +
+  scale_fill_geopattern(name = NULL,
+                        breaks = factor(liths$fill), labels = liths$name) +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
   # Add geological time scale
-  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
 ```
 
 ### Further customization
@@ -167,63 +193,76 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
   # Plot units, patterned by rock type
   geom_rect_pattern(aes(pattern_type = pattern), pattern = "geo",
                     pattern_scale = 4) +
-  scale_pattern_type_identity() +
+  scale_pattern_type_identity(name = NULL, guide = "legend",
+                              breaks = factor(liths$fill),
+                              labels = liths$name) +
   # Add text labels
   geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
                   size = 3.5, hjust = 0, force = 2,
                   min.segment.length = 0, direction = "y",
                   nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
   # Reverse direction of y-axis
   scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
-  # Theming
-  theme_classic() +
-  theme(legend.position = "none",
-        axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +
-  # Add geological time scale
-  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
 ```
 
-Oh no! This is a good example of how the defaults change between the two methods. We can easily fix this by specifying our own defaults:
+Oh no! The patterns are more zoomed in as we wanted, but now the colors are all messed up! This is a good example of how the defaults change between the two methods. We can easily fix this by specifying our own defaults:
 
-```{r fig.height = 8}
+```{r fig.height = 9}
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type
   geom_rect_pattern(aes(pattern_type = pattern), pattern = "geo",
                     pattern_color = "black", pattern_fill = "white",
                     fill = "white", pattern_scale = 4) +
-  scale_pattern_type_identity() +
+  # Use identity of pattern_type aesthetic to set pattern type
+  # Also, substitute lithology names for codes in the legend
+  scale_pattern_type_identity(name = NULL, guide = "legend",
+                              breaks = factor(liths$fill),
+                              labels = liths$name) +
   # Add text labels
   geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
                   size = 3.5, hjust = 0, force = 2,
                   min.segment.length = 0, direction = "y",
                   nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
   # Reverse direction of y-axis
   scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
-  # Theming
-  theme_classic() +
-  theme(legend.position = "none",
-        axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +
-  # Add geological time scale
-  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black and increase legend key size
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
 ```
 
-There we go, now the patterns are more zoomed in! Hmm...now it looks a little boring. Let's go ahead and bring back those colors from before. We'll make both the background color (`fill`) and the pattern fill color (`pattern_fill`) based on the "color" column:
+There we go, now the colors are fixed! Hmm...now it looks a little boring. Let's go ahead and bring back those colors from before. We'll make both the background color (`fill`) and the pattern fill color (`pattern_fill`) based on the "color" column:
 
-```{r fig.height = 8}
+```{r fig.height = 9}
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type
   geom_rect_pattern(aes(pattern_type = pattern, fill = color,
                         pattern_fill = color), pattern = "geo",
                     pattern_color = "black", pattern_scale = 4) +
-  scale_pattern_type_identity() +
+  # Need to override the legend defaults
+  scale_pattern_type_identity(name = NULL,
+                              guide = guide_legend(
+                                override.aes = list(pattern_fill = "white",
+                                                    fill = "white")
+                              ),
+                              breaks = factor(liths$fill),
+                              labels = liths$name) +
   # Use the raw color values
   scale_fill_identity() +
   scale_pattern_fill_identity() +
@@ -232,17 +271,17 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                   size = 3.5, hjust = 0, force = 2,
                   min.segment.length = 0, direction = "y",
                   nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
   # Reverse direction of y-axis
   scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
-  # Theming
-  theme_classic() +
-  theme(legend.position = "none",
-        axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +
-  # Add geological time scale
-  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black and increase legend key size
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
 ```
 
 Well isn't that a nice looking visualization of the stratigraphic column!
