@@ -4,6 +4,8 @@
 * Updated built-in timescales to 2024/12 version of GTS
 * Removed the defaults for the `colors` argument in `facet_grid_color()`, `facet_wrap_color()`, `facet_nested_color()`, and `facet_nested_wrap_color()`
   * Added `facet_grid_geo()`, `facet_wrap_geo()`, `facet_nested_geo()`, and `facet_nested_wrap_geo()` which now serve as aliases for these functions with their original defaults (#81)
+* Added legends to the examples in the "Plotting geological/stratigraphical patterns" vignette (#78)
+* Added facetting examples to the "Plotting temporal data" vignette (#80)
 
 # deeptime 2.1.0
 
