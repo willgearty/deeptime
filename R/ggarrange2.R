@@ -50,7 +50,6 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"),
     return(g)
   }
   panels <- g$layout[grepl("panel", g$layout[["name"]]), ]
-  background <- gtable_filter(g, "background")
   ll <- unique(panels$l)
   tt <- unique(panels$t)
   fixed_ar <- g$respect
@@ -263,8 +262,11 @@ gtable_frame2 <- function(g, width = unit(1, "null"), height = unit(1, "null"),
   all$layout$z[25] <- 0
 
   # add background
-  all <- gtable_add_grob(all, background, 1, 1, 7, 7,
-                         name = "background", z = -Inf)
+  if (any(grepl("background", g$layout$name))) {
+    background <- gtable_filter(g, "background")
+    all <- gtable_add_grob(all, background, 1, 1, 7, 7,
+                           name = "background", z = -Inf)
+  }
 
   if (fixed_ar) {
     all$respect <- TRUE
