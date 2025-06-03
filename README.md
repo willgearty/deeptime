@@ -171,23 +171,24 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type
   geom_rect(aes(fill = pattern), color = "black") +
-  scale_fill_geopattern() +
+  scale_fill_geopattern(name = NULL,
+                        breaks = factor(liths$fill), labels = liths$name) +
   # Add text labels
   geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
                   size = 3.5, hjust = 0, force = 2,
                   min.segment.length = 0, direction = "y",
                   nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
   # Reverse direction of y-axis
   scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
-  # Theming
-  theme_classic(base_size = 16) +
-  theme(legend.position = "none",
-        axis.line.x = element_blank(),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) +
-  # Add geological time scale
-  coord_geo(pos = "left", dat = list("stages"), rot = 90)
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
 ```
 
 <img src="man/figures/example_patterns.png">
