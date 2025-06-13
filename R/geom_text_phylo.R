@@ -55,6 +55,9 @@ utils::globalVariables(c("isTip", "node"))
 #'   * A string naming the stat. To give the stat as a string, strip the
 #'     function name of the `stat_` prefix. For example, to use `stat_count()`,
 #'     give the stat as `"count"`.
+#' @param nudge_x,nudge_y Horizontal and vertical adjustment to nudge labels by.
+#'   Useful for offsetting text from points, particularly on discrete scales.
+#'   Cannot be jointly specified with `position`.
 #' @param node_type Determines the subset of nodes to label. Valid options are
 #'   "tip" for tip nodes, "internal" for non-tip nodes, and "all" for all nodes.
 #' @param auto_adjust Should upside-down text labels automatically be rotated
