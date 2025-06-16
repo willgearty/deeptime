@@ -3,7 +3,7 @@
   ggplot2::register_theme_elements(
     deeptime.axis.line.r = ggplot2::element_line(),
     deeptime.axis.text.r = ggplot2::element_text(size = 3.5, vjust = -2,
-                                                 hjust = NA),
+                                                 hjust = -0.5),
     deeptime.axis.ticks.r = ggplot2::element_line(),
     deeptime.axis.ticks.length.r = grid::unit(1.5, "points"),
     element_tree = list(
