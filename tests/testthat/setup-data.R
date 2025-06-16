@@ -81,8 +81,7 @@ expect_doppelganger_deeptime <- function(title, fig, patterns = FALSE) {
   file <- paste0(fig_name, ".svg")
   announce_snapshot_file(name = file)
 
-  variant <- ifelse(packageVersion("ggplot2") > "3.5.2",
-                    "ggplot4", NULL)
+  variant <- switch(packageVersion("ggplot2") > "3.5.2", "ggplot4", NULL)
 
   if (patterns) {
     expect_doppelganger(title_new, fig, writer = write_svg_bleeding_edge,
