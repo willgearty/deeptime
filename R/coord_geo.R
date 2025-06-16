@@ -305,7 +305,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity theme_void
-#' @importFrom ggplot2 scale_x_reverse coord_trans
+#' @importFrom ggplot2 scale_x_reverse
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
@@ -402,9 +402,15 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       rev_axis <- panel_params$scale_x$trans$name == "reverse"
       lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
     }
-    gg_scale <- gg_scale +
-      coord_trans(x = self$trans$x, xlim = lims, ylim = c(0, 1), expand = FALSE,
-                  clip = self$clip)
+    if (packageVersion("ggplot2") > "3.5.2") {
+      gg_scale <- gg_scale +
+        ggplot2::coord_transform(x = self$trans$x, xlim = lims, ylim = c(0, 1),
+                                 expand = FALSE, clip = self$clip)
+    } else {
+      gg_scale <- gg_scale +
+        ggplot2::coord_trans(x = self$trans$x, xlim = lims, ylim = c(0, 1),
+                             expand = FALSE, clip = self$clip)
+    }
   } else if (pos %in% c("left", "right", "l", "r")) {
     if (discrete) {
       lims <- panel_params$y.range

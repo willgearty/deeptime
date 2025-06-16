@@ -132,7 +132,7 @@ guide_geo <- function(dat = "periods",
 #' @importFrom ggplot2 GuideAxis ggproto ggproto_parent zeroGrob last_plot
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity ggplotGrob
 #' @importFrom ggplot2 annotate aes theme_void geom_rect geom_segment geom_text
-#' @importFrom ggplot2 coord_trans xlim
+#' @importFrom ggplot2 xlim
 #' @importFrom grid unit viewport
 #' @importFrom gtable gtable gtable_add_grob gtable_width gtable_height
 #' @importFrom rlang := exec
@@ -361,9 +361,15 @@ GuideGeo <- ggproto("GuideGeo", GuideAxis,
     # if left or right, rotate accordingly using coord_trans_flip,
     # otherwise, just use coord_trans
     if (position %in% c("bottom", "top")) {
-      gg_scale <- gg_scale +
-        coord_trans(x = trans, xlim = lims, ylim = c(0, 1),
-                    expand = FALSE, clip = "off")
+      if (packageVersion("ggplot2") > "3.5.2") {
+        gg_scale <- gg_scale +
+          ggplot2::coord_transform(x = trans, xlim = lims, ylim = c(0, 1),
+                                   expand = FALSE, clip = "off")
+      } else {
+        gg_scale <- gg_scale +
+          ggplot2::coord_trans(x = trans, xlim = lims, ylim = c(0, 1),
+                               expand = FALSE, clip = "off")
+      }
     } else if (position %in% c("left", "right")) {
       gg_scale <- gg_scale +
         coord_trans_flip(x = trans, xlim = lims, ylim = c(0, 1),
