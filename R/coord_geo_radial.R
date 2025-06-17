@@ -83,7 +83,7 @@
 #'   theme_classic()
 coord_geo_radial <- function(dat = "periods",
                              theta = "y", start = -0.5 * pi, end = 1.25 * pi,
-                             expand = TRUE, direction = 1,
+                             expand = TRUE, direction = 1, reverse = "none",
                              r_axis_inside = NULL, inner.radius = 0.05,
                              fill = NULL, alpha = 1,
                              lwd = .25, color = "grey80", lty = "solid",
@@ -125,6 +125,7 @@ coord_geo_radial <- function(dat = "periods",
           arc = c(start, end),
           expand = expand,
           direction = sign(direction),
+          reverse = reverse,
           r_axis_inside = r_axis_inside,
           rotate_angle = rotate_angle,
           inner.radius = inner.radius,
@@ -239,10 +240,22 @@ CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
     }
 
     colors <- do.call(c, lapply(dat_list, function(dat) dat$color))
+    if (packageVersion("ggplot2") > "3.5.2") {
+      reverse <- ifelse(self$reverse == "none" && self$direction == -1,
+                        "theta", self$reverse)
+      geo_scale <- geo_scale +
+        coord_radial(start = self$start, end = self$end,
+                     expand = FALSE, reverse = reverse,
+                     clip = self$clip, inner.radius = self$inner.radius)
+      reverse <- switch(reverse, "r" = "thetar", "theta")
+    } else {
+      geo_scale <- geo_scale +
+        coord_radial(start = self$start, end = self$end,
+                     expand = FALSE, direction = self$direction,
+                     clip = self$clip, inner.radius = self$inner.radius)
+    }
+
     geo_scale <- geo_scale +
-      coord_radial(start = self$start, end = self$end,
-                   expand = FALSE, direction = self$direction,
-                   clip = self$clip, inner.radius = self$inner.radius) +
       scale_fill_manual(values = setNames(colors, colors)) +
       scale_x_continuous(limits = c(0, 1)) +
       scale_y_continuous(limits = r_lims) +

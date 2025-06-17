@@ -13,6 +13,7 @@ coord_geo_radial(
   end = 1.25 * pi,
   expand = TRUE,
   direction = 1,
+  reverse = "none",
   r_axis_inside = NULL,
   inner.radius = 0.05,
   fill = NULL,
@@ -46,15 +47,20 @@ is applied clockwise or anticlockwise depending on value of \code{direction}.}
 for partial polar coordinates. The default, \code{NULL}, is set to
 \code{start + 2 * pi}.}
 
-\item{expand}{If \code{TRUE}, the default, adds a small expansion factor the
+\item{expand}{If \code{TRUE}, the default, adds a small expansion factor to
 the limits to prevent overlap between data and axes. If \code{FALSE}, limits
 are taken directly from the scale.}
 
 \item{direction}{1, clockwise; -1, anticlockwise}
 
+\item{reverse}{A string giving which directions to reverse. \code{"none"}
+(default) keep directions as is. \code{"theta"} reverses the angle and \code{"r"}
+reverses the radius. \code{"thetar"} reverses both the angle and the radius.}
+
 \item{r_axis_inside, rotate_angle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
-\item{inner.radius}{A \code{numeric} between 0 and 1 setting the size of a inner.radius hole.}
+\item{inner.radius}{A \code{numeric} between 0 and 1 setting the size of a
+inner radius hole.}
 
 \item{fill}{The fill color of the background. The default is to use the
 \code{color} column included in \code{dat}. If a custom dataset is provided with
@@ -96,12 +102,12 @@ setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
 means no. For details, please see \code{\link[ggplot2:coord_cartesian]{coord_cartesian()}}.}
 }
 \description{
-\code{coord_geo_radial} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_radial()}} in that it
+\code{coord_geo_radial} behaves similarly to \code{\link[ggplot2:coord_radial]{ggplot2::coord_radial()}} in that it
 occurs after statistical transformation and will affect the visual appearance
 of geoms. The main difference is that it also adds a geological timescale to
 the background of the plot. \code{coord_geo_radial} is similar to
 \code{\link[=coord_geo_polar]{coord_geo_polar()}} but has more options related to the polar coordinate
-plotting that are inherited from \code{\link[ggplot2:coord_polar]{ggplot2::coord_radial()}} (e.g., \code{end},
+plotting that are inherited from \code{\link[ggplot2:coord_radial]{ggplot2::coord_radial()}} (e.g., \code{end},
 \code{r_axis_inside}, \code{inner.radius}). Furthermore, unlike \code{coord_geo_polar},
 \code{coord_geo_radial} uses the ggplot2 internals to draw the \code{r} and \code{theta}
 axes, gridlines, etc. This means that users can tweak the
