@@ -59,6 +59,9 @@ utils::globalVariables(c("isTip", "node"))
 #'   "tip" for tip nodes, "internal" for non-tip nodes, and "all" for all nodes.
 #' @param auto_adjust Should upside-down text labels automatically be rotated
 #'   180° to improve readability?
+#' @param nudge_x,nudge_y Horizontal and vertical adjustment to nudge labels by.
+#'   Useful for offsetting text from points, particularly on discrete scales.
+#'   Cannot be jointly specified with `position`.
 #' @importFrom ggplot2 layer position_nudge
 #' @importFrom rlang %||%
 #' @importFrom utils modifyList
