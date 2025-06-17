@@ -280,7 +280,20 @@ facet_wrap_color <- function(facets, colors, nrow = NULL, ncol = NULL,
   # function and arguments copied from ggplot 3.5.0
   scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x",
                                               "free_y", "free"))
-  dir <- arg_match0(dir, c("h", "v"))
+  scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x", "free_y", "free"))
+  if (packageVersion("ggplot2") > "3.5.2") {
+    dir <- arg_match0(dir, c("h", "v", "lt", "tl", "lb", "bl", "rt", "tr", "rb", "br"))
+    if (nchar(dir) == 1) {
+      dir <- base::switch(
+        dir,
+        h = if (as.table) "lt" else "lb",
+        v = if (as.table) "tl" else "tr"
+      )
+    }
+  } else {
+    dir <- arg_match0(dir, c("h", "v"))
+  }
+
   free <- list(
     x = any(scales %in% c("free_x", "free")),
     y = any(scales %in% c("free_y", "free"))
