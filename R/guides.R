@@ -137,6 +137,7 @@ guide_geo <- function(dat = "periods",
 #' @importFrom gtable gtable gtable_add_grob gtable_width gtable_height
 #' @importFrom rlang := exec
 #' @importFrom scales transform_identity
+#' @importFrom utils packageVersion
 GuideGeo <- ggproto("GuideGeo", GuideAxis,
   params = c(GuideAxis$params,
              list(dat = "periods",

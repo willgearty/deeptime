@@ -309,6 +309,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
+#' @importFrom utils packageVersion
 make_geo_scale <- function(self, dat, fill, color, alpha, pos,
                            lab, lab_color, rot, abbrv, family, fontface, skip,
                            size, lwd, neg, bord,

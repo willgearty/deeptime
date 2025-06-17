@@ -156,6 +156,7 @@ coord_geo_radial <- function(dat = "periods",
 #' @importFrom ggplot2 last_plot set_last_plot calc_element
 #' @importFrom grid addGrob reorderGrob grid.ls
 #' @importFrom rlang %||% exec
+#' @importFrom utils packageVersion
 CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
   render_bg = function(self, panel_params, theme) {
     panel_params <- rename_data(self, panel_params)

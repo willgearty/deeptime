@@ -259,6 +259,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
+#' @importFrom utils packageVersion
 #' @family faceting functions
 #' @export
 #'
