@@ -92,7 +92,7 @@ facet_grid_color <- function(colors, rows = NULL, cols = NULL,
   facets_list <- grid_as_facets_list(rows, cols)
 
   # Check for deprecated labellers
-  labeller <- check_labeller(labeller)
+  labeller <- match.fun(labeller)
 
   params <- list(rows = facets_list$rows, cols = facets_list$cols,
                  margins = margins, free = free, space_free = space_free,
@@ -124,10 +124,6 @@ facet_grid_geo <- function(colors = stages, rows = NULL, cols = NULL,
 
 grid_as_facets_list <- function(...) {
   asNamespace("ggplot2")$grid_as_facets_list(...)
-}
-
-check_labeller <- function(...) {
-  asNamespace("ggplot2")$check_labeller(...)
 }
 
 #' @importFrom rlang is_function
@@ -263,6 +259,7 @@ FacetGridColor <- ggproto("FacetGridColor", FacetGrid,
 #' @inheritParams ggplot2::facet_wrap
 #' @importFrom ggplot2 ggproto FacetWrap ggproto_parent
 #' @importFrom rlang arg_match0
+#' @importFrom utils packageVersion
 #' @family faceting functions
 #' @export
 #'
@@ -284,7 +281,20 @@ facet_wrap_color <- function(facets, colors, nrow = NULL, ncol = NULL,
   # function and arguments copied from ggplot 3.5.0
   scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x",
                                               "free_y", "free"))
-  dir <- arg_match0(dir, c("h", "v"))
+  scales <- arg_match0(scales %||% "fixed", c("fixed", "free_x", "free_y", "free"))
+  if (packageVersion("ggplot2") > "3.5.2") {
+    dir <- arg_match0(dir, c("h", "v", "lt", "tl", "lb", "bl", "rt", "tr", "rb", "br"))
+    if (nchar(dir) == 1) {
+      dir <- base::switch(
+        dir,
+        h = if (as.table) "lt" else "lb",
+        v = if (as.table) "tl" else "tr"
+      )
+    }
+  } else {
+    dir <- arg_match0(dir, c("h", "v"))
+  }
+
   free <- list(
     x = any(scales %in% c("free_x", "free")),
     y = any(scales %in% c("free_y", "free"))
@@ -306,10 +316,10 @@ facet_wrap_color <- function(facets, colors, nrow = NULL, ncol = NULL,
   )
 
   # Check for deprecated labellers
-  labeller <- check_labeller(labeller)
+  labeller <- match.fun(labeller)
 
   # Flatten all facets dimensions into a single one
-  facets <- wrap_as_facets_list(facets)
+  facets <- ggplot2::facet_wrap(facets = facets)$params$facets
 
   strip.position <- arg_match0(strip.position, c("top", "bottom",
                                                  "left", "right"))
@@ -364,10 +374,6 @@ facet_wrap_geo <- function(facets, colors = stages, nrow = NULL, ncol = NULL,
 
 check_number_whole <- function(...) {
   asNamespace("rlang")$check_number_whole(...)
-}
-
-wrap_as_facets_list <- function(...) {
-  asNamespace("ggplot2")$wrap_as_facets_list(...)
 }
 
 #' @rdname facet_wrap_color

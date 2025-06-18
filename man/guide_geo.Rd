@@ -107,7 +107,7 @@ scale?}
 
 \item{theme}{A \code{\link[ggplot2:theme]{theme}} object to style the guide individually or
 differently from the plot's theme settings. The \code{theme} argument in the
-guide overrides, and is combined with, the plot's theme.}
+guide partially overrides, and is combined with, the plot's theme.}
 
 \item{title}{A character string or expression indicating a title of guide.
 If \code{NULL}, the title is not shown. By default

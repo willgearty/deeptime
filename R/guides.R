@@ -132,11 +132,12 @@ guide_geo <- function(dat = "periods",
 #' @importFrom ggplot2 GuideAxis ggproto ggproto_parent zeroGrob last_plot
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity ggplotGrob
 #' @importFrom ggplot2 annotate aes theme_void geom_rect geom_segment geom_text
-#' @importFrom ggplot2 coord_trans xlim
+#' @importFrom ggplot2 xlim
 #' @importFrom grid unit viewport
 #' @importFrom gtable gtable gtable_add_grob gtable_width gtable_height
 #' @importFrom rlang := exec
 #' @importFrom scales transform_identity
+#' @importFrom utils packageVersion
 GuideGeo <- ggproto("GuideGeo", GuideAxis,
   params = c(GuideAxis$params,
              list(dat = "periods",
@@ -362,8 +363,8 @@ GuideGeo <- ggproto("GuideGeo", GuideAxis,
     # otherwise, just use coord_trans
     if (position %in% c("bottom", "top")) {
       gg_scale <- gg_scale +
-        coord_trans(x = trans, xlim = lims, ylim = c(0, 1),
-                    expand = FALSE, clip = "off")
+        coord_trans_deeptime(x = trans, xlim = lims, ylim = c(0, 1),
+                             expand = FALSE, clip = "off")
     } else if (position %in% c("left", "right")) {
       gg_scale <- gg_scale +
         coord_trans_flip(x = trans, xlim = lims, ylim = c(0, 1),

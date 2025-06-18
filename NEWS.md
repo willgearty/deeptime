@@ -1,6 +1,6 @@
 # deeptime (development version)
 
-This new minor version of deeptime introduces several new features and bug fixes.
+This new minor version of deeptime introduces several new features and bug fixes. It also is compatible with version 4 of ggplot2.
 
 New features:
 
@@ -15,6 +15,8 @@ Bug fixes:
 
 * Fixed `gtable_frame2()` and `ggarrange2()` for plots that use `theme_void()` (#74)
 * Fixed `disparity_through_time()` for rare edge cases (#71)
+* Updated `GeomPointsRange` to use the aesthetic defaults from `ggplot2::GeomPointrange`
+* Updated `GeomTextPhylo` to use the aesthetic defaults from `ggplot2::GeomText`
 
 # deeptime 2.1.0
 
