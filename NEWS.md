@@ -15,6 +15,8 @@ Bug fixes:
 
 * Fixed `gtable_frame2()` and `ggarrange2()` for plots that use `theme_void()` (#74)
 * Fixed `disparity_through_time()` for rare edge cases (#71)
+* Updated `GeomPointsRange` to use the aesthetic defaults from `ggplot2::GeomPointrange`
+* Updated `GeomTextPhylo` to use the aesthetic defaults from `ggplot2::GeomText`
 
 # deeptime 2.1.0
 
