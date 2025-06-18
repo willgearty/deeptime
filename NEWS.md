@@ -1,4 +1,4 @@
-# deeptime (development version)
+# deeptime 2.2.0
 
 This new minor version of deeptime introduces several new features and bug fixes. It also is compatible with version 4 of ggplot2.
 

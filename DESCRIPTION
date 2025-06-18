@@ -1,6 +1,6 @@
 Package: deeptime
 Title: Plotting Tools for Anyone Working in Deep Time
-Version: 2.1.0.9002
+Version: 2.2.0
 Authors@R: person("William", "Gearty", email = "willgearty@gmail.com", role = c("aut", "cre"),
                   comment = c(ORCID = "0000-0003-0076-3262"))
 Maintainer: William Gearty <willgearty@gmail.com>
