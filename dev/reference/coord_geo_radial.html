@@ -91,6 +91,7 @@ features (see examples).</p>
 <span>  end <span class="op">=</span> <span class="fl">1.25</span> <span class="op">*</span> <span class="va">pi</span>,</span>
 <span>  expand <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  direction <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  reverse <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  r_axis_inside <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  inner.radius <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -137,7 +138,7 @@ for partial polar coordinates. The default, <code>NULL</code>, is set to
 
 
 <dt id="arg-expand">expand<a class="anchor" aria-label="anchor" href="#arg-expand"></a></dt>
-<dd><p>If <code>TRUE</code>, the default, adds a small expansion factor the
+<dd><p>If <code>TRUE</code>, the default, adds a small expansion factor to
 the limits to prevent overlap between data and axes. If <code>FALSE</code>, limits
 are taken directly from the scale.</p></dd>
 
@@ -146,12 +147,19 @@ are taken directly from the scale.</p></dd>
 <dd><p>1, clockwise; -1, anticlockwise</p></dd>
 
 
+<dt id="arg-reverse">reverse<a class="anchor" aria-label="anchor" href="#arg-reverse"></a></dt>
+<dd><p>A string giving which directions to reverse. <code>"none"</code>
+(default) keep directions as is. <code>"theta"</code> reverses the angle and <code>"r"</code>
+reverses the radius. <code>"thetar"</code> reverses both the angle and the radius.</p></dd>
+
+
 <dt id="arg-r-axis-inside-rotate-angle">r_axis_inside, rotate_angle<a class="anchor" aria-label="anchor" href="#arg-r-axis-inside-rotate-angle"></a></dt>
 <dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 
 <dt id="arg-inner-radius">inner.radius<a class="anchor" aria-label="anchor" href="#arg-inner-radius"></a></dt>
-<dd><p>A <code>numeric</code> between 0 and 1 setting the size of a inner.radius hole.</p></dd>
+<dd><p>A <code>numeric</code> between 0 and 1 setting the size of a
+inner radius hole.</p></dd>
 
 
 <dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
