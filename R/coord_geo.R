@@ -3,6 +3,14 @@
 utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
                          "name", "translate", "stages", "periods"))
 
+coord_trans_deeptime <- function(...) {
+  if (packageVersion("ggplot2") > "3.5.2") {
+    asNamespace("ggplot2")$coord_transform(...)
+  } else {
+    asNamespace("ggplot2")$coord_trans(...)
+  }
+}
+
 #' Transformed coordinate system with geological timescale
 #'
 #' `coord_geo` behaves similarly to [ggplot2::coord_trans()] in that it occurs
@@ -403,15 +411,9 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       rev_axis <- panel_params$scale_x$trans$name == "reverse"
       lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
     }
-    if (packageVersion("ggplot2") > "3.5.2") {
-      gg_scale <- gg_scale +
-        ggplot2::coord_transform(x = self$trans$x, xlim = lims, ylim = c(0, 1),
-                                 expand = FALSE, clip = self$clip)
-    } else {
-      gg_scale <- gg_scale +
-        ggplot2::coord_trans(x = self$trans$x, xlim = lims, ylim = c(0, 1),
-                             expand = FALSE, clip = self$clip)
-    }
+    gg_scale <- gg_scale +
+      coord_trans_deeptime(x = self$trans$x, xlim = lims, ylim = c(0, 1),
+                           expand = FALSE, clip = self$clip)
   } else if (pos %in% c("left", "right", "l", "r")) {
     if (discrete) {
       lims <- panel_params$y.range

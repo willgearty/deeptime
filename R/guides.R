@@ -362,15 +362,9 @@ GuideGeo <- ggproto("GuideGeo", GuideAxis,
     # if left or right, rotate accordingly using coord_trans_flip,
     # otherwise, just use coord_trans
     if (position %in% c("bottom", "top")) {
-      if (packageVersion("ggplot2") > "3.5.2") {
-        gg_scale <- gg_scale +
-          ggplot2::coord_transform(x = trans, xlim = lims, ylim = c(0, 1),
-                                   expand = FALSE, clip = "off")
-      } else {
-        gg_scale <- gg_scale +
-          ggplot2::coord_trans(x = trans, xlim = lims, ylim = c(0, 1),
-                               expand = FALSE, clip = "off")
-      }
+      gg_scale <- gg_scale +
+        coord_trans_deeptime(x = trans, xlim = lims, ylim = c(0, 1),
+                             expand = FALSE, clip = "off")
     } else if (position %in% c("left", "right")) {
       gg_scale <- gg_scale +
         coord_trans_flip(x = trans, xlim = lims, ylim = c(0, 1),
