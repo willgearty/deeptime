@@ -127,17 +127,17 @@ geom_text_phylo <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @importFrom ggplot2 ggproto GeomText aes ggproto_parent
+#' @importFrom ggplot2 ggproto GeomPoint GeomText ggproto_parent
 #' @importFrom rlang %||%
+#' @importFrom utils modifyList
 GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
   required_aes = c("x", "y", "label", "isTip"),
   non_missing_aes = "angle",
   extra_params = c("na.rm", "node_type", "auto_adjust"),
 
-  default_aes = aes(
-    colour = "black", size = 3.88, angle = 0, hjust = 0,
-    vjust = 0.5, alpha = NA, family = "", fontface = 1, lineheight = 1.2
-  ),
+  default_aes = modifyList(GeomPoint$default_aes,
+                           list(hjust = 0, vjust = 0.5, size = 3.88, angle = 0),
+                           keep.null = T),
 
   setup_data = function(data, params) {
     # subset the nodes as desired
