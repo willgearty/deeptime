@@ -129,7 +129,7 @@ coord_geo_polar <- function(dat = "periods", theta = "y",
                             skip = c("Quaternary", "Holocene",
                                      "Late Pleistocene"),
                             neg = TRUE, prop = 1, textpath_args = list()) {
-  lifecycle::deprecate_soft("1.1.0", "coord_geo_polar()", "coord_geo_radial()")
+  lifecycle::deprecate_warn("1.1.0", "coord_geo_polar()", "coord_geo_radial()")
   dat <- make_list(dat)
   n_scales <- length(dat)
 

@@ -11,6 +11,11 @@ New features:
 * Added legends to the examples in the "Plotting geological/stratigraphical patterns" vignette (#78)
 * Added facetting examples to the "Plotting temporal data" vignette (#80)
 
+Deprecation:
+
+* Advanced the deprecation of `coord_geo_polar()`. Use of this function will result in a warning. This function will be removed in a future version of deeptime.
+* Advanced the deprecation of `getScaleData()`. This function has been fully deprecated from deeptime in favor of `get_scale_data()`.
+
 Bug fixes:
 
 * Fixed `gtable_frame2()` and `ggarrange2()` for plots that use `theme_void()` (#74)

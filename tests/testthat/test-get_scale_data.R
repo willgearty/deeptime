@@ -24,5 +24,5 @@ test_that("get_scale_data works", {
 })
 
 test_that("getScaleData is deprecated", {
-  lifecycle::expect_deprecated(getScaleData("stages"))
+  lifecycle::expect_defunct(getScaleData("stages"))
 })

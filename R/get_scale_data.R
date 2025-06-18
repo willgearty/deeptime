@@ -145,6 +145,5 @@ macrostrat_timescales <- function() {# nocov start
 #' @keywords internal
 #' @export
 getScaleData <- function(name) {
-  lifecycle::deprecate_warn("1.0.0", "getScaleData()", "get_scale_data()")
-  get_scale_data(name)
+  lifecycle::deprecate_stop("1.0.0", "getScaleData()", "get_scale_data()")
 }
