@@ -44,8 +44,8 @@
 #' pointing towards the right, but these theme settings will need to be modified
 #' for other orientations. The default value for `deeptime.axis.line.r` is
 #' `element_line()`. The default value for `deeptime.axis.text.r` is
-#' `element_text(size = 3.5, vjust = -2, hjust = NA)`. The default value for
-#' `deeptime.axis.ticks.r` is `element_line()`. The default value for
+#' `element_text(size = 3.5, vjust = -2, hjust = -0.5)`. The default value
+#' for `deeptime.axis.ticks.r` is `element_line()`. The default value for
 #' `deeptime.axis.ticks.length.r` is `unit(1.5, "points")`. However, note that
 #' the units for this element are meaningless and only the numeric value will be
 #' used (but a `unit` must still be used).

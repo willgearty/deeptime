@@ -3,6 +3,14 @@
 utils::globalVariables(c("min_age", "max_age", "mid_age", "label",
                          "name", "translate", "stages", "periods"))
 
+coord_trans_deeptime <- function(...) {
+  if (packageVersion("ggplot2") > "3.5.2") {
+    asNamespace("ggplot2")$coord_transform(...)
+  } else {
+    asNamespace("ggplot2")$coord_trans(...)
+  }
+}
+
 #' Transformed coordinate system with geological timescale
 #'
 #' `coord_geo` behaves similarly to [ggplot2::coord_trans()] in that it occurs
@@ -305,10 +313,11 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity theme_void
-#' @importFrom ggplot2 scale_x_reverse coord_trans
+#' @importFrom ggplot2 scale_x_reverse
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
+#' @importFrom utils packageVersion
 make_geo_scale <- function(self, dat, fill, color, alpha, pos,
                            lab, lab_color, rot, abbrv, family, fontface, skip,
                            size, lwd, neg, bord,
@@ -403,8 +412,8 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       lims <- panel_params$x.range * c(1, -1)[rev_axis + 1]
     }
     gg_scale <- gg_scale +
-      coord_trans(x = self$trans$x, xlim = lims, ylim = c(0, 1), expand = FALSE,
-                  clip = self$clip)
+      coord_trans_deeptime(x = self$trans$x, xlim = lims, ylim = c(0, 1),
+                           expand = FALSE, clip = self$clip)
   } else if (pos %in% c("left", "right", "l", "r")) {
     if (discrete) {
       lims <- panel_params$y.range

@@ -17,6 +17,6 @@ test_that("coord_trans_flip() works", {
   params <- ggplot_build(gg)$layout$panel_params[[1]]
   expect_equal(params$x.range, scales::pseudo_log_trans()$transform(c(1, 6)))
   expect_equal(params$y.range, sqrt(c(50, 500)))
-  expect_doppelganger_deeptime("coord_trans_flip() with different transforms",
+  expect_doppelganger_deeptime("coord_trans_flip() with diff trans",
                                gg)
 })

@@ -155,14 +155,13 @@ StatPointsRange <- ggproto("StatPointsRange", Stat,
 )
 
 #' @importFrom ggplot2 ggproto Geom GeomPoint GeomLinerange draw_key_pointrange
+#' @importFrom ggplot2 GeomPointrange
 #' @importFrom ggplot2 standardise_aes_names
 #' @importFrom grid gList gTree
 GeomPointsRange <- ggproto("GeomPointsRange", Geom,
   required_aes = c("x", "y", "ymin|xmin", "ymax|xmax"),
   extra_params = c("na.rm", "orientation"),
-  default_aes = aes(shape = 19, colour = "black", size = 0.5, fill = NA,
-                    alpha = NA, stroke = 0.5,
-                    linewidth = 0.5, linetype = 1),
+  default_aes = GeomPointrange$default_aes,
   draw_key = draw_key_pointrange,
   setup_params = function(self, data, params) {
     params$flipped_aes <- has_flipped_aes(data, params)

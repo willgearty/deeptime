@@ -90,16 +90,23 @@ whichever has better contrast with the background color, based on
 \href{https://www.itu.int/rec/R-REC-BT.601-7-201103-I/en}{recommendations by the International Telecommunication Union}.
 If the function returns \code{NA}, the default label color will be used.}
 
-\item{as.table}{If \code{TRUE}, the default, the facets are laid out like
-a table with highest values at the bottom-right. If \code{FALSE}, the
-facets are laid out like a plot with the highest value at the top-right.}
+\item{as.table}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} The \code{as.table} argument
+is now absorbed into the \code{dir} argument via the two letter options.
+If \code{TRUE}, the facets are laid out like a table with highest values at the
+bottom-right. If \code{FALSE}, the facets are laid out like a plot with the
+highest value at the top-right.}
 
 \item{drop}{If \code{TRUE}, the default, all factor levels not used in the
 data will automatically be dropped. If \code{FALSE}, all factor levels
 will be shown, regardless of whether or not they appear in the data.}
 
 \item{dir}{Direction: either \code{"h"} for horizontal, the default, or \code{"v"},
-for vertical.}
+for vertical. When \code{"h"} or \code{"v"} will be combined with \code{as.table} to
+set final layout. Alternatively, a combination of \code{"t"} (top) or
+\code{"b"} (bottom) with \code{"l"} (left) or \code{"r"} (right) to set a layout directly.
+These two letters give the starting position and the first letter gives
+the growing direction. For example \code{"rt"} will place the first panel in
+the top-right and starts filling in panels right-to-left.}
 
 \item{strip.position}{By default, the labels are displayed on the top of
 the plot. Using \code{strip.position} it is possible to place the labels on

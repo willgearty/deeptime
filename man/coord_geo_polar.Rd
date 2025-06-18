@@ -123,8 +123,8 @@ the radius axis. The default settings work well for a horizontal axis
 pointing towards the right, but these theme settings will need to be modified
 for other orientations. The default value for \code{deeptime.axis.line.r} is
 \code{element_line()}. The default value for \code{deeptime.axis.text.r} is
-\code{element_text(size = 3.5, vjust = -2, hjust = NA)}. The default value for
-\code{deeptime.axis.ticks.r} is \code{element_line()}. The default value for
+\code{element_text(size = 3.5, vjust = -2, hjust = -0.5)}. The default value
+for \code{deeptime.axis.ticks.r} is \code{element_line()}. The default value for
 \code{deeptime.axis.ticks.length.r} is \code{unit(1.5, "points")}. However, note that
 the units for this element are meaningless and only the numeric value will be
 used (but a \code{unit} must still be used).

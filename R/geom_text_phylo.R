@@ -59,6 +59,9 @@ utils::globalVariables(c("isTip", "node"))
 #'   "tip" for tip nodes, "internal" for non-tip nodes, and "all" for all nodes.
 #' @param auto_adjust Should upside-down text labels automatically be rotated
 #'   180° to improve readability?
+#' @param nudge_x,nudge_y Horizontal and vertical adjustment to nudge labels by.
+#'   Useful for offsetting text from points, particularly on discrete scales.
+#'   Cannot be jointly specified with `position`.
 #' @importFrom ggplot2 layer position_nudge
 #' @importFrom rlang %||%
 #' @importFrom utils modifyList
@@ -124,17 +127,17 @@ geom_text_phylo <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @importFrom ggplot2 ggproto GeomText aes ggproto_parent
+#' @importFrom ggplot2 ggproto GeomPoint GeomText ggproto_parent
 #' @importFrom rlang %||%
+#' @importFrom utils modifyList
 GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
   required_aes = c("x", "y", "label", "isTip"),
   non_missing_aes = "angle",
   extra_params = c("na.rm", "node_type", "auto_adjust"),
 
-  default_aes = aes(
-    colour = "black", size = 3.88, angle = 0, hjust = 0,
-    vjust = 0.5, alpha = NA, family = "", fontface = 1, lineheight = 1.2
-  ),
+  default_aes = modifyList(GeomPoint$default_aes,
+                           list(hjust = 0, vjust = 0.5, size = 3.88, angle = 0),
+                           keep.null = T),
 
   setup_data = function(data, params) {
     # subset the nodes as desired
