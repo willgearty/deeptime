@@ -22,7 +22,11 @@ coord_trans_xy(
 
 \item{expand}{If \code{TRUE}, the default, adds a small expansion factor to
 the limits to ensure that data and axes don't overlap. If \code{FALSE},
-limits are taken exactly from the data or \code{xlim}/\code{ylim}.}
+limits are taken exactly from the data or \code{xlim}/\code{ylim}.
+Giving a logical vector will separately control the expansion for the four
+directions (top, left, bottom and right). The \code{expand} argument will be
+recycled to length 4 if necessary. Alternatively, can be a named logical
+vector to control a single direction, e.g. \code{expand = c(bottom = FALSE)}.}
 
 \item{default}{Is this the default coordinate system? If \code{FALSE} (the default),
 then replacing this coordinate system with another one creates a message alerting
@@ -39,7 +43,7 @@ limits, then those data points may show up in places such as the axes, the
 legend, the plot title, or the plot margins.}
 }
 \description{
-\code{coord_trans_xy} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it
+\code{coord_trans_xy} behaves similarly to \code{\link[ggplot2:coord_transform]{ggplot2::coord_trans()}} in that it
 occurs after statistical transformation and will affect the visual appearance
 of geoms. The main difference is that it takes a single transformer that is
 applied to the x and y axes simultaneously. Any transformers produced by

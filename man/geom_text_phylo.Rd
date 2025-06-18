@@ -124,12 +124,14 @@ a warning. If \code{TRUE}, missing values are silently removed.}
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.
 It can also be a named logical vector to finely select the aesthetics to
-display.}
+display. To include legend keys for all levels, even
+when no data exists, use \code{TRUE}.  If \code{NA}, all levels are shown in legend,
+but unobserved levels are omitted.}
 
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:annotation_borders]{annotation_borders()}}.}
 }
 \description{
 This geom adds labels to all or a subset of the nodes of a phylogenetic tree
@@ -174,8 +176,8 @@ aesthetics (required aesthetics are in bold):
 
 
 You can modify text alignment with the \code{vjust} and \code{hjust}
-aesthetics. These can either be a number between 0 (right/bottom) and
-1 (top/left) or a character (\code{"left"}, \code{"middle"}, \code{"right"}, \code{"bottom"},
+aesthetics. These can either be a number between 0 (left/bottom) and
+1 (right/top) or a character (\code{"left"}, \code{"middle"}, \code{"right"}, \code{"bottom"},
 \code{"center"}, \code{"top"}). There are two special alignments: \code{"inward"} and
 \code{"outward"}. Inward always aligns text towards the center, and outward
 aligns it away from the center.
