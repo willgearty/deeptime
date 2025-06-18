@@ -241,20 +241,18 @@ CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
     }
 
     colors <- do.call(c, lapply(dat_list, function(dat) dat$color))
+    radial_args <- list(
+      start = self$start, end = self$end,
+      expand = FALSE, clip = self$clip, inner.radius = self$inner.radius
+    )
     if (packageVersion("ggplot2") > "3.5.2") {
-      reverse <- ifelse(self$reverse == "none" && self$direction == -1,
-                        "theta", self$reverse)
-      geo_scale <- geo_scale +
-        coord_radial(start = self$start, end = self$end,
-                     expand = FALSE, reverse = reverse,
-                     clip = self$clip, inner.radius = self$inner.radius)
-      reverse <- switch(reverse, "r" = "thetar", "theta")
+      radial_args$reverse <- ifelse(self$reverse == "none" &&
+                                      self$direction == -1,
+                                    "theta", self$reverse)
     } else {
-      geo_scale <- geo_scale +
-        coord_radial(start = self$start, end = self$end,
-                     expand = FALSE, direction = self$direction,
-                     clip = self$clip, inner.radius = self$inner.radius)
+      radial_args$direction <- self$direction
     }
+    geo_scale <- geo_scale + do.call(coord_radial, radial_args)
 
     geo_scale <- geo_scale +
       scale_fill_manual(values = setNames(colors, colors)) +
