@@ -1,6 +1,7 @@
 # deeptime (development version)
 
 * Updated citation information for the package (#89)
+* Updated package logo to reflect the recent inclusion of patterns (#90)
 
 # deeptime 2.2.0
 
