@@ -1,0 +1,19 @@
+{
+    "creators": [
+        {
+            "affiliation": "Syracuse University",
+            "name": "Gearty, William",
+            "orcid": "0000-0003-0076-3262"
+        }
+    ],
+    "keywords": [
+        "R",
+        "data visualization",
+        "ggplot2",
+        "geology",
+        "paleontology"
+    ],
+    "license": {
+        "id": "GPL-3.0-only"
+    }
+}
