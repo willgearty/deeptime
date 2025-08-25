@@ -192,3 +192,9 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
 ```
 
 <img src="man/figures/example_patterns.png">
+
+## Citation
+
+If you use the deeptime R package in your work, please cite as:
+
+Gearty, W. 2025. deeptime: an R package that facilitates highly customizable and reproducible visualizations of data over geological time intervals. *Big Earth Data*. doi: [10.1080/20964471.2025.2537516](https://doi.org/10.1080/20964471.2025.2537516).
