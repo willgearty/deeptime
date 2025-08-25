@@ -168,6 +168,17 @@ scales should be added to the plot. In this case, \code{dat}, \code{fill}, \code
 If individual values (or vectors) are used for these parameters, they will be
 applied to all time scales (and recycled as necessary).
 }
+\section{Theme elements}{
+
+The following theme elements can be used to customize the appearance of the
+geologic time scale:
+\itemize{
+\item \code{deeptime.scale.background}: the background element of each individual
+scale (shown wherever no intervals are being shown). Behaves like
+\code{plot.background}. The default is \code{element_rect(fill = NA, color = NA)}.
+}
+}
+
 \examples{
 library(ggplot2)
 # single scale on bottom
