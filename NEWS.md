@@ -1,5 +1,7 @@
 # deeptime (development version)
 
+* Updated citation information for the package (#89)
+
 # deeptime 2.2.0
 
 This new minor version of deeptime introduces several new features and bug fixes. It also is compatible with version 4 of ggplot2.
