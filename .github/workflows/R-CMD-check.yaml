@@ -13,7 +13,7 @@ name: R-CMD-check
 permissions: read-all
 
 env:
-  R_BIOC_VERSION: 3.19
+  R_BIOC_VERSION: 3.22
 
 jobs:
   R-CMD-check:
