@@ -43,16 +43,18 @@ coord_trans_deeptime <- function(...) {
 #' useful for adding a time scale where categories and time intervals are not
 #' 1:1.
 #'
-#' `pos` may also be a `list` of sides (including duplicates) if multiple time
-#' scales should be added to the plot. In this case, `dat`, `fill`, `alpha`,
-#' `height`, `bord`, `lwd`, `color`, `lab`, `lab_color`, `rot`, `family`,
-#' `fontface`, `size`, `skip`, `abbrv`, `neg`, `center_end_labels`, and
-#' `dat_is_discrete` can also be `list`s. If these `list`s are not as long as
-#' `pos`, the elements will be recycled.
-#' If individual values (or vectors) are used for these parameters, they will be
-#' applied to all time scales (and recycled as necessary).
-#' @param pos Which side to add the scale to (left, right, top, or bottom).
-#'   First letter may also be used.
+#' `pos` and/or `dat` may be a `list` of values if multiple time scales should
+#' be added to the plot. In this case, `fill`, `alpha`, `height`, `bord`, `lwd`,
+#' `color`, `lab`, `lab_color`, `rot`, `family`, `fontface`, `size`, `skip`,
+#' `abbrv`, `neg`, `center_end_labels`, and `dat_is_discrete` can also be
+#' `list`s, with elements corresponding to the settings for each individual time
+#' scale. If these `list`s are not as long as the number of time scales, the
+#' elements will be recycled. If individual values (or vectors) are used for
+#' these parameters, they will be applied to all time scales (and recycled as
+#' necessary). In the case where both `pos` and `dat` are `list`s, the length of
+#' the longer list will be used as the desired number of scales.
+#' @param pos Which side to add the scale to ("left", "right", "top", or
+#'   "bottom"). First letter may also be used.
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
 #'   B) a string indicating a timescale from macrostrat (see list here:
@@ -126,7 +128,7 @@ coord_trans_deeptime <- function(...) {
 #'   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
 #'   scale_x_reverse() +
 #'   coord_geo(
-#'     xlim = c(100, 0), ylim = c(0, 8), pos = as.list(rep("bottom", 3)),
+#'     xlim = c(100, 0), ylim = c(0, 8), pos = "bottom",
 #'     dat = list("stages", "epochs", "periods"),
 #'     height = list(unit(4, "lines"), unit(4, "lines"), unit(2, "line")),
 #'     rot = list(90, 90, 0), size = list(2.5, 2.5, 5), abbrv = FALSE
@@ -163,13 +165,17 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
                    "bottom" (first letter may also be used).')
   }
   pos <- as.list(pos)
-  n_scales <- length(pos)
+  dat <- make_list(dat)
+  n_pos <- length(pos)
+  n_dat <- length(dat)
+  n_scales <- max(n_pos, n_dat)
 
   ggproto(NULL, CoordGeo,
     trans = list(x = xtrans, y = ytrans),
     limits = list(x = xlim, y = ylim),
     expand = expand, clip = clip,
-    pos = pos, dat = rep(make_list(dat), length.out = n_scales),
+    pos = rep(pos, length.out = n_scales),
+    dat = rep(dat, length.out = n_scales),
     fill = rep(make_list(fill), length.out = n_scales),
     color = rep(make_list(color), length.out = n_scales),
     alpha = rep(make_list(alpha), length.out = n_scales),

@@ -64,6 +64,16 @@ test_that("stacking scales works", {
     ) +
     theme_classic()
   expect_doppelganger_deeptime("stacked scales", gg)
+  gg <- ggplot(coral_div) +
+    geom_line(aes(x = stage_age, y = n)) +
+    scale_x_reverse("Age (Ma)") +
+    ylab("Coral Genera") +
+    coord_geo(
+      dat = list("epochs", "periods", "eras"), xlim = c(250, 0), ylim = c(0, 1700),
+      pos = "b", abbrv = list("auto", TRUE, FALSE)
+    ) +
+    theme_classic()
+  expect_doppelganger_deeptime("stacked scales with single pos", gg)
 })
 
 test_that("scales on different sides works", {
