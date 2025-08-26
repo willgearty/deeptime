@@ -48,7 +48,7 @@ data.frame of time interval boundaries (see Details).}
 \item{xlim, ylim}{Limits for the x and y axes.}
 
 \item{xtrans, ytrans}{Transformers for the x and y axes. For more information
-see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
+see \code{\link[ggplot2:coord_transform]{ggplot2::coord_trans()}}.}
 
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
@@ -128,7 +128,7 @@ scale?}
 \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}. Only used if \code{size} is set to \code{"auto"}.}
 }
 \description{
-\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it occurs
+\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_transform]{ggplot2::coord_trans()}} in that it occurs
 after statistical transformation and will affect the visual appearance of
 geoms. The main difference is that it also adds a geological timescale to the
 specified side(s) of the plot.
