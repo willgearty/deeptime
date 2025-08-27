@@ -164,6 +164,8 @@ ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
         axis.text.y = element_text(color = "black"))
 ```
 
+Note that we also could have used `fgdc_dict()` to get a labeling function to use within `scale_fill_geopattern()` here, but we want to use the macrostrat lithology names here, not the lithology names from the FGDC standard definitions, so we'll stick with grabbing them from `liths`.
+
 ### Further customization
 If you use `scale_fill_geopattern()`, the patterns are used with the default parameters (e.g., line color, background color, and scale). However, if you'd like to customize how the patterns look, you can use the `geom_` functions from the [**ggpattern**](https://trevorldavis.com/R/ggpattern/) package (e.g., `geom_rect_pattern()`) and use the "geo" `pattern`. Once you have implemented this, any of the following ggplot2 aesthetics can be used to tweak the patterns. _Note that the defaults for these two methods are often different:_
 

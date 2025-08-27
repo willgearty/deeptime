@@ -1,3 +1,54 @@
+#' FGDC pattern labeling function/dictionary
+#'
+#' Generates a [labeling function][scales::label_dictionary()]/dictionary based
+#' on the built-in [fgdc_names] dataset that can be used to retrieve the names
+#' of patterns based on their pattern numbers/codes as defined in the [FGDC
+#' Digital Cartographic Standard for Geologic Map
+#' Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php) by the [U.S.
+#' Geological Survey](https://www.usgs.gov/) and the [Geologic Data Subcommittee
+#' (GDS)](https://ngmdb.usgs.gov/fgdc_gds/index.php) of the [Federal Geographic
+#' Data Committee (FGDC)](https://www.fgdc.gov/). Like [fgdc_names], only
+#' patterns with names are included (i.e., patterns 601-733).
+#'
+#' @param clean `logical`. Should the pattern names be cleaned? If `TRUE`
+#'   (default), the names will be cleaned to remove strings such as "(2nd
+#'   option)". If `FALSE`, the names will be verbatim from the FGDC standard.
+#'   Note that pattern names may not be unique when this is set to `TRUE`.
+#' @param nomatch `character`. A string to label values that do not match any
+#'   name in the dictionary. When `NULL` (default), the values are kept as-is.
+#' @param wrap `integer`. If not `NULL`, the pattern names will be wrapped to
+#'   the specified width (in characters) by insertting line breaks between words
+#'   using [strwrap()] (words will not be broken). This can be useful for making
+#'   long names fit better in legends. If `NULL` (default), no wrapping is done.
+#'
+#' @return A [labeling function][scales::label_dictionary()] that takes
+#'   a vector `x` of pattern numbers and returns a character vector of
+#'   `length(x)` giving the corresponding pattern names. The function is
+#'   designed to be used with the `labels` argument of ggplot2 scales, such as
+#'   [scale_fill_geopattern()] and [ggpattern::scale_pattern_type_identity()].
+#' @importFrom scales label_dictionary
+#' @export
+#' @examples
+#' library(ggplot2)
+#' vals <- c("603", "626", "720", "733")
+#' ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
+#'   geom_bar() +
+#'   scale_fill_geopattern(name = NULL, labels = fgdc_dict())
+#' @family patterns
+fgdc_dict <- function(clean = TRUE, nomatch = NULL, wrap = NULL) {
+  codes <- deeptime::fgdc_names$code
+  nms <- deeptime::fgdc_names$name
+  if (clean) {
+    nms <- gsub(" \\(.+ option\\)", "", nms)
+  }
+  if (!is.null(wrap)) {
+    nms <- sapply(nms, function(x) paste(strwrap(x, width = wrap),
+                                         collapse = "\n"),
+                  USE.NAMES = FALSE)
+  }
+  dict <- label_dictionary(setNames(nms, nm = codes), nomatch = nomatch)
+}
+
 #' Get a FGDC geologic plotting pattern
 #'
 #' Retrieve a single geologic pattern as defined in the [FGDC Digital
@@ -14,6 +65,8 @@
 #'   patterns/codes](https://davenquinn.com/projects/geologic-patterns/#pattern-reference)
 #'   and [lithology
 #'   patterns/codes](https://davenquinn.com/projects/geologic-patterns/#series-600).
+#'   The set of patterns with names is also included in the built-in dataset
+#'   [fgdc_names] (and a label dictionary is available using [fgdc_dict()].
 #'   [rmacrostrat::def_lithologies()] can also be used to look up pattern codes
 #'   for various lithologies (see the "fill" column). Note that codes associated
 #'   with color variants (e.g., "101-M") are supported but will result in the
