@@ -17,11 +17,6 @@ In 2006, the [U.S. Geological Survey](https://www.usgs.gov/) and the [Geologic D
 
 Let's first load the packages we'll need:
 
-```{r echo = FALSE}
-#library(devtools)
-#install_github("palaeoverse/rmacrostrat")
-```
-
 ```{r message = FALSE}
 # Load deeptime
 library(deeptime)
