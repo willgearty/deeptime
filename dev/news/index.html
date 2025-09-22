@@ -54,6 +54,7 @@
 <li>The <code>pos</code> argument for <code><a href="../reference/coord_geo.html">coord_geo()</a></code> is now recycled when <code>dat</code> is a list, removing the need for repeated <code>pos</code> values when adding multiple time scales to the same side (<a href="https://github.com/willgearty/deeptime/issues/86" class="external-link">#86</a>)</li>
 <li>Added built-in dataset <code>fgdc_names</code> which includes FGDC pattern codes and verbatim names for named patterns</li>
 <li>Added <code><a href="../reference/fgdc_dict.html">fgdc_dict()</a></code> which can be used to generate a labeling dictionary for FGDC pattern codes (<a href="https://github.com/willgearty/deeptime/issues/79" class="external-link">#79</a>)</li>
+<li>Added contribution docs (<a href="https://github.com/willgearty/deeptime/issues/91" class="external-link">#91</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.2.0" id="deeptime-220">deeptime 2.2.0<a class="anchor" aria-label="anchor" href="#deeptime-220"></a></h2><p class="text-muted">CRAN release: 2025-06-19</p>
@@ -73,9 +74,9 @@
 </ul><p>Bug fixes:</p>
 <ul><li>Fixed <code><a href="../reference/gtable_frame2.html">gtable_frame2()</a></code> and <code><a href="../reference/ggarrange2.html">ggarrange2()</a></code> for plots that use <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/74" class="external-link">#74</a>)</li>
 <li>Fixed <code><a href="../reference/disparity_through_time.html">disparity_through_time()</a></code> for rare edge cases (<a href="https://github.com/willgearty/deeptime/issues/71" class="external-link">#71</a>)</li>
-<li>Updated <code>GeomPointsRange</code> to use the aesthetic defaults from <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html" class="external-link">ggplot2::GeomPointrange</a></code>
+<li>Updated <code>GeomPointsRange</code> to use the aesthetic defaults from <code><a href="https://ggplot2.tidyverse.org/reference/Geom.html" class="external-link">ggplot2::GeomPointrange</a></code>
 </li>
-<li>Updated <code>GeomTextPhylo</code> to use the aesthetic defaults from <code><a href="https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html" class="external-link">ggplot2::GeomText</a></code>
+<li>Updated <code>GeomTextPhylo</code> to use the aesthetic defaults from <code><a href="https://ggplot2.tidyverse.org/reference/Geom.html" class="external-link">ggplot2::GeomText</a></code>
 </li>
 </ul></div>
     <div class="section level2">
@@ -223,7 +224,7 @@ This new major version of deeptime includes several new features:</p>
 <p>Added <code><a href="../reference/coord_geo.html">coord_geo()</a></code>, which is a coordinate system for <code>ggplot2</code> that allows for adding highly customized timescales to <code>ggplot</code> objects. Both <code><a href="../reference/gggeo_scale.html">gggeo_scale()</a></code> and <code>gggeo_scale_old</code> are preserved but will receive notably less maintenance moving forward.</p>
 <ul><li>Updated examples and documentation to use <code><a href="../reference/coord_geo.html">coord_geo()</a></code>
 </li>
-<li>Added <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code>, which is a coordinate system for <code>ggplot2</code> that is similar to <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html" class="external-link">coord_trans()</a></code> but allows for 2-dimensional transformations</li>
+<li>Added <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code>, which is a coordinate system for <code>ggplot2</code> that is similar to <code><a href="https://ggplot2.tidyverse.org/reference/coord_transform.html" class="external-link">coord_trans()</a></code> but allows for 2-dimensional transformations</li>
 <li>Added <code><a href="../reference/disparity_through_time.html">disparity_through_time()</a></code> which allows for plotting 2-dimensional data across a 3rd dimension (using <code>lattice</code>)</li>
 </ul></div>
     <div class="section level2">
