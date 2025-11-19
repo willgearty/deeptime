@@ -109,6 +109,7 @@ get_scale_data <- function(name, true_colors = TRUE) {
     clean_dat$abbr[no_abbr] <-
       abbreviate(clean_dat$name, minlength = 1,
                  use.classes = TRUE, named = FALSE)[no_abbr]
+    clean_dat$abbr[clean_dat$name == "Stage 10"] <- "S10" # fix abbreviation
     dat <- clean_dat
     dat$lab_color <- white_or_black(dat$color)
   }
