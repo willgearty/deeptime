@@ -9,56 +9,6 @@ gggeo_scale(obj, ...)
 \arguments{
 \item{obj}{An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced
 by this function).}
-
-\item{lims}{The limits of the axis of the desired side of the plot. Only
-required if using a gtable object not created by this function.}
-
-\item{dat}{Either A) a string indicating a built-in dataframe with interval
-data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here:
-\url{https://macrostrat.org/api/defs/timescales?all}),
-or C) a custom dataframe of time interval boundaries (see Details).}
-
-\item{fill}{The fill color of the boxes. The default is to use the colors
-included in \code{dat}. If a custom dataset is provided with \code{dat} without color
-and without fill, a greyscale will be used. Custom fill colors can be
-provided with this option and will be recycled if/as necessary.}
-
-\item{color}{The outline color of the interval boxes.}
-
-\item{alpha}{The transparency of the fill colors.}
-
-\item{height}{The height (or width if \code{pos} is \code{left} or \code{right}) of the
-scale.}
-
-\item{pos}{Which side to add the scale to (left, right, top, or bottom).
-First letter may also be used.}
-
-\item{lab}{Whether to include labels.}
-
-\item{rot}{The amount of counter-clockwise rotation to add to the labels (in
-degrees).}
-
-\item{abbrv}{If including labels, whether to use abbreviations instead of
-full interval names.}
-
-\item{skip}{A vector of interval names indicating which intervals should not
-be labeled.}
-
-\item{size}{Label size.}
-
-\item{lwd}{Line width.}
-
-\item{margin}{The width of the margin around the returned object (can be a
-vector of length 4).}
-
-\item{neg}{Set this to true if your x-axis is using negative values.}
-
-\item{bord}{A vector specifying on Which sides of the scale to add borders
-(same options as \code{pos}).}
-
-\item{center_end_labels}{Should labels be centered within the visible range
-of intervals at the ends of the axis?}
 }
 \value{
 A geo_scale object. Basically a gtable object but with the axis
