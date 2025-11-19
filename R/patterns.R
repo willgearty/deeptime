@@ -161,7 +161,7 @@ geo_grob <- function(code,
 #' should correspond to specific pattern codes (see "Details").
 #'
 #' @inherit geo_pattern details
-#' @inheritDotParams ggplot2::discrete_scale -palette -aesthetics -super -position -expand
+#' @inheritDotParams ggplot2::discrete_scale -palette -aesthetics -super -position -expand -fallback.palette
 #' @param na.value The aesthetic value to use for missing (NA) values. May be
 #'   either a color or a [GridPattern][grid::patterns] object (such as that
 #'   returned by [geo_pattern()]).

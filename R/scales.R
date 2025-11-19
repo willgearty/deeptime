@@ -3,7 +3,7 @@
 #' Color scales using the colors in the Geological Time Scale graphics.
 #'
 #' @inheritParams ggplot2::scale_discrete_manual
-#' @inheritDotParams ggplot2::discrete_scale -expand -position -palette -breaks
+#' @inheritDotParams ggplot2::discrete_scale -expand -position -palette -breaks -fallback.palette
 #' @importFrom ggplot2 discrete_scale
 #' @rdname scale_geo
 #' @param dat Either A) a string indicating a built-in dataframe with interval
