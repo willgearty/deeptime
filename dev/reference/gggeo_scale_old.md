@@ -125,5 +125,5 @@ columns of data. See `data(periods)` for an example.
 
 This function is fully deprecated in favor of
 [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md)
-as of **deeptime** version 1.2.0. It will be removed in a future
+as of **deeptime** version 2.0.0. It will be removed in a future
 version.

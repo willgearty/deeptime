@@ -2,10 +2,11 @@
 
 ## deeptime (development version)
 
-- Updated citation information for the package
-  ([\#89](https://github.com/willgearty/deeptime/issues/89))
-- Updated package logo to reflect the recent inclusion of patterns
-  ([\#90](https://github.com/willgearty/deeptime/issues/90))
+This new minor version of deeptime includes a small number of new
+features and some minor housekeeping.
+
+New features:
+
 - The `pos` argument for
   [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md)
   is now recycled when `dat` is a list, removing the need for repeated
@@ -17,6 +18,25 @@
   [`fgdc_dict()`](https://williamgearty.com/deeptime/dev/reference/fgdc_dict.md)
   which can be used to generate a labeling dictionary for FGDC pattern
   codes ([\#79](https://github.com/willgearty/deeptime/issues/79))
+- Added an optional theme element (`deeptime.scale.background`) to
+  customize the background of the time scale area in
+  [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md)
+  ([\#87](https://github.com/willgearty/deeptime/issues/87))
+
+Deprecation:
+
+- Removed `getScaleData()`.
+- Advanced the deprecation of
+  [`gggeo_scale()`](https://williamgearty.com/deeptime/dev/reference/gggeo_scale.md).
+  This function has been fully deprecated from deeptime in favor of
+  [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md).
+
+Miscellaneous:
+
+- Updated citation information for the package
+  ([\#89](https://github.com/willgearty/deeptime/issues/89))
+- Updated package logo to reflect the recent inclusion of patterns
+  ([\#90](https://github.com/willgearty/deeptime/issues/90))
 - Added contribution docs
   ([\#91](https://github.com/willgearty/deeptime/issues/91))
 
@@ -60,9 +80,8 @@ Deprecation:
   [`coord_geo_polar()`](https://williamgearty.com/deeptime/dev/reference/coord_geo_polar.md).
   Use of this function will result in a warning. This function will be
   removed in a future version of deeptime.
-- Advanced the deprecation of
-  [`getScaleData()`](https://williamgearty.com/deeptime/dev/reference/getScaleData.md).
-  This function has been fully deprecated from deeptime in favor of
+- Advanced the deprecation of `getScaleData()`. This function has been
+  fully deprecated from deeptime in favor of
   [`get_scale_data()`](https://williamgearty.com/deeptime/dev/reference/get_scale_data.md).
 
 Bug fixes:
@@ -268,9 +287,7 @@ CRAN release: 2023-01-20
 - Added a geom for making phylomorphospaces
   ([`geom_phylomorpho()`](https://williamgearty.com/deeptime/dev/reference/geom_phylomorpho.md))
 - Added vignettes
-- Renamed
-  [`getScaleData()`](https://williamgearty.com/deeptime/dev/reference/getScaleData.md)
-  to
+- Renamed `getScaleData()` to
   [`get_scale_data()`](https://williamgearty.com/deeptime/dev/reference/get_scale_data.md)
 - Soft deprecated
   [`gggeo_scale()`](https://williamgearty.com/deeptime/dev/reference/gggeo_scale.md)
@@ -309,8 +326,7 @@ features and fixed compatibility with various ggplot2 versions.
 CRAN release: 2022-09-20
 
 - Updated built-in timescales to 2022/02 version of GTS
-- Better name handling and documentation for
-  [`getScaleData()`](https://williamgearty.com/deeptime/dev/reference/getScaleData.md)
+- Better name handling and documentation for `getScaleData()`
   ([\#42](https://github.com/willgearty/deeptime/issues/42))
 
 ## deeptime 0.2.2

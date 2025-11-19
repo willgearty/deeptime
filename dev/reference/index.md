@@ -50,7 +50,6 @@ encouraged to use
 instead, which has more features and is still under active development.
 
 - [`gggeo_scale()`](https://williamgearty.com/deeptime/dev/reference/gggeo_scale.md)
-  [`print(`*`<geo_scale>`*`)`](https://williamgearty.com/deeptime/dev/reference/gggeo_scale.md)
   **\[deprecated\]** :
 
   Add a geologic scale below ggplots using *grid*

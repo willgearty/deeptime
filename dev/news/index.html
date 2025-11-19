@@ -49,11 +49,18 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="deeptime-development-version">deeptime (development version)<a class="anchor" aria-label="anchor" href="#deeptime-development-version"></a></h2>
-<ul><li>Updated citation information for the package (<a href="https://github.com/willgearty/deeptime/issues/89" class="external-link">#89</a>)</li>
-<li>Updated package logo to reflect the recent inclusion of patterns (<a href="https://github.com/willgearty/deeptime/issues/90" class="external-link">#90</a>)</li>
-<li>The <code>pos</code> argument for <code><a href="../reference/coord_geo.html">coord_geo()</a></code> is now recycled when <code>dat</code> is a list, removing the need for repeated <code>pos</code> values when adding multiple time scales to the same side (<a href="https://github.com/willgearty/deeptime/issues/86" class="external-link">#86</a>)</li>
+<p>This new minor version of deeptime includes a small number of new features and some minor housekeeping.</p>
+<p>New features:</p>
+<ul><li>The <code>pos</code> argument for <code><a href="../reference/coord_geo.html">coord_geo()</a></code> is now recycled when <code>dat</code> is a list, removing the need for repeated <code>pos</code> values when adding multiple time scales to the same side (<a href="https://github.com/willgearty/deeptime/issues/86" class="external-link">#86</a>)</li>
 <li>Added built-in dataset <code>fgdc_names</code> which includes FGDC pattern codes and verbatim names for named patterns</li>
 <li>Added <code><a href="../reference/fgdc_dict.html">fgdc_dict()</a></code> which can be used to generate a labeling dictionary for FGDC pattern codes (<a href="https://github.com/willgearty/deeptime/issues/79" class="external-link">#79</a>)</li>
+<li>Added an optional theme element (<code>deeptime.scale.background</code>) to customize the background of the time scale area in <code><a href="../reference/coord_geo.html">coord_geo()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/87" class="external-link">#87</a>)</li>
+</ul><p>Deprecation:</p>
+<ul><li>Removed <code>getScaleData()</code>.</li>
+<li>Advanced the deprecation of <code><a href="../reference/gggeo_scale.html">gggeo_scale()</a></code>. This function has been fully deprecated from deeptime in favor of <code><a href="../reference/coord_geo.html">coord_geo()</a></code>.</li>
+</ul><p>Miscellaneous:</p>
+<ul><li>Updated citation information for the package (<a href="https://github.com/willgearty/deeptime/issues/89" class="external-link">#89</a>)</li>
+<li>Updated package logo to reflect the recent inclusion of patterns (<a href="https://github.com/willgearty/deeptime/issues/90" class="external-link">#90</a>)</li>
 <li>Added contribution docs (<a href="https://github.com/willgearty/deeptime/issues/91" class="external-link">#91</a>)</li>
 </ul></div>
     <div class="section level2">
@@ -70,7 +77,7 @@
 <li>Added facetting examples to the “Plotting temporal data” vignette (<a href="https://github.com/willgearty/deeptime/issues/80" class="external-link">#80</a>)</li>
 </ul><p>Deprecation:</p>
 <ul><li>Advanced the deprecation of <code><a href="../reference/coord_geo_polar.html">coord_geo_polar()</a></code>. Use of this function will result in a warning. This function will be removed in a future version of deeptime.</li>
-<li>Advanced the deprecation of <code><a href="../reference/getScaleData.html">getScaleData()</a></code>. This function has been fully deprecated from deeptime in favor of <code><a href="../reference/get_scale_data.html">get_scale_data()</a></code>.</li>
+<li>Advanced the deprecation of <code>getScaleData()</code>. This function has been fully deprecated from deeptime in favor of <code><a href="../reference/get_scale_data.html">get_scale_data()</a></code>.</li>
 </ul><p>Bug fixes:</p>
 <ul><li>Fixed <code><a href="../reference/gtable_frame2.html">gtable_frame2()</a></code> and <code><a href="../reference/ggarrange2.html">ggarrange2()</a></code> for plots that use <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/74" class="external-link">#74</a>)</li>
 <li>Fixed <code><a href="../reference/disparity_through_time.html">disparity_through_time()</a></code> for rare edge cases (<a href="https://github.com/willgearty/deeptime/issues/71" class="external-link">#71</a>)</li>
@@ -156,7 +163,7 @@ This new major version of deeptime includes several new features:</p>
 <ul><li>Updated built-in timescales to 2022/10 version of GTS</li>
 <li>Added a geom for making phylomorphospaces (<code><a href="../reference/geom_phylomorpho.html">geom_phylomorpho()</a></code>)</li>
 <li>Added vignettes</li>
-<li>Renamed <code><a href="../reference/getScaleData.html">getScaleData()</a></code> to <code><a href="../reference/get_scale_data.html">get_scale_data()</a></code>
+<li>Renamed <code>getScaleData()</code> to <code><a href="../reference/get_scale_data.html">get_scale_data()</a></code>
 </li>
 <li>Soft deprecated <code><a href="../reference/gggeo_scale.html">gggeo_scale()</a></code> and <code><a href="../reference/gggeo_scale_old.html">gggeo_scale_old()</a></code>
 </li>
@@ -174,7 +181,7 @@ This new major version of deeptime includes several new features:</p>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.3" id="deeptime-023">deeptime 0.2.3<a class="anchor" aria-label="anchor" href="#deeptime-023"></a></h2><p class="text-muted">CRAN release: 2022-09-20</p>
 <ul><li>Updated built-in timescales to 2022/02 version of GTS</li>
-<li>Better name handling and documentation for <code><a href="../reference/getScaleData.html">getScaleData()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/42" class="external-link">#42</a>)</li>
+<li>Better name handling and documentation for <code>getScaleData()</code> (<a href="https://github.com/willgearty/deeptime/issues/42" class="external-link">#42</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="deeptime-022">deeptime 0.2.2<a class="anchor" aria-label="anchor" href="#deeptime-022"></a></h2><p class="text-muted">CRAN release: 2022-05-18</p>
