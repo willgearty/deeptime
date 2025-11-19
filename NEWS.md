@@ -2,6 +2,10 @@
 
 * Updated citation information for the package (#89)
 * Updated package logo to reflect the recent inclusion of patterns (#90)
+* The `pos` argument for `coord_geo()` is now recycled when `dat` is a list, removing the need for repeated `pos` values when adding multiple time scales to the same side (#86)
+* Added built-in dataset `fgdc_names` which includes FGDC pattern codes and verbatim names for named patterns
+* Added `fgdc_dict()` which can be used to generate a labeling dictionary for FGDC pattern codes (#79)
+* Added contribution docs (#91)
 
 # deeptime 2.2.0
 

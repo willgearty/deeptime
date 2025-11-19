@@ -126,6 +126,8 @@ reference:
   - grid.pattern_geo
   - geo_pattern
   - scale_fill_geopattern
+  - fgdc_names
+  - fgdc_dict
 
 - title: Combining and arranging plots
   desc: >

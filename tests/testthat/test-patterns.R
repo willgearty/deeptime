@@ -106,3 +106,13 @@ test_that("ggpattern works", {
     theme(legend.key.size = unit(1.5, 'cm'))
   expect_doppelganger_deeptime("ggpattern", gg, patterns = TRUE)
 })
+
+test_that("fgdc_dict works", {
+  dict <- fgdc_dict()
+  expect_true(is.function(dict))
+  vals <- c("603", "626", "720", "733")
+  expect_equal(dict(vals), c("Crossbedded gravel or conglomerate", "Chalk",
+                             "Banded igneous rock", "Ore"))
+  dict <- fgdc_dict(clean = FALSE, wrap = 10)
+  expect_equal(dict("601"), "Gravel or\nconglomerate\n(1st\noption)")
+})

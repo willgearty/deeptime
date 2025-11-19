@@ -36,8 +36,8 @@ coord_geo(
 )
 }
 \arguments{
-\item{pos}{Which side to add the scale to (left, right, top, or bottom).
-First letter may also be used.}
+\item{pos}{Which side to add the scale to ("left", "right", "top", or
+"bottom"). First letter may also be used.}
 
 \item{dat}{Either A) a string indicating a built-in dataframe with interval
 data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
@@ -48,7 +48,7 @@ data.frame of time interval boundaries (see Details).}
 \item{xlim, ylim}{Limits for the x and y axes.}
 
 \item{xtrans, ytrans}{Transformers for the x and y axes. For more information
-see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
+see \code{\link[ggplot2:coord_transform]{ggplot2::coord_trans()}}.}
 
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
@@ -128,7 +128,7 @@ scale?}
 \code{\link[ggfittext:geom_fit_text]{ggfittext::geom_fit_text()}}. Only used if \code{size} is set to \code{"auto"}.}
 }
 \description{
-\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}} in that it occurs
+\code{coord_geo} behaves similarly to \code{\link[ggplot2:coord_transform]{ggplot2::coord_trans()}} in that it occurs
 after statistical transformation and will affect the visual appearance of
 geoms. The main difference is that it also adds a geological timescale to the
 specified side(s) of the plot.
@@ -159,14 +159,16 @@ If the ages within \code{dat} are already discretized, you can set
 useful for adding a time scale where categories and time intervals are not
 1:1.
 
-\code{pos} may also be a \code{list} of sides (including duplicates) if multiple time
-scales should be added to the plot. In this case, \code{dat}, \code{fill}, \code{alpha},
-\code{height}, \code{bord}, \code{lwd}, \code{color}, \code{lab}, \code{lab_color}, \code{rot}, \code{family},
-\code{fontface}, \code{size}, \code{skip}, \code{abbrv}, \code{neg}, \code{center_end_labels}, and
-\code{dat_is_discrete} can also be \code{list}s. If these \code{list}s are not as long as
-\code{pos}, the elements will be recycled.
-If individual values (or vectors) are used for these parameters, they will be
-applied to all time scales (and recycled as necessary).
+\code{pos} and/or \code{dat} may be a \code{list} of values if multiple time scales should
+be added to the plot. In this case, \code{fill}, \code{alpha}, \code{height}, \code{bord}, \code{lwd},
+\code{color}, \code{lab}, \code{lab_color}, \code{rot}, \code{family}, \code{fontface}, \code{size}, \code{skip},
+\code{abbrv}, \code{neg}, \code{center_end_labels}, and \code{dat_is_discrete} can also be
+\code{list}s, with elements corresponding to the settings for each individual time
+scale. If these \code{list}s are not as long as the number of time scales, the
+elements will be recycled. If individual values (or vectors) are used for
+these parameters, they will be applied to all time scales (and recycled as
+necessary). In the case where both \code{pos} and \code{dat} are \code{list}s, the length of
+the longer list will be used as the desired number of scales.
 }
 \section{Theme elements}{
 
@@ -193,7 +195,7 @@ ggplot() +
   geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
   scale_x_reverse() +
   coord_geo(
-    xlim = c(100, 0), ylim = c(0, 8), pos = as.list(rep("bottom", 3)),
+    xlim = c(100, 0), ylim = c(0, 8), pos = "bottom",
     dat = list("stages", "epochs", "periods"),
     height = list(unit(4, "lines"), unit(4, "lines"), unit(2, "line")),
     rot = list(90, 90, 0), size = list(2.5, 2.5, 5), abbrv = FALSE

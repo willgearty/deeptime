@@ -83,6 +83,8 @@ For specific codes, see the "pattern numbers" in the \href{https://ngmdb.usgs.go
 for valid \code{code} values. Daven Quinn has also assembled more accessible
 documentation of the \href{https://davenquinn.com/projects/geologic-patterns/#pattern-reference}{map patterns/codes}
 and \href{https://davenquinn.com/projects/geologic-patterns/#series-600}{lithology patterns/codes}.
+The set of patterns with names is also included in the built-in dataset
+\link{fgdc_names} (and a label dictionary is available using \code{\link[=fgdc_dict]{fgdc_dict()}}.
 \code{\link[rmacrostrat:def_lithologies]{rmacrostrat::def_lithologies()}} can also be used to look up pattern codes
 for various lithologies (see the "fill" column). Note that codes associated
 with color variants (e.g., "101-M") are supported but will result in the
@@ -122,6 +124,8 @@ ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
 }
 \seealso{
 FGDC patterns:
+\code{\link{fgdc_dict}()},
+\code{\link{fgdc_names}},
 \code{\link{geo_pattern}()},
 \code{\link{grid.pattern_geo}()}
 }

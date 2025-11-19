@@ -81,7 +81,7 @@ Useful arguments include \code{color} (font color), \code{family} (font family),
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
-\code{coord_geo_polar} behaves similarly to \code{\link[ggplot2:coord_polar]{ggplot2::coord_polar()}} in that it
+\code{coord_geo_polar} behaves similarly to \code{\link[ggplot2:coord_radial]{ggplot2::coord_polar()}} in that it
 occurs after statistical transformation and will affect the visual appearance
 of geoms. The main difference is that it also adds a geological timescale to
 the background of the plot.

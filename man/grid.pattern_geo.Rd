@@ -83,6 +83,8 @@ ggplot(df, aes(trt, outcome)) +
 }
 \seealso{
 FGDC patterns:
+\code{\link{fgdc_dict}()},
+\code{\link{fgdc_names}},
 \code{\link{geo_pattern}()},
 \code{\link{scale_fill_geopattern}()}
 }
