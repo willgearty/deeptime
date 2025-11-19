@@ -107,7 +107,7 @@ contains the tip names (see example below).
 }
 \examples{
 library(ggplot2)
-\dontshow{if (require(ape)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ape)) withAutoprint(\{ # examplesIf}
 library(ape)
 tr <- rtree(10)
 dat <- data.frame(

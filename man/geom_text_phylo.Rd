@@ -186,7 +186,7 @@ aligns it away from the center.
 
 \examples{
 library(ggplot2)
-\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) withAutoprint(\{ # examplesIf}
 library(ape)
 library(ggtree)
 tr <- rtree(10)

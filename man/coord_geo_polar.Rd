@@ -145,7 +145,7 @@ migrate to the new function for enhanced polar functionality.
 
 \examples{
 library(ggplot2)
-\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) withAutoprint(\{ # examplesIf}
 library(ggtree)
 set.seed(1)
 tree <- rtree(100)
@@ -163,7 +163,7 @@ revts(ggtree(tree)) +
   theme(deeptime.axis.text.r = element_text(size = 3.5, hjust = .75,
                                             vjust = .75))
 \dontshow{\}) # examplesIf}
-\dontshow{if (require(ggtree) && require(paleotree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree) && require(paleotree)) withAutoprint(\{ # examplesIf}
 library(ggplot2)
 library(paleotree)
 data(RaiaCopesRule)

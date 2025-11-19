@@ -172,7 +172,7 @@ ggplot() +
                   spacing = unit(0, "npc"))) +
   coord_cartesian(xlim = c(1000, 0), ylim = c(0, 8)) +
   theme_classic()
-\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) withAutoprint(\{ # examplesIf}
 # the coord_geo() look on a radial phylogeny
 library(ggtree)
 library(paleotree)

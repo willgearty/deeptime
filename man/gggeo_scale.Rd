@@ -223,7 +223,7 @@ p <- ggplot(df) +
 gggeo_scale(p)
 
 # can even add a scale to a phylogeny (using ggtree)
-\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) withAutoprint(\{ # examplesIf}
 library(phytools)
 library(ggtree)
 tree <- pbtree(b = .03, d = .01, n = 100)

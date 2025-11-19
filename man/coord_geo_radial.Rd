@@ -151,7 +151,7 @@ distance from the origin. This is why \code{abbrv} is set to \code{TRUE} by defa
 }
 \examples{
 library(ggplot2)
-\dontshow{if (require(ggtree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree)) withAutoprint(\{ # examplesIf}
 library(ggtree)
 set.seed(1)
 tree <- rtree(100)
@@ -171,7 +171,7 @@ revts(ggtree(tree)) +
                      guide = "none", breaks = NULL) +
   theme_gray()
 \dontshow{\}) # examplesIf}
-\dontshow{if (require(ggtree) && require(paleotree)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggtree) && require(paleotree)) withAutoprint(\{ # examplesIf}
 library(ggplot2)
 library(paleotree)
 data(RaiaCopesRule)

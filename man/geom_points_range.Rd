@@ -165,7 +165,7 @@ This geom treats each axis differently and, thus, can thus have two orientations
 
 \examples{
 library(ggplot2)
-\dontshow{if (require(palaeoverse)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(palaeoverse)) withAutoprint(\{ # examplesIf}
 library(palaeoverse)
 data(tetrapods)
 tetrapod_names <- tetrapods$accepted_name[1:50]

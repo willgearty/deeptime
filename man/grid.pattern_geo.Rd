@@ -68,7 +68,7 @@ y <- 0.5 + 0.5 * sin(seq(2 * pi / 4, by = 2 * pi / 6, length.out = 6))
 grid.newpage()
 grid.pattern_geo(params = list(pattern_type = "633", pattern_scale = 4),
                  boundary_df = data.frame(x, y, id = 1))
-\dontshow{if (require(ggpattern)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (require(ggpattern)) withAutoprint(\{ # examplesIf}
 # use the function via ggpattern by specifying `pattern = 'geo'`
 library(ggplot2)
 library(ggpattern)
