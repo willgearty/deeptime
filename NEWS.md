@@ -9,6 +9,11 @@ New features:
 * Added `fgdc_dict()` which can be used to generate a labeling dictionary for FGDC pattern codes (#79)
 * Added an optional theme element (`deeptime.scale.background`) to customize the background of the time scale area in `coord_geo()` (#87)
 
+Deprecation:
+
+* Removed `getScaleData()`.
+* Advanced the deprecation of `gggeo_scale()`. This function has been fully deprecated from deeptime in favor of `coord_geo()`.
+
 Miscellaneous:
 
 * Updated citation information for the package (#89)

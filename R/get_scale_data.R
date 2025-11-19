@@ -134,16 +134,3 @@ macrostrat_timescales <- function() {# nocov start
                      stringsAsFactors = FALSE)
   return(paste0("\\item ", scales$timescale, collapse = "\n"))
 }# nocov end
-
-#' Get geological timescale data
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `getScaleData()` was renamed to [get_scale_data()] as of **deeptime** version
-#' 1.0.0 to create a more consistent API.
-#' @keywords internal
-#' @export
-getScaleData <- function(name) {
-  lifecycle::deprecate_stop("1.0.0", "getScaleData()", "get_scale_data()")
-}

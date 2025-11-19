@@ -2,85 +2,13 @@
 % Please edit documentation in R/gggeo_scale.R
 \name{gggeo_scale}
 \alias{gggeo_scale}
-\alias{gggeo_scale.gtable}
-\alias{gggeo_scale.ggplot}
-\alias{gggeo_scale.geo_scale}
-\alias{print.geo_scale}
 \title{Add a geologic scale below ggplots using \emph{grid}}
 \usage{
 gggeo_scale(obj, ...)
-
-\method{gggeo_scale}{gtable}(
-  obj,
-  lims,
-  dat = "periods",
-  fill = NULL,
-  color = "black",
-  alpha = 1,
-  height = unit(2, "line"),
-  pos = "bottom",
-  lab = TRUE,
-  rot = 0,
-  abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
-  size = 5,
-  lwd = 0.25,
-  margin = unit(0, "line"),
-  neg = FALSE,
-  bord = c("left", "right", "top", "bottom"),
-  center_end_labels = FALSE,
-  ...
-)
-
-\method{gggeo_scale}{ggplot}(
-  obj,
-  dat = "periods",
-  fill = NULL,
-  color = "black",
-  alpha = 1,
-  height = unit(2, "line"),
-  pos = "bottom",
-  lab = TRUE,
-  rot = 0,
-  abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
-  size = 5,
-  lwd = 0.25,
-  margin = unit(0, "line"),
-  neg = FALSE,
-  bord = c("left", "right", "top", "bottom"),
-  center_end_labels = FALSE,
-  ...
-)
-
-\method{gggeo_scale}{geo_scale}(
-  obj,
-  dat = "periods",
-  fill = NULL,
-  color = "black",
-  alpha = 1,
-  height = unit(2, "line"),
-  pos = "bottom",
-  lab = TRUE,
-  rot = 0,
-  abbrv = TRUE,
-  skip = c("Quaternary", "Holocene", "Late Pleistocene"),
-  size = 5,
-  lwd = 0.25,
-  margin = unit(0, "line"),
-  neg = FALSE,
-  bord = c("left", "right", "top", "bottom"),
-  center_end_labels = FALSE,
-  ...
-)
-
-\method{print}{geo_scale}(x, ...)
 }
 \arguments{
 \item{obj}{An object of class \code{ggplot}, \code{gtable}, or \code{geo_scale} (as produced
 by this function).}
-
-\item{...}{further arguments passed to \code{\link[grid:grid.draw]{grid::grid.draw()}}.}
 
 \item{lims}{The limits of the axis of the desired side of the plot. Only
 required if using a gtable object not created by this function.}
@@ -131,8 +59,6 @@ vector of length 4).}
 
 \item{center_end_labels}{Should labels be centered within the visible range
 of intervals at the ends of the axis?}
-
-\item{x}{An object of class geo_scale.}
 }
 \value{
 A geo_scale object. Basically a gtable object but with the axis
@@ -160,81 +86,8 @@ used as labels.
 }
 \section{Life cycle}{
 
-This function is deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of \strong{deeptime}
-version 1.0.0. It will be removed in a future release.
+This function is fully deprecated in favor of \code{\link[=coord_geo]{coord_geo()}} as of
+\strong{deeptime} version 2.3.0. It will be removed in a future version.
 }
 
-\examples{
-library(ggplot2)
-# bottom scale by default
-p <- ggplot() +
-  geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 1000))) +
-  scale_x_reverse() +
-  coord_cartesian(xlim = c(1000, 0), ylim = c(0, 8), expand = FALSE) +
-  theme_classic()
-gggeo_scale(p)
-
-# can specify any side of the plot
-p <- ggplot() +
-  geom_point(aes(x = runif(1000, 0, 8), y = runif(1000, 0, 1000))) +
-  scale_y_reverse() +
-  coord_cartesian(xlim = c(0, 8), ylim = c(1000, 0), expand = FALSE) +
-  theme_classic()
-gggeo_scale(p, pos = "left", rot = 90)
-
-# can add multiple scales
-p <- ggplot() +
-  geom_point(aes(y = runif(1000, 0, 8), x = runif(1000, 0, 100))) +
-  scale_x_reverse() +
-  coord_cartesian(xlim = c(100, 0), ylim = c(0, 8), expand = FALSE) +
-  theme_classic()
-p <- gggeo_scale(p, abbrv = FALSE)
-p <- gggeo_scale(p, dat = "epochs", height = unit(4, "lines"), rot = 90,
-                 size = 2.5, abbrv = FALSE)
-gggeo_scale(p, dat = "stages", height = unit(4, "lines"), rot = 90,
-            size = 2.5, abbrv = FALSE)
-\dontrun{
-# intervals on both sides for different timescales (ICS stages vs North
-# American Land Mammal Ages)
-p <- ggplot() +
-  geom_point(aes(x = runif(1000, 0, 10), y = runif(1000, 0, 65))) +
-  scale_y_reverse() +
-  coord_cartesian(xlim = c(0, 10), ylim = c(65, 0), expand = FALSE) +
-  theme_classic()
-p <- gggeo_scale(p, dat = "stages", pos = "left", height = unit(4, "lines"),
-  size = 2.5, abbrv = FALSE)
-gggeo_scale(p, dat = "North American Land Mammal Ages",
-            pos = "right", height = unit(4, "lines"),
-            size = 2.5, abbrv = FALSE)
-}
-
-# can add scales to a faceted plot
-# use gggeo_scale_old() if you have more than one column
-df <- data.frame(
-  x = runif(1000, 0, 541), y = runif(1000, 0, 8),
-  z = sample(c(1, 2, 3, 4), 1000, TRUE)
-)
-p <- ggplot(df) +
-  geom_point(aes(x, y)) +
-  scale_x_reverse() +
-  coord_cartesian(xlim = c(541, 0), ylim = c(0, 8), expand = FALSE) +
-  theme_classic() +
-  facet_wrap(~z, ncol = 1)
-gggeo_scale(p)
-
-# can even add a scale to a phylogeny (using ggtree)
-\dontshow{if (require(ggtree)) withAutoprint(\{ # examplesIf}
-library(phytools)
-library(ggtree)
-tree <- pbtree(b = .03, d = .01, n = 100)
-p <- ggtree(tree) +
-  coord_cartesian(xlim = c(-500, 0), ylim = c(-2, Ntip(tree)),
-                  expand = FALSE) +
-  scale_x_continuous(breaks = seq(-500, 0, 100),
-                     labels = abs(seq(-500, 0, 100))) +
-  theme_tree2()
-p <- revts(p)
-gggeo_scale(p, neg = TRUE)
-\dontshow{\}) # examplesIf}
-}
 \keyword{internal}

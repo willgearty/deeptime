@@ -22,7 +22,7 @@
 #' }
 #' @section Life cycle:
 #'   This function is fully deprecated in favor of [coord_geo()] as of
-#'   **deeptime** version 1.2.0. It will be removed in a future version.
+#'   **deeptime** version 2.0.0. It will be removed in a future version.
 #' @param gg The ggplot object.
 #' @param dat Either A) a string indicating a built-in dataframe with interval
 #'   data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
@@ -58,5 +58,5 @@ gggeo_scale_old <-
            height = .05, gap = 0, pos = "bottom", lab = TRUE, rot = 0,
            abbrv = TRUE, skip = c("Quaternary", "Holocene", "Late Pleistocene"),
            size = 5, neg = FALSE) {
-  lifecycle::deprecate_stop("1.2.0", "gggeo_scale_old()", "coord_geo()")
+  lifecycle::deprecate_stop("2.0.0", "gggeo_scale_old()", "coord_geo()")
 }
