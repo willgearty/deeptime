@@ -6,5 +6,5 @@ test_that("gggeo_scale() is deprecated", {
     ylab("Coral Genera") +
     coord_cartesian(xlim = c(250, 0), ylim = c(0, 1700), expand = FALSE) +
     theme_classic()
-  lifecycle::expect_deprecated(gggeo_scale(p))
+  lifecycle::expect_defunct(gggeo_scale(p))
 })
