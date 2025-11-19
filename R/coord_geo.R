@@ -328,7 +328,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity theme_void
-#' @importFrom ggplot2 scale_x_reverse calc_element
+#' @importFrom ggplot2 scale_x_reverse calc_element theme
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
