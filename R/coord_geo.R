@@ -53,6 +53,15 @@ coord_trans_deeptime <- function(...) {
 #' these parameters, they will be applied to all time scales (and recycled as
 #' necessary). In the case where both `pos` and `dat` are `list`s, the length of
 #' the longer list will be used as the desired number of scales.
+#'
+#' @section Theme elements:
+#' The following theme elements can be used to customize the appearance of the
+#' geologic time scale:
+#' \itemize{
+#'  \item `deeptime.scale.background`: the background element of each individual
+#'    scale (shown wherever no intervals are being shown). Behaves like
+#'    `plot.background`. The default is `element_rect(fill = NA, color = NA)`.
+#' }
 #' @param pos Which side to add the scale to ("left", "right", "top", or
 #'   "bottom"). First letter may also be used.
 #' @param dat Either A) a string indicating a built-in dataframe with interval
@@ -319,7 +328,7 @@ render_geo_scale <- function(self, panel_params, theme, position) {
 
 #' @importFrom ggplot2 ggplot geom_rect geom_segment geom_text annotate aes
 #' @importFrom ggplot2 scale_fill_identity scale_color_identity theme_void
-#' @importFrom ggplot2 scale_x_reverse
+#' @importFrom ggplot2 scale_x_reverse calc_element
 #' @importFrom ggplot2 last_plot set_last_plot
 #' @importFrom ggfittext geom_fit_text
 #' @importFrom rlang exec
@@ -405,7 +414,8 @@ make_geo_scale <- function(self, dat, fill, color, alpha, pos,
       data = dat, aes(x = max_age, xend = max_age), y = 0, yend = 1,
       color = color, linewidth = lwd
     ) +
-    theme_void()
+    theme_void() +
+    theme(plot.background = calc_element("deeptime.scale.background", theme))
 
   rev_axis <- FALSE
   # if left or right, rotate accordingly using coord_trans_flip,

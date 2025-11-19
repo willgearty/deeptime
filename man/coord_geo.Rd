@@ -170,6 +170,17 @@ these parameters, they will be applied to all time scales (and recycled as
 necessary). In the case where both \code{pos} and \code{dat} are \code{list}s, the length of
 the longer list will be used as the desired number of scales.
 }
+\section{Theme elements}{
+
+The following theme elements can be used to customize the appearance of the
+geologic time scale:
+\itemize{
+\item \code{deeptime.scale.background}: the background element of each individual
+scale (shown wherever no intervals are being shown). Behaves like
+\code{plot.background}. The default is \code{element_rect(fill = NA, color = NA)}.
+}
+}
+
 \examples{
 library(ggplot2)
 # single scale on bottom
