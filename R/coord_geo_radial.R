@@ -150,12 +150,6 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
   clip <- arg_match0(clip, c("off", "on"))
   reverse <- arg_match0(reverse, c("theta", "thetar", "r", "none"))
 
-  end <- end %||% (start + 2 * pi)
-  if (start > end) {
-    n_rotate <- ((start - end) %/% (2 * pi)) + 1
-    start <- start - n_rotate * 2 * pi
-  }
-
   arc <- c(start, end %||% (start + 2 * pi))
   if (arc[1] > arc[2]) {
     n_rotate <- ((arc[1] - arc[2]) %/% (2 * pi)) + 1
@@ -164,6 +158,16 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
   arc <- switch(reverse, thetar = , theta = rev(arc), arc)
 
   r.axis.inside <- r.axis.inside %||% !(abs(arc[2] - arc[1]) >= 1.999 * pi)
+  if (isFALSE(r.axis.inside)) {
+    place <- in_arc(c(0, 0.5, 1, 1.5) * pi, arc)
+    if (!any(place)) {
+      cli::cli_warn(c(
+        "No appropriate placement found for outside {.field r.axis}.",
+        i = "Will use {.code r.axis.inside = TRUE} instead"
+      ))
+      r.axis.inside <- TRUE
+    }
+  }
 
   inner_radius <- c(inner.radius, 1) * 0.4
   inner_radius <- switch(reverse, thetar = , r = rev, identity)(inner_radius)
