@@ -97,7 +97,7 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
                              clip = "off", r_axis_inside = deprecated(),
                              rotate_angle = deprecated()) {
   if (lifecycle::is_present(r_axis_inside)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_soft(
       "2.3.1",
       "coord_geo_radial(r_axis_inside)",
       "coord_geo_radial(r.axis.inside)"
@@ -105,7 +105,7 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
     r.axis.inside <- r_axis_inside
   }
   if (lifecycle::is_present(rotate_angle)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_soft(
       "2.3.1",
       "coord_geo_radial(rotate_angle)",
       "coord_geo_radial(rotate.angle)"
@@ -113,7 +113,7 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
     rotate.angle <- rotate_angle
   }
   if (lifecycle::is_present(direction)) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_soft(
       "2.3.1",
       "coord_geo_radial(direction)",
       "coord_geo_radial(reverse)"
