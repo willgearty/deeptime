@@ -12,9 +12,10 @@ coord_geo_radial(
   start = -0.5 * pi,
   end = 1.25 * pi,
   expand = TRUE,
-  direction = 1,
+  direction = deprecated(),
   reverse = "none",
-  r_axis_inside = NULL,
+  r.axis.inside = NULL,
+  rotate.angle = FALSE,
   inner.radius = 0.05,
   fill = NULL,
   alpha = 1,
@@ -28,7 +29,8 @@ coord_geo_radial(
   prop = 1,
   textpath_args = list(),
   clip = "off",
-  rotate_angle = FALSE
+  r_axis_inside = deprecated(),
+  rotate_angle = deprecated()
 )
 }
 \arguments{
@@ -38,7 +40,8 @@ string indicating a timescale from macrostrat (see list here:
 \url{https://macrostrat.org/api/defs/timescales?all}), or C) a custom
 data.frame of time interval boundaries (see Details).}
 
-\item{theta}{variable to map angle to (\code{x} or \code{y})}
+\item{theta}{The variable to map angle to (\code{x} or \code{y}). This should normally
+be \code{y} when using this function with \code{ggtree}.}
 
 \item{start}{Offset of starting point from 12 o'clock in radians. Offset
 is applied clockwise or anticlockwise depending on value of \code{direction}.}
@@ -51,13 +54,27 @@ for partial polar coordinates. The default, \code{NULL}, is set to
 the limits to prevent overlap between data and axes. If \code{FALSE}, limits
 are taken directly from the scale.}
 
-\item{direction}{1, clockwise; -1, anticlockwise}
+\item{direction}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{reverse}{A string giving which directions to reverse. \code{"none"}
 (default) keep directions as is. \code{"theta"} reverses the angle and \code{"r"}
 reverses the radius. \code{"thetar"} reverses both the angle and the radius.}
 
-\item{r_axis_inside, rotate_angle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+\item{r.axis.inside}{One of the following:
+\itemize{
+\item \code{NULL} (default) places the axis next to the panel if \code{start} and
+\code{end} arguments form a full circle and inside the panel otherwise.
+\item \code{TRUE} to place the radius axis inside the panel.
+\item \code{FALSE} to place the radius axis next to the panel.
+\item A numeric value, setting a theta axis value at which
+the axis should be placed inside the panel. Can be given as a length 2
+vector to control primary and secondary axis placement separately.
+}}
+
+\item{rotate.angle}{If \code{TRUE}, transforms the \code{angle} aesthetic in data
+in accordance with the computed \code{theta} position. If \code{FALSE} (default),
+no such transformation is performed. Can be useful to rotate text geoms in
+alignment with the coordinates.}
 
 \item{inner.radius}{A \code{numeric} between 0 and 1 setting the size of a
 inner radius hole.}
@@ -100,6 +117,8 @@ Useful arguments include \code{color} (font color), \code{family} (font family),
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
 means no. For details, please see \code{\link[ggplot2:coord_cartesian]{coord_cartesian()}}.}
+
+\item{r_axis_inside, rotate_angle}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \description{
 \code{coord_geo_radial} behaves similarly to \code{\link[ggplot2:coord_radial]{ggplot2::coord_radial()}} in that it
