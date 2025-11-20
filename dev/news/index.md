@@ -2,6 +2,10 @@
 
 ## deeptime (development version)
 
+## deeptime 2.3.0
+
+CRAN release: 2025-11-20
+
 This new minor version of deeptime includes a small number of new
 features and some minor housekeeping.
 

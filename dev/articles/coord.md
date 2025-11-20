@@ -50,7 +50,7 @@ ggplot(mtcars, aes(disp, wt)) +
 ![](coord_files/figure-html/unnamed-chunk-3-1.png)
 
 Note: back in 2020, [ggplot2](https://ggplot2.tidyverse.org)
-[updated](https://www.tidyverse.org/blog/2020/03/ggplot2-3-3-0/#bi-directional-geoms-and-stats)
+[updated](https://tidyverse.org/blog/2020/03/ggplot2-3-3-0/#bi-directional-geoms-and-stats)
 all the directional stats and geoms (e.g., boxplots and histograms) to
 work in both directions based on the aesthetic mapping. This somewhat
 makes this function redundant, but I still find it useful.
