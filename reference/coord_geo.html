@@ -19,7 +19,7 @@ specified side(s) of the plot."><meta property="og:image" content="https://willi
 
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,12 +50,12 @@ specified side(s) of the plot."><meta property="og:image" content="https://willi
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Transformed coordinate system with geological timescale</h1>
-      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/v2.2.0/R/coord_geo.R" class="external-link"><code>R/coord_geo.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/master/R/coord_geo.R" class="external-link"><code>R/coord_geo.R</code></a></small>
       <div class="d-none name"><code>coord_geo.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p><code>coord_geo</code> behaves similarly to <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html" class="external-link">ggplot2::coord_trans()</a></code> in that it occurs
+    <p><code>coord_geo</code> behaves similarly to <code><a href="https://ggplot2.tidyverse.org/reference/coord_transform.html" class="external-link">ggplot2::coord_trans()</a></code> in that it occurs
 after statistical transformation and will affect the visual appearance of
 geoms. The main difference is that it also adds a geological timescale to the
 specified side(s) of the plot.</p>
@@ -98,8 +98,8 @@ specified side(s) of the plot.</p>
 
 
 <dl><dt id="arg-pos">pos<a class="anchor" aria-label="anchor" href="#arg-pos"></a></dt>
-<dd><p>Which side to add the scale to (left, right, top, or bottom).
-First letter may also be used.</p></dd>
+<dd><p>Which side to add the scale to ("left", "right", "top", or
+"bottom"). First letter may also be used.</p></dd>
 
 
 <dt id="arg-dat">dat<a class="anchor" aria-label="anchor" href="#arg-dat"></a></dt>
@@ -116,7 +116,7 @@ data.frame of time interval boundaries (see Details).</p></dd>
 
 <dt id="arg-xtrans-ytrans">xtrans, ytrans<a class="anchor" aria-label="anchor" href="#arg-xtrans-ytrans"></a></dt>
 <dd><p>Transformers for the x and y axes. For more information
-see <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html" class="external-link">ggplot2::coord_trans()</a></code>.</p></dd>
+see <code><a href="https://ggplot2.tidyverse.org/reference/coord_transform.html" class="external-link">ggplot2::coord_trans()</a></code>.</p></dd>
 
 
 <dt id="arg-clip">clip<a class="anchor" aria-label="anchor" href="#arg-clip"></a></dt>
@@ -258,15 +258,26 @@ If the ages within <code>dat</code> are already discretized, you can set
 <code>dat_is_discrete</code> to <code>TRUE</code> to prevent this automatic conversion. This can be
 useful for adding a time scale where categories and time intervals are not
 1:1.</p>
-<p><code>pos</code> may also be a <code>list</code> of sides (including duplicates) if multiple time
-scales should be added to the plot. In this case, <code>dat</code>, <code>fill</code>, <code>alpha</code>,
-<code>height</code>, <code>bord</code>, <code>lwd</code>, <code>color</code>, <code>lab</code>, <code>lab_color</code>, <code>rot</code>, <code>family</code>,
-<code>fontface</code>, <code>size</code>, <code>skip</code>, <code>abbrv</code>, <code>neg</code>, <code>center_end_labels</code>, and
-<code>dat_is_discrete</code> can also be <code>list</code>s. If these <code>list</code>s are not as long as
-<code>pos</code>, the elements will be recycled.
-If individual values (or vectors) are used for these parameters, they will be
-applied to all time scales (and recycled as necessary).</p>
+<p><code>pos</code> and/or <code>dat</code> may be a <code>list</code> of values if multiple time scales should
+be added to the plot. In this case, <code>fill</code>, <code>alpha</code>, <code>height</code>, <code>bord</code>, <code>lwd</code>,
+<code>color</code>, <code>lab</code>, <code>lab_color</code>, <code>rot</code>, <code>family</code>, <code>fontface</code>, <code>size</code>, <code>skip</code>,
+<code>abbrv</code>, <code>neg</code>, <code>center_end_labels</code>, and <code>dat_is_discrete</code> can also be
+<code>list</code>s, with elements corresponding to the settings for each individual time
+scale. If these <code>list</code>s are not as long as the number of time scales, the
+elements will be recycled. If individual values (or vectors) are used for
+these parameters, they will be applied to all time scales (and recycled as
+necessary). In the case where both <code>pos</code> and <code>dat</code> are <code>list</code>s, the length of
+the longer list will be used as the desired number of scales.</p>
     </div>
+    <div class="section level2">
+    <h2 id="theme-elements">Theme elements<a class="anchor" aria-label="anchor" href="#theme-elements"></a></h2>
+
+
+<p>The following theme elements can be used to customize the appearance of the
+geologic time scale:</p><ul><li><p><code>deeptime.scale.background</code>: the background element of each individual
+scale (shown wherever no intervals are being shown). Behaves like
+<code>plot.background</code>. The default is <code>element_rect(fill = NA, color = NA)</code>.</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -284,7 +295,7 @@ applied to all time scales (and recycled as necessary).</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">coord_geo</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, pos <span class="op">=</span> <span class="st">"bottom"</span>,</span></span>
 <span class="r-in"><span>    dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span>, <span class="st">"epochs"</span>, <span class="st">"periods"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"lines"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"lines"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"line"</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    rot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">90</span>, <span class="fl">0</span><span class="op">)</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">5</span><span class="op">)</span>, abbrv <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -302,7 +313,7 @@ applied to all time scales (and recycled as necessary).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

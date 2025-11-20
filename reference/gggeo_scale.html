@@ -43,7 +43,7 @@ The color column is also optional and lists a hex color code
 
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@ The color column is also optional and lists a hex color code
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Add a geologic scale below ggplots using <em>grid</em></h1>
-      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/v2.2.0/R/gggeo_scale.R" class="external-link"><code>R/gggeo_scale.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/master/R/gggeo_scale.R" class="external-link"><code>R/gggeo_scale.R</code></a></small>
       <div class="d-none name"><code>gggeo_scale.Rd</code></div>
     </div>
 
@@ -96,77 +96,7 @@ used as labels.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">obj</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'gtable'</span></span>
-<span><span class="fu">gggeo_scale</span><span class="op">(</span></span>
-<span>  <span class="va">obj</span>,</span>
-<span>  <span class="va">lims</span>,</span>
-<span>  dat <span class="op">=</span> <span class="st">"periods"</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>  pos <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>  lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rot <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  abbrv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  skip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Quaternary"</span>, <span class="st">"Holocene"</span>, <span class="st">"Late Pleistocene"</span><span class="op">)</span>,</span>
-<span>  size <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  lwd <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>  margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>  neg <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  bord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
-<span>  center_end_labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'ggplot'</span></span>
-<span><span class="fu">gggeo_scale</span><span class="op">(</span></span>
-<span>  <span class="va">obj</span>,</span>
-<span>  dat <span class="op">=</span> <span class="st">"periods"</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>  pos <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>  lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rot <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  abbrv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  skip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Quaternary"</span>, <span class="st">"Holocene"</span>, <span class="st">"Late Pleistocene"</span><span class="op">)</span>,</span>
-<span>  size <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  lwd <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>  margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>  neg <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  bord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
-<span>  center_end_labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'geo_scale'</span></span>
-<span><span class="fu">gggeo_scale</span><span class="op">(</span></span>
-<span>  <span class="va">obj</span>,</span>
-<span>  dat <span class="op">=</span> <span class="st">"periods"</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>  pos <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>  lab <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rot <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  abbrv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  skip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Quaternary"</span>, <span class="st">"Holocene"</span>, <span class="st">"Late Pleistocene"</span><span class="op">)</span>,</span>
-<span>  size <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  lwd <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>  margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>  neg <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  bord <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"left"</span>, <span class="st">"right"</span>, <span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
-<span>  center_end_labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'geo_scale'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">obj</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -176,98 +106,6 @@ used as labels.</p></li>
 <dl><dt id="arg-obj">obj<a class="anchor" aria-label="anchor" href="#arg-obj"></a></dt>
 <dd><p>An object of class <code>ggplot</code>, <code>gtable</code>, or <code>geo_scale</code> (as produced
 by this function).</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>further arguments passed to <code><a href="https://rdrr.io/r/grid/grid.draw.html" class="external-link">grid::grid.draw()</a></code>.</p></dd>
-
-
-<dt id="arg-lims">lims<a class="anchor" aria-label="anchor" href="#arg-lims"></a></dt>
-<dd><p>The limits of the axis of the desired side of the plot. Only
-required if using a gtable object not created by this function.</p></dd>
-
-
-<dt id="arg-dat">dat<a class="anchor" aria-label="anchor" href="#arg-dat"></a></dt>
-<dd><p>Either A) a string indicating a built-in dataframe with interval
-data from the ICS ("periods", "epochs", "stages", "eons", or "eras"),
-B) a string indicating a timescale from macrostrat (see list here:
-<a href="https://macrostrat.org/api/defs/timescales?all" class="external-link">https://macrostrat.org/api/defs/timescales?all</a>),
-or C) a custom dataframe of time interval boundaries (see Details).</p></dd>
-
-
-<dt id="arg-fill">fill<a class="anchor" aria-label="anchor" href="#arg-fill"></a></dt>
-<dd><p>The fill color of the boxes. The default is to use the colors
-included in <code>dat</code>. If a custom dataset is provided with <code>dat</code> without color
-and without fill, a greyscale will be used. Custom fill colors can be
-provided with this option and will be recycled if/as necessary.</p></dd>
-
-
-<dt id="arg-color">color<a class="anchor" aria-label="anchor" href="#arg-color"></a></dt>
-<dd><p>The outline color of the interval boxes.</p></dd>
-
-
-<dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>The transparency of the fill colors.</p></dd>
-
-
-<dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
-<dd><p>The height (or width if <code>pos</code> is <code>left</code> or <code>right</code>) of the
-scale.</p></dd>
-
-
-<dt id="arg-pos">pos<a class="anchor" aria-label="anchor" href="#arg-pos"></a></dt>
-<dd><p>Which side to add the scale to (left, right, top, or bottom).
-First letter may also be used.</p></dd>
-
-
-<dt id="arg-lab">lab<a class="anchor" aria-label="anchor" href="#arg-lab"></a></dt>
-<dd><p>Whether to include labels.</p></dd>
-
-
-<dt id="arg-rot">rot<a class="anchor" aria-label="anchor" href="#arg-rot"></a></dt>
-<dd><p>The amount of counter-clockwise rotation to add to the labels (in
-degrees).</p></dd>
-
-
-<dt id="arg-abbrv">abbrv<a class="anchor" aria-label="anchor" href="#arg-abbrv"></a></dt>
-<dd><p>If including labels, whether to use abbreviations instead of
-full interval names.</p></dd>
-
-
-<dt id="arg-skip">skip<a class="anchor" aria-label="anchor" href="#arg-skip"></a></dt>
-<dd><p>A vector of interval names indicating which intervals should not
-be labeled.</p></dd>
-
-
-<dt id="arg-size">size<a class="anchor" aria-label="anchor" href="#arg-size"></a></dt>
-<dd><p>Label size.</p></dd>
-
-
-<dt id="arg-lwd">lwd<a class="anchor" aria-label="anchor" href="#arg-lwd"></a></dt>
-<dd><p>Line width.</p></dd>
-
-
-<dt id="arg-margin">margin<a class="anchor" aria-label="anchor" href="#arg-margin"></a></dt>
-<dd><p>The width of the margin around the returned object (can be a
-vector of length 4).</p></dd>
-
-
-<dt id="arg-neg">neg<a class="anchor" aria-label="anchor" href="#arg-neg"></a></dt>
-<dd><p>Set this to true if your x-axis is using negative values.</p></dd>
-
-
-<dt id="arg-bord">bord<a class="anchor" aria-label="anchor" href="#arg-bord"></a></dt>
-<dd><p>A vector specifying on Which sides of the scale to add borders
-(same options as <code>pos</code>).</p></dd>
-
-
-<dt id="arg-center-end-labels">center_end_labels<a class="anchor" aria-label="anchor" href="#arg-center-end-labels"></a></dt>
-<dd><p>Should labels be centered within the visible range
-of intervals at the ends of the axis?</p></dd>
-
-
-<dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>An object of class geo_scale.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -279,91 +117,10 @@ limits included.</p>
     <h2 id="life-cycle">Life cycle<a class="anchor" aria-label="anchor" href="#life-cycle"></a></h2>
 
 
-<p>This function is deprecated in favor of <code><a href="coord_geo.html">coord_geo()</a></code> as of <strong>deeptime</strong>
-version 1.0.0. It will be removed in a future release.</p>
+<p>This function is fully deprecated in favor of <code><a href="coord_geo.html">coord_geo()</a></code> as of
+<strong>deeptime</strong> version 2.3.0. It will be removed in a future version.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># bottom scale by default</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`gggeo_scale()` was deprecated in deeptime 1.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `coord_geo()` instead.</span>
-<span class="r-plt img"><img src="gggeo_scale-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># can specify any side of the plot</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, pos <span class="op">=</span> <span class="st">"left"</span>, rot <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="gggeo_scale-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># can add multiple scales</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, abbrv <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, dat <span class="op">=</span> <span class="st">"epochs"</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"lines"</span><span class="op">)</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span></span>
-<span class="r-in"><span>                 size <span class="op">=</span> <span class="fl">2.5</span>, abbrv <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, dat <span class="op">=</span> <span class="st">"stages"</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"lines"</span><span class="op">)</span>, rot <span class="op">=</span> <span class="fl">90</span>,</span></span>
-<span class="r-in"><span>            size <span class="op">=</span> <span class="fl">2.5</span>, abbrv <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="gggeo_scale-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># intervals on both sides for different timescales (ICS stages vs North</span></span></span>
-<span class="r-in"><span><span class="co"># American Land Mammal Ages)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">65</span>, <span class="fl">0</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, dat <span class="op">=</span> <span class="st">"stages"</span>, pos <span class="op">=</span> <span class="st">"left"</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"lines"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  size <span class="op">=</span> <span class="fl">2.5</span>, abbrv <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, dat <span class="op">=</span> <span class="st">"North American Land Mammal Ages"</span>,</span></span>
-<span class="r-in"><span>            pos <span class="op">=</span> <span class="st">"right"</span>, height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"lines"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>            size <span class="op">=</span> <span class="fl">2.5</span>, abbrv <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># can add scales to a faceted plot</span></span></span>
-<span class="r-in"><span><span class="co"># use gggeo_scale_old() if you have more than one column</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">541</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">1000</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_reverse</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">541</span>, <span class="fl">0</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">z</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="gggeo_scale-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># can even add a scale to a phylogeny (using ggtree)</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/liamrevell/phytools" class="external-link">phytools</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: maps</span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/" class="external-link">ggtree</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phytools/man/pbtree.html" class="external-link">pbtree</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">.03</span>, d <span class="op">=</span> <span class="fl">.01</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html" class="external-link">ggtree</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">500</span>, <span class="fl">0</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/pkg/ape/man/summary.phylo.html" class="external-link">Ntip</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                  expand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">500</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">500</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/theme_tree2.html" class="external-link">theme_tree2</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/revts.html" class="external-link">revts</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">gggeo_scale</span><span class="op">(</span><span class="va">p</span>, neg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="gggeo_scale-5.png" alt="" width="700" height="433"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
@@ -373,7 +130,7 @@ version 1.0.0. It will be removed in a future release.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

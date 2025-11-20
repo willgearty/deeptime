@@ -1,0 +1,379 @@
+# deeptime
+
+## Overview
+
+**deeptime** extends the functionality of other plotting packages
+(notably [ggplot2](https://ggplot2.tidyverse.org)) to help facilitate
+the plotting of data over long time intervals, including, but not
+limited to, geological, evolutionary, and ecological data. The primary
+goal of **deeptime** is to enable users to add highly customizable
+timescales to their visualizations. Other functions are also included to
+assist with other areas of deep time visualization.
+
+## Installation
+
+``` r
+# get the stable version from CRAN
+install.packages("deeptime")
+
+# or get the development version from github
+# install.packages("devtools")
+devtools::install_github("willgearty/deeptime")
+```
+
+## Usage
+
+### Load packages
+
+``` r
+library(deeptime)
+library(ggplot2)
+library(dplyr)
+```
+
+### Add one or more timescales to virtually any ggplot2 plot!
+
+The main function of **deeptime** is
+[`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md),
+which functions just like
+[`coord_trans()`](https://ggplot2.tidyverse.org/reference/coord_transform.html)
+from [ggplot2](https://ggplot2.tidyverse.org). You can use this function
+to add highly customizable timescales to a wide variety of ggplots.
+
+``` r
+library(divDyn)
+data(corals)
+
+# this is not a proper diversity curve but it gets the point across
+coral_div <- corals %>% filter(stage != "") %>%
+  group_by(stage) %>%
+  summarise(n = n()) %>%
+  mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
+                        stages$min_age[match(stage, stages$name)])/2)
+ggplot(coral_div) +
+  geom_line(aes(x = stage_age, y = n)) +
+  scale_x_reverse("Age (Ma)") +
+  ylab("Coral Genera") +
+  coord_geo(xlim = c(250, 0), ylim = c(0, 1700)) +
+  theme_classic(base_size = 16)
+```
+
+![](reference/figures/example_bottom.png)
+
+#### Lots of timescales available!
+
+``` r
+# Load packages
+library(gsloid)
+
+# Plot two different timescales
+ggplot(lisiecki2005) +
+  geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
+  scale_y_reverse("Time (Ma)") +
+  scale_x_reverse("\u03B418O") +
+  coord_geo(
+    dat = list("Geomagnetic Polarity Chron",
+               "Planktic foraminiferal Primary Biozones"),
+    xlim = c(6, 2), ylim = c(5.5, 0), pos = list("l", "r"),
+    rot = 90, skip = "PL4", size = list(5, 4)
+  ) +
+  theme_classic(base_size = 16)
+```
+
+![](reference/figures/example_left_right.png)
+
+### Super flexible, supports multiple layouts, and works great with other packages!
+
+``` r
+# Load packages
+library(ggtree)
+library(rphylopic)
+
+# Get vertebrate phylogeny
+library(phytools)
+data(vertebrate.tree)
+
+vertebrate.tree$tip.label[vertebrate.tree$tip.label ==
+                            "Myotis_lucifugus"] <- "Vespertilioninae"
+vertebrate_data <- data.frame(species = vertebrate.tree$tip.label,
+                              name = vertebrate.tree$tip.label)
+
+# Plot the phylogeny with a timescale
+revts(ggtree(vertebrate.tree, size = 1)) %<+%
+  vertebrate_data +
+  geom_phylopic(aes(name = name), size = 25) +
+  scale_x_continuous("Time (Ma)", breaks = seq(-500, 0, 100),
+                     labels = seq(500, 0, -100), limits = c(-500, 0),
+                     expand = expansion(mult = 0)) +
+  scale_y_continuous(guide = NULL) +
+  coord_geo_radial(dat = "periods", end = 0.5 * pi) +
+  theme_classic(base_size = 16)
+```
+
+![](reference/figures/example_phylogeny.png)
+
+### Does lots of other things too!
+
+#### Plot fossil occurence ranges
+
+``` r
+library(palaeoverse)
+
+# Filter occurrences
+occdf <- subset(tetrapods, accepted_rank == "genus")
+occdf <- subset(occdf, accepted_name %in%
+                  c("Eryops", "Dimetrodon", "Diadectes", "Diictodon",
+                    "Ophiacodon", "Diplocaulus", "Benthosuchus"))
+
+# Plot occurrences
+ggplot(data = occdf) +
+  geom_points_range(aes(x = (max_ma + min_ma)/2, y = accepted_name)) +
+  scale_x_reverse(name = "Time (Ma)") +
+  ylab(NULL) +
+  coord_geo(pos = list("bottom", "bottom"), dat = list("stages", "periods"),
+            abbrv = list(TRUE, FALSE), expand = TRUE, size = "auto") +
+  theme_classic(base_size = 16)
+```
+
+![](reference/figures/example_points_range.png)
+
+#### Use standardized geological patterns
+
+``` r
+# Load packages
+library(rmacrostrat)
+library(ggrepel)
+
+# Retrieve the Macrostrat units in the San Juan Basin column
+san_juan_units <- get_units(column_id = 489, interval_name = "Cretaceous")
+
+# Specify x_min and x_max in dataframe
+san_juan_units$x_min <- 0
+san_juan_units$x_max <- 1
+# Tweak values for overlapping units
+san_juan_units$x_max[10] <- 0.5
+san_juan_units$x_min[11] <- 0.5
+
+# Add midpoint age for plotting
+san_juan_units$m_age <- (san_juan_units$b_age + san_juan_units$t_age) / 2
+
+# Get lithology definitions
+liths <- def_lithologies()
+
+# Get the primary lithology for each unit
+san_juan_units$lith_prim <- sapply(san_juan_units$lith, function(df) {
+  df$name[which.max(df$prop)]
+})
+
+# Get the pattern codes for those lithologies
+san_juan_units$pattern <- factor(liths$fill[match(san_juan_units$lith_prim, liths$name)])
+
+# Plot with pattern fills
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect(aes(fill = pattern), color = "black") +
+  scale_fill_geopattern(name = NULL,
+                        breaks = factor(liths$fill), labels = liths$name) +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
+```
+
+![](reference/figures/example_patterns.png)
+
+## Citation
+
+If you use the deeptime R package in your work, please cite as:
+
+Gearty, W. 2025. deeptime: an R package that facilitates highly
+customizable and reproducible visualizations of data over geological
+time intervals. *Big Earth Data*. doi:
+[10.1080/20964471.2025.2537516](https://doi.org/10.1080/20964471.2025.2537516).
+
+# Package index
+
+## Adding geological timescales to plots
+
+The original purpose of deeptime,
+[`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md)
+adds a highly customizable timescale to any
+[ggplot2](https://ggplot2.tidyverse.org) plot. Other functions now
+supplement it to aid in the visualization of data over long time scales.
+
+- [`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md)
+  : Transformed coordinate system with geological timescale
+- [`scale_color_geo()`](https://williamgearty.com/deeptime/reference/scale_geo.md)
+  [`scale_fill_geo()`](https://williamgearty.com/deeptime/reference/scale_geo.md)
+  [`scale_discrete_geo()`](https://williamgearty.com/deeptime/reference/scale_geo.md)
+  : Geological Time Scale color scales
+- [`get_scale_data()`](https://williamgearty.com/deeptime/reference/get_scale_data.md)
+  : Get geological timescale data
+- [`guide_geo()`](https://williamgearty.com/deeptime/reference/guide_geo.md)
+  : Geological timescale axis guide
+
+### Built-in interval data
+
+deeptime includes a selection of built-in interval data from the most
+up-to-date Geological Time Scale. These dataframes include name, max
+age, min age, abbreviation, and color columns.
+
+- [`eons`](https://williamgearty.com/deeptime/reference/eons.md) : Eon
+  data from the International Commission on Stratigraphy (v2024/12)
+- [`eras`](https://williamgearty.com/deeptime/reference/eras.md) : Era
+  data from the International Commission on Stratigraphy (v2024/12)
+- [`periods`](https://williamgearty.com/deeptime/reference/periods.md) :
+  Period data from the International Commission on Stratigraphy
+  (v2024/12)
+- [`epochs`](https://williamgearty.com/deeptime/reference/epochs.md) :
+  Epoch data from the International Commission on Stratigraphy
+  (v2024/12)
+- [`stages`](https://williamgearty.com/deeptime/reference/stages.md) :
+  Stage data from the International Commission on Stratigraphy
+  (v2024/12)
+
+### Deprecated functions
+
+The following function(s) represent early iterations of what is now
+[`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md).
+These function(s) still work but are considered “deprecated”. They will
+be removed in a future version of deeptime, and users are strongly
+encouraged to use
+[`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md)
+instead, which has more features and is still under active development.
+
+- [`gggeo_scale()`](https://williamgearty.com/deeptime/reference/gggeo_scale.md)
+  **\[deprecated\]** :
+
+  Add a geologic scale below ggplots using *grid*
+
+## Adding geological timescales to phylogenies
+
+These functions can be used to add timescales specifically to
+phylogenies that are plotted with
+[ggtree](https://www.bioconductor.org/packages/ggtree).
+
+- [`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md)
+  : Transformed coordinate system with geological timescale
+- [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
+  : Enhanced polar coordinate system with geological timescale
+- [`coord_geo_polar()`](https://williamgearty.com/deeptime/reference/coord_geo_polar.md)
+  **\[deprecated\]** : Polar coordinate system with geological timescale
+- [`scale_color_geo()`](https://williamgearty.com/deeptime/reference/scale_geo.md)
+  [`scale_fill_geo()`](https://williamgearty.com/deeptime/reference/scale_geo.md)
+  [`scale_discrete_geo()`](https://williamgearty.com/deeptime/reference/scale_geo.md)
+  : Geological Time Scale color scales
+- [`get_scale_data()`](https://williamgearty.com/deeptime/reference/get_scale_data.md)
+  : Get geological timescale data
+- [`guide_geo()`](https://williamgearty.com/deeptime/reference/guide_geo.md)
+  : Geological timescale axis guide
+
+### Adding text labels to phylogenies
+
+When using deeptime coordinate systems, this geom may work better than
+geoms from ggtree.
+
+- [`geom_text_phylo()`](https://williamgearty.com/deeptime/reference/geom_text_phylo.md)
+  : Label nodes on a phylogenetic tree plotted with ggtree
+
+## Transforming coordinate systems
+
+These functions can be used to modify the way that your data is plotted
+by [ggplot2](https://ggplot2.tidyverse.org).
+
+- [`coord_trans_flip()`](https://williamgearty.com/deeptime/reference/coord_trans_flip.md)
+  : Transformed and flipped Cartesian coordinate system
+- [`coord_trans_xy()`](https://williamgearty.com/deeptime/reference/coord_trans_xy.md)
+  : Transformed XY Cartesian coordinate system
+
+## Plotting trait data
+
+These functions can be used for visualizing species trait data.
+
+- [`geom_phylomorpho()`](https://williamgearty.com/deeptime/reference/geom_phylomorpho.md)
+  : Plot a 2-D phylomorphospace in ggplot2
+- [`disparity_through_time()`](https://williamgearty.com/deeptime/reference/disparity_through_time.md)
+  : Disparity through time plot using lattice
+- [`panel.disparity()`](https://williamgearty.com/deeptime/reference/panel.disparity.md)
+  : Combined wireframe and cloud panel
+- [`coord_trans_xy()`](https://williamgearty.com/deeptime/reference/coord_trans_xy.md)
+  : Transformed XY Cartesian coordinate system
+
+## Plotting temporal data
+
+These functions can be used for visualizing categorical temporal data.
+
+- [`geom_points_range()`](https://williamgearty.com/deeptime/reference/geom_points_range.md)
+  [`stat_points_range()`](https://williamgearty.com/deeptime/reference/geom_points_range.md)
+  : Display points and their range
+- [`facet_grid_color()`](https://williamgearty.com/deeptime/reference/facet_grid_color.md)
+  [`facet_grid_geo()`](https://williamgearty.com/deeptime/reference/facet_grid_color.md)
+  : Lay out panels in a grid with colored strips
+- [`facet_wrap_color()`](https://williamgearty.com/deeptime/reference/facet_wrap_color.md)
+  [`facet_wrap_geo()`](https://williamgearty.com/deeptime/reference/facet_wrap_color.md)
+  : Wrap a 1d ribbon of panels into 2d with colored strips
+- [`facet_nested_color()`](https://williamgearty.com/deeptime/reference/facet_nested_color.md)
+  [`facet_nested_geo()`](https://williamgearty.com/deeptime/reference/facet_nested_color.md)
+  : Layout panels in a grid with nested colored strips
+- [`facet_nested_wrap_color()`](https://williamgearty.com/deeptime/reference/facet_nested_wrap_color.md)
+  [`facet_nested_wrap_geo()`](https://williamgearty.com/deeptime/reference/facet_nested_wrap_color.md)
+  : Ribbon of panels with nested colored strips
+
+## Plotting geologic data
+
+These functions can be used for visualizing geologic/stratigraphic data.
+
+- [`grid.pattern_geo()`](https://williamgearty.com/deeptime/reference/grid.pattern_geo.md)
+  : Plot an individual FGDC pattern using grid
+- [`geo_pattern()`](https://williamgearty.com/deeptime/reference/geo_pattern.md)
+  [`geo_grob()`](https://williamgearty.com/deeptime/reference/geo_pattern.md)
+  : Get a FGDC geologic plotting pattern
+- [`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md)
+  : Geologic pattern fill scale
+- [`fgdc_names`](https://williamgearty.com/deeptime/reference/fgdc_names.md)
+  : Pattern numbers and names for patterns from the FGDC Digital
+  Cartographic Standard for Geologic Map Symbolization
+- [`fgdc_dict()`](https://williamgearty.com/deeptime/reference/fgdc_dict.md)
+  : FGDC pattern labeling function/dictionary
+
+## Combining and arranging plots
+
+These functions can be used to combine and arrange plots into
+publishable-quality figures.
+
+- [`ggarrange2()`](https://williamgearty.com/deeptime/reference/ggarrange2.md)
+  : Combine and arrange multiple ggplot-like objects
+- [`gtable_frame2()`](https://williamgearty.com/deeptime/reference/gtable_frame2.md)
+  : Decompose a ggplot gtable
+
+# Articles
+
+### Articles
+
+- [Adding geological timescales to
+  plots](https://williamgearty.com/deeptime/articles/coord_geo.md):
+- [Adding geological timescales to
+  phylogenies](https://williamgearty.com/deeptime/articles/phylogenies.md):
+- [Transforming coordinate
+  systems](https://williamgearty.com/deeptime/articles/coord.md):
+- [Plotting trait
+  data](https://williamgearty.com/deeptime/articles/traits.md):
+- [Plotting temporal
+  data](https://williamgearty.com/deeptime/articles/time.md):
+- [Plotting geological/stratigraphical
+  patterns](https://williamgearty.com/deeptime/articles/geo.md):
+- [Combining and arranging
+  plots](https://williamgearty.com/deeptime/articles/ggarrange2.md):

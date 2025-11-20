@@ -23,7 +23,7 @@ including coord_geo() and coord_geo_radial()."><meta property="og:image" content
 
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@ including coord_geo() and coord_geo_radial()."><meta property="og:image" content
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Label nodes on a phylogenetic tree plotted with ggtree</h1>
-      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/v2.2.0/R/geom_text_phylo.R" class="external-link"><code>R/geom_text_phylo.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/master/R/geom_text_phylo.R" class="external-link"><code>R/geom_text_phylo.R</code></a></small>
       <div class="d-none name"><code>geom_text_phylo.Rd</code></div>
     </div>
 
@@ -217,7 +217,7 @@ but unobserved levels are omitted.</p></dd>
 <dd><p>If <code>FALSE</code>, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders()</a></code>.</p></dd>
+the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/annotation_borders.html" class="external-link">annotation_borders()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -270,6 +270,10 @@ aligns it away from the center.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/revts.html" class="external-link">revts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html" class="external-link">ggtree</a></span><span class="op">(</span><span class="va">tr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">geom_text_phylo</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="coord_geo_radial.html">coord_geo_radial</a></span><span class="op">(</span><span class="st">"epochs"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `subgroup`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `subgroup`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `subgroup`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Unknown or uninitialised column: `subgroup`.</span>
 <span class="r-plt img"><img src="geom_text_phylo-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -282,7 +286,7 @@ aligns it away from the center.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

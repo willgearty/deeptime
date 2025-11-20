@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.1.3
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   coord_geo: coord_geo.html
@@ -9,7 +9,7 @@ articles:
   phylogenies: phylogenies.html
   time: time.html
   traits: traits.html
-last_built: 2025-06-23T14:37Z
+last_built: 2025-11-20T18:26Z
 urls:
   reference: https://williamgearty.com/deeptime/reference
   article: https://williamgearty.com/deeptime/articles

@@ -1,5 +1,7 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://williamgearty.com/deeptime/404.html</loc></url>
+<url><loc>https://williamgearty.com/deeptime/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://williamgearty.com/deeptime/CONTRIBUTING.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/LICENSE.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/articles/coord.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/articles/coord_geo.html</loc></url>
@@ -26,11 +28,12 @@
 <url><loc>https://williamgearty.com/deeptime/reference/facet_nested_color.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/facet_nested_wrap_color.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/facet_wrap_color.html</loc></url>
+<url><loc>https://williamgearty.com/deeptime/reference/fgdc_dict.html</loc></url>
+<url><loc>https://williamgearty.com/deeptime/reference/fgdc_names.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/geo_pattern.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/geom_phylomorpho.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/geom_points_range.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/geom_text_phylo.html</loc></url>
-<url><loc>https://williamgearty.com/deeptime/reference/getScaleData.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/get_scale_data.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/ggarrange2.html</loc></url>
 <url><loc>https://williamgearty.com/deeptime/reference/gggeo_scale.html</loc></url>

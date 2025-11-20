@@ -1,0 +1,422 @@
+# Plotting geological/stratigraphical patterns
+
+In 2006, the [U.S. Geological Survey](https://www.usgs.gov/) and the
+[Geologic Data Subcommittee](https://ngmdb.usgs.gov/fgdc_gds/index.php)
+of the [Federal Geographic Data Committee](https://www.fgdc.gov/)
+established the [Digital Cartographic Standard for Geologic Map
+Symbolization](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd.php). This is
+the National Standard for the digital cartographic representation of
+geologic map features, including line symbols, point symbols, colors,
+and patterns. The standard patterns that are put forth in this document
+are included in **deeptime** ([thanks to the work that Daven Quinn put
+in to extracting them as
+SVGs](https://github.com/davenquinn/geologic-patterns/)). Let’s explore
+the functionality that **deeptime** has to retrieve and utilize these
+patterns.
+
+Let’s first load the packages we’ll need:
+
+``` r
+# Load deeptime
+library(deeptime)
+# Load rmacrostrat to get data
+library(rmacrostrat)
+# Load packages for data visualization
+library(ggplot2)
+library(ggrepel)
+```
+
+## Stratigraphic columns
+
+The [**rmacrostrat**](https://rmacrostrat.palaeoverse.org/) package
+allows users to access the Macrostrat API, which includes various
+geological data (e.g., lithostratigraphic units) and
+definitions/metadata associated with those data. The package includes a
+number of [vignettes](https://rmacrostrat.palaeoverse.org/articles/)
+that walk through how to retrieve and visualize various types of data
+from the database. Here, we’re going to be plotting a stratigraphic
+column for the San Juan Basin, a large structural depression which spans
+parts of New Mexico, Colorado, Utah, and Arizona. The details about
+downloading this data are thoroughly presented in [this **rmacrostrat**
+vignette](https://rmacrostrat.palaeoverse.org/articles/stratigraphic-column.html).
+For the purposes of this **deeptime** vignette, we’ll skip ahead and
+download the unit-level stratigraphic data for this basin during the
+Cretaceous:
+
+``` r
+# Using the column ID, retrieve the units in the San Juan Basin column
+san_juan_units <- get_units(column_id = 489, interval_name = "Cretaceous")
+# See the column names and number of rows
+colnames(san_juan_units)
+##  [1] "unit_id"          "section_id"       "col_id"           "project_id"      
+##  [5] "col_area"         "unit_name"        "strat_name_id"    "Mbr"             
+##  [9] "Fm"               "Gp"               "SGp"              "t_age"           
+## [13] "b_age"            "max_thick"        "min_thick"        "outcrop"         
+## [17] "pbdb_collections" "pbdb_occurrences" "lith"             "environ"         
+## [21] "econ"             "measure"          "notes"            "color"           
+## [25] "text_color"       "t_int_id"         "t_int_name"       "t_int_age"       
+## [29] "t_prop"           "units_above"      "b_int_id"         "b_int_name"      
+## [33] "b_int_age"        "b_prop"           "units_below"      "strat_name_long" 
+## [37] "refs"             "clat"             "clng"             "t_plat"          
+## [41] "t_plng"           "b_plat"           "b_plng"
+nrow(san_juan_units)
+## [1] 17
+```
+
+### Plot stratigraphic column
+
+We now have information for each of the 17 Cretaceous geologic units
+contained within the San Juan Basin, including the age of the top and
+bottom of each, which is what we will use to plot our stratigraphic
+column. We’ll follow the **rmacrostrat** vignette to plot the
+stratigraphic column:
+
+``` r
+# Specify x_min and x_max in dataframe
+san_juan_units$x_min <- 0
+san_juan_units$x_max <- 1
+# Tweak values for overlapping units
+san_juan_units$x_max[10] <- 0.5
+san_juan_units$x_min[11] <- 0.5
+
+# Add midpoint age for plotting
+san_juan_units$m_age <- (san_juan_units$b_age + san_juan_units$t_age) / 2
+
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, colored by rock type
+  geom_rect(fill = san_juan_units$color, color = "black") +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(axis.text.y = element_text(color = "black"))
+```
+
+![](geo_files/figure-html/unnamed-chunk-4-1.png)
+
+### Use stratigraphic patterns
+
+Isn’t that snazzy! You’ll see that we used the colors that come straight
+from Macrostrat (i.e., the “color” column) to visualize the different
+units. Presumably these colors represent something about the different
+lithologies of the units. However, we could also represent these
+lithologies with our standardized FGDC patterns. First, we’ll need to
+get the lithology definitions from Macrostrat, which includes the FGDC
+pattern codes:
+
+``` r
+# Get lithology definitions
+liths <- def_lithologies()
+head(liths)
+##   lith_id          name          type          group       class   color fill
+## 1       1 siliciclastic siliciclastic                sedimentary #FFF400  670
+## 2       2        gravel siliciclastic unconsolidated sedimentary #FFAB00  601
+## 3       3          sand siliciclastic unconsolidated sedimentary #FFCA00  607
+## 4       4          silt siliciclastic unconsolidated sedimentary #919AA3  619
+## 5       5           mud siliciclastic unconsolidated sedimentary #A7ACB0  641
+## 6       6     claystone siliciclastic       mudrocks sedimentary #B2B5B7  620
+##   t_units
+## 1     347
+## 2    1316
+## 3   12663
+## 4    9839
+## 5    8472
+## 6    5920
+```
+
+In this output, the “fill” column corresponds to the FGDC pattern code
+for each lithology. Now, we need to figure out the lithology of each of
+our San Juan units. However, you’ll notice that some units have multiple
+lithologies:
+
+``` r
+# Count lithologies for each unit
+sapply(san_juan_units$lith, nrow)
+##  [1] 1 1 1 2 1 1 1 3 3 1 1 1 1 1 1 6 3
+# Inspect one with multiple rows
+san_juan_units$lith[16]
+## [[1]]
+##         atts      name   prop lith_id            type       class
+## 1                shale 0.0714       8   siliciclastic sedimentary
+## 2            quartzite 0.3571      85 metasedimentary metamorphic
+## 3            sandstone 0.3571      10   siliciclastic sedimentary
+## 4        red claystone 0.0714       6   siliciclastic sedimentary
+## 5 calcareous      clay 0.0714      93   siliciclastic sedimentary
+## 6 calcareous      clay 0.0714      93   siliciclastic sedimentary
+```
+
+That’s a lot of different lithologies for this single unit! We could
+theoretically represent all of the lithologies, but let’s just go ahead
+and extract the primary lithology, or the one with the highest “prop”
+value (i.e., proportion of unit):
+
+``` r
+# Get the primary lithology for each unit
+san_juan_units$lith_prim <- sapply(san_juan_units$lith, function(df) {
+  df$name[which.max(df$prop)]
+})
+table(san_juan_units$lith_prim)
+## 
+## conglomerate    graywacke  litharenite    quartzite    sandstone        shale 
+##            1            1            1            1            6            7
+```
+
+Now that we’ve assigned a primary lithology to each unit, we can assign
+an FGDC pattern code to each unit:
+
+``` r
+# Assign pattern code
+san_juan_units$pattern <- factor(liths$fill[match(san_juan_units$lith_prim, liths$name)])
+table(san_juan_units$pattern, exclude = NULL)
+## 
+## 602 607 620 654 702 
+##   1   6   7   2   1
+```
+
+Excellent, we now have a pattern code for each unit! Now we can go ahead
+and use these instead of the colors for the fills of the units. In order
+to convert the codes to visual patterns, we’ll need to move the `fill`
+argument to a call to
+[`aes()`](https://ggplot2.tidyverse.org/reference/aes.html) and we’ll
+need to add a call to
+[`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md):
+
+``` r
+# Plot with pattern fills
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect(aes(fill = pattern), color = "black") +
+  scale_fill_geopattern() +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(axis.text.y = element_text(color = "black"))
+```
+
+![](geo_files/figure-html/unnamed-chunk-9-1.png)
+
+Well look at that! Oh, but that legend isn’t very helpful at the moment,
+is it? Let’s go ahead and customize it to define what lithologies the
+different patterns actually represent. We’ll use the codes and names in
+`liths` to set the breaks and labels for the legend, and we’ll move it
+to the bottom so it doesn’t mess up our labels:
+
+``` r
+# Plot with pattern fills
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect(aes(fill = pattern), color = "black") +
+  scale_fill_geopattern(name = NULL,
+                        breaks = factor(liths$fill), labels = liths$name) +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
+```
+
+![](geo_files/figure-html/unnamed-chunk-10-1.png)
+
+Note that we also could have used
+[`fgdc_dict()`](https://williamgearty.com/deeptime/reference/fgdc_dict.md)
+to get a labeling function to use within
+[`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md)
+here, but we want to use the macrostrat lithology names here, not the
+lithology names from the FGDC standard definitions, so we’ll stick with
+grabbing them from `liths`.
+
+### Further customization
+
+If you use
+[`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md),
+the patterns are used with the default parameters (e.g., line color,
+background color, and scale). However, if you’d like to customize how
+the patterns look, you can use the `geom_` functions from the
+[**ggpattern**](https://trevorldavis.com/R/ggpattern/) package (e.g.,
+[`geom_rect_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html))
+and use the “geo” `pattern`. Once you have implemented this, any of the
+following ggplot2 aesthetics can be used to tweak the patterns. *Note
+that the defaults for these two methods are often different:*
+
+| aesthetic     | description                                                             | [`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md) default | ggpattern default |
+|---------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|-------------------|
+| pattern_type  | Code for the FGDC pattern to use                                        | “101”                                                                                                      | “101”             |
+| pattern_color | Color used for strokes and points                                       | original color                                                                                             | “grey20”          |
+| pattern_fill  | Color used to fill various closed shapes (e.g., circles) in the pattern | original color                                                                                             | “grey80”          |
+| pattern_alpha | Alpha transparency for pattern                                          | 1                                                                                                          | 1                 |
+| pattern_scale | Scale of the pattern (higher values zoom in on pattern)                 | 2                                                                                                          | 1                 |
+| fill          | Background color                                                        | “white”                                                                                                    | “white”           |
+
+For the pattern code (i.e., `pattern\_type`), see the “pattern numbers”
+in the [full pattern
+chart](https://ngmdb.usgs.gov/fgdc_gds/geolsymstd/fgdc-geolsym-patternchart.pdf)
+for the full list of options. Daven Quinn has also assembled more
+accessible documentation of the [map
+patterns/codes](https://davenquinn.com/projects/geologic-patterns/#pattern-reference)
+and [lithology
+patterns/codes](https://davenquinn.com/projects/geologic-patterns/#series-600).
+[`def_lithologies()`](https://rmacrostrat.palaeoverse.org/reference/def_lithologies.html)
+can also be used to look up pattern codes for various lithologies (see
+the “fill” column). Note that codes associated with color variants
+(e.g., “101-M”) are supported but will result in the default color
+variant instead (usually black and white). Most, if not all, color
+variants can be recreated by adjusting the color, fill, and background
+of the pattern.
+
+Let’s try increasing the scale of the patterns in our stratigraphic
+column. We’ll need to switch to using
+[`geom_rect_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html).
+Since we are specifying the patterns within an
+[`aes()`](https://ggplot2.tidyverse.org/reference/aes.html) call, we can
+use
+[`scale_pattern_type_identity()`](https://trevorldavis.com/R/ggpattern/reference/scale_pattern_identity.html)
+to use those raw pattern codes:
+
+``` r
+# Plot using ggpattern
+library(ggpattern)
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect_pattern(aes(pattern_type = pattern), pattern = "geo",
+                    pattern_scale = 4) +
+  scale_pattern_type_identity(name = NULL, guide = "legend",
+                              breaks = factor(liths$fill),
+                              labels = liths$name) +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
+```
+
+![](geo_files/figure-html/unnamed-chunk-11-1.png)
+
+Oh no! The patterns are more zoomed in as we wanted, but now the colors
+are all messed up! This is a good example of how the defaults change
+between the two methods. We can easily fix this by specifying our own
+defaults:
+
+``` r
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect_pattern(aes(pattern_type = pattern), pattern = "geo",
+                    pattern_color = "black", pattern_fill = "white",
+                    fill = "white", pattern_scale = 4) +
+  # Use identity of pattern_type aesthetic to set pattern type
+  # Also, substitute lithology names for codes in the legend
+  scale_pattern_type_identity(name = NULL, guide = "legend",
+                              breaks = factor(liths$fill),
+                              labels = liths$name) +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black and increase legend key size
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
+```
+
+![](geo_files/figure-html/unnamed-chunk-12-1.png)
+
+There we go, now the colors are fixed! Hmm…now it looks a little boring.
+Let’s go ahead and bring back those colors from before. We’ll make both
+the background color (`fill`) and the pattern fill color
+(`pattern_fill`) based on the “color” column:
+
+``` r
+ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
+                           xmin = x_min, xmax = x_max)) +
+  # Plot units, patterned by rock type
+  geom_rect_pattern(aes(pattern_type = pattern, fill = color,
+                        pattern_fill = color), pattern = "geo",
+                    pattern_color = "black", pattern_scale = 4) +
+  # Need to override the legend defaults
+  scale_pattern_type_identity(name = NULL,
+                              guide = guide_legend(
+                                override.aes = list(pattern_fill = "white",
+                                                    fill = "white")
+                              ),
+                              breaks = factor(liths$fill),
+                              labels = liths$name) +
+  # Use the raw color values
+  scale_fill_identity() +
+  scale_pattern_fill_identity() +
+  # Add text labels
+  geom_text_repel(aes(x = x_max, y = m_age, label = unit_name),
+                  size = 3.5, hjust = 0, force = 2,
+                  min.segment.length = 0, direction = "y",
+                  nudge_x = rep_len(x = c(2, 3), length.out = 17)) +
+  # Add geological time scale
+  coord_geo(pos = "left", dat = list("stages"), rot = 90) +
+  # Reverse direction of y-axis
+  scale_y_reverse(limits = c(145, 66), n.breaks = 10, name = "Time (Ma)") +
+  # Remove x-axis guide and title
+  scale_x_continuous(NULL, guide = NULL) +
+  # Choose theme and font size
+  theme_classic(base_size = 14) +
+  # Make tick labels black and increase legend key size
+  theme(legend.position = "bottom", legend.key.size = unit(1, 'cm'),
+        axis.text.y = element_text(color = "black"))
+```
+
+![](geo_files/figure-html/unnamed-chunk-13-1.png)
+
+Well isn’t that a nice looking visualization of the stratigraphic
+column!

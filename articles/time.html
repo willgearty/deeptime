@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Plotting temporal data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/v2.2.0/vignettes/time.Rmd" class="external-link"><code>vignettes/time.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/willgearty/deeptime/blob/master/vignettes/time.Rmd" class="external-link"><code>vignettes/time.Rmd</code></a></small>
       <div class="d-none name"><code>time.Rmd</code></div>
     </div>
 
@@ -136,7 +136,7 @@ some Permian vertebrate occurrence data from the
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">occdf</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_points_range.html">geom_points_range</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">accepted_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>And then, of course, we want to add a timescale:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">occdf</span><span class="op">)</span> <span class="op">+</span></span>
@@ -145,7 +145,7 @@ some Permian vertebrate occurrence data from the
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"bottom"</span><span class="op">)</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span>, <span class="st">"periods"</span><span class="op">)</span>,</span>
 <span>            abbrv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>What if we aren’t certain about some of our data points? Maybe we
 don’t necessarily know if they are assigned to the correct genus or
 perhaps we are uncertain about their age? Fortunately, we have all of
@@ -164,7 +164,7 @@ aesthetics:</p>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"bottom"</span><span class="op">)</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span>, <span class="st">"periods"</span><span class="op">)</span>,</span>
 <span>            abbrv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>Finally, we can sort the taxa so that they are arranged in order of
 their earliest occurrence:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -179,7 +179,7 @@ their earliest occurrence:</p>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"bottom"</span><span class="op">)</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span>, <span class="st">"periods"</span><span class="op">)</span>,</span>
 <span>            abbrv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>Note that our uncertain lines (0) always overlap with our certain
 lines (1), so there is a continuous line spanning each taxon’s entire
 range. However, if we tweak some of the data, we can change that,
@@ -207,7 +207,7 @@ so there is a gap between them:</p>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"bottom"</span><span class="op">)</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span>, <span class="st">"periods"</span><span class="op">)</span>,</span>
 <span>            abbrv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>However, if we want a line connecting these groups of points, we can
 fix this by using the <code>background_line</code> argument, which can
 be a list of aesthetic values to use for the background line
@@ -223,7 +223,7 @@ segments:</p>
 <span>  <span class="fu"><a href="../reference/coord_geo.html">coord_geo</a></span><span class="op">(</span>pos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"bottom"</span><span class="op">)</span>, dat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"stages"</span>, <span class="st">"periods"</span><span class="op">)</span>,</span>
 <span>            abbrv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, expand <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>Finally, while I’ve showcased this geom with the use case of plotting
 occurrence data, note that the potential usage for this function is much
 broader. Basically any set of data with a categorical and a continuous
@@ -246,7 +246,7 @@ vignette tutorial:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Coral Genera"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Diet"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="facetting-with-the-geological-timescale">Facetting with the geological timescale<a class="anchor" aria-label="anchor" href="#facetting-with-the-geological-timescale"></a>
@@ -271,7 +271,7 @@ facets appear in chronological order.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Diet"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/facet_wrap_color.html">facet_wrap_geo</a></span><span class="op">(</span><span class="op">~</span><span class="va">period</span>, colors <span class="op">=</span> <span class="va">periods</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 <p>Just like with adding timescales to plots, you may want to show
 hierarchical timescale information. For example, we may want to show
 which of these periods are in the Mesozoic and which are in the
@@ -291,7 +291,7 @@ columns to make a nested facet:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Diet"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/facet_nested_wrap_color.html">facet_nested_wrap_geo</a></span><span class="op">(</span><span class="op">~</span><span class="va">era</span> <span class="op">+</span> <span class="va">period</span>, colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">periods</span>, <span class="va">eras</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="time_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;"></p>
+<p><img src="time_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -305,7 +305,7 @@ columns to make a nested facet:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
