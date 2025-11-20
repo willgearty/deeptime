@@ -323,3 +323,19 @@ CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
     reorderGrob(bg, order = c(1, length(grid.ls(bg, print = FALSE)$name) - 1))
   }
 )
+
+# For any `theta` in [0, 2 * pi), test if theta is inside the span
+# given by `arc`
+in_arc <- function(theta, arc) {
+  # Full circle case
+  if (abs(diff(arc)) > 2 * pi - sqrt(.Machine$double.eps)) {
+    return(rep(TRUE, length(theta)))
+  }
+  # Partial circle case
+  arc <- arc %% (2 * pi)
+  if (arc[1] < arc[2]) {
+    theta >= arc[1] & theta <= arc[2]
+  } else {
+    !(theta < arc[1] & theta > arc[2])
+  }
+}
