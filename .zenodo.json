@@ -11,7 +11,16 @@
         "data visualization",
         "ggplot2",
         "geology",
-        "paleontology"
+        "paleontology",
+        "reproducible",
+        "earth science"
+    ],
+    "related_identifiers": [
+        {
+            "identifier": "https://doi.org/10.1080/20964471.2025.2537516",
+            "relation": "isDescribedBy",
+            "resource_type": "publication-article"
+        }
     ],
     "license": {
         "id": "GPL-3.0-only"
