@@ -141,6 +141,16 @@ therefore very similar to \code{\link[ggtree:geom_cladelab]{ggtree::geom_cladela
 systems, including \code{\link[=coord_geo]{coord_geo()}} and \code{\link[=coord_geo_radial]{coord_geo_radial()}}.
 }
 \details{
+The clades to be labeled are specified using the \code{node} aesthetic which
+identifies the most recent common ancestor of the clade. The \code{label}
+aesthetic specifies the text label for each clade. The \code{\link[ggfun:attacher]{ggfun::\%<+\%()}}
+operator should be used to combine custom clade labels with the tree (see
+Examples). If no nodes are specified, a label will be added to every tip
+by default (like \code{\link[=geom_text_phylo]{geom_text_phylo()}}).
+
+The vertical bar for each clade extends from the minimum to the maximum
+y-values of all descendant nodes of the specified \code{node}, with optional
+extensions above and below these values controlled by the \code{extend} parameter.
 Each label will be plotted center aligned and perpendicular to its
 corresponding bar by default. The \code{angle}, \code{hjust}, and \code{vjust} aesthetics
 can be used to adjust this. If custom \code{angle} values are specified, these
@@ -185,3 +195,19 @@ aligns it away from the center.
 
 }
 
+\examples{
+library(ggplot2)
+\dontshow{if (require(ggtree);require(phytools)) withAutoprint(\{ # examplesIf}
+library(ggtree)
+library(phytools)
+data(primate.tree)
+clades.df <- data.frame(
+  clade = c("Lorisoidea", "Lemuroidea", "Tarsioidea", "Ceboidea",
+            "Cercopithecoidea", "Hominoidea"),
+  node = c(166, 146, 144, 120, 95, 114)
+)
+revts(ggtree(primate.tree)) \%<+\% clades.df +
+  geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
+  coord_geo_radial()
+\dontshow{\}) # examplesIf}
+}

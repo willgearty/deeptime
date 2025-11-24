@@ -187,6 +187,16 @@ GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
 #' [ggtree::geom_cladelab()], this geom is intended to work with all coordinate
 #' systems, including [coord_geo()] and [coord_geo_radial()].
 #'
+#' The clades to be labeled are specified using the `node` aesthetic which
+#' identifies the most recent common ancestor of the clade. The `label`
+#' aesthetic specifies the text label for each clade. The [ggfun::%<+%()]
+#' operator should be used to combine custom clade labels with the tree (see
+#' Examples). If no nodes are specified, a label will be added to every tip
+#' by default (like [geom_text_phylo()]).
+#'
+#' The vertical bar for each clade extends from the minimum to the maximum
+#' y-values of all descendant nodes of the specified `node`, with optional
+#' extensions above and below these values controlled by the `extend` parameter.
 #' Each label will be plotted center aligned and perpendicular to its
 #' corresponding bar by default. The `angle`, `hjust`, and `vjust` aesthetics
 #' can be used to adjust this. If custom `angle` values are specified, these
@@ -241,6 +251,20 @@ GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
 #' @importFrom ggplot2 layer position_nudge
 #' @importFrom rlang %||%
 #' @importFrom utils modifyList
+#' @examples
+#' library(ggplot2)
+#' @examplesIf require(ggtree);require(phytools)
+#' library(ggtree)
+#' library(phytools)
+#' data(primate.tree)
+#' clades.df <- data.frame(
+#'   clade = c("Lorisoidea", "Lemuroidea", "Tarsioidea", "Ceboidea",
+#'             "Cercopithecoidea", "Hominoidea"),
+#'   node = c(166, 146, 144, 120, 95, 114)
+#' )
+#' revts(ggtree(primate.tree)) %<+% clades.df +
+#'   geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
+#'   coord_geo_radial()
 geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
                             stat = "identity", position = "identity", ...,
                             parse = FALSE, auto_adjust = TRUE, extend = c(0, 0),
@@ -248,12 +272,8 @@ geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
                             na.rm = FALSE, show.legend = NA,
                             inherit.aes = TRUE) {
   rlang::check_installed("tidytree", reason = "to use `geom_text_clade()`")
-  # type checks
-  # check extend is length 2
-  # check that text_geom is either text or label
   check_bool(auto_adjust)
-  check_number_decimal(extend)
-  if (length(extend) != 2) {
+  if (is.numeric(extend) && length(extend) != 2) {
     cli::cli_abort("`extend` must be a numeric vector of length 2.")
   }
   text_geom <- arg_match0(text_geom, c("text", "label"))
@@ -359,7 +379,7 @@ GeomTextClade <- ggproto("GeomTextClade", GeomText,
                                      text.colour = text.colour)
     }
     grob_list <- gList(text_grob, segment_grob)
-    gTree(name = "geom_points_range", children = grob_list)
+    gTree(name = "geom_text_clade", children = grob_list)
   }
 )
 
