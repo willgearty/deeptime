@@ -59,11 +59,11 @@ give the stat as \code{"count"}.
 can be used in various ways, including to prevent overplotting and
 improving the display. The \code{position} argument accepts the following:
 \itemize{
-\item The result of calling a position function, such as \code{position_jitter()}.
+\item The result of calling a position function, such as \code{position_nudge()}.
 This method allows for passing extra arguments to the position.
 \item A string naming the position adjustment. To give the position as a
 string, strip the function name of the \code{position_} prefix. For example,
-to use \code{position_jitter()}, give the position as \code{"jitter"}.
+to use \code{position_nudge()}, give the position as \code{"nudge"}.
 }}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}'s \code{params} argument. These

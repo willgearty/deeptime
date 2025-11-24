@@ -42,11 +42,11 @@ utils::globalVariables(c("isTip", "node"))
 #' @param position A position adjustment to use on the data for this layer. This
 #'   can be used in various ways, including to prevent overplotting and
 #'   improving the display. The `position` argument accepts the following:
-#'   * The result of calling a position function, such as `position_jitter()`.
+#'   * The result of calling a position function, such as `position_nudge()`.
 #'     This method allows for passing extra arguments to the position.
 #'   * A string naming the position adjustment. To give the position as a
 #'     string, strip the function name of the `position_` prefix. For example,
-#'     to use `position_jitter()`, give the position as `"jitter"`.
+#'     to use `position_nudge()`, give the position as `"nudge"`.
 #' @param stat The statistical transformation to use on the data for this layer.
 #'   When using a `geom_*()` function to construct a layer, the `stat`
 #'   argument can be used the override the default coupling between geoms and
