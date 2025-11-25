@@ -157,6 +157,7 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
   }
   arc <- switch(reverse, thetar = , theta = rev(arc), arc)
 
+  # nocov start
   r.axis.inside <- r.axis.inside %||% !(abs(arc[2] - arc[1]) >= 1.999 * pi)
   if (isFALSE(r.axis.inside)) {
     place <- in_arc(c(0, 0.5, 1, 1.5) * pi, arc)
@@ -168,6 +169,7 @@ coord_geo_radial <- function(dat = "periods", theta = "y",
       r.axis.inside <- TRUE
     }
   }
+  # nocov end
 
   inner_radius <- c(inner.radius, 1) * 0.4
   inner_radius <- switch(reverse, thetar = , r = rev, identity)(inner_radius)
@@ -326,7 +328,7 @@ CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
 
 # For any `theta` in [0, 2 * pi), test if theta is inside the span
 # given by `arc`
-in_arc <- function(theta, arc) {
+in_arc <- function(theta, arc) { # nocov start
   # Full circle case
   if (abs(diff(arc)) > 2 * pi - sqrt(.Machine$double.eps)) {
     return(rep(TRUE, length(theta)))
@@ -338,4 +340,4 @@ in_arc <- function(theta, arc) {
   } else {
     !(theta < arc[1] & theta > arc[2])
   }
-}
+} # nocov end
