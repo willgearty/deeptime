@@ -201,6 +201,12 @@ library(ggplot2)
 library(ggtree)
 library(phytools)
 data(primate.tree)
+# single annotation
+revts(ggtree(primate.tree)) +
+  geom_text_clade(label = "Hominoidea", node = 114, extend = c(0.1, 0.1)) +
+  coord_geo_radial()
+
+# data frame of clade labels
 clades.df <- data.frame(
   clade = c("Lorisoidea", "Lemuroidea", "Tarsioidea", "Ceboidea",
             "Cercopithecoidea", "Hominoidea"),

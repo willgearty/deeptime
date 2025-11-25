@@ -46,6 +46,7 @@ test_that("geom_text_clade works", {
   expect_true(is(gg$layers[[3]]$stat, "StatIdentity"))
   expect_doppelganger_deeptime("geom_text_clade", gg)
 
+  # geom_label
   gg <- revts(ggtree(primate.tree)) %<+% clades.df +
     geom_text_clade(aes(label = clade), extend = c(0.1, 0.1),
                     text_geom = "label") +
@@ -60,6 +61,29 @@ test_that("geom_text_clade works", {
   expect_error({
     revts(ggtree(primate.tree)) %<+% clades.df +
       geom_text_clade(aes(label = clade), extend = 0.5) +
+      coord_geo_radial()
+  })
+
+  # annotation
+  gg <- revts(ggtree(primate.tree)) +
+    geom_text_clade(label = "Hominoidea", node = 114, extend = c(0.1, 0.1)) +
+    coord_geo_radial()
+  expect_doppelganger_deeptime("geom_text_clade-annotation", gg)
+  expect_error({
+    revts(ggtree(primate.tree)) +
+      geom_text_clade(label = "Hominoidea", extend = c(0.1, 0.1)) +
+      coord_geo_radial()
+  })
+  expect_error({
+    revts(ggtree(primate.tree)) +
+      geom_text_clade(label = c("Hominoidea", "Lorisoidea"), node = 114,
+                      extend = c(0.1, 0.1)) +
+      coord_geo_radial()
+  })
+  expect_error({
+    revts(ggtree(primate.tree)) +
+      geom_text_clade(aes(label = label), label = "Hominoidea", node = 114,
+                      extend = c(0.1, 0.1)) +
       coord_geo_radial()
   })
 })

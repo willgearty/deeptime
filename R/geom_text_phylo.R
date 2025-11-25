@@ -265,6 +265,12 @@ GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
 #' library(ggtree)
 #' library(phytools)
 #' data(primate.tree)
+#' # single annotation
+#' revts(ggtree(primate.tree)) +
+#'   geom_text_clade(label = "Hominoidea", node = 114, extend = c(0.1, 0.1)) +
+#'   coord_geo_radial()
+#'
+#' # data frame of clade labels
 #' clades.df <- data.frame(
 #'   clade = c("Lorisoidea", "Lemuroidea", "Tarsioidea", "Ceboidea",
 #'             "Cercopithecoidea", "Hominoidea"),
@@ -288,6 +294,31 @@ geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
                             check_overlap = FALSE, lineend = "butt",
                             na.rm = FALSE, show.legend = NA,
                             inherit.aes = TRUE) {
+  args_list <- list(...)
+  temp <- sum(c("label" %in% names(args_list), "node" %in% names(args_list)))
+  if (temp == 1) {
+    cli::cli_abort(paste(
+      "Both {.arg label} and {.arg node} must be supplied if not using
+      {.arg mapping}."
+    ))
+  } else if (temp == 2) {
+    if (!is.null(mapping)) {
+      cli::cli_abort(
+        "Do not supply both {.arg mapping} and individual {.arg label} and
+        {.arg node} arguments."
+      )
+    } else if (length(args_list$label) != length(args_list$node)) {
+      cli::cli_abort(
+        "The lengths of {.arg label} and {.arg node} must be the same."
+      )
+    } else {
+      args_list$custom_label <- args_list$label
+      args_list$custom_node <- args_list$node
+      args_list$label <- NULL
+      args_list$node <- NULL
+    }
+  }
+
   rlang::check_installed("tidytree", reason = "to use `geom_text_clade()`")
   check_bool(auto_adjust)
   if (is.numeric(extend) && length(extend) != 2) {
@@ -304,27 +335,28 @@ geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
-    params = list(
+    params = c(list(
       parse = parse,
       text_geom = text_geom,
       extend = extend,
       auto_adjust = auto_adjust,
       check_overlap = check_overlap,
       lineend = lineend,
-      na.rm = na.rm,
-      ...
-    )
+      na.rm = na.rm
+    ), args_list)
   )
 }
 
 #' @importFrom ggplot2 ggproto GeomText GeomLabel GeomLinerange ggproto_parent
+#' @importFrom ggplot2 remove_missing
 #' @importFrom rlang %||%
 #' @importFrom grid unit
 #' @importFrom utils modifyList
 GeomTextClade <- ggproto("GeomTextClade", GeomText,
   required_aes = c("x", "y", "parent", "node", "label"),
-  non_missing_aes = c("angle", "linetype", "linewidth", "fill"),
-  extra_params = c("na.rm", "auto_adjust", "extend", "text_geom"),
+  non_missing_aes = c("node", "angle", "linetype", "linewidth", "fill"),
+  extra_params = c("na.rm", "auto_adjust", "extend", "text_geom",
+                   "custom_label", "custom_node"),
 
   default_aes = modifyList(GeomLinerange$default_aes,
                            list(hjust = -0.02, vjust = 0.5, size = 3.88,
@@ -333,18 +365,26 @@ GeomTextClade <- ggproto("GeomTextClade", GeomText,
 
   setup_data = function(data, params) {
     extend <- params$extend
+    # make the tbl_tree with the full tree data
     tbl_tree <- tidytree::as_tibble(data)
     class(tbl_tree) <- c("tbl_tree", class(tbl_tree))
-    data_sub <- subset(data, !is.na(label))
-    l <- lapply(seq_len(nrow(data_sub)), function(i) {
-      offspring_df <- tidytree::offspring(tbl_tree, data_sub$node[i],
+    # handle manual node/label pairs
+    if ("custom_label" %in% names(params)) {
+      params_data <- data.frame(node = params$custom_node,
+                                label = params$custom_label)
+      data$label <- NULL
+      data <- merge(data, params_data, by = "node")
+    }
+    data <- remove_missing(data, na.rm = params$na.rm, c("node", "label"))
+    l <- lapply(seq_len(nrow(data)), function(i) {
+      offspring_df <- tidytree::offspring(tbl_tree, data$node[i],
                                           self_include = TRUE)
       offspring_df <- subset(offspring_df,
                              !is.na(offspring_df$x) & !is.na(offspring_df$y))
       mx <- max(offspring_df$x)
       maxy <- max(offspring_df$y)
       miny <- min(offspring_df$y)
-      data_row <- data_sub[i, , drop = FALSE]
+      data_row <- data[i, , drop = FALSE]
       data_row$x <- mx
       data_row$y <- mean(c(miny, maxy))
       data_row$ymin <- miny - extend[2]
