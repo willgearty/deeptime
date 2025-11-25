@@ -1,4 +1,4 @@
-# deeptime (development version)
+# deeptime 2.3.1
 
 Bug fixes:
 
