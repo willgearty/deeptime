@@ -1,6 +1,6 @@
 ## declare variables that are used within aes() to prevent
 ## R CMD check from complaining
-utils::globalVariables(c("isTip", "node"))
+utils::globalVariables(c("isTip", "node", "parent"))
 
 #' Label nodes on a phylogenetic tree plotted with ggtree
 #'
