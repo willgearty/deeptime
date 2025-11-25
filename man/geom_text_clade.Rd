@@ -185,19 +185,19 @@ aesthetics (required aesthetics are in bold):
 
 \section{Alignment}{
 
-
-You can modify text alignment with the \code{vjust} and \code{hjust}
-aesthetics. These can either be a number between 0 (left/bottom) and
-1 (right/top) or a character (\code{"left"}, \code{"middle"}, \code{"right"}, \code{"bottom"},
-\code{"center"}, \code{"top"}). There are two special alignments: \code{"inward"} and
-\code{"outward"}. Inward always aligns text towards the center, and outward
-aligns it away from the center.
-
+You can modify text alignment with the \code{vjust} and \code{hjust} aesthetics. These
+can either be a number between 0 (left/bottom) and 1 (right/top) or a
+character (\code{"left"}, \code{"middle"}, \code{"right"}, \code{"bottom"}, \code{"center"}, \code{"top"}).
+There are two special alignments: \code{"inward"} and \code{"outward"}. Inward always
+aligns text towards the center, and outward aligns it away from the center.
+Note that numeric values outside of [0, 1] will also work and will move the
+text beyond the normal alignment positions (e.g., the default \code{hjust} value
+is -0.02).
 }
 
 \examples{
 library(ggplot2)
-\dontshow{if (require(ggtree);require(phytools)) withAutoprint(\{ # examplesIf}
+\dontshow{if (require(ggtree) && require(phytools)) withAutoprint(\{ # examplesIf}
 library(ggtree)
 library(phytools)
 data(primate.tree)
@@ -208,6 +208,15 @@ clades.df <- data.frame(
 )
 revts(ggtree(primate.tree)) \%<+\% clades.df +
   geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
+  coord_geo_radial()
+
+# display with other tip data
+data(primate.data)
+activity <- subset(primate.data, select = "Activity_pattern")
+revts(gheatmap(ggtree(primate.tree), activity, offset = -70,
+               colnames = FALSE, width = 0.03, color = NA)) \%<+\% clades.df +
+  geom_text_clade(aes(label = clade), extend = c(0.1, 0.1),
+                  position = position_nudge(x = 10)) +
   coord_geo_radial()
 \dontshow{\}) # examplesIf}
 }

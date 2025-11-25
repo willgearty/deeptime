@@ -226,7 +226,15 @@ GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
 #' - size
 #' - vjust
 #'
-#' @inheritSection ggplot2::geom_text Alignment
+#' @section Alignment:
+#' You can modify text alignment with the `vjust` and `hjust` aesthetics. These
+#' can either be a number between 0 (left/bottom) and 1 (right/top) or a
+#' character (`"left"`, `"middle"`, `"right"`, `"bottom"`, `"center"`, `"top"`).
+#' There are two special alignments: `"inward"` and `"outward"`. Inward always
+#' aligns text towards the center, and outward aligns it away from the center.
+#' Note that numeric values outside of \[0, 1\] will also work and will move the
+#' text beyond the normal alignment positions (e.g., the default `hjust` value
+#' is -0.02).
 #' @param position A position adjustment to use on the data for this layer. This
 #'   can be used in various ways, including to prevent overplotting and
 #'   improving the display. The `position` argument accepts the following:
@@ -253,7 +261,7 @@ GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
 #' @importFrom utils modifyList
 #' @examples
 #' library(ggplot2)
-#' @examplesIf require(ggtree);require(phytools)
+#' @examplesIf require(ggtree) && require(phytools)
 #' library(ggtree)
 #' library(phytools)
 #' data(primate.tree)
@@ -264,6 +272,15 @@ GeomTextPhylo <- ggproto("GeomTextPhylo", GeomText,
 #' )
 #' revts(ggtree(primate.tree)) %<+% clades.df +
 #'   geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
+#'   coord_geo_radial()
+#'
+#' # display with other tip data
+#' data(primate.data)
+#' activity <- subset(primate.data, select = "Activity_pattern")
+#' revts(gheatmap(ggtree(primate.tree), activity, offset = -70,
+#'                colnames = FALSE, width = 0.03, color = NA)) %<+% clades.df +
+#'   geom_text_clade(aes(label = clade), extend = c(0.1, 0.1),
+#'                   position = position_nudge(x = 10)) +
 #'   coord_geo_radial()
 geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
                             stat = "identity", position = "identity", ...,
