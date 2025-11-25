@@ -133,11 +133,12 @@ revts(ggtree(mammal.tree)) +
 <img src="phylogenies-4.png" alt="plot of phylogeny with stacked guides" width="100%" />
 </div>
 
-There they are! Hmm...after looking at all of these phylogenies with background colors, this one looks quite bare. Fortunately, we can use _both_ `coord_geo_radial()` and `guide_geo()` to make a phylogeny that really pops! However, since we're trying to avoid a distracting background, we'll set the fill colors to a light gray scale. We'll also adjust the `end` value for `coord_geo_radial()` to remove the empty space. Note that if the `start` and `end` values result in the same polar locations, the axis will be bumped to the margin, so we use an `end` value that is _just_ slightly smaller than the `start` value. This leaves a very small gap, but it's covered by the `guide_geo()` boxes. Finally, note that you can use `guide_geo()` within `scale_` functions and also within the `guides()` function.
+There they are! Hmm...after looking at all of these phylogenies with background colors, this one looks quite bare. Fortunately, we can use _both_ `coord_geo_radial()` and `guide_geo()` to make a phylogeny that really pops! However, since we're trying to avoid a distracting background, we'll set the fill colors to a light gray scale. We'll also adjust the `end` value for `coord_geo_radial()` to remove the empty space. Note that if the `start` and `end` values result in the same polar locations, the axis will be bumped to the margin, but we can override this with `r.axis.inside = TRUE`. This leaves a very small gap, but it's covered by the `guide_geo()` boxes. Finally, note that you can use `guide_geo()` within `scale_` functions and also within the `guides()` function.
 
 ```{r eval = FALSE}
 revts(ggtree(mammal.tree)) +
-  coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.49 * pi) +
+  coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.5 * pi,
+                   r.axis.inside = TRUE) +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
                      expand = expansion(mult = c(0.05, 0))) +
   scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.05))) +
@@ -163,7 +164,8 @@ __deeptime__ also provides a specialized geom, `geom_text_phylo()`, for adding t
 ```{r eval = FALSE}
 revts(ggtree(mammal.tree)) +
     geom_text_phylo(nudge_x = 2) +
-    coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.49 * pi) +
+    coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.5 * pi,
+                     r.axis.inside = TRUE) +
     scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
                        expand = expansion(mult = c(0.05, 0))) +
     scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.05))) +

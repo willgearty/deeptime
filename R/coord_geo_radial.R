@@ -46,6 +46,9 @@
 #' arguments. Also note that the curvature of the labels may vary based on the
 #' distance from the origin. This is why `abbrv` is set to `TRUE` by default.
 #'
+#' @param theta The variable to map angle to (`x` or `y`). This should normally
+#'   be `y` when using this function with `ggtree`.
+#' @param direction `r lifecycle::badge("deprecated")`
 #' @inheritParams ggplot2::coord_radial
 #' @inheritParams coord_geo_polar
 #' @importFrom ggplot2 ggproto
@@ -81,55 +84,109 @@
 #'   coord_geo_radial(dat = "stages") +
 #'   scale_y_continuous(guide = "none", breaks = NULL) +
 #'   theme_classic()
-coord_geo_radial <- function(dat = "periods",
-                             theta = "y", start = -0.5 * pi, end = 1.25 * pi,
-                             expand = TRUE, direction = 1, reverse = "none",
-                             r_axis_inside = NULL, inner.radius = 0.05,
-                             fill = NULL, alpha = 1,
+coord_geo_radial <- function(dat = "periods", theta = "y",
+                             start = -0.5 * pi, end = 1.25 * pi, expand = TRUE,
+                             direction = deprecated(), reverse = "none",
+                             r.axis.inside = NULL, rotate.angle = FALSE,
+                             inner.radius = 0.05, fill = NULL, alpha = 1,
                              lwd = .25, color = "grey80", lty = "solid",
                              lab = FALSE, abbrv = TRUE,
                              skip = c("Quaternary", "Holocene",
                                       "Late Pleistocene"),
                              neg = TRUE, prop = 1, textpath_args = list(),
-                             clip = "off", rotate_angle = FALSE) {
+                             clip = "off", r_axis_inside = deprecated(),
+                             rotate_angle = deprecated()) {
+  if (lifecycle::is_present(r_axis_inside)) {
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      "coord_geo_radial(r_axis_inside)",
+      "coord_geo_radial(r.axis.inside)"
+    )
+    r.axis.inside <- r_axis_inside
+  }
+  if (lifecycle::is_present(rotate_angle)) {
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      "coord_geo_radial(rotate_angle)",
+      "coord_geo_radial(rotate.angle)"
+    )
+    rotate.angle <- rotate_angle
+  }
+  if (lifecycle::is_present(direction)) {
+    lifecycle::deprecate_soft(
+      "2.3.1",
+      "coord_geo_radial(direction)",
+      "coord_geo_radial(reverse)"
+    )
+    if (!direction %in% c(-1, 1)) {
+      cli::cli_abort(paste0("`direction` must be either -1 or 1, not ",
+                            direction, "."))
+    } else {
+      if (direction == -1) {
+        reverse <- switch(reverse, "theta" = "none", "theta")
+      }
+    }
+  } else {
+    direction <- 1
+  }
+
   dat <- make_list(dat)
   n_scales <- length(dat)
 
   # check global (non-list) arguments
   theta <- arg_match0(theta, c("x", "y"))
   r <- if (theta == "x") "y" else "x"
+  if (!is.numeric(r.axis.inside)) {
+    check_bool(r.axis.inside, allow_null = TRUE)
+  }
+  reverse <- arg_match0(reverse, c("theta", "thetar", "r", "none"))
+
+  check_bool(rotate.angle)
   check_number_decimal(start, allow_infinite = FALSE)
   check_number_decimal(end, allow_infinite = FALSE, allow_null = TRUE)
-  check_bool(expand)
-  if (!direction %in% c(-1, 1)) {
-    cli::cli_abort(paste0("`direction` must be either -1 or 1, not ",
-                          direction, "."))
-  }
-  check_bool(r_axis_inside, allow_null = TRUE)
   check_number_decimal(inner.radius, min = 0, max = 1, allow_infinite = FALSE)
-  clip <- arg_match0(clip, c("off", "on"))
-  check_bool(rotate_angle)
+  check_bool(expand)
 
-  end <- end %||% (start + 2 * pi)
-  if (start > end) {
-    n_rotate <- ((start - end) %/% (2 * pi)) + 1
-    start <- start - n_rotate * 2 * pi
+  clip <- arg_match0(clip, c("off", "on"))
+  reverse <- arg_match0(reverse, c("theta", "thetar", "r", "none"))
+
+  arc <- c(start, end %||% (start + 2 * pi))
+  if (arc[1] > arc[2]) {
+    n_rotate <- ((arc[1] - arc[2]) %/% (2 * pi)) + 1
+    arc[1] <- arc[1] - n_rotate * 2 * pi
   }
-  r_axis_inside <- r_axis_inside %||% !(abs(end - start) >= 1.999 * pi)
+  arc <- switch(reverse, thetar = , theta = rev(arc), arc)
+
+  # nocov start
+  r.axis.inside <- r.axis.inside %||% !(abs(arc[2] - arc[1]) >= 1.999 * pi)
+  if (isFALSE(r.axis.inside)) {
+    place <- in_arc(c(0, 0.5, 1, 1.5) * pi, arc)
+    if (!any(place)) {
+      cli::cli_warn(c(
+        "No appropriate placement found for outside {.field r.axis}.",
+        i = "Will use {.code r.axis.inside = TRUE} instead"
+      ))
+      r.axis.inside <- TRUE
+    }
+  }
+  # nocov end
+
+  inner_radius <- c(inner.radius, 1) * 0.4
+  inner_radius <- switch(reverse, thetar = , r = rev, identity)(inner_radius)
 
   ggproto(NULL, CoordGeoRadial,
           theta = theta,
           r = r,
           start = start,
           end = end,
-          arc = c(start, end),
+          arc = arc,
           expand = expand,
-          direction = sign(direction),
+          direction = direction,
           reverse = reverse,
-          r_axis_inside = r_axis_inside,
-          rotate_angle = rotate_angle,
+          r_axis_inside = r.axis.inside,
+          rotate_angle = rotate.angle,
+          inner_radius = inner_radius,
           inner.radius = inner.radius,
-          inner_radius = c(inner.radius, 1) * 0.4,
           clip = clip,
           dat = dat,
           fill = rep(make_list(fill), length.out = n_scales),
@@ -246,9 +303,7 @@ CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
       expand = FALSE, clip = self$clip, inner.radius = self$inner.radius
     )
     if (packageVersion("ggplot2") > "3.5.2") {
-      radial_args$reverse <- ifelse(self$reverse == "none" &&
-                                      self$direction == -1,
-                                    "theta", self$reverse)
+      radial_args$reverse <- self$reverse
     } else {
       radial_args$direction <- self$direction
     }
@@ -270,3 +325,19 @@ CoordGeoRadial <- ggproto("CoordGeoRadial", CoordRadial,
     reorderGrob(bg, order = c(1, length(grid.ls(bg, print = FALSE)$name) - 1))
   }
 )
+
+# For any `theta` in [0, 2 * pi), test if theta is inside the span
+# given by `arc`
+in_arc <- function(theta, arc) { # nocov start
+  # Full circle case
+  if (abs(diff(arc)) > 2 * pi - sqrt(.Machine$double.eps)) {
+    return(rep(TRUE, length(theta)))
+  }
+  # Partial circle case
+  arc <- arc %% (2 * pi)
+  if (arc[1] < arc[2]) {
+    theta >= arc[1] & theta <= arc[2]
+  } else {
+    !(theta < arc[1] & theta > arc[2])
+  }
+} # nocov end

@@ -12,6 +12,20 @@ test_that("coord_geo_radial works", {
   skip_if_not_installed("phytools")
   expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$r.range,
                c(-max(nodeHeights(tree)), 0))
+
+  gg <- revts(ggtree(tree))
+  lifecycle::expect_deprecated({
+    gg + coord_geo_radial(direction = -1)
+  })
+  expect_error({
+    gg + coord_geo_radial(direction = 5)
+  })
+  lifecycle::expect_deprecated({
+    gg + coord_geo_radial(r_axis_inside = TRUE)
+  })
+  lifecycle::expect_deprecated({
+    gg + coord_geo_radial(rotate_angle = TRUE)
+  })
 })
 
 test_that("stacking scales works", {
@@ -25,6 +39,15 @@ test_that("stacking scales works", {
                        guide = "none", breaks = NULL) +
     theme_gray()
   expect_doppelganger_deeptime("stacked scales", gg)
+
+  gg <- ggarrange2(
+    revts(ggtree(mammal.tree)) +
+      coord_geo_radial(list("stages", "periods")),
+    revts(ggtree(mammal.tree)) +
+      coord_geo_radial(list("stages", "periods"), reverse = "theta"),
+    nrow = 1
+  )
+  expect_doppelganger_deeptime("stacked scales_reverse", gg)
 })
 
 test_that("ggtree scale works with only fossil taxa", {
