@@ -1,5 +1,7 @@
 # deeptime (development version)
 
+# deeptime 2.3.1
+
 Bug fixes:
 
 * Fixed behavior of the `reverse` argument for `coord_geo_radial()` for ggplot2 4.0.0 and up (#96)

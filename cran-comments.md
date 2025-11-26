@@ -1,10 +1,10 @@
-This minor version includes minor new features and some housekeeping.
+This patch (2.3.1) fixes a bug that was discovered right after publishing the latest minor release (2.3.0). Existing CRAN check result errors appear to be related to failures in the geojsonsf package, a dependency of multiple SUGGESTS.
 
 ## Test environments (with Github Actions)
 
 * Windows 10.0.26100 (x86_64-w64-mingw32): R 4.5.2
 * Mac OS X 15.7.1 (aarch64-apple-darwin20): R 4.5.2
-* Ubuntu 24.04.3 (x86_64-pc-linux-gnu): R 4.4.3, 4.5.2, and devel (r89035)
+* Ubuntu 24.04.3 (x86_64-pc-linux-gnu): R 4.4.3, 4.5.2, and devel (r89059)
 
 * All checks were run separately with ggplot2 4.0.1 and 4.0.1.9000
 
