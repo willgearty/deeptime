@@ -86,10 +86,11 @@ reference:
 
 - subtitle: Adding text labels to phylogenies
   desc: >
-    When using deeptime coordinate systems, this geom may work better than geoms
+    When using deeptime coordinate systems, these geoms may work better than geoms
     from ggtree.
   contents:
   - geom_text_phylo
+  - geom_text_clade
 
 - title: Transforming coordinate systems
   desc: >

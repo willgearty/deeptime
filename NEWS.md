@@ -1,5 +1,9 @@
 # deeptime (development version)
 
+New features:
+
+* Added `geom_text_clade()` for adding clade labels to phylogenies when using `coord_geo_radial()`
+
 # deeptime 2.3.1
 
 Bug fixes:
