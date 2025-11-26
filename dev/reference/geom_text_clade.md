@@ -1,16 +1,13 @@
-# Label nodes on a phylogenetic tree plotted with ggtree
+# Label clades on a phylogenetic tree plotted with ggtree
 
-This geom adds labels to all or a subset of the nodes of a phylogenetic
-tree that has been plotted using
+This geom adds labels and corresponding vertical bars to specified
+clades of a phylogenetic tree that has been plotted using
 [`ggtree::ggtree()`](https://rdrr.io/pkg/ggtree/man/ggtree.html). It is
 therefore very similar to
-[`ggtree::geom_tiplab()`](https://rdrr.io/pkg/ggtree/man/geom_tiplab.html),
-[`ggtree::geom_tiplab2()`](https://rdrr.io/pkg/ggtree/man/geom_tiplab2.html),
-[`ggtree::geom_nodelab()`](https://rdrr.io/pkg/ggtree/man/geom_nodelab.html),
-and
-[`ggtree::geom_nodelab2()`](https://rdrr.io/pkg/ggtree/man/geom_nodelab2.html).
-However, unlike those geoms, this geom is intended to work with all
-coordinate systems, including
+[`ggtree::geom_cladelab()`](https://rdrr.io/pkg/ggtree/man/geom_cladelab.html).
+However, unlike
+[`ggtree::geom_cladelab()`](https://rdrr.io/pkg/ggtree/man/geom_cladelab.html),
+this geom is intended to work with all coordinate systems, including
 [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md)
 and
 [`coord_geo_radial()`](https://williamgearty.com/deeptime/dev/reference/coord_geo_radial.md).
@@ -18,19 +15,18 @@ and
 ## Usage
 
 ``` r
-geom_text_phylo(
+geom_text_clade(
   mapping = NULL,
   data = NULL,
+  text_geom = "text",
   stat = "identity",
   position = "identity",
   ...,
   parse = FALSE,
-  nudge_x = 0,
-  nudge_y = 0,
-  node_type = "tip",
   auto_adjust = TRUE,
+  extend = c(0, 0),
   check_overlap = FALSE,
-  size.unit = "mm",
+  lineend = "butt",
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -65,11 +61,18 @@ geom_text_phylo(
   data. A `function` can be created from a `formula` (e.g.
   `~ head(.x, 10)`).
 
+- text_geom:
+
+  Which geom to use for the text labels. Valid options are "text" for
+  [`ggplot2::geom_text()`](https://ggplot2.tidyverse.org/reference/geom_text.html)
+  and "label" for
+  [`ggplot2::geom_label()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
+
 - stat:
 
   The statistical transformation to use on the data for this layer. When
   using a `geom_*()` function to construct a layer, the `stat` argument
-  can be used the override the default coupling between geoms and stats.
+  can be used to override the default coupling between geoms and stats.
   The `stat` argument accepts the following:
 
   - A `Stat` ggproto subclass, for example `StatCount`.
@@ -78,6 +81,11 @@ geom_text_phylo(
     function name of the `stat_` prefix. For example, to use
     [`stat_count()`](https://ggplot2.tidyverse.org/reference/geom_bar.html),
     give the stat as `"count"`.
+
+  - For more information and other ways to specify the stat, see the
+    [layer
+    stat](https://ggplot2.tidyverse.org/reference/layer_stats.html)
+    documentation.
 
 - position:
 
@@ -138,21 +146,17 @@ geom_text_phylo(
   If `TRUE`, the labels will be parsed into expressions and displayed as
   described in [`?plotmath`](https://rdrr.io/r/grDevices/plotmath.html).
 
-- nudge_x, nudge_y:
-
-  Horizontal and vertical adjustment to nudge labels by. Useful for
-  offsetting text from points, particularly on discrete scales. Cannot
-  be jointly specified with `position`.
-
-- node_type:
-
-  Determines the subset of nodes to label. Valid options are "tip" for
-  tip nodes, "internal" for non-tip nodes, and "all" for all nodes.
-
 - auto_adjust:
 
   Should upside-down text labels automatically be rotated 180° to
   improve readability?
+
+- extend:
+
+  A numeric vector of length 2 indicating how much to extend the
+  vertical bar beyond the minimum and maximum y-values of the clade. The
+  first value extends the bar above the maximum y-value, and the second
+  value extends the bar below the minimum y-value.
 
 - check_overlap:
 
@@ -164,11 +168,9 @@ geom_text_phylo(
   Note that this argument is not supported by
   [`geom_label()`](https://ggplot2.tidyverse.org/reference/geom_text.html).
 
-- size.unit:
+- lineend:
 
-  How the `size` aesthetic is interpreted: as millimetres (`"mm"`,
-  default), points (`"pt"`), centimetres (`"cm"`), inches (`"in"`), or
-  picas (`"pc"`).
+  Line end style (round, butt, square).
 
 - na.rm:
 
@@ -194,8 +196,19 @@ geom_text_phylo(
 
 ## Details
 
-Each label will be plotted with the same angle as the branch/edge
-leading to its node by default. The `angle`, `hjust`, and `vjust`
+The clades to be labeled are specified using the `node` aesthetic which
+identifies the most recent common ancestor of the clade. The `label`
+aesthetic specifies the text label for each clade. The `ggfun::%<+%()`
+operator should be used to combine custom clade labels with the tree
+(see Examples). If no nodes are specified, a label will be added to
+every tip by default (like
+[`geom_text_phylo()`](https://williamgearty.com/deeptime/dev/reference/geom_text_phylo.md)).
+
+The vertical bar for each clade extends from the minimum to the maximum
+y-values of all descendant nodes of the specified `node`, with optional
+extensions above and below these values controlled by the `extend`
+parameter. Each label will be plotted center aligned and perpendicular
+to its corresponding bar by default. The `angle`, `hjust`, and `vjust`
 aesthetics can be used to adjust this. If custom `angle` values are
 specified, these will be **added** to the default angle as calculated as
 described above.
@@ -210,12 +223,16 @@ by default sets `expand = FALSE`.
 
 ## Aesthetics
 
-`geom_text_phylo()` understands the following aesthetics (required
-aesthetics are in bold):
+[`geom_text_phylo()`](https://williamgearty.com/deeptime/dev/reference/geom_text_phylo.md)
+understands the following aesthetics (required aesthetics are in bold):
 
 - **x** (pulled from the phylogeny by default)
 
 - **y** (pulled from the phylogeny by default)
+
+- **parent** (pulled from the phylogeny by default)
+
+- **node** (pulled from the phylogeny by default)
 
 - **label** (pulled from the phylogeny by default)
 
@@ -246,18 +263,54 @@ These can either be a number between 0 (left/bottom) and 1 (right/top)
 or a character (`"left"`, `"middle"`, `"right"`, `"bottom"`, `"center"`,
 `"top"`). There are two special alignments: `"inward"` and `"outward"`.
 Inward always aligns text towards the center, and outward aligns it away
-from the center.
+from the center. Note that numeric values outside of \[0, 1\] will also
+work and will move the text beyond the normal alignment positions (e.g.,
+the default `hjust` value is -0.02).
 
 ## Examples
 
 ``` r
 library(ggplot2)
-library(ape)
 library(ggtree)
-tr <- rtree(10)
-revts(ggtree(tr)) +
-  geom_text_phylo() +
-  coord_geo_radial("epochs")
+library(phytools)
+data(primate.tree)
+# single annotation
+revts(ggtree(primate.tree)) +
+  geom_text_clade(label = "Hominoidea", node = 114, extend = c(0.1, 0.1)) +
+  coord_geo_radial()
+#> Warning: Unknown or uninitialised column: `subgroup`.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+
+
+# data frame of clade labels
+clades.df <- data.frame(
+  clade = c("Lorisoidea", "Lemuroidea", "Tarsioidea", "Ceboidea",
+            "Cercopithecoidea", "Hominoidea"),
+  node = c(166, 146, 144, 120, 95, 114)
+)
+revts(ggtree(primate.tree)) %<+% clades.df +
+  geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
+  coord_geo_radial()
+#> Warning: Removed 173 rows containing missing values or values outside the scale range.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+#> Warning: Unknown or uninitialised column: `subgroup`.
+
+
+# display with other tip data
+data(primate.data)
+activity <- subset(primate.data, select = "Activity_pattern")
+revts(gheatmap(ggtree(primate.tree), activity, offset = -70,
+               colnames = FALSE, width = 0.03, color = NA)) %<+% clades.df +
+  geom_text_clade(aes(label = clade), extend = c(0.1, 0.1),
+                  position = position_nudge(x = 10)) +
+  coord_geo_radial()
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
+#> Warning: Removed 173 rows containing missing values or values outside the scale range.
 #> Warning: Unknown or uninitialised column: `subgroup`.
 #> Warning: Unknown or uninitialised column: `subgroup`.
 #> Warning: Unknown or uninitialised column: `subgroup`.

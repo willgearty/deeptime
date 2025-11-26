@@ -2,6 +2,13 @@
 
 ## deeptime (development version)
 
+New features:
+
+- Added
+  [`geom_text_clade()`](https://williamgearty.com/deeptime/dev/reference/geom_text_clade.md)
+  for adding clade labels to phylogenies when using
+  [`coord_geo_radial()`](https://williamgearty.com/deeptime/dev/reference/coord_geo_radial.md)
+
 ## deeptime 2.3.1
 
 CRAN release: 2025-11-26

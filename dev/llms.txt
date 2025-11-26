@@ -283,11 +283,13 @@ phylogenies that are plotted with
 
 ### Adding text labels to phylogenies
 
-When using deeptime coordinate systems, this geom may work better than
+When using deeptime coordinate systems, these geoms may work better than
 geoms from ggtree.
 
 - [`geom_text_phylo()`](https://williamgearty.com/deeptime/dev/reference/geom_text_phylo.md)
   : Label nodes on a phylogenetic tree plotted with ggtree
+- [`geom_text_clade()`](https://williamgearty.com/deeptime/dev/reference/geom_text_clade.md)
+  : Label clades on a phylogenetic tree plotted with ggtree
 
 ## Transforming coordinate systems
 
