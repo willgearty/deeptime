@@ -2,6 +2,10 @@
 
 ## deeptime (development version)
 
+## deeptime 2.3.1
+
+CRAN release: 2025-11-26
+
 Bug fixes:
 
 - Fixed behavior of the `reverse` argument for
