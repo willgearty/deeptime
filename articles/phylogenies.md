@@ -221,8 +221,8 @@ gray scale. We’ll also adjust the `end` value for
 [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
 to remove the empty space. Note that if the `start` and `end` values
 result in the same polar locations, the axis will be bumped to the
-margin, so we use an `end` value that is *just* slightly smaller than
-the `start` value. This leaves a very small gap, but it’s covered by the
+margin, but we can override this with `r.axis.inside = TRUE`. This
+leaves a very small gap, but it’s covered by the
 [`guide_geo()`](https://williamgearty.com/deeptime/reference/guide_geo.md)
 boxes. Finally, note that you can use
 [`guide_geo()`](https://williamgearty.com/deeptime/reference/guide_geo.md)
@@ -232,7 +232,8 @@ function.
 
 ``` r
 revts(ggtree(mammal.tree)) +
-  coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.49 * pi) +
+  coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.5 * pi,
+                   r.axis.inside = TRUE) +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
                      expand = expansion(mult = c(0.05, 0))) +
   scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.05))) +
@@ -283,7 +284,8 @@ some space around the plot so the labels aren’t cut off.
 ``` r
 revts(ggtree(mammal.tree)) +
     geom_text_phylo(nudge_x = 2) +
-    coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.49 * pi) +
+    coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.5 * pi,
+                     r.axis.inside = TRUE) +
     scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
                        expand = expansion(mult = c(0.05, 0))) +
     scale_y_continuous(guide = NULL, expand = expansion(mult = c(0.01, 0.05))) +

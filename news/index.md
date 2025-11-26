@@ -1,5 +1,30 @@
 # Changelog
 
+## deeptime 2.3.1
+
+CRAN release: 2025-11-26
+
+Bug fixes:
+
+- Fixed behavior of the `reverse` argument for
+  [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
+  for ggplot2 4.0.0 and up
+  ([\#96](https://github.com/willgearty/deeptime/issues/96))
+
+Deprecation:
+
+- Soft deprecated the `direction` argument of
+  [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
+  in favor of the `reverse` argument that was added in deeptime 2.2.0
+- Soft deprecated the `r_axis_inside` argument
+  [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
+  in favor of the new `r.axis.inside` argument to maintain parity with
+  [`ggplot2::coord_radial()`](https://ggplot2.tidyverse.org/reference/coord_radial.html)
+- Soft deprecated the `rotate_angle` argument
+  [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
+  in favor of the new `rotate.angle` argument to maintain parity with
+  [`ggplot2::coord_radial()`](https://ggplot2.tidyverse.org/reference/coord_radial.html)
+
 ## deeptime 2.3.0
 
 CRAN release: 2025-11-20

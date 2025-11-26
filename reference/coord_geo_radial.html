@@ -33,7 +33,7 @@ features (see examples)."><meta property="og:image" content="https://williamgear
 
     <a class="navbar-brand me-2" href="../index.html">deeptime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,9 +90,10 @@ features (see examples).</p>
 <span>  start <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> <span class="va">pi</span>,</span>
 <span>  end <span class="op">=</span> <span class="fl">1.25</span> <span class="op">*</span> <span class="va">pi</span>,</span>
 <span>  expand <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  direction <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  direction <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  reverse <span class="op">=</span> <span class="st">"none"</span>,</span>
-<span>  r_axis_inside <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  r.axis.inside <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rotate.angle <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  inner.radius <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -106,7 +107,8 @@ features (see examples).</p>
 <span>  prop <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  textpath_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  clip <span class="op">=</span> <span class="st">"off"</span>,</span>
-<span>  rotate_angle <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  r_axis_inside <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  rotate_angle <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -123,7 +125,8 @@ data.frame of time interval boundaries (see Details).</p></dd>
 
 
 <dt id="arg-theta">theta<a class="anchor" aria-label="anchor" href="#arg-theta"></a></dt>
-<dd><p>variable to map angle to (<code>x</code> or <code>y</code>)</p></dd>
+<dd><p>The variable to map angle to (<code>x</code> or <code>y</code>). This should normally
+be <code>y</code> when using this function with <code>ggtree</code>.</p></dd>
 
 
 <dt id="arg-start">start<a class="anchor" aria-label="anchor" href="#arg-start"></a></dt>
@@ -144,7 +147,7 @@ are taken directly from the scale.</p></dd>
 
 
 <dt id="arg-direction">direction<a class="anchor" aria-label="anchor" href="#arg-direction"></a></dt>
-<dd><p>1, clockwise; -1, anticlockwise</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 
 <dt id="arg-reverse">reverse<a class="anchor" aria-label="anchor" href="#arg-reverse"></a></dt>
@@ -153,8 +156,22 @@ are taken directly from the scale.</p></dd>
 reverses the radius. <code>"thetar"</code> reverses both the angle and the radius.</p></dd>
 
 
-<dt id="arg-r-axis-inside-rotate-angle">r_axis_inside, rotate_angle<a class="anchor" aria-label="anchor" href="#arg-r-axis-inside-rotate-angle"></a></dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
+<dt id="arg-r-axis-inside">r.axis.inside<a class="anchor" aria-label="anchor" href="#arg-r-axis-inside"></a></dt>
+<dd><p>One of the following:</p><ul><li><p><code>NULL</code> (default) places the axis next to the panel if <code>start</code> and
+<code>end</code> arguments form a full circle and inside the panel otherwise.</p></li>
+<li><p><code>TRUE</code> to place the radius axis inside the panel.</p></li>
+<li><p><code>FALSE</code> to place the radius axis next to the panel.</p></li>
+<li><p>A numeric value, setting a theta axis value at which
+the axis should be placed inside the panel. Can be given as a length 2
+vector to control primary and secondary axis placement separately.</p></li>
+</ul></dd>
+
+
+<dt id="arg-rotate-angle">rotate.angle<a class="anchor" aria-label="anchor" href="#arg-rotate-angle"></a></dt>
+<dd><p>If <code>TRUE</code>, transforms the <code>angle</code> aesthetic in data
+in accordance with the computed <code>theta</code> position. If <code>FALSE</code> (default),
+no such transformation is performed. Can be useful to rotate text geoms in
+alignment with the coordinates.</p></dd>
 
 
 <dt id="arg-inner-radius">inner.radius<a class="anchor" aria-label="anchor" href="#arg-inner-radius"></a></dt>
@@ -223,6 +240,10 @@ Useful arguments include <code>color</code> (font color), <code>family</code> (f
 <dd><p>Should drawing be clipped to the extent of the plot panel? A
 setting of <code>"on"</code> (the default) means yes, and a setting of <code>"off"</code>
 means no. For details, please see <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian()</a></code>.</p></dd>
+
+
+<dt id="arg-r-axis-inside-rotate-angle">r_axis_inside, rotate_angle<a class="anchor" aria-label="anchor" href="#arg-r-axis-inside-rotate-angle"></a></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -26,9 +26,10 @@ coord_geo_radial(
   start = -0.5 * pi,
   end = 1.25 * pi,
   expand = TRUE,
-  direction = 1,
+  direction = deprecated(),
   reverse = "none",
-  r_axis_inside = NULL,
+  r.axis.inside = NULL,
+  rotate.angle = FALSE,
   inner.radius = 0.05,
   fill = NULL,
   alpha = 1,
@@ -42,7 +43,8 @@ coord_geo_radial(
   prop = 1,
   textpath_args = list(),
   clip = "off",
-  rotate_angle = FALSE
+  r_axis_inside = deprecated(),
+  rotate_angle = deprecated()
 )
 ```
 
@@ -58,7 +60,8 @@ coord_geo_radial(
 
 - theta:
 
-  variable to map angle to (`x` or `y`)
+  The variable to map angle to (`x` or `y`). This should normally be `y`
+  when using this function with `ggtree`.
 
 - start:
 
@@ -79,7 +82,7 @@ coord_geo_radial(
 
 - direction:
 
-  1, clockwise; -1, anticlockwise
+  **\[deprecated\]**
 
 - reverse:
 
@@ -87,9 +90,27 @@ coord_geo_radial(
   directions as is. `"theta"` reverses the angle and `"r"` reverses the
   radius. `"thetar"` reverses both the angle and the radius.
 
-- r_axis_inside, rotate_angle:
+- r.axis.inside:
 
-  **\[deprecated\]**
+  One of the following:
+
+  - `NULL` (default) places the axis next to the panel if `start` and
+    `end` arguments form a full circle and inside the panel otherwise.
+
+  - `TRUE` to place the radius axis inside the panel.
+
+  - `FALSE` to place the radius axis next to the panel.
+
+  - A numeric value, setting a theta axis value at which the axis should
+    be placed inside the panel. Can be given as a length 2 vector to
+    control primary and secondary axis placement separately.
+
+- rotate.angle:
+
+  If `TRUE`, transforms the `angle` aesthetic in data in accordance with
+  the computed `theta` position. If `FALSE` (default), no such
+  transformation is performed. Can be useful to rotate text geoms in
+  alignment with the coordinates.
 
 - inner.radius:
 
@@ -158,6 +179,10 @@ coord_geo_radial(
   of `"on"` (the default) means yes, and a setting of `"off"` means no.
   For details, please see
   [`coord_cartesian()`](https://ggplot2.tidyverse.org/reference/coord_cartesian.html).
+
+- r_axis_inside, rotate_angle:
+
+  **\[deprecated\]**
 
 ## Details
 
