@@ -25,11 +25,11 @@ on:
       - master
     paths-ignore:
       - "Meta**"
-      - "memcheck**"
       - "data-raw**"
       - "docs**"
       - "inst**"
       - "man**"
+      - "memcheck**"
       - "tests**"
       - "vignettes**"
       - "**.git"
@@ -41,60 +41,42 @@ on:
       - "**.Rpro*"
   schedule:
     - cron: '30 5 1 * *'
-
 name: revdep-check
-
 jobs:
-  mem-check:
-    runs-on: windows-latest
-
-    name: revdepcheck, macOS, R release
-
+  revdepcheck:
+    runs-on: ubuntu-latest
+    name: revdepcheck, Linux, R release
     env:
-      _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
-      _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
-      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
-      _R_CHECK_THINGS_IN_CHECK_DIR_: false
-      R_REMOTES_STANDALONE: true
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_BIOC_VERSION: 3.22
-
     steps:
       - uses: actions/checkout@v4
-
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: release
           use-public-rspm: true
-
       - uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Cache R packages
-        uses: actions/cache@v4
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install dependencies
-        run: |
-          install.packages('pak', repos = 'https://r-lib.github.io/p/pak/dev/')
-          pak::local_install_deps()
-          pak::pkg_install('r-lib/revdepcheck')
-        shell: Rscript {0}
-
+          # Keep this workflow's package cache separate from other workflows
+          # (which use the default cache-version)
+          cache-version: revdep
+          # BiocManager + BiocVersion let revdepcheck/pak resolve the correct
+          # Bioconductor version from the installed BiocVersion package, so we
+          # no longer hardcode R_BIOC_VERSION. (Running on Linux also avoids the
+          # Bioconductor binary-repo errors that occur on Windows/macOS.)
+          extra-packages: |
+            local::.
+            any::BiocManager
+            any::BiocVersion
+            r-lib/revdepcheck
+          needs: check
       - name: Check reverse dependencies
-        env:
-          _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
           revdepcheck::revdep_reset()
           revdepcheck::revdep_check(num_workers=4)
           problems <- readLines('revdep/problems.md', warn = FALSE)
           if (length(problems) > 1) stop(paste0(problems, collapse= "\n"))
         shell: Rscript {0}
-
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@v4
