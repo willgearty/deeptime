@@ -278,10 +278,6 @@ data(primate.tree)
 revts(ggtree(primate.tree)) +
   geom_text_clade(label = "Hominoidea", node = 114, extend = c(0.1, 0.1)) +
   coord_geo_radial()
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 
 
 # data frame of clade labels
@@ -294,10 +290,6 @@ revts(ggtree(primate.tree)) %<+% clades.df +
   geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
   coord_geo_radial()
 #> Warning: Removed 173 rows containing missing values or values outside the scale range.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 
 
 # display with other tip data
@@ -311,8 +303,4 @@ revts(gheatmap(ggtree(primate.tree), activity, offset = -70,
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
 #> Warning: Removed 173 rows containing missing values or values outside the scale range.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 ```

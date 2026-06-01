@@ -9,6 +9,7 @@ to add highly customizable timescales to a wide variety of ggplots.
 Before we begin, let’s load some necessary packages first.
 
 ``` r
+
 # Load deeptime
 library(deeptime)
 # Load other packages
@@ -27,6 +28,7 @@ First, let’s summarize some coral data from the `divDyn` package to
 generate a diversity curve that we’ll be able to plot:
 
 ``` r
+
 # this is not a proper diversity curve but it gets the point across
 coral_div <- corals %>%
   filter(stage != "") %>%
@@ -49,6 +51,7 @@ Note that the function assumes that age is decreasing towards the
 present.
 
 ``` r
+
 ggplot(coral_div) +
   geom_line(aes(x = stage_age, y = n)) +
   scale_x_reverse("Age (Ma)") +
@@ -71,6 +74,7 @@ global timescales that are available through **deeptime** from the
 [`get_scale_data()`](https://williamgearty.com/deeptime/dev/reference/get_scale_data.md)).
 
 ``` r
+
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
   scale_y_reverse("Time (Ma)") +
@@ -94,6 +98,7 @@ Polarity Chron” timescale to the left axis and the “Planktic
 foraminiferal Primary Biozones” timescale to the right axis.
 
 ``` r
+
 # uses the oxygen isotope data from above
 ggplot(lisiecki2005) +
   geom_line(aes(x = d18O, y = Time / 1000), orientation = "y") +
@@ -118,6 +123,7 @@ added from the inside to the outside. Here we are stacking periods and
 eras.
 
 ``` r
+
 # uses the coral diversity data from above
 ggplot(coral_div) +
   geom_line(aes(x = stage_age, y = n)) +
@@ -143,6 +149,7 @@ panel. This behavior works similarly with
 [`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html).
 
 ``` r
+
 # uses the coral occurrence data from above
 coral_div_diet <- corals %>%
   filter(stage != "") %>%
@@ -166,6 +173,7 @@ By specifying `scales = "free_x"`, you can add a geological time scale
 to each panel.
 
 ``` r
+
 ggplot(coral_div_diet) +
   geom_line(aes(x = stage_age, y = n)) +
   scale_x_reverse("Age (Ma)") +
@@ -187,6 +195,7 @@ Additional arguments can be passed to
 as a list using the `fittext_args` argument.
 
 ``` r
+
 ggplot(coral_div) +
   geom_line(aes(x = stage_age, y = n)) +
   scale_x_reverse("Age (Ma)") +
@@ -212,6 +221,7 @@ use the arguments of
 `scale_[x/y]_discrete()` to optionally remove the labels and tick marks.
 
 ``` r
+
 # use the coral occurrence data from above
 coral_div_dis <- corals %>%
   filter(period != "") %>%
@@ -247,6 +257,7 @@ for interval label colors. You can even have one scale with
 auto-discretized intervals and one scale with pre-discretized intervals.
 
 ``` r
+
 eras_custom <- data.frame(
   name = c("Mesozoic", "Cenozoic"), max_age = c(0.5, 3.5),
   min_age = c(3.5, 6.5), color = c("#67C5CA", "#F2F91D")

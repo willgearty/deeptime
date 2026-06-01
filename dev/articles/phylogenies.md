@@ -6,6 +6,7 @@ the [ggtree](https://www.bioconductor.org/packages/ggtree) package.
 First let’s load some important packages.
 
 ``` r
+
 # Load deeptime
 library(deeptime)
 # Load other packages
@@ -37,16 +38,13 @@ Here we also use the
 function to relabel the negative x-axis values with positive labels.
 
 ``` r
+
 p <- ggtree(mammal.tree) +
   coord_geo(xlim = c(-75, 0), ylim = c(-2, Ntip(mammal.tree)),
             neg = TRUE, abbrv = FALSE) +
   scale_x_continuous(breaks = seq(-80, 0, 20), labels = abs(seq(-80, 0, 20))) +
   theme_tree2()
 revts(p)
-## Warning: Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
 ```
 
 ![](phylogenies_files/figure-html/unnamed-chunk-3-1.png)
@@ -64,6 +62,7 @@ that we have modified `plot.margin` here to accommodate the stacked
 timescale.
 
 ``` r
+
 ggtree(ceratopsianTreeRaia,
        position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
   coord_geo(
@@ -76,10 +75,6 @@ ggtree(ceratopsianTreeRaia,
                      labels = rev(epochs$max_age)) +
   theme_tree2() +
   theme(plot.margin = margin(7, 11, 7, 11))
-## Warning: Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
 ```
 
 ![](phylogenies_files/figure-html/unnamed-chunk-4-1.png)
@@ -100,6 +95,7 @@ to add space to either side of the phylogeny to prevent the tips from
 overlapping with the `pie` edges.
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
   coord_geo_radial(dat = "stages") +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
@@ -120,6 +116,7 @@ although the stacking occurs in a circular fashion. We also use the
 different timescales are oriented and split within the polar space.
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
   coord_geo_radial(
       dat = list("stages", "periods"), alpha = .5, lty = "dashed",
@@ -169,6 +166,7 @@ function. Here’s a brief example using the same mammal phylogeny from
 above:
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
   coord_radial(theta = "y", start = -0.5 * pi, end = 1.25 * pi) +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
@@ -194,6 +192,7 @@ In most cases you probably want to set the `spacing` to 0 (i.e.,
 `unit(0, "line")`) so the different guides are glued together.
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
   coord_radial(theta = "y", start = -0.5 * pi, end = 1.25 * pi) +
   scale_x_continuous(breaks = seq(-60, 0, 20), labels = abs(seq(-60, 0, 20)),
@@ -231,6 +230,7 @@ within `scale_` functions and also within the
 function.
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
   coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.5 * pi,
                    r.axis.inside = TRUE) +
@@ -282,6 +282,7 @@ the labels away from the tips a bit. We also use `plot.margin` to add
 some space around the plot so the labels aren’t cut off.
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
     geom_text_phylo(nudge_x = 2) +
     coord_geo_radial(dat = "stages", fill = c("grey90", "grey95"), end = 1.5 * pi,
@@ -331,6 +332,7 @@ label bar. We also use `plot.margin` to add some space around the plot
 so the labels aren’t cut off.
 
 ``` r
+
 revts(ggtree(mammal.tree)) +
     geom_text_clade(node = c(51, 70, 75),
                     label = c("Carnivora", "Perissodactyla", "Artiodactyla"),
@@ -359,6 +361,7 @@ the data with the tree data. This allows you to map aesthetics to
 columns in the data frame.
 
 ``` r
+
 data(primate.tree)
 clades.df <- data.frame(
   clade = c("Lorisoidea", "Lemuroidea", "Tarsioidea", "Ceboidea",

@@ -240,10 +240,6 @@ revts(ggtree(tree)) +
   theme_gray()
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 
 
 # multiple scales
@@ -257,10 +253,6 @@ revts(ggtree(tree)) +
   theme_gray()
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 
 library(ggplot2)
 library(paleotree)
@@ -272,8 +264,4 @@ ggtree(ceratopsianTreeRaia,
   theme_classic()
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 ```

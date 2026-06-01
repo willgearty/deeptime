@@ -258,8 +258,4 @@ tr <- rtree(10)
 revts(ggtree(tr)) +
   geom_text_phylo() +
   coord_geo_radial("epochs")
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 ```
