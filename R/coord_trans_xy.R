@@ -143,7 +143,7 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
 
     # secondary axis breaks are potentially different
     out_x_sec <- scale_x$break_info(scale_range_x_sec)
-    out_y_sec <- scale_x$break_info(scale_range_y_sec)
+    out_y_sec <- scale_y$break_info(scale_range_y_sec)
 
     # range in coord space
     out_x$range <- range(range_x_coord)
