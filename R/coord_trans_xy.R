@@ -94,10 +94,11 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     dist_euclidean(points_trans$x, points_trans$y) / max_dist
   },
   backtransform_range = function(self, panel_params) {
-    ranges <- self$trans$inverse(panel_params$x.range, panel_params$y.range)
+    corners <- expand.grid(x = panel_params$x.range, y = panel_params$y.range)
+    ranges <- self$trans$inverse(corners$x, corners$y)
     list(
-      x = ranges$x,
-      y = ranges$y
+      x = range(ranges$x),
+      y = range(ranges$y)
     )
   },
   setup_panel_params = function(self, scale_x, scale_y, params = list()) {
@@ -147,7 +148,6 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     # range in coord space
     out_x$range <- range(range_x_coord)
     out_y$range <- range(range_y_coord)
-
     c(
       list(
         x = view_scale_primary(scale_x, continuous_range = scale_range_x),
@@ -187,26 +187,22 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     new_data <- data
     # transform x and y coordinates
     if ("x" %in% colnames(new_data)) {
-      # hacks for axis lines
-      if (all(data$y == panel_params$y.full.range[1])) {
-        new_data$x <- rescale(data$x, 0:1, range(data$x))
-      } else if (all(data$y == panel_params$y.full.range[2])) {
-        new_data$x <- rescale(data$x, 0:1, range(data$x))
-      } else if (all(data$x == panel_params$x.full.range[1])) {
-        new_data$y <- rescale(data$y, 0:1, range(data$y))
-      } else if (all(data$x == panel_params$x.full.range[2])) {
-        new_data$y <- rescale(data$y, 0:1, range(data$y))
-      }
       # hacks for axis tick labels
-      else if (all(data$x == -Inf)) {
+      if (isTRUE(all(data$x == Inf))) {                  # left (primary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y$continuous_range)
-      } else if (all(data$x == Inf)) {
+      } else if (isTRUE(all(data$x == -Inf))) {          # right (secondary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y.sec$continuous_range)
-      } else if (all(data$y == -Inf)) {
+      } else if (isTRUE(all(data$y == Inf))) {           # bottom (primary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x$continuous_range)
-      } else if (all(data$y == Inf)) {
+      } else if (isTRUE(all(data$y == -Inf))) {          # top (secondary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x.sec$continuous_range)
-      } else {
+      }
+      # hacks for axis lines
+      else if (length(unique(data$y)) == 1) {       # horizontal axis line
+        new_data$x <- rescale(data$x, 0:1, range(data$x))
+      } else if (length(unique(data$x)) == 1) {      # vertical axis line
+        new_data$y <- rescale(data$y, 0:1, range(data$y))
+      } else {                                       # geoms: transform normally
         temp_data <- self$trans$transform(data$x, data$y)
         new_data$x <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)
         new_data$y <- rescale(temp_data$y, 0:1, panel_params$y.range.coord)
