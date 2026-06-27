@@ -138,12 +138,12 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     scale_range_y_sec <- final_scale_limits$y[c(2, 4)]
 
     # calculate break information
-    out_x <- scale_x$break_info(scale_range_x)
-    out_y <- scale_y$break_info(scale_range_y)
+    out_x <- scale_x$break_info(sort(scale_range_x))
+    out_y <- scale_y$break_info(sort(scale_range_y))
 
     # secondary axis breaks are potentially different
-    out_x_sec <- scale_x$break_info(scale_range_x_sec)
-    out_y_sec <- scale_y$break_info(scale_range_y_sec)
+    out_x_sec <- scale_x$break_info(sort(scale_range_x_sec))
+    out_y_sec <- scale_y$break_info(sort(scale_range_y_sec))
 
     # range in coord space
     out_x$range <- range(range_x_coord)
@@ -152,7 +152,7 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
       list(
         x = view_scale_primary(scale_x, continuous_range = scale_range_x),
         x.sec = view_scale_secondary(scale_x,
-                                     continuous_range = scale_range_x_sec),
+                                     continuous_range = sort(scale_range_x_sec)),
         x.range = out_x$range,
         x.range.coord = range_x_coord,
         x.full.range = final_scale_limits$x[c(1, 4)],
@@ -166,9 +166,9 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
                               0:1, scale_range_x_sec)
       ),
       list(
-        y = view_scale_primary(scale_y, continuous_range = scale_range_y),
+        y = view_scale_primary(scale_y, continuous_range = sort(scale_range_y)),
         y.sec = view_scale_secondary(scale_y,
-                                     continuous_range = scale_range_y_sec),
+                                     continuous_range = sort(scale_range_y_sec)),
         y.range = out_y$range,
         y.range.coord = range_y_coord,
         y.full.range = final_scale_limits$y[c(1, 4)],
