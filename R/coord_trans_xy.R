@@ -102,6 +102,12 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     )
   },
   setup_panel_params = function(self, scale_x, scale_y, params = list()) {
+    if (scale_x$trans$name == "reverse" || scale_y$trans$name == "reverse") {
+      cli::cli_abort(c(
+        "{.fn coord_trans_xy} does not support reverse scales.",
+        "i" = "Use a {.fn ggforce::reflect} transformation to flip an axis."
+      ))
+    }
     # TODO: handle discrete scales?
     expansion_x <- default_expansion(scale_x, expand = self$expand)
     expansion_y <- default_expansion(scale_y, expand = self$expand)
