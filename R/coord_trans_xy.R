@@ -129,6 +129,9 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     }
     expand_range <- expand.grid(x = range_x_coord, y = range_y_coord)
     final_scale_limits <- self$trans$inverse(expand_range$x, expand_range$y)
+    # round to make all platforms have identical results
+    final_scale_limits$x <- signif(final_scale_limits$x, 10)
+    final_scale_limits$y <- signif(final_scale_limits$y, 10)
 
     scale_range_x <- final_scale_limits$x[1:2]
     scale_range_y <- final_scale_limits$y[c(1, 3)]
