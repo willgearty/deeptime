@@ -102,12 +102,6 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     )
   },
   setup_panel_params = function(self, scale_x, scale_y, params = list()) {
-    if (scale_x$trans$name == "reverse" || scale_y$trans$name == "reverse") {
-      cli::cli_abort(c(
-        "{.fn coord_trans_xy} does not support reverse scales.",
-        "i" = "Use a {.fn ggforce::reflect} transformation to flip an axis."
-      ))
-    }
     # TODO: handle discrete scales?
     expansion_x <- default_expansion(scale_x, expand = self$expand)
     expansion_y <- default_expansion(scale_y, expand = self$expand)
@@ -118,13 +112,11 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     lims <- expand.grid(x = limits$x, y = limits$y)
     lims_trans <- self$trans$transform(lims$x, lims$y)
     limits_trans <- data.frame(
-      x = if (scale_x$trans$name == "reverse") rev(range(lims_trans$x))
-            else range(lims_trans$x),
-      y = if (scale_y$trans$name == "reverse") rev(range(lims_trans$y))
-            else range(lims_trans$y)
+      x = range(lims_trans$x),
+      y = range(lims_trans$y)
     )
-    # range expansion expects values in increasing order, which may not be true
-    # for reciprocal/reverse transformations
+    # range expansion expects increasing order, which may not hold for
+    # reciprocal coord transformations
     if (all(is.finite(limits_trans$x)) && diff(limits_trans$x) < 0) {
       range_x_coord <- rev(expand_range4(rev(limits_trans$x), expansion_x))
     } else {
@@ -156,7 +148,7 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     out_y$range <- range(range_y_coord)
     c(
       list(
-        x = view_scale_primary(scale_x, continuous_range = scale_range_x),
+        x = view_scale_primary(scale_x, continuous_range = sort(scale_range_x)),
         x.sec = view_scale_secondary(scale_x,
                                      continuous_range = sort(scale_range_x_sec)),
         x.range = out_x$range,
