@@ -1,8 +1,14 @@
 # deeptime (development version)
 
+* __deeptime now requires R version 4.1 or higher__.
+
 New features:
 
 * Added `geom_text_clade()` for adding clade labels to phylogenies when using `coord_geo_radial()`
+
+Miscellaneous:
+
+* Swapped usage of the magrittr pipe operator (`%>%`) to the base R pipe operator (`|>`) (#100)
 
 # deeptime 2.3.1
 
