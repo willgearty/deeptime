@@ -6,6 +6,10 @@ New features:
 
 * Added `geom_text_clade()` for adding clade labels to phylogenies when using `coord_geo_radial()`
 
+Bug fixes:
+
+* Fixed several edge cases of `coord_trans_xy()` including `ggforce::reflect()` transformations, `_reverse_` scales, and capped axes (#57, #102)
+
 Miscellaneous:
 
 * Swapped usage of the magrittr pipe operator (`%>%`) to the base R pipe operator (`|>`) (#100)
