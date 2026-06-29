@@ -33,10 +33,10 @@ library(gsloid)
 First, let's summarize some coral data from the `divDyn` package to generate a diversity curve that we'll be able to plot:
 ```{r message = FALSE}
 # this is not a proper diversity curve but it gets the point across
-coral_div <- corals %>%
-  filter(stage != "") %>%
-  group_by(period, stage) %>%
-  summarise(n = n()) %>%
+coral_div <- corals |>
+  filter(stage != "") |>
+  group_by(period, stage) |>
+  summarise(n = n()) |>
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
     stages$min_age[match(stage, stages$name)]) / 2)
 ```
@@ -107,10 +107,10 @@ ggplot(coral_div) +
 `coord_geo()` synergizes well with faceted plots. You can change on which facets the timescale is plotted by changing the `scales` argument in `facet_wrap()`. The default behavior is to only include the timescale on the bottom-most panel. This behavior works similarly with `facet_grid()`.
 ```{r message = FALSE}
 # uses the coral occurrence data from above
-coral_div_diet <- corals %>%
-  filter(stage != "") %>%
-  group_by(diet, stage) %>%
-  summarise(n = n()) %>%
+coral_div_diet <- corals |>
+  filter(stage != "") |>
+  group_by(diet, stage) |>
+  summarise(n = n()) |>
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
     stages$min_age[match(stage, stages$name)]) / 2)
 
@@ -153,12 +153,12 @@ ggplot(coral_div) +
 `coord_geo()` will automatically detect if your axis is discrete. The categories of the discrete axis (which can be reordered using the `limits` argument of `scale_x_discrete()`/`scale_y_discrete()`) should match the `name` column of the timescale data (`dat`). You can use the arguments of `theme()` and `scale_[x/y]_discrete()` to optionally remove the labels and tick marks.
 ```{r message = FALSE}
 # use the coral occurrence data from above
-coral_div_dis <- corals %>%
-  filter(period != "") %>%
-  group_by(diet, period) %>%
-  summarise(n = n()) %>%
+coral_div_dis <- corals |>
+  filter(period != "") |>
+  group_by(diet, period) |>
+  summarise(n = n()) |>
   mutate(period_age = (periods$max_age[match(period, periods$name)] +
-    periods$min_age[match(period, periods$name)]) / 2) %>%
+    periods$min_age[match(period, periods$name)]) / 2) |>
   arrange(-period_age)
 
 ggplot(coral_div_dis) +

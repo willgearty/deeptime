@@ -33,11 +33,11 @@ Do you have a bunch of temporal occurrences of taxa or some sort of geological p
 ```{r}
 # sort the occurrences from most common genera to least common genera
 # assume the age is just the mean of the max and min
-occdf <- tetrapods %>%
-  filter(accepted_rank == "genus") %>%
-  select(occurrence_no, accepted_name, max_ma, min_ma) %>%
-  mutate(accepted_name = reorder(accepted_name, accepted_name, length)) %>%
-  arrange(desc(accepted_name)) %>%
+occdf <- tetrapods |>
+  filter(accepted_rank == "genus") |>
+  select(occurrence_no, accepted_name, max_ma, min_ma) |>
+  mutate(accepted_name = reorder(accepted_name, accepted_name, length)) |>
+  arrange(desc(accepted_name)) |>
   mutate(age = (max_ma + min_ma) / 2)
 # get a reasonable subset of those occurrences
 occdf <- occdf[1:300, ]
@@ -96,9 +96,9 @@ ggplot(data = occdf) +
 Note that our uncertain lines (0) always overlap with our certain lines (1), so there is a continuous line spanning each taxon's entire range. However, if we tweak some of the data, we can change that, causing a gap in the ranges. Note that in this engineered example, the uncertain and certain ranges for _Diictodon_ no longer overlap, so there is a gap between them:
 
 ```{r}
-oldest_certain <- occdf %>%
-  filter(accepted_name == "Diictodon", certainty == 1) %>%
-  pull(age) %>%
+oldest_certain <- occdf |>
+  filter(accepted_name == "Diictodon", certainty == 1) |>
+  pull(age) |>
   max()
 
 n_uncertain <- sum(occdf$accepted_name == "Diictodon" & occdf$certainty == 0)
@@ -142,12 +142,12 @@ You may also want to color your data based on its age. __deeptime__ has `scale_c
 library(divDyn)
 data(corals)
 
-coral_div_dis <- corals %>%
-  filter(period != "") %>%
-  group_by(diet, period) %>%
-  summarise(n = n()) %>%
+coral_div_dis <- corals |>
+  filter(period != "") |>
+  group_by(diet, period) |>
+  summarise(n = n()) |>
   mutate(period_age = (periods$max_age[match(period, periods$name)] +
-    periods$min_age[match(period, periods$name)]) / 2) %>%
+    periods$min_age[match(period, periods$name)]) / 2) |>
   arrange(-period_age)
 ```
 
@@ -164,7 +164,7 @@ ggplot(coral_div_dis, aes(x = n, y = diet, fill = period)) +
 Another way to split data by categories is by [faceting](https://ggplot2-book.org/facet.html). __deeptime__ has a suite of facetting functions that allow you to facet by geological intervals (`facet_grid_geo()`, `facet_wrap_geo()`, `facet_nested_geo()`, and `facet_nested_wrap_geo()`). Here, we'll use the same coral diversity data as above, but facet wrap it by period. Note that we need to convert the `period` column to an ordered factor so the facets appear in chronological order.
 
 ```{r}
-coral_div_dis <- coral_div_dis %>%
+coral_div_dis <- coral_div_dis |>
   mutate(period = factor(period, levels = rev(periods$name)))
 
 
@@ -180,9 +180,9 @@ ggplot(coral_div_dis, aes(x = n, y = diet)) +
 Just like with adding timescales to plots, you may want to show hierarchical timescale information. For example, we may want to show which of these periods are in the Mesozoic and which are in the Cenozoic. We can do this by adding a new column to our data that indicates the era of each period, then using both the period and era columns to make a nested facet:
 
 ```{r}
-coral_div_dis <- coral_div_dis %>%
+coral_div_dis <- coral_div_dis |>
   mutate(era = ifelse(period %in% c("Paleogene", "Neogene", "Quaternary"),
-                      "Cenozoic", "Mesozoic")) %>%
+                      "Cenozoic", "Mesozoic")) |>
   mutate(era = factor(era, levels = c("Cenozoic", "Mesozoic")))
 
 ggplot(coral_div_dis, aes(x = n, y = diet)) +

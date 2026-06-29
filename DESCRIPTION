@@ -13,7 +13,7 @@ Description: Extends the functionality of other plotting packages (notably 'ggpl
 URL: https://williamgearty.com/deeptime/,
     https://github.com/willgearty/deeptime
 BugReports: https://github.com/willgearty/deeptime/issues
-Depends: R (>= 3.5)
+Depends: R (>= 4.1)
 License: GPL (>= 3)
 Encoding: UTF-8
 RoxygenNote: 7.3.3
