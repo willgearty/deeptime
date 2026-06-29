@@ -32,6 +32,29 @@ test_that("coord_trans_xy() works", {
   expect_equal(ggplot_build(gg)$layout$panel_params[[1]]$x$limits, c(-2, 2))
   expect_doppelganger_deeptime("coord_trans_xy() with expansion", gg)
 
+  # check that reflect transformation works
+  trans <- ggforce::linear_trans(shear(0.5, 0.5), reflect(1, 0))
+  gg <- ggplot(points, aes(x, y)) +
+    geom_polygon(data = square, fill = NA, colour = "black") +
+    geom_point(size = 0.4) +
+    scale_x_continuous(sec.axis = sec_axis(~.)) +
+    scale_y_continuous(sec.axis = sec_axis(~.)) +
+    coord_trans_xy(trans = trans) +
+    theme_classic()
+  expect_doppelganger_deeptime("coord_trans_xy() with reflect", gg)
+
+  # check that reverse scales work
+  trans <- ggforce::linear_trans(shear(0.5, 0), rotate(-pi / 4))
+  gg <- ggplot(points, aes(x, y)) +
+    geom_polygon(data = square, fill = NA, colour = "black") +
+    geom_point(size = 0.4) +
+    scale_x_reverse(sec.axis = sec_axis(~ .)) +
+    scale_y_reverse(sec.axis = sec_axis(~ .)) +
+    coord_trans_xy(trans = trans, expand = FALSE) +
+    theme_classic()
+  expect_doppelganger_deeptime("coord_trans_xy() with reverse scales", gg)
+
+  # check errors
   gg <- ggplot(data = points, aes(x = x, y = y, color = color)) +
     geom_polygon(data = square, fill = NA, color = "black") +
     geom_point() +
