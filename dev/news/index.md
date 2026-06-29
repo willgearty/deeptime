@@ -9,6 +9,16 @@ New features:
   for adding clade labels to phylogenies when using
   [`coord_geo_radial()`](https://williamgearty.com/deeptime/dev/reference/coord_geo_radial.md)
 
+Bug fixes:
+
+- Fixed several edge cases of
+  [`coord_trans_xy()`](https://williamgearty.com/deeptime/dev/reference/coord_trans_xy.md)
+  including
+  [`ggforce::reflect()`](https://ggforce.data-imaginist.com/reference/linear_trans.html)
+  transformations, `_reverse_` scales, and capped axes
+  ([\#57](https://github.com/willgearty/deeptime/issues/57),
+  [\#102](https://github.com/willgearty/deeptime/issues/102))
+
 ## deeptime 2.3.1
 
 CRAN release: 2025-11-26
