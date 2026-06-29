@@ -13,7 +13,6 @@
 #'   defined with x and y coordinates (e.g., [ggplot2::geom_point()],
 #'   [ggplot2::geom_polygon()]). This does not currently work with geoms where
 #'   point coordinates are extrapolated (e.g., [ggplot2::geom_rect()]).
-#'   Note that "capped" axes are also not currently supported.
 #'
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto
@@ -197,9 +196,21 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
       }
       # hacks for axis lines
       else if (length(unique(data$y)) == 1) {       # horizontal axis line
-        new_data$x <- rescale(data$x, 0:1, range(data$x))
+        yr <- self$backtransform_range(panel_params)$y
+        cont <- if (abs(data$y[1] - max(yr)) <= abs(data$y[1] - min(yr))) {
+          panel_params$x$continuous_range            # bottom (primary x)
+        } else {
+          panel_params$x.sec$continuous_range        # top (secondary x)
+        }
+        new_data$x <- pmax(0, pmin(1, rescale(data$x, 0:1, cont)))
       } else if (length(unique(data$x)) == 1) {      # vertical axis line
-        new_data$y <- rescale(data$y, 0:1, range(data$y))
+        xr <- self$backtransform_range(panel_params)$x
+        cont <- if (abs(data$x[1] - max(xr)) <= abs(data$x[1] - min(xr))) {
+          panel_params$y$continuous_range            # left (primary y)
+        } else {
+          panel_params$y.sec$continuous_range        # right (secondary y)
+        }
+        new_data$y <- pmax(0, pmin(1, rescale(data$y, 0:1, cont)))
       } else {                                       # geoms: transform normally
         temp_data <- self$trans$transform(data$x, data$y)
         new_data$x <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)

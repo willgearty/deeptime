@@ -54,6 +54,23 @@ test_that("coord_trans_xy() works", {
     theme_classic()
   expect_doppelganger_deeptime("coord_trans_xy() with reverse scales", gg)
 
+  # check that capped axes work
+  trans <- ggforce::linear_trans(shear(0.5, 0.5), reflect(1, 0))
+  gg <- ggplot(points, aes(x, y)) +
+    geom_polygon(data = square, fill = NA, colour = "black") +
+    geom_point(size = 0.4) +
+    scale_x_continuous(sec.axis = sec_axis(~., breaks = seq(-1, 2, 1)), breaks = seq(-1, 2, 1)) +
+    scale_y_continuous(sec.axis = sec_axis(~., breaks = seq(-5, 0, 1)), breaks = seq(0, 5, 1)) +
+    coord_trans_xy(trans = trans) +
+    theme_classic() +
+    guides(
+      x = guide_axis(cap = "both"),
+      x.sec = guide_axis(cap = "lower"),
+      y = guide_axis(cap = "both"),
+      y.sec = guide_axis(cap = "upper")
+    )
+  expect_doppelganger_deeptime("coord_trans_xy() with capped axes", gg)
+
   # check errors
   gg <- ggplot(data = points, aes(x = x, y = y, color = color)) +
     geom_polygon(data = square, fill = NA, color = "black") +

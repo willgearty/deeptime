@@ -6,7 +6,7 @@ New features:
 
 Bug fixes:
 
-* Fixed several edge cases of `coord_trans_xy()` including `ggforce::reflect()` transformations and `_reverse_` scales (#57, #102)
+* Fixed several edge cases of `coord_trans_xy()` including `ggforce::reflect()` transformations, `_reverse_` scales, and capped axes (#57, #102)
 
 # deeptime 2.3.1
 

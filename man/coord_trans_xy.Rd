@@ -57,7 +57,6 @@ This coordinate system only works with geoms where all points are
 defined with x and y coordinates (e.g., \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}},
 \code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}}). This does not currently work with geoms where
 point coordinates are extrapolated (e.g., \code{\link[ggplot2:geom_tile]{ggplot2::geom_rect()}}).
-Note that "capped" axes are also not currently supported.
 }
 \examples{
 # make transformer
