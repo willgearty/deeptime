@@ -13,10 +13,6 @@
 #'   defined with x and y coordinates (e.g., [ggplot2::geom_point()],
 #'   [ggplot2::geom_polygon()]). This does not currently work with geoms where
 #'   point coordinates are extrapolated (e.g., [ggplot2::geom_rect()]).
-#'   Furthermore, when used with ggplot2 3.5.0 and later, some transformation
-#'   edge cases may cause problems with rendering axis lines. This includes not
-#'   currently support "capping" axes. I hope to support all of these geoms,
-#'   edge cases, and features in the future.
 #'
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto
@@ -94,10 +90,11 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     dist_euclidean(points_trans$x, points_trans$y) / max_dist
   },
   backtransform_range = function(self, panel_params) {
-    ranges <- self$trans$inverse(panel_params$x.range, panel_params$y.range)
+    corners <- expand.grid(x = panel_params$x.range, y = panel_params$y.range)
+    ranges <- self$trans$inverse(corners$x, corners$y)
     list(
-      x = ranges$x,
-      y = ranges$y
+      x = range(ranges$x),
+      y = range(ranges$y)
     )
   },
   setup_panel_params = function(self, scale_x, scale_y, params = list()) {
@@ -111,13 +108,11 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     lims <- expand.grid(x = limits$x, y = limits$y)
     lims_trans <- self$trans$transform(lims$x, lims$y)
     limits_trans <- data.frame(
-      x = if (scale_x$trans$name == "reverse") rev(range(lims_trans$x))
-            else range(lims_trans$x),
-      y = if (scale_y$trans$name == "reverse") rev(range(lims_trans$y))
-            else range(lims_trans$y)
+      x = range(lims_trans$x),
+      y = range(lims_trans$y)
     )
-    # range expansion expects values in increasing order, which may not be true
-    # for reciprocal/reverse transformations
+    # range expansion expects increasing order, which may not hold for
+    # reciprocal coord transformations
     if (all(is.finite(limits_trans$x)) && diff(limits_trans$x) < 0) {
       range_x_coord <- rev(expand_range4(rev(limits_trans$x), expansion_x))
     } else {
@@ -130,6 +125,9 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     }
     expand_range <- expand.grid(x = range_x_coord, y = range_y_coord)
     final_scale_limits <- self$trans$inverse(expand_range$x, expand_range$y)
+    # round to make all platforms have identical results
+    final_scale_limits$x <- signif(final_scale_limits$x, 10)
+    final_scale_limits$y <- signif(final_scale_limits$y, 10)
 
     scale_range_x <- final_scale_limits$x[1:2]
     scale_range_y <- final_scale_limits$y[c(1, 3)]
@@ -137,22 +135,21 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     scale_range_y_sec <- final_scale_limits$y[c(2, 4)]
 
     # calculate break information
-    out_x <- scale_x$break_info(scale_range_x)
-    out_y <- scale_y$break_info(scale_range_y)
+    out_x <- scale_x$break_info(sort(scale_range_x))
+    out_y <- scale_y$break_info(sort(scale_range_y))
 
     # secondary axis breaks are potentially different
-    out_x_sec <- scale_x$break_info(scale_range_x_sec)
-    out_y_sec <- scale_x$break_info(scale_range_y_sec)
+    out_x_sec <- scale_x$break_info(sort(scale_range_x_sec))
+    out_y_sec <- scale_y$break_info(sort(scale_range_y_sec))
 
     # range in coord space
     out_x$range <- range(range_x_coord)
     out_y$range <- range(range_y_coord)
-
     c(
       list(
-        x = view_scale_primary(scale_x, continuous_range = scale_range_x),
+        x = view_scale_primary(scale_x, continuous_range = sort(scale_range_x)),
         x.sec = view_scale_secondary(scale_x,
-                                     continuous_range = scale_range_x_sec),
+                                     continuous_range = sort(scale_range_x_sec)),
         x.range = out_x$range,
         x.range.coord = range_x_coord,
         x.full.range = final_scale_limits$x[c(1, 4)],
@@ -166,9 +163,9 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
                               0:1, scale_range_x_sec)
       ),
       list(
-        y = view_scale_primary(scale_y, continuous_range = scale_range_y),
+        y = view_scale_primary(scale_y, continuous_range = sort(scale_range_y)),
         y.sec = view_scale_secondary(scale_y,
-                                     continuous_range = scale_range_y_sec),
+                                     continuous_range = sort(scale_range_y_sec)),
         y.range = out_y$range,
         y.range.coord = range_y_coord,
         y.full.range = final_scale_limits$y[c(1, 4)],
@@ -187,26 +184,34 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     new_data <- data
     # transform x and y coordinates
     if ("x" %in% colnames(new_data)) {
-      # hacks for axis lines
-      if (all(data$y == panel_params$y.full.range[1])) {
-        new_data$x <- rescale(data$x, 0:1, range(data$x))
-      } else if (all(data$y == panel_params$y.full.range[2])) {
-        new_data$x <- rescale(data$x, 0:1, range(data$x))
-      } else if (all(data$x == panel_params$x.full.range[1])) {
-        new_data$y <- rescale(data$y, 0:1, range(data$y))
-      } else if (all(data$x == panel_params$x.full.range[2])) {
-        new_data$y <- rescale(data$y, 0:1, range(data$y))
-      }
       # hacks for axis tick labels
-      else if (all(data$x == -Inf)) {
+      if (isTRUE(all(data$x == Inf))) {                  # left (primary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y$continuous_range)
-      } else if (all(data$x == Inf)) {
+      } else if (isTRUE(all(data$x == -Inf))) {          # right (secondary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y.sec$continuous_range)
-      } else if (all(data$y == -Inf)) {
+      } else if (isTRUE(all(data$y == Inf))) {           # bottom (primary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x$continuous_range)
-      } else if (all(data$y == Inf)) {
+      } else if (isTRUE(all(data$y == -Inf))) {          # top (secondary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x.sec$continuous_range)
-      } else {
+      }
+      # hacks for axis lines
+      else if (length(unique(data$y)) == 1) {       # horizontal axis line
+        yr <- self$backtransform_range(panel_params)$y
+        cont <- if (abs(data$y[1] - max(yr)) <= abs(data$y[1] - min(yr))) {
+          panel_params$x$continuous_range            # bottom (primary x)
+        } else {
+          panel_params$x.sec$continuous_range        # top (secondary x)
+        }
+        new_data$x <- pmax(0, pmin(1, rescale(data$x, 0:1, cont)))
+      } else if (length(unique(data$x)) == 1) {      # vertical axis line
+        xr <- self$backtransform_range(panel_params)$x
+        cont <- if (abs(data$x[1] - max(xr)) <= abs(data$x[1] - min(xr))) {
+          panel_params$y$continuous_range            # left (primary y)
+        } else {
+          panel_params$y.sec$continuous_range        # right (secondary y)
+        }
+        new_data$y <- pmax(0, pmin(1, rescale(data$y, 0:1, cont)))
+      } else {                                       # geoms: transform normally
         temp_data <- self$trans$transform(data$x, data$y)
         new_data$x <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)
         new_data$y <- rescale(temp_data$y, 0:1, panel_params$y.range.coord)
