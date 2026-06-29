@@ -39,7 +39,7 @@ test_that("coord_trans_xy() works", {
     geom_point(size = 0.4) +
     scale_x_continuous(sec.axis = sec_axis(~.)) +
     scale_y_continuous(sec.axis = sec_axis(~.)) +
-    coord_trans_xy(trans = trans) +
+    coord_trans_xy(trans = trans, xlim = c(-2, 2), ylim = c(-2, 2)) +
     theme_classic()
   expect_doppelganger_deeptime("coord_trans_xy() with reflect", gg)
 
