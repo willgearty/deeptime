@@ -30,10 +30,10 @@ generate a diversity curve that we’ll be able to plot:
 ``` r
 
 # this is not a proper diversity curve but it gets the point across
-coral_div <- corals %>%
-  filter(stage != "") %>%
-  group_by(period, stage) %>%
-  summarise(n = n()) %>%
+coral_div <- corals |>
+  filter(stage != "") |>
+  group_by(period, stage) |>
+  summarise(n = n()) |>
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
     stages$min_age[match(stage, stages$name)]) / 2)
 ```
@@ -151,10 +151,10 @@ panel. This behavior works similarly with
 ``` r
 
 # uses the coral occurrence data from above
-coral_div_diet <- corals %>%
-  filter(stage != "") %>%
-  group_by(diet, stage) %>%
-  summarise(n = n()) %>%
+coral_div_diet <- corals |>
+  filter(stage != "") |>
+  group_by(diet, stage) |>
+  summarise(n = n()) |>
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
     stages$min_age[match(stage, stages$name)]) / 2)
 
@@ -223,12 +223,12 @@ use the arguments of
 ``` r
 
 # use the coral occurrence data from above
-coral_div_dis <- corals %>%
-  filter(period != "") %>%
-  group_by(diet, period) %>%
-  summarise(n = n()) %>%
+coral_div_dis <- corals |>
+  filter(period != "") |>
+  group_by(diet, period) |>
+  summarise(n = n()) |>
   mutate(period_age = (periods$max_age[match(period, periods$name)] +
-    periods$min_age[match(period, periods$name)]) / 2) %>%
+    periods$min_age[match(period, periods$name)]) / 2) |>
   arrange(-period_age)
 
 ggplot(coral_div_dis) +

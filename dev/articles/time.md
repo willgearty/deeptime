@@ -49,11 +49,11 @@ try it out with some Permian vertebrate occurrence data from the
 
 # sort the occurrences from most common genera to least common genera
 # assume the age is just the mean of the max and min
-occdf <- tetrapods %>%
-  filter(accepted_rank == "genus") %>%
-  select(occurrence_no, accepted_name, max_ma, min_ma) %>%
-  mutate(accepted_name = reorder(accepted_name, accepted_name, length)) %>%
-  arrange(desc(accepted_name)) %>%
+occdf <- tetrapods |>
+  filter(accepted_rank == "genus") |>
+  select(occurrence_no, accepted_name, max_ma, min_ma) |>
+  mutate(accepted_name = reorder(accepted_name, accepted_name, length)) |>
+  arrange(desc(accepted_name)) |>
   mutate(age = (max_ma + min_ma) / 2)
 # get a reasonable subset of those occurrences
 occdf <- occdf[1:300, ]
@@ -132,9 +132,9 @@ between them:
 
 ``` r
 
-oldest_certain <- occdf %>%
-  filter(accepted_name == "Diictodon", certainty == 1) %>%
-  pull(age) %>%
+oldest_certain <- occdf |>
+  filter(accepted_name == "Diictodon", certainty == 1) |>
+  pull(age) |>
   max()
 
 n_uncertain <- sum(occdf$accepted_name == "Diictodon" & occdf$certainty == 0)
@@ -221,7 +221,7 @@ ordered factor so the facets appear in chronological order.
 
 ``` r
 
-coral_div_dis <- coral_div_dis %>%
+coral_div_dis <- coral_div_dis |>
   mutate(period = factor(period, levels = rev(periods$name)))
 
 
@@ -245,9 +245,9 @@ columns to make a nested facet:
 
 ``` r
 
-coral_div_dis <- coral_div_dis %>%
+coral_div_dis <- coral_div_dis |>
   mutate(era = ifelse(period %in% c("Paleogene", "Neogene", "Quaternary"),
-                      "Cenozoic", "Mesozoic")) %>%
+                      "Cenozoic", "Mesozoic")) |>
   mutate(era = factor(era, levels = c("Cenozoic", "Mesozoic")))
 
 ggplot(coral_div_dis, aes(x = n, y = diet)) +

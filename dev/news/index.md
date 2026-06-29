@@ -2,6 +2,8 @@
 
 ## deeptime (development version)
 
+- **deeptime now requires R version 4.1 or higher**.
+
 New features:
 
 - Added
@@ -18,6 +20,12 @@ Bug fixes:
   transformations, `_reverse_` scales, and capped axes
   ([\#57](https://github.com/willgearty/deeptime/issues/57),
   [\#102](https://github.com/willgearty/deeptime/issues/102))
+
+Miscellaneous:
+
+- Swapped usage of the magrittr pipe operator (`%>%`) to the base R pipe
+  operator (`|>`)
+  ([\#100](https://github.com/willgearty/deeptime/issues/100))
 
 ## deeptime 2.3.1
 

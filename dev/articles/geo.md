@@ -277,7 +277,7 @@ the patterns are used with the default parameters (e.g., line color,
 background color, and scale). However, if you’d like to customize how
 the patterns look, you can use the `geom_` functions from the
 [**ggpattern**](https://trevorldavis.com/R/ggpattern/) package (e.g.,
-[`geom_rect_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html))
+[`geom_rect_pattern()`](https://rdrr.io/pkg/ggpattern/man/geom-docs.html))
 and use the “geo” `pattern`. Once you have implemented this, any of the
 following ggplot2 aesthetics can be used to tweak the patterns. *Note
 that the defaults for these two methods are often different:*
@@ -309,11 +309,11 @@ of the pattern.
 
 Let’s try increasing the scale of the patterns in our stratigraphic
 column. We’ll need to switch to using
-[`geom_rect_pattern()`](https://trevorldavis.com/R/ggpattern/reference/geom-docs.html).
+[`geom_rect_pattern()`](https://rdrr.io/pkg/ggpattern/man/geom-docs.html).
 Since we are specifying the patterns within an
 [`aes()`](https://ggplot2.tidyverse.org/reference/aes.html) call, we can
 use
-[`scale_pattern_type_identity()`](https://trevorldavis.com/R/ggpattern/reference/scale_pattern_identity.html)
+[`scale_pattern_type_identity()`](https://rdrr.io/pkg/ggpattern/man/scale_pattern_identity.html)
 to use those raw pattern codes:
 
 ``` r
