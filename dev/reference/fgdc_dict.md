@@ -52,7 +52,7 @@ designed to be used with the `labels` argument of ggplot2 scales, such
 as
 [`scale_fill_geopattern()`](https://williamgearty.com/deeptime/dev/reference/scale_fill_geopattern.md)
 and
-[`ggpattern::scale_pattern_type_identity()`](https://rdrr.io/pkg/ggpattern/man/scale_pattern_identity.html).
+[`ggpattern::scale_pattern_type_identity()`](https://trevorldavis.com/R/ggpattern/reference/scale_pattern_identity.html).
 
 ## See also
 
