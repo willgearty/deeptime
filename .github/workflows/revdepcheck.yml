@@ -78,7 +78,6 @@ jobs:
           if (length(problems) > 1) stop(paste0(problems, collapse= "\n"))
         shell: Rscript {0}
       - name: Upload check results
-        if: failure()
         uses: actions/upload-artifact@v7
         with:
           name: revdep-results
