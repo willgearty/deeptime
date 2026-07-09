@@ -1,19 +1,18 @@
 # deeptime (development version)
 
-* __deeptime now requires R version 4.1 or higher__.
+__deeptime now requires R version 4.1 or higher__.
 
-Breaking changes:
-
-* `coord_geo()` scales are now always added outwards from the plot region (#47)
-  * Previously, scales on the left and top were added inwards
+This new minor version of deeptime includes a new feature, some major bug fixes, and some minor housekeeping.
 
 New features:
 
-* Added `geom_text_clade()` for adding clade labels to phylogenies when using `coord_geo_radial()`
+* Added `geom_text_clade()` for adding clade labels to phylogenies when using `coord_geo_radial()` (#96)
 
 Bug fixes:
 
 * Fixed several edge cases of `coord_trans_xy()` including `ggforce::reflect()` transformations, `_reverse_` scales, and capped axes (#57, #102)
+* Fixed `coord_geo()` scale placement to now always be added outwards from the plot region (#47)
+  * Previously, scales on the left and top were added inwards
 
 Deprecation:
 
