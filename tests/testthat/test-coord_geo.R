@@ -29,6 +29,18 @@ test_that("coord_geo works", {
       coord_geo(xlim = c(250, 0), ylim = c(10, 1700),
                 ytrans = list(x = 5, y = 2))
   })
+  expect_error({
+    ggplot(coral_div) +
+      geom_line(aes(x = stage_age, y = n)) +
+      coord_geo(xlim = c(250, 0), ylim = c(10, 1700),
+                xtrans = "log10")
+  })
+  expect_error({
+    ggplot(coral_div) +
+      geom_line(aes(y = stage_age, x = n)) +
+      coord_geo(pos = "left", ylim = c(250, 0), xlim = c(10, 1700),
+                ytrans = "log10")
+  })
   gg <- ggplot(coral_div) +
     geom_line(aes(x = stage_age, y = n)) +
     coord_geo(xlim = c(250, 0), ylim = c(10, 1700), height = 5)

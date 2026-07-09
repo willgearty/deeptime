@@ -18,7 +18,6 @@ coord_trans_deeptime <- function(...) {
 #' geoms. The main difference is that it also adds a geological timescale to the
 #' specified side(s) of the plot.
 #'
-#' Transforming the side with the scale is not currently implemented.
 #' If a custom data.frame is provided (with `dat`), it should consist of at
 #' least 3 columns of data. See `data(periods)` for an example.
 #' \itemize{
@@ -72,8 +71,9 @@ coord_trans_deeptime <- function(...) {
 #'   B) a string indicating a timescale from macrostrat (see list here:
 #'   <https://macrostrat.org/api/defs/timescales?all>), or C) a custom
 #'   data.frame of time interval boundaries (see Details).
-#' @param xtrans,ytrans Transformers for the x and y axes. For more information
-#'   see [ggplot2::coord_trans()].
+#' @param xtrans,ytrans Transformers for the x and y axes. Transforming a side
+#'   with a scale is not currently supported. For more information see
+#'   [ggplot2::coord_trans()].
 #' @param expand If `FALSE`, the default, limits are taken exactly from the data
 #'   or `xlim`/`ylim`. If `TRUE`, adds a small expansion factor to the limits to
 #'   ensure that data and axes don't overlap.
@@ -158,6 +158,36 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
                       abbrv = TRUE, neg = FALSE,
                       center_end_labels = FALSE, dat_is_discrete = FALSE,
                       fittext_args = list()) {
+  # check global (non-list) arguments
+  clip <- arg_match0(clip, c("off", "on"))
+  check_bool(expand)
+
+  if (any(!pos %in% c("bottom", "top", "left", "right", "b", "t", "l", "r"))) {
+    cli::cli_abort('`pos` must be a one of "left", "right", "top", or
+                   "bottom" (first letter may also be used).')
+  }
+
+  # abort if trying to transform the side with the scale
+  if (!missing(xtrans) && any(c("bottom", "top", "b", "t") %in% pos)) {
+    cli::cli_abort(
+      paste('Transforming a side with a scale is not currently supported;',
+            '`xtrans` is only allowed when `pos` is not "bottom" or "top".')
+    )
+  }
+  if (!missing(ytrans) && any(c("left", "right", "l", "r") %in% pos)) {
+    cli::cli_abort(
+      paste('Transforming a side with a scale is not currently supported;',
+            '`ytrans` is only allowed when `pos` is not "left" or "right".')
+    )
+  }
+
+  # determine number of scales
+  pos <- as.list(pos)
+  dat <- make_list(dat)
+  n_pos <- length(pos)
+  n_dat <- length(dat)
+  n_scales <- max(n_pos, n_dat)
+
   # resolve transformers
   if (is.character(xtrans)) xtrans <- as.trans(xtrans)
   if (!is.trans(xtrans)) {
@@ -167,20 +197,6 @@ coord_geo <- function(pos = "bottom", dat = "periods", xlim = NULL, ylim = NULL,
   if (!is.trans(ytrans)) {
     cli::cli_abort("`ytrans` must be a transformer function or a string.")
   }
-
-  # check global (non-list) arguments
-  clip <- arg_match0(clip, c("off", "on"))
-  check_bool(expand)
-
-  if (any(!pos %in% c("bottom", "top", "left", "right", "b", "t", "l", "r"))) {
-    cli::cli_abort('`pos` must be a one of "left", "right", "top", or
-                   "bottom" (first letter may also be used).')
-  }
-  pos <- as.list(pos)
-  dat <- make_list(dat)
-  n_pos <- length(pos)
-  n_dat <- length(dat)
-  n_scales <- max(n_pos, n_dat)
 
   ggproto(NULL, CoordGeo,
     trans = list(x = xtrans, y = ytrans),

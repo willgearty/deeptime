@@ -46,8 +46,9 @@ data.frame of time interval boundaries (see Details).}
 
 \item{xlim, ylim}{Limits for the x and y axes.}
 
-\item{xtrans, ytrans}{Transformers for the x and y axes. For more information
-see \code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
+\item{xtrans, ytrans}{Transformers for the x and y axes. Transforming a side
+with a scale is not currently supported. For more information see
+\code{\link[ggplot2:coord_trans]{ggplot2::coord_trans()}}.}
 
 \item{clip}{Should drawing be clipped to the extent of the plot panel? A
 setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
@@ -133,7 +134,6 @@ geoms. The main difference is that it also adds a geological timescale to the
 specified side(s) of the plot.
 }
 \details{
-Transforming the side with the scale is not currently implemented.
 If a custom data.frame is provided (with \code{dat}), it should consist of at
 least 3 columns of data. See \code{data(periods)} for an example.
 \itemize{
