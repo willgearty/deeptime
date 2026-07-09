@@ -21,3 +21,8 @@ Useful links:
 
 **Maintainer**: William Gearty <willgearty@gmail.com>
 ([ORCID](https://orcid.org/0000-0003-0076-3262))
+
+Authors:
+
+- William Gearty <willgearty@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-0076-3262))

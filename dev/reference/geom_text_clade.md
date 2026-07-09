@@ -27,7 +27,7 @@ geom_text_clade(
   extend = c(0, 0),
   check_overlap = FALSE,
   lineend = "butt",
-  na.rm = FALSE,
+  na.rm = TRUE,
   show.legend = NA,
   inherit.aes = TRUE
 )
@@ -198,10 +198,11 @@ geom_text_clade(
 
 The clades to be labeled are specified using the `node` aesthetic which
 identifies the most recent common ancestor of the clade. The `label`
-aesthetic specifies the text label for each clade. The `ggfun::%<+%()`
-operator should be used to combine custom clade labels with the tree
-(see Examples). If no nodes are specified, a label will be added to
-every tip by default (like
+aesthetic specifies the text label for each clade. The
+[`ggfun::%<+%()`](https://rdrr.io/pkg/ggfun/man/attacher.html) operator
+should be used to combine custom clade labels with the tree (see
+Examples). If no nodes are specified, a label will be added to every tip
+by default (like
 [`geom_text_phylo()`](https://williamgearty.com/deeptime/dev/reference/geom_text_phylo.md)).
 
 The vertical bar for each clade extends from the minimum to the maximum
@@ -289,7 +290,6 @@ clades.df <- data.frame(
 revts(ggtree(primate.tree)) %<+% clades.df +
   geom_text_clade(aes(label = clade), extend = c(0.1, 0.1)) +
   coord_geo_radial()
-#> Warning: Removed 173 rows containing missing values or values outside the scale range.
 
 
 # display with other tip data
@@ -302,5 +302,4 @@ revts(gheatmap(ggtree(primate.tree), activity, offset = -70,
   coord_geo_radial()
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-#> Warning: Removed 173 rows containing missing values or values outside the scale range.
 ```
