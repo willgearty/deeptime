@@ -292,7 +292,7 @@ geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
                             stat = "identity", position = "identity", ...,
                             parse = FALSE, auto_adjust = TRUE, extend = c(0, 0),
                             check_overlap = FALSE, lineend = "butt",
-                            na.rm = FALSE, show.legend = NA,
+                            na.rm = TRUE, show.legend = NA,
                             inherit.aes = TRUE) {
   args_list <- list(...)
   temp <- sum(c("label" %in% names(args_list), "node" %in% names(args_list)))

@@ -17,7 +17,7 @@ geom_text_clade(
   extend = c(0, 0),
   check_overlap = FALSE,
   lineend = "butt",
-  na.rm = FALSE,
+  na.rm = TRUE,
   show.legend = NA,
   inherit.aes = TRUE
 )
