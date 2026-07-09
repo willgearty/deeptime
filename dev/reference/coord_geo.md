@@ -60,7 +60,8 @@ coord_geo(
 
 - xtrans, ytrans:
 
-  Transformers for the x and y axes. For more information see
+  Transformers for the x and y axes. Transforming a side with a scale is
+  not currently supported. For more information see
   [`ggplot2::coord_trans()`](https://ggplot2.tidyverse.org/reference/coord_transform.html).
 
 - clip:
@@ -186,8 +187,7 @@ coord_geo(
 
 ## Details
 
-Transforming the side with the scale is not currently implemented. If a
-custom data.frame is provided (with `dat`), it should consist of at
+If a custom data.frame is provided (with `dat`), it should consist of at
 least 3 columns of data. See `data(periods)` for an example.
 
 - The `name` column lists the names of each time interval. These will be

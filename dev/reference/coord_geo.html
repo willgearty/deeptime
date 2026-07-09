@@ -115,8 +115,9 @@ data.frame of time interval boundaries (see Details).</p></dd>
 
 
 <dt id="arg-xtrans-ytrans">xtrans, ytrans<a class="anchor" aria-label="anchor" href="#arg-xtrans-ytrans"></a></dt>
-<dd><p>Transformers for the x and y axes. For more information
-see <code><a href="https://ggplot2.tidyverse.org/reference/coord_transform.html" class="external-link">ggplot2::coord_trans()</a></code>.</p></dd>
+<dd><p>Transformers for the x and y axes. Transforming a side
+with a scale is not currently supported. For more information see
+<code><a href="https://ggplot2.tidyverse.org/reference/coord_transform.html" class="external-link">ggplot2::coord_trans()</a></code>.</p></dd>
 
 
 <dt id="arg-clip">clip<a class="anchor" aria-label="anchor" href="#arg-clip"></a></dt>
@@ -238,8 +239,7 @@ scale?</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Transforming the side with the scale is not currently implemented.
-If a custom data.frame is provided (with <code>dat</code>), it should consist of at
+    <p>If a custom data.frame is provided (with <code>dat</code>), it should consist of at
 least 3 columns of data. See <code>data(periods)</code> for an example.</p><ul><li><p>The <code>name</code> column lists the names of each time interval. These will
 be used as labels if no abbreviations are provided.</p></li>
 <li><p>The <code>max_age</code> column lists the oldest boundary of each time interval.</p></li>
