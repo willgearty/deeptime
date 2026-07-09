@@ -49,18 +49,15 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="deeptime-development-version">deeptime (development version)<a class="anchor" aria-label="anchor" href="#deeptime-development-version"></a></h2>
-<ul><li>
-<strong>deeptime now requires R version 4.1 or higher</strong>.</li>
-</ul><p>Breaking changes:</p>
-<ul><li>
-<code><a href="../reference/coord_geo.html">coord_geo()</a></code> scales are now always added outwards from the plot region (<a href="https://github.com/willgearty/deeptime/issues/47" class="external-link">#47</a>)
-<ul><li>Previously, scales on the left and top were added inwards</li>
-</ul></li>
-</ul><p>New features:</p>
-<ul><li>Added <code><a href="../reference/geom_text_clade.html">geom_text_clade()</a></code> for adding clade labels to phylogenies when using <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code>
-</li>
+<p><strong>deeptime now requires R version 4.1 or higher</strong>.</p>
+<p>This new minor version of deeptime includes a new feature, some major bug fixes, and some minor housekeeping.</p>
+<p>New features:</p>
+<ul><li>Added <code><a href="../reference/geom_text_clade.html">geom_text_clade()</a></code> for adding clade labels to phylogenies when using <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code> (<a href="https://github.com/willgearty/deeptime/issues/96" class="external-link">#96</a>)</li>
 </ul><p>Bug fixes:</p>
 <ul><li>Fixed several edge cases of <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code> including <code><a href="https://ggforce.data-imaginist.com/reference/linear_trans.html" class="external-link">ggforce::reflect()</a></code> transformations, <code>_reverse_</code> scales, and capped axes (<a href="https://github.com/willgearty/deeptime/issues/57" class="external-link">#57</a>, <a href="https://github.com/willgearty/deeptime/issues/102" class="external-link">#102</a>)</li>
+<li>Fixed <code><a href="../reference/coord_geo.html">coord_geo()</a></code> scale placement to now always be added outwards from the plot region (<a href="https://github.com/willgearty/deeptime/issues/47" class="external-link">#47</a>)
+<ul><li>Previously, scales on the left and top were added inwards</li>
+</ul></li>
 </ul><p>Deprecation:</p>
 <ul><li>Soft deprecated <code><a href="../reference/disparity_through_time.html">disparity_through_time()</a></code> and <code><a href="../reference/panel.disparity.html">panel.disparity()</a></code>. These functions were never well supported and will be removed in a future version of deeptime to reduce maintenance overhead. Users are encouraged to use <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code> to achieve a similar plot with <code>ggplot2</code>.</li>
 </ul><p>Miscellaneous:</p>
