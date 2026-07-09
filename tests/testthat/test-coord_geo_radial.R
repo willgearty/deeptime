@@ -18,7 +18,9 @@ test_that("coord_geo_radial works", {
     gg + coord_geo_radial(direction = -1)
   })
   expect_error({
-    gg + coord_geo_radial(direction = 5)
+    lifecycle::expect_deprecated({
+      gg + coord_geo_radial(direction = 5)
+    })
   })
   lifecycle::expect_deprecated({
     gg + coord_geo_radial(r_axis_inside = TRUE)
