@@ -4,14 +4,21 @@ calculateAxisComponents <- function(...) {
 
 #' Combined wireframe and cloud panel
 #'
+#' @description
+#' `r lifecycle::badge('deprecated')`
+#'
 #' Plots the provided data on 2-D surfaces within a 3-D framework. See
 #' [disparity_through_time()].
+#' @section Life cycle:
+#'   This function is soft deprecated as of **deeptime** version 2.4.0. It will
+#'   be removed in a future version.
 #' @param x,y,z,groups,subscripts,... Same as for [lattice::panel.cloud()]
 #' @return No return value, plots the results of both [lattice::panel.cloud()]
 #'   and [lattice::panel.wireframe()].
 #' @importFrom lattice panel.wireframe panel.cloud
 #' @export
 panel.disparity <- function(x, y, z, groups, subscripts, ...) {
+  lifecycle::deprecate_soft("2.4.0", "panel.disparity()")
   args <- list(...)
   xlabelinfo <- calculateAxisComponents(args$xlim,
     at = args$scales.3d$x.scales$at,
@@ -54,10 +61,15 @@ panel.disparity <- function(x, y, z, groups, subscripts, ...) {
 
 #' Disparity through time plot using lattice
 #'
+#' @description
+#' `r lifecycle::badge('deprecated')`
+#'
 #' Plots points on 2-D surfaces within a a 3-D framework. See
 #' [lattice::wireframe()] and [lattice::panel.cloud()] for customization
 #' options.
-#'
+#' @section Life cycle:
+#'   This function is soft deprecated as of **deeptime** version 2.4.0. It will
+#'   be removed in a future version.
 #' @param x a formula (most likely of the form `z ~ x * y`)
 #' @param data a data frame in which variables in the formula are to be
 #'   evaluated
@@ -135,6 +147,7 @@ disparity_through_time <-
              )
            ),
            lattice.options = list(axis.padding = list(factor = 0)), ...) {
+  lifecycle::deprecate_soft("2.4.0", "disparity_through_time()")
   eval(substitute(lattice::wireframe(
     x = x, data = data, groups = groups, pch = pch, col.point = col.point,
     scales = scales, colorkey = colorkey, screen = screen,

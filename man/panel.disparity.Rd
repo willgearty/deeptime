@@ -14,6 +14,14 @@ No return value, plots the results of both \code{\link[lattice:panel.cloud]{latt
 and \code{\link[lattice:panel.wireframe]{lattice::panel.wireframe()}}.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
 Plots the provided data on 2-D surfaces within a 3-D framework. See
 \code{\link[=disparity_through_time]{disparity_through_time()}}.
 }
+\section{Life cycle}{
+
+This function is soft deprecated as of \strong{deeptime} version 2.4.0. It will
+be removed in a future version.
+}
+

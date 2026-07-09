@@ -15,6 +15,10 @@ Bug fixes:
 
 * Fixed several edge cases of `coord_trans_xy()` including `ggforce::reflect()` transformations, `_reverse_` scales, and capped axes (#57, #102)
 
+Deprecation:
+
+* Soft deprecated `disparity_through_time()` and `panel.disparity()`. These functions were never well supported and will be removed in a future version of deeptime to reduce maintenance overhead. Users are encouraged to use `coord_trans_xy()` to achieve a similar plot with `ggplot2`.
+
 Miscellaneous:
 
 * Swapped usage of the magrittr pipe operator (`%>%`) to the base R pipe operator (`|>`) (#100)
