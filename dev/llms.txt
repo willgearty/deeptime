@@ -315,9 +315,9 @@ These functions can be used for visualizing species trait data.
 - [`geom_phylomorpho()`](https://williamgearty.com/deeptime/dev/reference/geom_phylomorpho.md)
   : Plot a 2-D phylomorphospace in ggplot2
 - [`disparity_through_time()`](https://williamgearty.com/deeptime/dev/reference/disparity_through_time.md)
-  : Disparity through time plot using lattice
+  **\[deprecated\]** : Disparity through time plot using lattice
 - [`panel.disparity()`](https://williamgearty.com/deeptime/dev/reference/panel.disparity.md)
-  : Combined wireframe and cloud panel
+  **\[deprecated\]** : Combined wireframe and cloud panel
 - [`coord_trans_xy()`](https://williamgearty.com/deeptime/dev/reference/coord_trans_xy.md)
   : Transformed XY Cartesian coordinate system
 

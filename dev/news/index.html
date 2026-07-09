@@ -61,6 +61,8 @@
 </li>
 </ul><p>Bug fixes:</p>
 <ul><li>Fixed several edge cases of <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code> including <code><a href="https://ggforce.data-imaginist.com/reference/linear_trans.html" class="external-link">ggforce::reflect()</a></code> transformations, <code>_reverse_</code> scales, and capped axes (<a href="https://github.com/willgearty/deeptime/issues/57" class="external-link">#57</a>, <a href="https://github.com/willgearty/deeptime/issues/102" class="external-link">#102</a>)</li>
+</ul><p>Deprecation:</p>
+<ul><li>Soft deprecated <code><a href="../reference/disparity_through_time.html">disparity_through_time()</a></code> and <code><a href="../reference/panel.disparity.html">panel.disparity()</a></code>. These functions were never well supported and will be removed in a future version of deeptime to reduce maintenance overhead. Users are encouraged to use <code><a href="../reference/coord_trans_xy.html">coord_trans_xy()</a></code> to achieve a similar plot with <code>ggplot2</code>.</li>
 </ul><p>Miscellaneous:</p>
 <ul><li>Swapped usage of the magrittr pipe operator (<code>%&gt;%</code>) to the base R pipe operator (<code>|&gt;</code>) (<a href="https://github.com/willgearty/deeptime/issues/100" class="external-link">#100</a>)</li>
 </ul></div>

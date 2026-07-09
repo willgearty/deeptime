@@ -112,6 +112,10 @@ disparity_through_time(time ~ V2 * V1,
       )
   )
 )
+## Warning: `disparity_through_time()` was deprecated in deeptime 2.4.0.
+## This warning is displayed once per session.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 ![](traits_files/figure-html/unnamed-chunk-4-1.png)

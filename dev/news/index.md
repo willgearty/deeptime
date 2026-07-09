@@ -28,6 +28,18 @@ Bug fixes:
   ([\#57](https://github.com/willgearty/deeptime/issues/57),
   [\#102](https://github.com/willgearty/deeptime/issues/102))
 
+Deprecation:
+
+- Soft deprecated
+  [`disparity_through_time()`](https://williamgearty.com/deeptime/dev/reference/disparity_through_time.md)
+  and
+  [`panel.disparity()`](https://williamgearty.com/deeptime/dev/reference/panel.disparity.md).
+  These functions were never well supported and will be removed in a
+  future version of deeptime to reduce maintenance overhead. Users are
+  encouraged to use
+  [`coord_trans_xy()`](https://williamgearty.com/deeptime/dev/reference/coord_trans_xy.md)
+  to achieve a similar plot with `ggplot2`.
+
 Miscellaneous:
 
 - Swapped usage of the magrittr pipe operator (`%>%`) to the base R pipe

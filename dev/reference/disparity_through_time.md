@@ -1,5 +1,7 @@
 # Disparity through time plot using lattice
 
+**\[deprecated\]**
+
 Plots points on 2-D surfaces within a a 3-D framework. See
 [`lattice::wireframe()`](https://rdrr.io/pkg/lattice/man/cloud.html) and
 [`lattice::panel.cloud()`](https://rdrr.io/pkg/lattice/man/panel.cloud.html)
@@ -120,6 +122,11 @@ disparity_through_time(
 An object of class `"trellis"`, as output by
 [`lattice::wireframe()`](https://rdrr.io/pkg/lattice/man/cloud.html).
 
+## Life cycle
+
+This function is soft deprecated as of **deeptime** version 2.4.0. It
+will be removed in a future version.
+
 ## Examples
 
 ``` r
@@ -134,4 +141,5 @@ disparity_through_time(z ~ x * y,
   xlim = c(0, 60), ylim = c(0, 10), col.regions = "lightgreen",
   col.point = c("red", "blue")
 )
+#> Warning: `disparity_through_time()` was deprecated in deeptime 2.4.0.
 ```
