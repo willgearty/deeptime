@@ -44,15 +44,18 @@ coord_trans_deeptime <- function(...) {
 #' 1:1.
 #'
 #' `pos` and/or `dat` may be a `list` of values if multiple time scales should
-#' be added to the plot. In this case, `fill`, `alpha`, `height`, `bord`, `lwd`,
+#' be added to the plot. In the case where both `pos` and `dat` are `list`s, the
+#' length of the longer list will be used as the desired number of scales, and
+#' the other argument will be recycled as needed. Scales are added sequentially
+#' outwards from the plot region, with the axis (line, ticks, tick labels, and
+#' title) added outside the last scale(s). In the case of multiple scales, most
+#' arguments can also be `list`s (`fill`, `alpha`, `height`, `bord`, `lwd`,
 #' `color`, `lab`, `lab_color`, `rot`, `family`, `fontface`, `size`, `skip`,
-#' `abbrv`, `neg`, `center_end_labels`, and `dat_is_discrete` can also be
-#' `list`s, with elements corresponding to the settings for each individual time
-#' scale. If these `list`s are not as long as the number of time scales, the
-#' elements will be recycled. If individual values (or vectors) are used for
-#' these parameters, they will be applied to all time scales (and recycled as
-#' necessary). In the case where both `pos` and `dat` are `list`s, the length of
-#' the longer list will be used as the desired number of scales.
+#' `abbrv`, `neg`, `center_end_labels`, and `dat_is_discrete`), with elements
+#' corresponding to the settings for each individual time scale. If these
+#' `list`s are not as long as the number of time scales, the elements will be
+#' recycled. If individual values (or vectors) are used for these parameters,
+#' they will be applied to all time scales (and recycled as necessary).
 #'
 #' @section Theme elements:
 #' The following theme elements can be used to customize the appearance of the
@@ -296,17 +299,17 @@ render_geo_scale <- function(self, panel_params, theme, position) {
   } else if (position == "top") {
     axis <- CoordTrans$render_axis_h(panel_params, theme)$top
     gt <- gtable_col("axis",
-      grobs = c(list(axis), geo_grobs),
+      grobs = c(list(axis), rev(geo_grobs)),
       width = one, heights = unit.c(grobHeight(axis),
-                                    do.call(unit.c, self$height[ind]))
+                                    rev(do.call(unit.c, self$height[ind])))
     )
     justvp <- viewport(y = 0, just = "bottom", height = gtable_height(gt))
   } else if (position == "left") {
     axis <- CoordTrans$render_axis_v(panel_params, theme)$left
     gt <- gtable_row("axis",
-      grobs = c(list(axis), geo_grobs),
+      grobs = c(list(axis), rev(geo_grobs)),
       height = one, widths = unit.c(grobWidth(axis),
-                                    do.call(unit.c, self$height[ind]))
+                                    rev(do.call(unit.c, self$height[ind])))
     )
     justvp <- viewport(x = 1, just = "right", width = gtable_width(gt))
   } else if (position == "right") {

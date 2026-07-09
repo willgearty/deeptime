@@ -159,15 +159,18 @@ useful for adding a time scale where categories and time intervals are not
 1:1.
 
 \code{pos} and/or \code{dat} may be a \code{list} of values if multiple time scales should
-be added to the plot. In this case, \code{fill}, \code{alpha}, \code{height}, \code{bord}, \code{lwd},
+be added to the plot. In the case where both \code{pos} and \code{dat} are \code{list}s, the
+length of the longer list will be used as the desired number of scales, and
+the other argument will be recycled as needed. Scales are added sequentially
+outwards from the plot region, with the axis (line, ticks, tick labels, and
+title) added outside the last scale(s). In the case of multiple scales, most
+arguments can also be \code{list}s (\code{fill}, \code{alpha}, \code{height}, \code{bord}, \code{lwd},
 \code{color}, \code{lab}, \code{lab_color}, \code{rot}, \code{family}, \code{fontface}, \code{size}, \code{skip},
-\code{abbrv}, \code{neg}, \code{center_end_labels}, and \code{dat_is_discrete} can also be
-\code{list}s, with elements corresponding to the settings for each individual time
-scale. If these \code{list}s are not as long as the number of time scales, the
-elements will be recycled. If individual values (or vectors) are used for
-these parameters, they will be applied to all time scales (and recycled as
-necessary). In the case where both \code{pos} and \code{dat} are \code{list}s, the length of
-the longer list will be used as the desired number of scales.
+\code{abbrv}, \code{neg}, \code{center_end_labels}, and \code{dat_is_discrete}), with elements
+corresponding to the settings for each individual time scale. If these
+\code{list}s are not as long as the number of time scales, the elements will be
+recycled. If individual values (or vectors) are used for these parameters,
+they will be applied to all time scales (and recycled as necessary).
 }
 \section{Theme elements}{
 

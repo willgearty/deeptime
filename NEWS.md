@@ -2,6 +2,11 @@
 
 * __deeptime now requires R version 4.1 or higher__.
 
+Breaking changes:
+
+* `coord_geo()` scales are now always added outwards from the plot region (#47)
+  * Previously, scales on the left and top were added inwards
+
 New features:
 
 * Added `geom_text_clade()` for adding clade labels to phylogenies when using `coord_geo_radial()`
