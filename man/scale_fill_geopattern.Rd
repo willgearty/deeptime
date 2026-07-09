@@ -124,9 +124,9 @@ ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
 }
 \seealso{
 FGDC patterns:
-\code{\link{fgdc_dict}()},
+\code{\link[=fgdc_dict]{fgdc_dict()}},
 \code{\link{fgdc_names}},
-\code{\link{geo_pattern}()},
-\code{\link{grid.pattern_geo}()}
+\code{\link[=geo_pattern]{geo_pattern()}},
+\code{\link[=grid.pattern_geo]{grid.pattern_geo()}}
 }
 \concept{patterns}

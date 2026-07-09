@@ -25,7 +25,7 @@ A \link[scales:label_dictionary]{labeling function} that takes
 a vector \code{x} of pattern numbers and returns a character vector of
 \code{length(x)} giving the corresponding pattern names. The function is
 designed to be used with the \code{labels} argument of ggplot2 scales, such as
-\code{\link[=scale_fill_geopattern]{scale_fill_geopattern()}} and \code{\link[ggpattern:scale_pattern_identity]{ggpattern::scale_pattern_type_identity()}}.
+\code{\link[=scale_fill_geopattern]{scale_fill_geopattern()}} and \code{\link[ggpattern:scale_pattern_type_identity]{ggpattern::scale_pattern_type_identity()}}.
 }
 \description{
 Generates a \link[scales:label_dictionary]{labeling function}/dictionary based
@@ -43,8 +43,8 @@ ggplot(mpg, aes(factor(cyl), fill = vals[factor(cyl)])) +
 \seealso{
 FGDC patterns:
 \code{\link{fgdc_names}},
-\code{\link{geo_pattern}()},
-\code{\link{grid.pattern_geo}()},
-\code{\link{scale_fill_geopattern}()}
+\code{\link[=geo_pattern]{geo_pattern()}},
+\code{\link[=grid.pattern_geo]{grid.pattern_geo()}},
+\code{\link[=scale_fill_geopattern]{scale_fill_geopattern()}}
 }
 \concept{patterns}

@@ -30,10 +30,10 @@ are hosted on \href{https://github.com/davenquinn/geologic-patterns/}{GitHub}.
 }
 \seealso{
 FGDC patterns:
-\code{\link{fgdc_dict}()},
-\code{\link{geo_pattern}()},
-\code{\link{grid.pattern_geo}()},
-\code{\link{scale_fill_geopattern}()}
+\code{\link[=fgdc_dict]{fgdc_dict()}},
+\code{\link[=geo_pattern]{geo_pattern()}},
+\code{\link[=grid.pattern_geo]{grid.pattern_geo()}},
+\code{\link[=scale_fill_geopattern]{scale_fill_geopattern()}}
 }
 \concept{patterns}
 \keyword{datasets}

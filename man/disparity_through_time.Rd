@@ -64,18 +64,18 @@ the y-size/x-size and z-size/x-size of the enclosing cube}
 \item{R.mat}{a transformational matrix that is applied to the orientation of
 the axes}
 
-\item{par.settings}{plotting settings (see \code{\link[lattice:trellis.par.get]{lattice::trellis.par.set()}})}
+\item{par.settings}{plotting settings (see \code{\link[lattice:trellis.par.set]{lattice::trellis.par.set()}})}
 
 \item{lattice.options}{lattice settings (see \code{\link[lattice:lattice.options]{lattice::lattice.options()}})}
 
-\item{...}{Other arguments passed to \code{\link[lattice:cloud]{lattice::wireframe()}}}
+\item{...}{Other arguments passed to \code{\link[lattice:wireframe]{lattice::wireframe()}}}
 }
 \value{
-An object of class \code{"trellis"}, as output by \code{\link[lattice:cloud]{lattice::wireframe()}}.
+An object of class \code{"trellis"}, as output by \code{\link[lattice:wireframe]{lattice::wireframe()}}.
 }
 \description{
 Plots points on 2-D surfaces within a a 3-D framework. See
-\code{\link[lattice:cloud]{lattice::wireframe()}} and \code{\link[lattice:panel.cloud]{lattice::panel.cloud()}} for customization
+\code{\link[lattice:wireframe]{lattice::wireframe()}} and \code{\link[lattice:panel.cloud]{lattice::panel.cloud()}} for customization
 options.
 }
 \examples{

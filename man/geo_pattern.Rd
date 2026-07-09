@@ -71,9 +71,9 @@ grid.draw(rectGrob(gp = gpar(fill = pattern2)))
 }
 \seealso{
 FGDC patterns:
-\code{\link{fgdc_dict}()},
+\code{\link[=fgdc_dict]{fgdc_dict()}},
 \code{\link{fgdc_names}},
-\code{\link{grid.pattern_geo}()},
-\code{\link{scale_fill_geopattern}()}
+\code{\link[=grid.pattern_geo]{grid.pattern_geo()}},
+\code{\link[=scale_fill_geopattern]{scale_fill_geopattern()}}
 }
 \concept{patterns}

@@ -11,7 +11,7 @@ panel.disparity(x, y, z, groups, subscripts, ...)
 }
 \value{
 No return value, plots the results of both \code{\link[lattice:panel.cloud]{lattice::panel.cloud()}}
-and \code{\link[lattice:panel.cloud]{lattice::panel.wireframe()}}.
+and \code{\link[lattice:panel.wireframe]{lattice::panel.wireframe()}}.
 }
 \description{
 Plots the provided data on 2-D surfaces within a 3-D framework. See

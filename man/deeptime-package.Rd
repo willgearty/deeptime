@@ -22,5 +22,10 @@ Useful links:
 \author{
 \strong{Maintainer}: William Gearty \email{willgearty@gmail.com} (\href{https://orcid.org/0000-0003-0076-3262}{ORCID})
 
+Authors:
+\itemize{
+  \item William Gearty \email{willgearty@gmail.com} (\href{https://orcid.org/0000-0003-0076-3262}{ORCID})
+}
+
 }
 \keyword{internal}

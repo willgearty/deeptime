@@ -117,8 +117,8 @@ give the geom as \code{"point"}.
 }}
 }
 \description{
-This geom is like \code{\link[ggplot2:geom_linerange]{ggplot2::geom_pointrange()}} in that it draws points and
-lines. However, unlike \code{\link[ggplot2:geom_linerange]{ggplot2::geom_pointrange()}}, this geom takes in sets
+This geom is like \code{\link[ggplot2:geom_pointrange]{ggplot2::geom_pointrange()}} in that it draws points and
+lines. However, unlike \code{\link[ggplot2:geom_pointrange]{ggplot2::geom_pointrange()}}, this geom takes in sets
 of x-y points and calculates the ranges/intervals based on those. It then
 plots both the original points and the ranges using
 \code{\link[ggplot2:geom_linerange]{ggplot2::geom_linerange()}}. In cases where not all points are connected

@@ -16,7 +16,6 @@ BugReports: https://github.com/willgearty/deeptime/issues
 Depends: R (>= 4.1)
 License: GPL (>= 3)
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 LazyData: true
 biocViews:
 Imports:
@@ -63,3 +62,4 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/revdeps: revdepcheck
 Roxygen: list(markdown = TRUE)
+Config/roxygen2/version: 8.0.0

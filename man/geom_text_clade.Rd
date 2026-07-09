@@ -44,7 +44,7 @@ will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{text_geom}{Which geom to use for the text labels. Valid options are
-"text" for \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} and "label" for \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}}.}
+"text" for \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} and "label" for \code{\link[ggplot2:geom_label]{ggplot2::geom_label()}}.}
 
 \item{stat}{The statistical transformation to use on the data for this layer.
 When using a \verb{geom_*()} function to construct a layer, the \code{stat}
@@ -143,7 +143,7 @@ systems, including \code{\link[=coord_geo]{coord_geo()}} and \code{\link[=coord_
 \details{
 The clades to be labeled are specified using the \code{node} aesthetic which
 identifies the most recent common ancestor of the clade. The \code{label}
-aesthetic specifies the text label for each clade. The \code{\link[ggfun:attacher]{ggfun::\%<+\%()}}
+aesthetic specifies the text label for each clade. The \code{\link[ggfun:\%<+\%]{ggfun::\%<+\%()}}
 operator should be used to combine custom clade labels with the tree (see
 Examples). If no nodes are specified, a label will be added to every tip
 by default (like \code{\link[=geom_text_phylo]{geom_text_phylo()}}).
