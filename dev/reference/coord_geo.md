@@ -218,16 +218,20 @@ can be useful for adding a time scale where categories and time
 intervals are not 1:1.
 
 `pos` and/or `dat` may be a `list` of values if multiple time scales
-should be added to the plot. In this case, `fill`, `alpha`, `height`,
-`bord`, `lwd`, `color`, `lab`, `lab_color`, `rot`, `family`, `fontface`,
-`size`, `skip`, `abbrv`, `neg`, `center_end_labels`, and
-`dat_is_discrete` can also be `list`s, with elements corresponding to
-the settings for each individual time scale. If these `list`s are not as
-long as the number of time scales, the elements will be recycled. If
-individual values (or vectors) are used for these parameters, they will
-be applied to all time scales (and recycled as necessary). In the case
-where both `pos` and `dat` are `list`s, the length of the longer list
-will be used as the desired number of scales.
+should be added to the plot. In the case where both `pos` and `dat` are
+`list`s, the length of the longer list will be used as the desired
+number of scales, and the other argument will be recycled as needed.
+Scales are added sequentially outwards from the plot region, with the
+axis (line, ticks, tick labels, and title) added outside the last
+scale(s). In the case of multiple scales, most arguments can also be
+`list`s (`fill`, `alpha`, `height`, `bord`, `lwd`, `color`, `lab`,
+`lab_color`, `rot`, `family`, `fontface`, `size`, `skip`, `abbrv`,
+`neg`, `center_end_labels`, and `dat_is_discrete`), with elements
+corresponding to the settings for each individual time scale. If these
+`list`s are not as long as the number of time scales, the elements will
+be recycled. If individual values (or vectors) are used for these
+parameters, they will be applied to all time scales (and recycled as
+necessary).
 
 ## Theme elements
 

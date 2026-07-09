@@ -259,15 +259,18 @@ If the ages within <code>dat</code> are already discretized, you can set
 useful for adding a time scale where categories and time intervals are not
 1:1.</p>
 <p><code>pos</code> and/or <code>dat</code> may be a <code>list</code> of values if multiple time scales should
-be added to the plot. In this case, <code>fill</code>, <code>alpha</code>, <code>height</code>, <code>bord</code>, <code>lwd</code>,
+be added to the plot. In the case where both <code>pos</code> and <code>dat</code> are <code>list</code>s, the
+length of the longer list will be used as the desired number of scales, and
+the other argument will be recycled as needed. Scales are added sequentially
+outwards from the plot region, with the axis (line, ticks, tick labels, and
+title) added outside the last scale(s). In the case of multiple scales, most
+arguments can also be <code>list</code>s (<code>fill</code>, <code>alpha</code>, <code>height</code>, <code>bord</code>, <code>lwd</code>,
 <code>color</code>, <code>lab</code>, <code>lab_color</code>, <code>rot</code>, <code>family</code>, <code>fontface</code>, <code>size</code>, <code>skip</code>,
-<code>abbrv</code>, <code>neg</code>, <code>center_end_labels</code>, and <code>dat_is_discrete</code> can also be
-<code>list</code>s, with elements corresponding to the settings for each individual time
-scale. If these <code>list</code>s are not as long as the number of time scales, the
-elements will be recycled. If individual values (or vectors) are used for
-these parameters, they will be applied to all time scales (and recycled as
-necessary). In the case where both <code>pos</code> and <code>dat</code> are <code>list</code>s, the length of
-the longer list will be used as the desired number of scales.</p>
+<code>abbrv</code>, <code>neg</code>, <code>center_end_labels</code>, and <code>dat_is_discrete</code>), with elements
+corresponding to the settings for each individual time scale. If these
+<code>list</code>s are not as long as the number of time scales, the elements will be
+recycled. If individual values (or vectors) are used for these parameters,
+they will be applied to all time scales (and recycled as necessary).</p>
     </div>
     <div class="section level2">
     <h2 id="theme-elements">Theme elements<a class="anchor" aria-label="anchor" href="#theme-elements"></a></h2>

@@ -4,6 +4,13 @@
 
 - **deeptime now requires R version 4.1 or higher**.
 
+Breaking changes:
+
+- [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md)
+  scales are now always added outwards from the plot region
+  ([\#47](https://github.com/willgearty/deeptime/issues/47))
+  - Previously, scales on the left and top were added inwards
+
 New features:
 
 - Added

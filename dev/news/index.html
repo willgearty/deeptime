@@ -51,6 +51,11 @@
 <h2 class="pkg-version" data-toc-text="development version" id="deeptime-development-version">deeptime (development version)<a class="anchor" aria-label="anchor" href="#deeptime-development-version"></a></h2>
 <ul><li>
 <strong>deeptime now requires R version 4.1 or higher</strong>.</li>
+</ul><p>Breaking changes:</p>
+<ul><li>
+<code><a href="../reference/coord_geo.html">coord_geo()</a></code> scales are now always added outwards from the plot region (<a href="https://github.com/willgearty/deeptime/issues/47" class="external-link">#47</a>)
+<ul><li>Previously, scales on the left and top were added inwards</li>
+</ul></li>
 </ul><p>New features:</p>
 <ul><li>Added <code><a href="../reference/geom_text_clade.html">geom_text_clade()</a></code> for adding clade labels to phylogenies when using <code><a href="../reference/coord_geo_radial.html">coord_geo_radial()</a></code>
 </li>
