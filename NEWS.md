@@ -4,7 +4,7 @@
 
 Breaking changes:
 
-* Scales are now always added outwards from the plot region (#47)
+* `coord_geo()` scales are now always added outwards from the plot region (#47)
   * Previously, scales on the left and top were added inwards
 
 New features:
