@@ -13,6 +13,7 @@ assist with other areas of deep time visualization.
 ## Installation
 
 ``` r
+
 # get the stable version from CRAN
 install.packages("deeptime")
 
@@ -26,6 +27,7 @@ devtools::install_github("willgearty/deeptime")
 ### Load packages
 
 ``` r
+
 library(deeptime)
 library(ggplot2)
 library(dplyr)
@@ -41,13 +43,14 @@ from [ggplot2](https://ggplot2.tidyverse.org). You can use this function
 to add highly customizable timescales to a wide variety of ggplots.
 
 ``` r
+
 library(divDyn)
 data(corals)
 
 # this is not a proper diversity curve but it gets the point across
-coral_div <- corals %>% filter(stage != "") %>%
-  group_by(stage) %>%
-  summarise(n = n()) %>%
+coral_div <- corals |> filter(stage != "") |>
+  group_by(stage) |>
+  summarise(n = n()) |>
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
                         stages$min_age[match(stage, stages$name)])/2)
 ggplot(coral_div) +
@@ -63,6 +66,7 @@ ggplot(coral_div) +
 #### Lots of timescales available!
 
 ``` r
+
 # Load packages
 library(gsloid)
 
@@ -85,6 +89,7 @@ ggplot(lisiecki2005) +
 ### Super flexible, supports multiple layouts, and works great with other packages!
 
 ``` r
+
 # Load packages
 library(ggtree)
 library(rphylopic)
@@ -117,6 +122,7 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+%
 #### Plot fossil occurence ranges
 
 ``` r
+
 library(palaeoverse)
 
 # Filter occurrences
@@ -140,6 +146,7 @@ ggplot(data = occdf) +
 #### Use standardized geological patterns
 
 ``` r
+
 # Load packages
 library(rmacrostrat)
 library(ggrepel)
@@ -283,11 +290,13 @@ phylogenies that are plotted with
 
 ### Adding text labels to phylogenies
 
-When using deeptime coordinate systems, this geom may work better than
+When using deeptime coordinate systems, these geoms may work better than
 geoms from ggtree.
 
 - [`geom_text_phylo()`](https://williamgearty.com/deeptime/reference/geom_text_phylo.md)
   : Label nodes on a phylogenetic tree plotted with ggtree
+- [`geom_text_clade()`](https://williamgearty.com/deeptime/reference/geom_text_clade.md)
+  : Label clades on a phylogenetic tree plotted with ggtree
 
 ## Transforming coordinate systems
 
@@ -306,9 +315,9 @@ These functions can be used for visualizing species trait data.
 - [`geom_phylomorpho()`](https://williamgearty.com/deeptime/reference/geom_phylomorpho.md)
   : Plot a 2-D phylomorphospace in ggplot2
 - [`disparity_through_time()`](https://williamgearty.com/deeptime/reference/disparity_through_time.md)
-  : Disparity through time plot using lattice
+  **\[deprecated\]** : Disparity through time plot using lattice
 - [`panel.disparity()`](https://williamgearty.com/deeptime/reference/panel.disparity.md)
-  : Combined wireframe and cloud panel
+  **\[deprecated\]** : Combined wireframe and cloud panel
 - [`coord_trans_xy()`](https://williamgearty.com/deeptime/reference/coord_trans_xy.md)
   : Transformed XY Cartesian coordinate system
 

@@ -11,6 +11,7 @@ whose primary function is to modify the way data is plotted. To
 demonstrate this, we’ll first need to load some packages.
 
 ``` r
+
 # Load deeptime
 library(deeptime)
 # Load ggplot for making plots
@@ -41,6 +42,7 @@ with the added functionality of the axis flip from
 [`coord_flip()`](https://ggplot2.tidyverse.org/reference/coord_flip.html).
 
 ``` r
+
 ggplot(mtcars, aes(disp, wt)) +
   geom_point() +
   coord_trans_flip(x = "sqrt", y = "log10") +
@@ -74,6 +76,7 @@ traits](https://williamgearty.com/deeptime/articles/traits.md) article
 for a potential real-world application using species trait data.
 
 ``` r
+
 # make transformer
 library(ggforce)
 trans <- linear_trans(shear(50, 0))
@@ -102,6 +105,7 @@ ggplot(mtcars, aes(disp, wt)) +
 ![](coord_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 # plot data with transformation
 ggplot(mtcars, aes(disp, wt)) +
   geom_polygon(data = square, fill = NA, color = "black") +

@@ -7,6 +7,7 @@ load some packages and example data so we can demonstrate some of this
 functionality.
 
 ``` r
+
 # Load deeptime
 library(deeptime)
 # Load other packages
@@ -45,13 +46,14 @@ try it out with some Permian vertebrate occurrence data from the
 `palaeoverse`:
 
 ``` r
+
 # sort the occurrences from most common genera to least common genera
 # assume the age is just the mean of the max and min
-occdf <- tetrapods %>%
-  filter(accepted_rank == "genus") %>%
-  select(occurrence_no, accepted_name, max_ma, min_ma) %>%
-  mutate(accepted_name = reorder(accepted_name, accepted_name, length)) %>%
-  arrange(desc(accepted_name)) %>%
+occdf <- tetrapods |>
+  filter(accepted_rank == "genus") |>
+  select(occurrence_no, accepted_name, max_ma, min_ma) |>
+  mutate(accepted_name = reorder(accepted_name, accepted_name, length)) |>
+  arrange(desc(accepted_name)) |>
   mutate(age = (max_ma + min_ma) / 2)
 # get a reasonable subset of those occurrences
 occdf <- occdf[1:300, ]
@@ -67,6 +69,7 @@ ggplot(data = occdf) +
 And then, of course, we want to add a timescale:
 
 ``` r
+
 ggplot(data = occdf) +
   geom_points_range(aes(x = age, y = accepted_name)) +
   scale_x_reverse() +
@@ -84,6 +87,7 @@ ggplot available to us! First we’ll simulate some binary “certainty”
 values, then we’ll plot certainty as additional aesthetics:
 
 ``` r
+
 occdf$certainty <- factor(sample(0:1, nrow(occdf), replace = TRUE))
 
 ggplot(data = occdf) +
@@ -103,6 +107,7 @@ Finally, we can sort the taxa so that they are arranged in order of
 their earliest occurrence:
 
 ``` r
+
 occdf$accepted_name <- reorder(occdf$accepted_name, occdf$age, max,
                                decreasing = TRUE)
 ggplot(data = occdf) +
@@ -126,9 +131,10 @@ certain ranges for *Diictodon* no longer overlap, so there is a gap
 between them:
 
 ``` r
-oldest_certain <- occdf %>%
-  filter(accepted_name == "Diictodon", certainty == 1) %>%
-  pull(age) %>%
+
+oldest_certain <- occdf |>
+  filter(accepted_name == "Diictodon", certainty == 1) |>
+  pull(age) |>
   max()
 
 n_uncertain <- sum(occdf$accepted_name == "Diictodon" & occdf$certainty == 0)
@@ -155,6 +161,7 @@ this by using the `background_line` argument, which can be a list of
 aesthetic values to use for the background line segments:
 
 ``` r
+
 ggplot(data = occdf) +
   geom_points_range(aes(x = age, y = accepted_name,
                         fill = certainty, linetype = certainty), shape = 21,
@@ -186,6 +193,7 @@ values to match the names of the intervals in `dat`. Here, we’ll use the
 coral_div_dis data from the first vignette tutorial:
 
 ``` r
+
 ggplot(coral_div_dis, aes(x = n, y = diet, fill = period)) +
   geom_col() +
   scale_fill_geo(periods) +
@@ -212,7 +220,8 @@ it by period. Note that we need to convert the `period` column to an
 ordered factor so the facets appear in chronological order.
 
 ``` r
-coral_div_dis <- coral_div_dis %>%
+
+coral_div_dis <- coral_div_dis |>
   mutate(period = factor(period, levels = rev(periods$name)))
 
 
@@ -235,9 +244,10 @@ indicates the era of each period, then using both the period and era
 columns to make a nested facet:
 
 ``` r
-coral_div_dis <- coral_div_dis %>%
+
+coral_div_dis <- coral_div_dis |>
   mutate(era = ifelse(period %in% c("Paleogene", "Neogene", "Quaternary"),
-                      "Cenozoic", "Mesozoic")) %>%
+                      "Cenozoic", "Mesozoic")) |>
   mutate(era = factor(era, levels = c("Cenozoic", "Mesozoic")))
 
 ggplot(coral_div_dis, aes(x = n, y = diet)) +

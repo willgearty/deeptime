@@ -13,6 +13,7 @@ assist with other areas of deep time visualization.
 ## Installation
 
 ``` r
+
 # get the stable version from CRAN
 install.packages("deeptime")
 
@@ -26,6 +27,7 @@ devtools::install_github("willgearty/deeptime")
 ### Load packages
 
 ``` r
+
 library(deeptime)
 library(ggplot2)
 library(dplyr)
@@ -41,13 +43,14 @@ from [ggplot2](https://ggplot2.tidyverse.org). You can use this function
 to add highly customizable timescales to a wide variety of ggplots.
 
 ``` r
+
 library(divDyn)
 data(corals)
 
 # this is not a proper diversity curve but it gets the point across
-coral_div <- corals %>% filter(stage != "") %>%
-  group_by(stage) %>%
-  summarise(n = n()) %>%
+coral_div <- corals |> filter(stage != "") |>
+  group_by(stage) |>
+  summarise(n = n()) |>
   mutate(stage_age = (stages$max_age[match(stage, stages$name)] +
                         stages$min_age[match(stage, stages$name)])/2)
 ggplot(coral_div) +
@@ -63,6 +66,7 @@ ggplot(coral_div) +
 #### Lots of timescales available!
 
 ``` r
+
 # Load packages
 library(gsloid)
 
@@ -85,6 +89,7 @@ ggplot(lisiecki2005) +
 ### Super flexible, supports multiple layouts, and works great with other packages!
 
 ``` r
+
 # Load packages
 library(ggtree)
 library(rphylopic)
@@ -117,6 +122,7 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+%
 #### Plot fossil occurence ranges
 
 ``` r
+
 library(palaeoverse)
 
 # Filter occurrences
@@ -140,6 +146,7 @@ ggplot(data = occdf) +
 #### Use standardized geological patterns
 
 ``` r
+
 # Load packages
 library(rmacrostrat)
 library(ggrepel)

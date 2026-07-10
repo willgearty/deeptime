@@ -68,7 +68,7 @@ A `data.frame` with the following columns:
 ## Details
 
 The following timescales are available from the Macrostrat API as of
-2025-11-19:
+2026-07-09:
 
 - international ages
 

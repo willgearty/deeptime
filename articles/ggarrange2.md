@@ -1,6 +1,7 @@
 # Combining and arranging plots
 
 ``` r
+
 library(deeptime)
 # Load ggplot2
 library(ggplot2)
@@ -40,6 +41,7 @@ corresponds to the axis titles, and the rectangle of cells around that
 corresponds to legends.
 
 ``` r
+
 p1 <- ggplot(mtcars, aes(mpg, wt, colour = factor(cyl))) +
   geom_point() +
   theme_classic(base_size = 20)
@@ -54,6 +56,7 @@ With this 7x7 decomposition process, it becomes very simple to combine
 plots into single figures with properly aligned components.
 
 ``` r
+
 p1 <- ggplot(ammoniteTraitsRaia) +
   geom_point(aes(x = Log_D, y = FD)) +
   labs(x = "Body size", y = "Suture complexity") +
@@ -71,6 +74,7 @@ You can chain calls to
 to accomplish highly complex combinations and arrangements:
 
 ``` r
+
 p3 <- ggtree(ammoniteTreeRaia, position = position_nudge(x = -ammoniteTreeRaia$root.time)) +
   coord_geo(
     xlim = c(-415, -66), ylim = c(-2, Ntip(ammoniteTreeRaia)), pos = "bottom",
@@ -80,10 +84,6 @@ p3 <- ggtree(ammoniteTreeRaia, position = position_nudge(x = -ammoniteTreeRaia$r
   theme_tree2() +
   theme(plot.margin = margin(7, 11, 7, 11))
 ggarrange2(gg1, p3, nrow = 2, heights = c(1, 2))
-## Warning: Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
 ```
 
 ![](ggarrange2_files/figure-html/unnamed-chunk-4-1.png)
@@ -96,14 +96,11 @@ repeating a number will duplicate a plot, not expand it across multiple
 plot spots.
 
 ``` r
+
 ggarrange2(p1, p2, p3,
   layout = matrix(c(1, 2, 0, 3), nrow = 2, byrow = TRUE),
   widths = c(1, 3)
 )
-## Warning: Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
-## Unknown or uninitialised column: `subgroup`.
 ```
 
 ![](ggarrange2_files/figure-html/unnamed-chunk-5-1.png)

@@ -17,6 +17,7 @@ patterns.
 Let’s first load the packages we’ll need:
 
 ``` r
+
 # Load deeptime
 library(deeptime)
 # Load rmacrostrat to get data
@@ -44,6 +45,7 @@ download the unit-level stratigraphic data for this basin during the
 Cretaceous:
 
 ``` r
+
 # Using the column ID, retrieve the units in the San Juan Basin column
 san_juan_units <- get_units(column_id = 489, interval_name = "Cretaceous")
 # See the column names and number of rows
@@ -72,6 +74,7 @@ column. We’ll follow the **rmacrostrat** vignette to plot the
 stratigraphic column:
 
 ``` r
+
 # Specify x_min and x_max in dataframe
 san_juan_units$x_min <- 0
 san_juan_units$x_max <- 1
@@ -116,6 +119,7 @@ get the lithology definitions from Macrostrat, which includes the FGDC
 pattern codes:
 
 ``` r
+
 # Get lithology definitions
 liths <- def_lithologies()
 head(liths)
@@ -141,19 +145,20 @@ our San Juan units. However, you’ll notice that some units have multiple
 lithologies:
 
 ``` r
+
 # Count lithologies for each unit
 sapply(san_juan_units$lith, nrow)
 ##  [1] 1 1 1 2 1 1 1 3 3 1 1 1 1 1 1 6 3
 # Inspect one with multiple rows
 san_juan_units$lith[16]
 ## [[1]]
-##         atts      name   prop lith_id            type       class
-## 1                shale 0.0714       8   siliciclastic sedimentary
-## 2            quartzite 0.3571      85 metasedimentary metamorphic
-## 3            sandstone 0.3571      10   siliciclastic sedimentary
-## 4        red claystone 0.0714       6   siliciclastic sedimentary
-## 5 calcareous      clay 0.0714      93   siliciclastic sedimentary
-## 6 calcareous      clay 0.0714      93   siliciclastic sedimentary
+##   lith_id      name            type       class   prop       atts
+## 1       8     shale   siliciclastic sedimentary 0.0714           
+## 2      85 quartzite metasedimentary metamorphic 0.3571           
+## 3      10 sandstone   siliciclastic sedimentary 0.3571           
+## 4       6 claystone   siliciclastic sedimentary 0.0714        red
+## 5      93      clay   siliciclastic sedimentary 0.0714 calcareous
+## 6      93      clay   siliciclastic sedimentary 0.0714 calcareous
 ```
 
 That’s a lot of different lithologies for this single unit! We could
@@ -162,6 +167,7 @@ and extract the primary lithology, or the one with the highest “prop”
 value (i.e., proportion of unit):
 
 ``` r
+
 # Get the primary lithology for each unit
 san_juan_units$lith_prim <- sapply(san_juan_units$lith, function(df) {
   df$name[which.max(df$prop)]
@@ -176,6 +182,7 @@ Now that we’ve assigned a primary lithology to each unit, we can assign
 an FGDC pattern code to each unit:
 
 ``` r
+
 # Assign pattern code
 san_juan_units$pattern <- factor(liths$fill[match(san_juan_units$lith_prim, liths$name)])
 table(san_juan_units$pattern, exclude = NULL)
@@ -193,6 +200,7 @@ need to add a call to
 [`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md):
 
 ``` r
+
 # Plot with pattern fills
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
@@ -225,6 +233,7 @@ different patterns actually represent. We’ll use the codes and names in
 to the bottom so it doesn’t mess up our labels:
 
 ``` r
+
 # Plot with pattern fills
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
@@ -273,14 +282,14 @@ and use the “geo” `pattern`. Once you have implemented this, any of the
 following ggplot2 aesthetics can be used to tweak the patterns. *Note
 that the defaults for these two methods are often different:*
 
-| aesthetic     | description                                                             | [`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md) default | ggpattern default |
-|---------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|-------------------|
-| pattern_type  | Code for the FGDC pattern to use                                        | “101”                                                                                                      | “101”             |
-| pattern_color | Color used for strokes and points                                       | original color                                                                                             | “grey20”          |
-| pattern_fill  | Color used to fill various closed shapes (e.g., circles) in the pattern | original color                                                                                             | “grey80”          |
-| pattern_alpha | Alpha transparency for pattern                                          | 1                                                                                                          | 1                 |
-| pattern_scale | Scale of the pattern (higher values zoom in on pattern)                 | 2                                                                                                          | 1                 |
-| fill          | Background color                                                        | “white”                                                                                                    | “white”           |
+| aesthetic | description | [`scale_fill_geopattern()`](https://williamgearty.com/deeptime/reference/scale_fill_geopattern.md) default | ggpattern default |
+|----|----|----|----|
+| pattern_type | Code for the FGDC pattern to use | “101” | “101” |
+| pattern_color | Color used for strokes and points | original color | “grey20” |
+| pattern_fill | Color used to fill various closed shapes (e.g., circles) in the pattern | original color | “grey80” |
+| pattern_alpha | Alpha transparency for pattern | 1 | 1 |
+| pattern_scale | Scale of the pattern (higher values zoom in on pattern) | 2 | 1 |
+| fill | Background color | “white” | “white” |
 
 For the pattern code (i.e., `pattern\_type`), see the “pattern numbers”
 in the [full pattern
@@ -308,6 +317,7 @@ use
 to use those raw pattern codes:
 
 ``` r
+
 # Plot using ggpattern
 library(ggpattern)
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
@@ -344,6 +354,7 @@ between the two methods. We can easily fix this by specifying our own
 defaults:
 
 ``` r
+
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type
@@ -381,6 +392,7 @@ the background color (`fill`) and the pattern fill color
 (`pattern_fill`) based on the “color” column:
 
 ``` r
+
 ggplot(san_juan_units, aes(ymin = b_age, ymax = t_age,
                            xmin = x_min, xmax = x_max)) +
   # Plot units, patterned by rock type

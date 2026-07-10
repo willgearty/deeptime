@@ -86,14 +86,14 @@ geom_text_phylo(
   the display. The `position` argument accepts the following:
 
   - The result of calling a position function, such as
-    [`position_jitter()`](https://ggplot2.tidyverse.org/reference/position_jitter.html).
+    [`position_nudge()`](https://ggplot2.tidyverse.org/reference/position_nudge.html).
     This method allows for passing extra arguments to the position.
 
   - A string naming the position adjustment. To give the position as a
     string, strip the function name of the `position_` prefix. For
     example, to use
-    [`position_jitter()`](https://ggplot2.tidyverse.org/reference/position_jitter.html),
-    give the position as `"jitter"`.
+    [`position_nudge()`](https://ggplot2.tidyverse.org/reference/position_nudge.html),
+    give the position as `"nudge"`.
 
 - ...:
 
@@ -258,8 +258,4 @@ tr <- rtree(10)
 revts(ggtree(tr)) +
   geom_text_phylo() +
   coord_geo_radial("epochs")
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 ```

@@ -6,6 +6,7 @@ in useful ways. We’ll first load some packages and example data so we
 can demonstrate some of this functionality.
 
 ``` r
+
 # Load deeptime
 library(deeptime)
 # Load other packages
@@ -36,6 +37,7 @@ function can be used to generate a similar plot with sheared trait space
 across several time intervals.
 
 ``` r
+
 # make transformer
 library(ggforce)
 trans <- linear_trans(shear(.75, 0))
@@ -87,6 +89,7 @@ Note that it may take some tweaking (especially the `aspect` argument)
 to get the results to look the way you want.
 
 ``` r
+
 crinoids$time <- factor(crinoids$time)
 disparity_through_time(time ~ V2 * V1,
   data = crinoids, groups = time, aspect = c(1.5, .6),
@@ -109,6 +112,10 @@ disparity_through_time(time ~ V2 * V1,
       )
   )
 )
+## Warning: `disparity_through_time()` was deprecated in deeptime 2.4.0.
+## This warning is displayed once per session.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 ![](traits_files/figure-html/unnamed-chunk-4-1.png)
@@ -133,6 +140,7 @@ but they are not demonstrated here because they would obscure the
 phylogenetic relationships.
 
 ``` r
+
 mammal.data$label <- rownames(mammal.data)
 
 ggplot(mammal.data, aes(x = bodyMass, y = homeRange, label = label)) +

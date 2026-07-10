@@ -1,5 +1,55 @@
 # Changelog
 
+## deeptime 2.4.0
+
+CRAN release: 2026-07-10
+
+**deeptime now requires R version 4.1 or higher**.
+
+This new minor version of deeptime includes a new feature, some major
+bug fixes, and some minor housekeeping.
+
+New features:
+
+- Added
+  [`geom_text_clade()`](https://williamgearty.com/deeptime/reference/geom_text_clade.md)
+  for adding clade labels to phylogenies when using
+  [`coord_geo_radial()`](https://williamgearty.com/deeptime/reference/coord_geo_radial.md)
+  ([\#96](https://github.com/willgearty/deeptime/issues/96))
+
+Bug fixes:
+
+- Fixed several edge cases of
+  [`coord_trans_xy()`](https://williamgearty.com/deeptime/reference/coord_trans_xy.md)
+  including
+  [`ggforce::reflect()`](https://ggforce.data-imaginist.com/reference/linear_trans.html)
+  transformations, `_reverse_` scales, and capped axes
+  ([\#57](https://github.com/willgearty/deeptime/issues/57),
+  [\#102](https://github.com/willgearty/deeptime/issues/102))
+- Fixed
+  [`coord_geo()`](https://williamgearty.com/deeptime/reference/coord_geo.md)
+  scale placement to now always be added outwards from the plot region
+  ([\#47](https://github.com/willgearty/deeptime/issues/47))
+  - Previously, scales on the left and top were added inwards
+
+Deprecation:
+
+- Soft deprecated
+  [`disparity_through_time()`](https://williamgearty.com/deeptime/reference/disparity_through_time.md)
+  and
+  [`panel.disparity()`](https://williamgearty.com/deeptime/reference/panel.disparity.md).
+  These functions were never well supported and will be removed in a
+  future version of deeptime to reduce maintenance overhead. Users are
+  encouraged to use
+  [`coord_trans_xy()`](https://williamgearty.com/deeptime/reference/coord_trans_xy.md)
+  to achieve a similar plot with `ggplot2`.
+
+Miscellaneous:
+
+- Swapped usage of the magrittr pipe operator (`%>%`) to the base R pipe
+  operator (`|>`)
+  ([\#100](https://github.com/willgearty/deeptime/issues/100))
+
 ## deeptime 2.3.1
 
 CRAN release: 2025-11-26

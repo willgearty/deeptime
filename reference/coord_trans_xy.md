@@ -74,10 +74,6 @@ defined with x and y coordinates (e.g.,
 This does not currently work with geoms where point coordinates are
 extrapolated (e.g.,
 [`ggplot2::geom_rect()`](https://ggplot2.tidyverse.org/reference/geom_tile.html)).
-Furthermore, when used with ggplot2 3.5.0 and later, some transformation
-edge cases may cause problems with rendering axis lines. This includes
-not currently support "capping" axes. I hope to support all of these
-geoms, edge cases, and features in the future.
 
 ## Examples
 

@@ -200,10 +200,6 @@ revts(ggtree(tree)) +
   coord_geo_polar(dat = "stages")
 #> Warning: `coord_geo_polar()` was deprecated in deeptime 1.1.0.
 #> ℹ Please use `coord_geo_radial()` instead.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 
 
 # multiple scales
@@ -217,10 +213,6 @@ revts(ggtree(tree)) +
                                             vjust = .75))
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 
 library(ggplot2)
 library(paleotree)
@@ -228,8 +220,4 @@ data(RaiaCopesRule)
 ggtree(ceratopsianTreeRaia,
        position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
   coord_geo_polar(dat = "stages")
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
-#> Warning: Unknown or uninitialised column: `subgroup`.
 ```

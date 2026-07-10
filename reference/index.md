@@ -77,11 +77,13 @@ phylogenies that are plotted with
 
 ### Adding text labels to phylogenies
 
-When using deeptime coordinate systems, this geom may work better than
+When using deeptime coordinate systems, these geoms may work better than
 geoms from ggtree.
 
 - [`geom_text_phylo()`](https://williamgearty.com/deeptime/reference/geom_text_phylo.md)
   : Label nodes on a phylogenetic tree plotted with ggtree
+- [`geom_text_clade()`](https://williamgearty.com/deeptime/reference/geom_text_clade.md)
+  : Label clades on a phylogenetic tree plotted with ggtree
 
 ## Transforming coordinate systems
 
@@ -100,9 +102,9 @@ These functions can be used for visualizing species trait data.
 - [`geom_phylomorpho()`](https://williamgearty.com/deeptime/reference/geom_phylomorpho.md)
   : Plot a 2-D phylomorphospace in ggplot2
 - [`disparity_through_time()`](https://williamgearty.com/deeptime/reference/disparity_through_time.md)
-  : Disparity through time plot using lattice
+  **\[deprecated\]** : Disparity through time plot using lattice
 - [`panel.disparity()`](https://williamgearty.com/deeptime/reference/panel.disparity.md)
-  : Combined wireframe and cloud panel
+  **\[deprecated\]** : Combined wireframe and cloud panel
 - [`coord_trans_xy()`](https://williamgearty.com/deeptime/reference/coord_trans_xy.md)
   : Transformed XY Cartesian coordinate system
 
