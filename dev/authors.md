@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/willgearty/deeptime/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/willgearty/deeptime/blob/main/inst/CITATION)
 
 Gearty, W. 2025. deeptime: an R package that facilitates highly
 customizable and reproducible visualizations of data over geological

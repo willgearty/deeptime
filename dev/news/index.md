@@ -2,6 +2,10 @@
 
 ## deeptime (development version)
 
+## deeptime 2.4.0
+
+CRAN release: 2026-07-10
+
 **deeptime now requires R version 4.1 or higher**.
 
 This new minor version of deeptime includes a new feature, some major
