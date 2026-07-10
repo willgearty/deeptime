@@ -1,3 +1,5 @@
+# deeptime (development version)
+
 # deeptime 2.4.0
 
 __deeptime now requires R version 4.1 or higher__.
