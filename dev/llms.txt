@@ -38,7 +38,7 @@ library(dplyr)
 The main function of **deeptime** is
 [`coord_geo()`](https://williamgearty.com/deeptime/dev/reference/coord_geo.md),
 which functions just like
-[`coord_trans()`](https://ggplot2.tidyverse.org/reference/coord_transform.html)
+[`coord_transform()`](https://ggplot2.tidyverse.org/reference/coord_transform.html)
 from [ggplot2](https://ggplot2.tidyverse.org). You can use this function
 to add highly customizable timescales to a wide variety of ggplots.
 
