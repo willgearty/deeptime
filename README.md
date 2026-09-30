@@ -37,7 +37,7 @@ library(dplyr)
 
 ### Add one or more timescales to virtually any ggplot2 plot!
 
-The main function of __deeptime__ is `coord_geo()`, which functions just like `coord_trans()` from `{ggplot2}`.
+The main function of __deeptime__ is `coord_geo()`, which functions just like `coord_transform()` from `{ggplot2}`.
 You can use this function to add highly customizable timescales to a wide variety of ggplots.
 
 ```r
