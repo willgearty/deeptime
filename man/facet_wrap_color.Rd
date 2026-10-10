@@ -147,6 +147,7 @@ ggplot(df) +
 Other faceting functions:
 \code{\link[=facet_grid_color]{facet_grid_color()}},
 \code{\link[=facet_nested_color]{facet_nested_color()}},
-\code{\link[=facet_nested_wrap_color]{facet_nested_wrap_color()}}
+\code{\link[=facet_nested_wrap_color]{facet_nested_wrap_color()}},
+\code{\link[=facet_stack]{facet_stack()}}
 }
 \concept{faceting functions}

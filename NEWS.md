@@ -1,5 +1,9 @@
 # deeptime (development version)
 
+New features:
+
+* Added `facet_stack()` for stacking `coord_trans_xy()` panels as layers of a pseudo-3D block (#54)
+
 Bug fixes:
 
 * Fixed `coord_trans_xy()` gridlines, which were not transformed with the rest of the plot

@@ -197,6 +197,7 @@ ggplot(df, aes(x, y)) +
 Other faceting functions:
 \code{\link[=facet_grid_color]{facet_grid_color()}},
 \code{\link[=facet_nested_color]{facet_nested_color()}},
+\code{\link[=facet_stack]{facet_stack()}},
 \code{\link[=facet_wrap_color]{facet_wrap_color()}}
 }
 \concept{faceting functions}
