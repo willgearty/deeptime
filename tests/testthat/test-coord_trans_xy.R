@@ -71,6 +71,21 @@ test_that("coord_trans_xy() works", {
     )
   expect_doppelganger_deeptime("coord_trans_xy() with capped axes", gg)
 
+  # check that gridlines are transformed and clipped to the scale limits
+  trans <- ggforce::linear_trans(shear(2, 0), rotate(-pi / 3))
+  gg <- ggplot(data = points, aes(x = x, y = y)) +
+    geom_point() +
+    coord_trans_xy(trans = trans, expand = TRUE) +
+    theme_bw()
+  built <- ggplot_build(gg)
+  grill <- built$layout$coord$render_bg(built$layout$panel_params[[1]],
+                                        theme_bw())
+  grid_x <- unlist(lapply(grill$children[-1], function(g) as.numeric(g$x)))
+  grid_y <- unlist(lapply(grill$children[-1], function(g) as.numeric(g$y)))
+  expect_true(all(is.finite(c(grid_x, grid_y))))
+  expect_true(all(grid_x >= 0 & grid_x <= 1 & grid_y >= 0 & grid_y <= 1))
+  expect_doppelganger_deeptime("coord_trans_xy() with gridlines", gg)
+
   # check errors
   gg <- ggplot(data = points, aes(x = x, y = y, color = color)) +
     geom_polygon(data = square, fill = NA, color = "black") +
