@@ -80,7 +80,8 @@ dist_euclidean <- function(...) {
 #' @format NULL
 #' @usage NULL
 #' @importFrom ggplot2 ggproto CoordCartesian CoordTrans ggproto_parent
-#' @importFrom ggplot2 transform_position
+#' @importFrom ggplot2 transform_position element_render
+#' @importFrom grid grobTree
 #' @importFrom scales rescale squish_infinite
 #' @export
 CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
@@ -178,6 +179,40 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
         y.sec.minor = rescale(out_y_sec$sec.minor_source,
                               0:1, scale_range_y_sec)
       )
+    )
+  },
+  render_bg = function(self, panel_params, theme) {
+    # gridlines span the transformed scale limits rather than the panel
+    lim_x <- sort(panel_params$x$limits)
+    lim_y <- sort(panel_params$y$limits)
+    grid_lines <- function(breaks, type) {
+      breaks <- breaks[!is.na(breaks)]
+      if (type %in% c("major.x", "minor.x")) {
+        breaks <- breaks[breaks >= lim_x[1] & breaks <= lim_x[2]]
+        x <- rep(breaks, each = 2)
+        y <- rep(lim_y, length(breaks))
+      } else {
+        breaks <- breaks[breaks >= lim_y[1] & breaks <= lim_y[2]]
+        x <- rep(lim_x, length(breaks))
+        y <- rep(breaks, each = 2)
+      }
+      if (length(breaks) == 0) return(NULL)
+      pts <- self$trans$transform(x, y)
+      element_render(theme, paste0("panel.grid.", type),
+                     x = rescale(pts$x, 0:1, panel_params$x.range.coord),
+                     y = rescale(pts$y, 0:1, panel_params$y.range.coord),
+                     id.lengths = rep(2, length(breaks)))
+    }
+    x_major <- panel_params$x$get_breaks()
+    y_major <- panel_params$y$get_breaks()
+    grobTree(
+      element_render(theme, "panel.background"),
+      grid_lines(setdiff(panel_params$y$get_breaks_minor(), y_major),
+                 "minor.y"),
+      grid_lines(setdiff(panel_params$x$get_breaks_minor(), x_major),
+                 "minor.x"),
+      grid_lines(y_major, "major.y"),
+      grid_lines(x_major, "major.x")
     )
   },
   transform = function(self, data, panel_params) {

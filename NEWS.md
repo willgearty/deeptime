@@ -1,5 +1,9 @@
 # deeptime (development version)
 
+Bug fixes:
+
+* Fixed `coord_trans_xy()` gridlines, which were not transformed with the rest of the plot
+
 # deeptime 2.4.0
 
 __deeptime now requires R version 4.1 or higher__.
