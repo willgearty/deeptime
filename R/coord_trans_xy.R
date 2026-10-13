@@ -207,16 +207,14 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
                      x = as.vector(t(segs$x)), y = as.vector(t(segs$y)),
                      id.lengths = rep(2, nrow(segs$x)))
     }
-    x_major <- panel_params$x$get_breaks()
-    y_major <- panel_params$y$get_breaks()
+    x_breaks <- panel_breaks(panel_params$x, lim$x)
+    y_breaks <- panel_breaks(panel_params$y, lim$y)
     grobTree(
       element_render(theme, "panel.background"),
-      grid_lines(setdiff(panel_params$y$get_breaks_minor(), y_major),
-                 "minor.y"),
-      grid_lines(setdiff(panel_params$x$get_breaks_minor(), x_major),
-                 "minor.x"),
-      grid_lines(y_major, "major.y"),
-      grid_lines(x_major, "major.x")
+      grid_lines(y_breaks$minor, "minor.y"),
+      grid_lines(x_breaks$minor, "minor.x"),
+      grid_lines(y_breaks$major, "major.y"),
+      grid_lines(x_breaks$major, "major.x")
     )
   },
   transform = function(self, data, panel_params) {
@@ -266,6 +264,29 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     transform_position(new_data, squish_infinite, squish_infinite)
   }
 )
+
+# gridline breaks across the panel's full data range: the axis's evenly spaced
+# breaks are extended to the parts of the panel that the axis doesn't cover,
+# while breaks set explicitly by the user are used as given
+panel_breaks <- function(view_scale, limits) {
+  scale <- view_scale$scale
+  if (is.numeric(scale$breaks)) {
+    major <- scale$get_breaks(limits)
+  } else {
+    major <- view_scale$get_breaks()
+    major <- sort(major[!is.na(major)])
+    step <- diff(major)
+    tol <- 1e-8 * step[1]
+    if (length(step) > 0 && all(abs(step - step[1]) < tol)) {
+      n <- seq(ceiling((min(limits) - major[1] - tol) / step[1]),
+               floor((max(limits) - major[1] + tol) / step[1]))
+      major <- major[1] + n * step[1]
+    }
+  }
+  major <- major[!is.na(major)]
+  minor <- scale$get_breaks_minor(b = major, limits = limits)
+  list(major = major, minor = setdiff(minor[!is.na(minor)], major))
+}
 
 # clip line segments (rows of start/end coordinates) to the unit square,
 # dropping any that fall entirely outside of it (Liang-Barsky)
