@@ -182,26 +182,30 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     )
   },
   render_bg = function(self, panel_params, theme) {
-    # gridlines span the transformed scale limits rather than the panel
-    lim_x <- sort(panel_params$x$limits)
-    lim_y <- sort(panel_params$y$limits)
+    # gridlines span the whole panel (meeting their axis ticks at its edges),
+    # so draw them across the panel's data range and clip them to the panel
+    lim <- self$backtransform_range(panel_params)
     grid_lines <- function(breaks, type) {
       breaks <- breaks[!is.na(breaks)]
       if (type %in% c("major.x", "minor.x")) {
-        breaks <- breaks[breaks >= lim_x[1] & breaks <= lim_x[2]]
         x <- rep(breaks, each = 2)
-        y <- rep(lim_y, length(breaks))
+        y <- rep(lim$y, length(breaks))
       } else {
-        breaks <- breaks[breaks >= lim_y[1] & breaks <= lim_y[2]]
-        x <- rep(lim_x, length(breaks))
+        x <- rep(lim$x, length(breaks))
         y <- rep(breaks, each = 2)
       }
       if (length(breaks) == 0) return(NULL)
       pts <- self$trans$transform(x, y)
+      segs <- clip_segments(
+        matrix(rescale(pts$x, 0:1, panel_params$x.range.coord), ncol = 2,
+               byrow = TRUE),
+        matrix(rescale(pts$y, 0:1, panel_params$y.range.coord), ncol = 2,
+               byrow = TRUE)
+      )
+      if (nrow(segs$x) == 0) return(NULL)
       element_render(theme, paste0("panel.grid.", type),
-                     x = rescale(pts$x, 0:1, panel_params$x.range.coord),
-                     y = rescale(pts$y, 0:1, panel_params$y.range.coord),
-                     id.lengths = rep(2, length(breaks)))
+                     x = as.vector(t(segs$x)), y = as.vector(t(segs$y)),
+                     id.lengths = rep(2, nrow(segs$x)))
     }
     x_major <- panel_params$x$get_breaks()
     y_major <- panel_params$y$get_breaks()
@@ -262,6 +266,25 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     transform_position(new_data, squish_infinite, squish_infinite)
   }
 )
+
+# clip line segments (rows of start/end coordinates) to the unit square,
+# dropping any that fall entirely outside of it (Liang-Barsky)
+clip_segments <- function(x, y) {
+  dx <- x[, 2] - x[, 1]
+  dy <- y[, 2] - y[, 1]
+  p <- cbind(-dx, dx, -dy, dy)
+  q <- cbind(x[, 1], 1 - x[, 1], y[, 1], 1 - y[, 1])
+  r <- q / p
+  t0 <- pmax(0, apply(ifelse(p < 0, r, -Inf), 1, max))
+  t1 <- pmin(1, apply(ifelse(p > 0, r, Inf), 1, min))
+  keep <- t0 <= t1 & !apply(p == 0 & q < 0, 1, any)
+  # squish floating point error back into the unit square
+  clamp <- function(v) pmin(pmax(v, 0), 1)
+  list(
+    x = clamp(cbind(x[, 1] + t0 * dx, x[, 1] + t1 * dx))[keep, , drop = FALSE],
+    y = clamp(cbind(y[, 1] + t0 * dy, y[, 1] + t1 * dy))[keep, , drop = FALSE]
+  )
+}
 
 view_scale_primary <- function(...) {
   asNamespace("ggplot2")$view_scale_primary(...)

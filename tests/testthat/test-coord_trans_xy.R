@@ -71,7 +71,7 @@ test_that("coord_trans_xy() works", {
     )
   expect_doppelganger_deeptime("coord_trans_xy() with capped axes", gg)
 
-  # check that gridlines are transformed and clipped to the scale limits
+  # check that gridlines are transformed and clipped to the panel
   trans <- ggforce::linear_trans(shear(2, 0), rotate(-pi / 3))
   gg <- ggplot(data = points, aes(x = x, y = y)) +
     geom_point() +
