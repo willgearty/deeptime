@@ -1,5 +1,9 @@
 # deeptime (development version)
 
+Bug fixes:
+
+* Fixed misplaced `coord_trans_xy()` axis labels when using ggplot2 < 4.0.0 (#115)
+
 # deeptime 2.4.0
 
 __deeptime now requires R version 4.1 or higher__.

@@ -82,6 +82,7 @@ dist_euclidean <- function(...) {
 #' @importFrom ggplot2 ggproto CoordCartesian CoordTrans ggproto_parent
 #' @importFrom ggplot2 transform_position
 #' @importFrom scales rescale squish_infinite
+#' @importFrom utils packageVersion
 #' @export
 CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
   distance = function(self, x, y, panel_params) {
@@ -185,13 +186,15 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     # transform x and y coordinates
     if ("x" %in% colnames(new_data)) {
       # hacks for axis tick labels
-      if (isTRUE(all(data$x == Inf))) {                  # left (primary y) axis
+      # ggplot2 < 4.0.0 flags primary axes with -Inf instead of Inf
+      prim <- if (packageVersion("ggplot2") > "3.5.2") Inf else -Inf
+      if (isTRUE(all(data$x == prim))) {                 # left (primary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y$continuous_range)
-      } else if (isTRUE(all(data$x == -Inf))) {          # right (secondary y) axis
+      } else if (isTRUE(all(data$x == -prim))) {         # right (secondary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y.sec$continuous_range)
-      } else if (isTRUE(all(data$y == Inf))) {           # bottom (primary x) axis
+      } else if (isTRUE(all(data$y == prim))) {          # bottom (primary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x$continuous_range)
-      } else if (isTRUE(all(data$y == -Inf))) {          # top (secondary x) axis
+      } else if (isTRUE(all(data$y == -prim))) {         # top (secondary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x.sec$continuous_range)
       }
       # hacks for axis lines
