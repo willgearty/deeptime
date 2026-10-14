@@ -37,6 +37,9 @@ jobs:
         include:
           - ggplot2: '3.5.2'
             config: {os: ubuntu-latest, r: 'release'}
+            # current versions of some suggested packages used in the
+            # vignettes (e.g., ggtree, ggpattern) require ggplot2 >= 4.0.0
+            skip_vignettes: true
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -84,4 +87,8 @@ jobs:
           _R_CHECK_FORCE_SUGGESTS_: 0
         with:
           upload-snapshots: true
-          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+          build_args: ${{ matrix.skip_vignettes && 'c("--no-manual","--no-build-vignettes")' || 'c("--no-manual","--compact-vignettes=gs+qpdf")' }}
+          args: ${{ matrix.skip_vignettes && 'c("--no-manual","--as-cran","--ignore-vignettes")' || 'c("--no-manual","--as-cran")' }}
+          # without vignettes, and with docs inherited from newer ggplot2
+          # versions, only errors are meaningful for the minimum version job
+          error-on: ${{ matrix.skip_vignettes && '"error"' || '"warning"' }}
