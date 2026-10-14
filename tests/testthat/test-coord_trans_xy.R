@@ -71,6 +71,31 @@ test_that("coord_trans_xy() works", {
     )
   expect_doppelganger_deeptime("coord_trans_xy() with capped axes", gg)
 
+  # check that layers with a single x or y value are not treated as axes
+  gg <- ggplot() +
+    geom_polygon(data = square, aes(x = x, y = y), fill = NA,
+                 color = "black") +
+    geom_hline(yintercept = 1, color = "red") +
+    geom_vline(xintercept = 1, color = "blue") +
+    geom_line(data = data.frame(x = c(-1, 1), y = -1), aes(x = x, y = y)) +
+    annotate("point", x = 1.5, y = -1.5, size = 3) +
+    annotate("text", x = -1, y = 0.5, label = "A", size = 6) +
+    coord_trans_xy(trans = trans) +
+    theme_void()
+  pp <- ggplot_build(gg)$layout$panel_params[[1]]
+  # back-transform drawn npc coordinates to data coordinates
+  to_data <- function(grob) {
+    g <- if (inherits(grob, "gTree")) grob$children[[1]] else grob
+    trans$inverse(scales::rescale(as.numeric(g$x), pp$x.range.coord, 0:1),
+                  scales::rescale(as.numeric(g$y), pp$y.range.coord, 0:1))
+  }
+  expect_equal(unique(round(to_data(layer_grob(gg, 2)[[1]])$y, 8)), 1)
+  expect_equal(unique(round(to_data(layer_grob(gg, 3)[[1]])$x, 8)), 1)
+  expect_equal(unique(round(to_data(layer_grob(gg, 4)[[1]])$y, 8)), -1)
+  expect_equal(unlist(to_data(layer_grob(gg, 5)[[1]])), c(x = 1.5, y = -1.5))
+  expect_equal(unlist(to_data(layer_grob(gg, 6)[[1]])), c(x = -1, y = 0.5))
+  expect_doppelganger_deeptime("coord_trans_xy() with single value layers", gg)
+
   # check errors
   gg <- ggplot(data = points, aes(x = x, y = y, color = color)) +
     geom_polygon(data = square, fill = NA, color = "black") +
