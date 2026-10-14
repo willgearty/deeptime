@@ -180,6 +180,7 @@ test_that("ggtree scale works with only fossil taxa", {
 })
 
 test_that("guide_geo works with coord_geo_radial", {
+  skip_if_not_installed("ggtree")
   skip_if_not_installed("ape")
   gg <- revts(ggtree(tree)) +
     coord_geo_radial(dat = "epochs", end = 1.49 * pi,
@@ -196,6 +197,7 @@ test_that("guide_geo works with coord_geo_radial", {
 })
 
 test_that("ggtree scale works with only fossil taxa", {
+  skip_if_not_installed("ggtree")
   skip_if_not_installed("paleotree")
   gg <- ggtree(ceratopsianTreeRaia,
                position = position_nudge(x = -ceratopsianTreeRaia$root.time)) +
