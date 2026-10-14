@@ -351,7 +351,7 @@ geom_text_clade <- function(mapping = NULL, data = NULL, text_geom = "text",
 #' @importFrom ggplot2 remove_missing
 #' @importFrom rlang %||%
 #' @importFrom grid unit
-#' @importFrom utils modifyList
+#' @importFrom utils modifyList packageVersion
 GeomTextClade <- ggproto("GeomTextClade", GeomText,
   required_aes = c("x", "y", "parent", "node", "label"),
   non_missing_aes = c("node", "angle", "linetype", "linewidth", "fill"),
@@ -429,11 +429,15 @@ GeomTextClade <- ggproto("GeomTextClade", GeomText,
                                      check_overlap, size.unit = size.unit)
     } else {
       parent <- ggproto_parent(GeomLabel, self)
-      text_grob <- parent$draw_panel(data, panel_params, coord, parse, na.rm,
-                                     label.padding = label.padding,
-                                     label.r = label.r, size.unit = size.unit,
-                                     border.colour = border.colour,
-                                     text.colour = text.colour)
+      label_args <- list(data, panel_params, coord, parse, na.rm,
+                         label.padding = label.padding, label.r = label.r,
+                         size.unit = size.unit)
+      # border.colour and text.colour were added to GeomLabel in ggplot2 4.0.0
+      if (packageVersion("ggplot2") > "3.5.2") {
+        label_args <- c(label_args, list(border.colour = border.colour,
+                                         text.colour = text.colour))
+      }
+      text_grob <- do.call(parent$draw_panel, label_args)
     }
     grob_list <- gList(text_grob, segment_grob)
     gTree(name = "geom_text_clade", children = grob_list)
