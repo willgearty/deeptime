@@ -26,13 +26,17 @@ jobs:
       fail-fast: false
       matrix:
         # devel only on schedule + manual dispatch; push/PR get stable only
-        ggplot2: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '[">= 3.5.2", "devel"]' || '[">= 3.5.2"]') }}
+        ggplot2: ${{ fromJSON((github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && '["release", "devel"]' || '["release"]') }}
         config:
           - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,  r: 'release'}
           - {os: ubuntu-latest,  r: 'oldrel-1'}
+        # minimum supported ggplot2 version (see DESCRIPTION)
+        include:
+          - ggplot2: '3.5.2'
+            config: {os: ubuntu-latest, r: 'release'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -59,12 +63,13 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
+      # the release version is already installed by setup-r-dependencies
       - name: Install ggplot2 ${{ matrix.ggplot2 }}
         run: |
           install.packages("remotes")
           remotes::install_version("ggplot2", version = "${{ matrix.ggplot2 }}")
         shell: Rscript {0}
-        if: matrix.ggplot2 != 'devel'
+        if: matrix.ggplot2 != 'devel' && matrix.ggplot2 != 'release'
 
       - name: Install development ggplot2
         run: |
