@@ -1,5 +1,7 @@
 # deeptime (development version)
 
+__deeptime now requires ggplot2 version 3.5.2 or higher__, matching the requirement of its ggh4x dependency.
+
 # deeptime 2.4.0
 
 __deeptime now requires R version 4.1 or higher__.

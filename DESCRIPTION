@@ -20,7 +20,7 @@ LazyData: true
 biocViews:
 Imports:
     deeptimedata,
-    ggplot2 (>= 3.5.0),
+    ggplot2 (>= 3.5.2),
     utils,
     ggforce,
     grid,
