@@ -1,5 +1,9 @@
 # deeptime (development version)
 
+Bug fixes:
+
+* Fixed `geom_text_clade(text_geom = "label")` erroring when using ggplot2 < 4.0.0 (#119)
+
 # deeptime 2.4.0
 
 __deeptime now requires R version 4.1 or higher__.
