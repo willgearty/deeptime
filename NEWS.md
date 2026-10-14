@@ -1,5 +1,9 @@
 # deeptime (development version)
 
+Bug fixes:
+
+* Fixed `coord_trans_xy()` dropping or misplacing layers whose points all share the same x or y value, such as `geom_hline()`, `geom_vline()`, and single points or labels
+
 # deeptime 2.4.0
 
 __deeptime now requires R version 4.1 or higher__.

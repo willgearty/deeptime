@@ -52,10 +52,12 @@ arguments should also work. Axis limits will be adjusted to account for
 transformation unless limits are specified with \code{xlim} or \code{ylim}.
 }
 \details{
-This coordinate system only works with geoms where all points are
-defined with x and y coordinates (e.g., \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}},
-\code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}}). This does not currently work with geoms where
-point coordinates are extrapolated (e.g., \code{\link[ggplot2:geom_rect]{ggplot2::geom_rect()}}).
+As with other non-linear coordinate systems, geoms whose points are
+calculated from other aesthetics (e.g., \code{\link[ggplot2:geom_rect]{ggplot2::geom_rect()}},
+\code{\link[ggplot2:geom_tile]{ggplot2::geom_tile()}}, \code{\link[ggplot2:geom_hline]{ggplot2::geom_hline()}}) are converted to polygons
+or paths before they are transformed. \code{\link[ggplot2:geom_raster]{ggplot2::geom_raster()}} requires
+ggplot2 version 4.0.0 or higher (where it falls back to drawing
+rectangles); with older versions, use \code{\link[ggplot2:geom_tile]{ggplot2::geom_tile()}} instead.
 }
 \examples{
 # make transformer

@@ -9,10 +9,12 @@
 #' arguments should also work. Axis limits will be adjusted to account for
 #' transformation unless limits are specified with `xlim` or `ylim`.
 #'
-#' @details This coordinate system only works with geoms where all points are
-#'   defined with x and y coordinates (e.g., [ggplot2::geom_point()],
-#'   [ggplot2::geom_polygon()]). This does not currently work with geoms where
-#'   point coordinates are extrapolated (e.g., [ggplot2::geom_rect()]).
+#' @details As with other non-linear coordinate systems, geoms whose points are
+#'   calculated from other aesthetics (e.g., [ggplot2::geom_rect()],
+#'   [ggplot2::geom_tile()], [ggplot2::geom_hline()]) are converted to polygons
+#'   or paths before they are transformed. [ggplot2::geom_raster()] requires
+#'   ggplot2 version 4.0.0 or higher (where it falls back to drawing
+#'   rectangles); with older versions, use [ggplot2::geom_tile()] instead.
 #'
 #' @param trans Transformer for x and y axes.
 #' @importFrom ggplot2 ggproto
@@ -184,18 +186,25 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
     new_data <- data
     # transform x and y coordinates
     if ("x" %in% colnames(new_data)) {
+      # layer data always has a group column, unlike axis guide data
+      is_guide <- !"group" %in% colnames(data)
       # hacks for axis tick labels
-      if (isTRUE(all(data$x == Inf))) {                  # left (primary y) axis
+      if (is_guide && isTRUE(all(data$x == Inf))) {
+        # left (primary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y$continuous_range)
-      } else if (isTRUE(all(data$x == -Inf))) {          # right (secondary y) axis
+      } else if (is_guide && isTRUE(all(data$x == -Inf))) {
+        # right (secondary y) axis
         new_data$y <- rescale(data$y, 0:1, panel_params$y.sec$continuous_range)
-      } else if (isTRUE(all(data$y == Inf))) {           # bottom (primary x) axis
+      } else if (is_guide && isTRUE(all(data$y == Inf))) {
+        # bottom (primary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x$continuous_range)
-      } else if (isTRUE(all(data$y == -Inf))) {          # top (secondary x) axis
+      } else if (is_guide && isTRUE(all(data$y == -Inf))) {
+        # top (secondary x) axis
         new_data$x <- rescale(data$x, 0:1, panel_params$x.sec$continuous_range)
       }
       # hacks for axis lines
-      else if (length(unique(data$y)) == 1) {       # horizontal axis line
+      else if (is_guide && length(unique(data$y)) == 1) {
+        # horizontal axis line
         yr <- self$backtransform_range(panel_params)$y
         cont <- if (abs(data$y[1] - max(yr)) <= abs(data$y[1] - min(yr))) {
           panel_params$x$continuous_range            # bottom (primary x)
@@ -203,7 +212,8 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
           panel_params$x.sec$continuous_range        # top (secondary x)
         }
         new_data$x <- pmax(0, pmin(1, rescale(data$x, 0:1, cont)))
-      } else if (length(unique(data$x)) == 1) {      # vertical axis line
+      } else if (is_guide && length(unique(data$x)) == 1) {
+        # vertical axis line
         xr <- self$backtransform_range(panel_params)$x
         cont <- if (abs(data$x[1] - max(xr)) <= abs(data$x[1] - min(xr))) {
           panel_params$y$continuous_range            # left (primary y)
@@ -223,7 +233,6 @@ CoordTransXY <- ggproto("CoordTransXY", CoordTrans,
       new_data$xend <- rescale(temp_data$x, 0:1, panel_params$x.range.coord)
       new_data$yend <- rescale(temp_data$y, 0:1, panel_params$y.range.coord)
     }
-    # TODO: transform corners for geom_rect?
     transform_position(new_data, squish_infinite, squish_infinite)
   }
 )
